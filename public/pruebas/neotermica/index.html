@@ -39,11 +39,13 @@ h1,h2,h3{font-family:'Space Grotesk',sans-serif;font-weight:700;line-height:1.05
 .demo{position:relative;display:flex;flex-direction:column;background:var(--panel);border:1px solid var(--line);border-radius:22px;overflow:hidden;
   transition:transform .35s,border-color .35s,box-shadow .35s}
 .demo:hover{transform:translateY(-8px);border-color:rgba(203,10,61,.45);box-shadow:0 30px 70px rgba(0,0,0,.45)}
-.demo .thumb{height:150px;position:relative;overflow:hidden;display:grid;place-items:center}
-.demo .thumb .lbl{position:absolute;top:.9rem;left:.9rem;font-family:'Space Grotesk';font-weight:700;font-size:.7rem;letter-spacing:.1em;
-  background:rgba(11,18,28,.6);backdrop-filter:blur(6px);border:1px solid var(--line);padding:.25rem .7rem;border-radius:99px}
-.demo .thumb .tag{position:absolute;bottom:.9rem;right:.9rem;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;
-  padding:.22rem .6rem;border-radius:99px;background:rgba(11,18,28,.55);border:1px solid var(--line)}
+.demo .thumb{height:190px;position:relative;overflow:hidden;background:#0e1620}
+.demo .thumb iframe{position:absolute;top:0;left:0;width:1280px;height:960px;border:0;transform-origin:0 0;pointer-events:none;background:#0b121c}
+.demo .thumb::after{content:'';position:absolute;inset:0;z-index:1;box-shadow:inset 0 -26px 30px -22px rgba(4,8,14,.55)}
+.demo .thumb .lbl{position:absolute;top:.9rem;left:.9rem;z-index:2;font-family:'Space Grotesk';font-weight:700;font-size:.7rem;letter-spacing:.1em;color:var(--white);
+  background:rgba(11,18,28,.72);backdrop-filter:blur(6px);border:1px solid var(--line);padding:.25rem .7rem;border-radius:99px}
+.demo .thumb .tag{position:absolute;bottom:.9rem;right:.9rem;z-index:2;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--white);
+  padding:.22rem .6rem;border-radius:99px;background:rgba(11,18,28,.72);backdrop-filter:blur(6px);border:1px solid var(--line)}
 .demo .body{padding:1.5rem 1.6rem 1.7rem;flex:1;display:flex;flex-direction:column}
 .demo h3{font-size:1.2rem;margin-bottom:.5rem}
 .demo p{color:var(--text);line-height:1.6;font-size:.9rem;flex:1;margin-bottom:1.2rem}
@@ -52,20 +54,6 @@ h1,h2,h3{font-family:'Space Grotesk',sans-serif;font-weight:700;line-height:1.05
 .demo:hover .open{gap:.85rem}
 .demo .link-abs{position:absolute;inset:0;z-index:2}
 
-/* thumbnail backgrounds evocando cada demo */
-.t2{display:flex}.t2 i{flex:1}.t2 .a{background:linear-gradient(160deg,#123e5e,#0a2740)}.t2 .b{background:linear-gradient(160deg,#5e2408,#2a1206)}
-.t3{background:linear-gradient(135deg,#dfeef0,#8fb6cf)}
-.t4{background:#0f1622;background-image:linear-gradient(rgba(52,227,154,.12) 1px,transparent 1px),linear-gradient(90deg,rgba(52,227,154,.12) 1px,transparent 1px);background-size:22px 22px}
-.t6{background:radial-gradient(circle at 50% 45%,#1c2838,#0c131d)}
-.t6 .dial{width:64px;height:64px;border-radius:50%;background:conic-gradient(from 135deg,#597D95,#8a6a86,#CB0A3D,#CB0A3D,#597D95);
-  -webkit-mask:radial-gradient(circle,transparent 55%,#000 56%);mask:radial-gradient(circle,transparent 55%,#000 56%)}
-.t8{background:radial-gradient(circle at 50% 45%,#ffffff,#dbe1e8)}
-.t8 .box{width:80px;height:56px;border:1.5px solid rgba(89,125,149,.55);border-radius:6px;position:relative}
-.t8 .box::after{content:'';position:absolute;top:8px;left:50%;transform:translateX(-50%);width:26px;height:8px;border-radius:3px;background:#597D95}
-.t9{background:linear-gradient(135deg,#597D95,#41617a 55%,#CB0A3D)}
-.t9 .mock{width:78%;height:70%;border-radius:8px 8px 0 0;background:#f5f8fb;position:relative;box-shadow:0 14px 30px rgba(0,0,0,.3)}
-.t9 .mock::before{content:'';position:absolute;top:0;left:0;right:0;height:12px;background:#fff;border-radius:8px 8px 0 0;border-bottom:1px solid #e2e9f0}
-.t9 .mock::after{content:'';position:absolute;top:22px;left:12px;width:45%;height:8px;border-radius:3px;background:#597D95;box-shadow:0 16px 0 -1px #e2e9f0,0 30px 0 -2px #cb0a3d}
 .demo.feat9{border-color:rgba(203,10,61,.5);box-shadow:0 20px 50px rgba(203,10,61,.16)}
 .demo .star{position:absolute;top:.9rem;right:.9rem;z-index:3;background:linear-gradient(135deg,#597D95,#CB0A3D);color:#fff;font-family:'Space Grotesk';font-weight:700;font-size:.6rem;letter-spacing:.1em;padding:.28rem .7rem;border-radius:99px}
 
@@ -92,38 +80,38 @@ h1,h2,h3{font-family:'Space Grotesk',sans-serif;font-weight:700;line-height:1.05
   <div class="grid">
     <article class="demo">
       <a class="link-abs" href="/pruebas/neotermica-2" target="_blank" rel="noopener" aria-label="Abrir propuesta 2"></a>
-      <div class="thumb t2"><span class="lbl">02</span><i class="a"></i><i class="b"></i><span class="tag">Impactante</span></div>
+      <div class="thumb"><iframe src="/pruebas/neotermica-2" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true" title="Vista previa de la propuesta 2"></iframe><span class="lbl">02</span><span class="tag">Impactante</span></div>
       <div class="body"><h3>Frío / Calor</h3><p>Split dramático a pantalla completa: dos mundos, hielo y fuego, que el visitante reparte a su gusto.</p><span class="open">Abrir demo →</span></div>
     </article>
 
     <article class="demo">
       <a class="link-abs" href="/pruebas/neotermica-3" target="_blank" rel="noopener" aria-label="Abrir propuesta 3"></a>
-      <div class="thumb t3"><span class="lbl" style="color:#12303f;border-color:rgba(18,48,63,.2);background:rgba(255,255,255,.5)">03</span><span class="tag" style="color:#12303f;background:rgba(255,255,255,.5);border-color:rgba(18,48,63,.2)">Minimal</span></div>
+      <div class="thumb"><iframe src="/pruebas/neotermica-3" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true" title="Vista previa de la propuesta 3"></iframe><span class="lbl">03</span><span class="tag">Minimal</span></div>
       <div class="body"><h3>El Aire</h3><p>Luminosa y limpia, tipo spa. Partículas de aire que fluyen y reaccionan al cursor. Sensación de calma y salud.</p><span class="open">Abrir demo →</span></div>
     </article>
 
     <article class="demo">
       <a class="link-abs" href="/pruebas/neotermica-4" target="_blank" rel="noopener" aria-label="Abrir propuesta 4"></a>
-      <div class="thumb t4"><span class="lbl">04</span><span class="tag" style="color:#34e39a;border-color:rgba(52,227,154,.4)">Datos</span></div>
+      <div class="thumb"><iframe src="/pruebas/neotermica-4" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true" title="Vista previa de la propuesta 4"></iframe><span class="lbl">04</span><span class="tag">Datos</span></div>
       <div class="body"><h3>Eficiencia</h3><p>Estética dashboard con una calculadora de ahorro en vivo. Ideal para vender aerotermia y eficiencia energética.</p><span class="open">Abrir demo →</span></div>
     </article>
 
     <article class="demo">
       <a class="link-abs" href="/pruebas/neotermica-6" target="_blank" rel="noopener" aria-label="Abrir propuesta 6"></a>
-      <div class="thumb t6"><span class="lbl">06</span><div class="dial"></div><span class="tag">Corporativa</span></div>
+      <div class="thumb"><iframe src="/pruebas/neotermica-6" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true" title="Vista previa de la propuesta 6"></iframe><span class="lbl">06</span><span class="tag">Corporativa</span></div>
       <div class="body"><h3>Termostato interactivo</h3><p>Oscura y tecnológica, con vuestros colores corporativos. Un termostato que giras y cambia toda la paleta de frío a calor.</p><span class="open">Abrir demo →</span></div>
     </article>
 
     <article class="demo">
       <a class="link-abs" href="/pruebas/neotermica-8" target="_blank" rel="noopener" aria-label="Abrir propuesta 8"></a>
-      <div class="thumb t8"><span class="lbl" style="color:#12303f;border-color:rgba(18,48,63,.2);background:rgba(255,255,255,.6)">08</span><div class="box"></div><span class="tag" style="color:#12303f;background:rgba(255,255,255,.6);border-color:rgba(18,48,63,.2)">Recorrido 3D</span></div>
+      <div class="thumb"><iframe src="/pruebas/neotermica-8" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true" title="Vista previa de la propuesta 8"></iframe><span class="lbl">08</span><span class="tag">Recorrido 3D</span></div>
       <div class="body"><h3>Rayos X · Recorrido 3D</h3><p>Un viaje con scroll por distintos inmuebles (casa, oficina, bar, clínica, gimnasio, nave) viendo el aire funcionar por dentro, en una atmósfera luminosa en blancos y grises.</p><span class="open">Abrir demo →</span></div>
     </article>
 
     <article class="demo feat9">
       <a class="link-abs" href="/pruebas/neotermica-9" target="_blank" rel="noopener" aria-label="Abrir propuesta 9"></a>
       <span class="star">★ Recomendada</span>
-      <div class="thumb t9"><span class="lbl">09</span><div class="mock"></div><span class="tag">Home completa</span></div>
+      <div class="thumb"><iframe src="/pruebas/neotermica-9" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true" title="Vista previa de la propuesta 9"></iframe><span class="lbl">09</span><span class="tag">Home completa</span></div>
       <div class="body"><h3>La web definitiva</h3><p>Home profesional completa con termostato interactivo que recolorea toda la web de frío a calor, servicios, calculadora de ahorro, testimonios y contacto.</p><span class="open">Abrir demo →</span></div>
     </article>
   </div>
@@ -134,5 +122,18 @@ h1,h2,h3{font-family:'Space Grotesk',sans-serif;font-weight:700;line-height:1.05
     <p style="margin-top:1rem">Diseño por <a href="https://www.eskaladigital.com/servicios" target="_blank" rel="noopener">ESCALA Marketing</a></p>
   </div>
 </div>
+<script>
+// Escala cada preview: el iframe renderiza la demo a 1280px (vista escritorio)
+// y se encoge al ancho real de la tarjeta, como una captura en vivo.
+function fitPreviews(){
+  document.querySelectorAll('.thumb iframe').forEach(function(f){
+    var w = f.parentElement.clientWidth;
+    if (w > 0) f.style.transform = 'scale(' + (w / 1280) + ')';
+  });
+}
+addEventListener('resize', fitPreviews);
+addEventListener('load', fitPreviews);
+fitPreviews();
+</script>
 </body>
 </html>
