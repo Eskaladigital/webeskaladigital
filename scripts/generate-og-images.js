@@ -23,7 +23,6 @@ const PROJECTS = [
   'gvc-abogados-murcia',
   'casi-cinco-recomendaciones',
   'on-procuradores-murcia',
-  'ondeon-hilo-musical',
   'rebeca-medina',
   'bcm-abogados-ibiza',
 ];

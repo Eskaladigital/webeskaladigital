@@ -25,7 +25,6 @@ UPDATE portfolio_projects SET og_image = '/portfolio/gvc-expertos-abogados/og-im
 UPDATE portfolio_projects SET og_image = '/portfolio/gvc-abogados-murcia/og-image.jpg' WHERE slug = 'gvc-abogados-murcia';
 UPDATE portfolio_projects SET og_image = '/portfolio/casi-cinco-recomendaciones/og-image.jpg' WHERE slug = 'casi-cinco-recomendaciones';
 UPDATE portfolio_projects SET og_image = '/portfolio/on-procuradores-murcia/og-image.jpg' WHERE slug = 'on-procuradores-murcia';
-UPDATE portfolio_projects SET og_image = '/portfolio/ondeon-hilo-musical/og-image.jpg' WHERE slug = 'ondeon-hilo-musical';
 UPDATE portfolio_projects SET og_image = '/portfolio/rebeca-medina/og-image.jpg' WHERE slug = 'rebeca-medina';
 UPDATE portfolio_projects SET og_image = '/portfolio/bcm-abogados-ibiza/og-image.jpg' WHERE slug = 'bcm-abogados-ibiza';
 

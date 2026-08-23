@@ -19,12 +19,16 @@ const PORTFOLIO_WEBS = [
   { url: 'https://www.gvcabogados.com', folder: 'gvc-abogados-murcia', name: 'GVC Abogados' },
   { url: 'https://www.casicinco.com', folder: 'casi-cinco-recomendaciones', name: 'Casi Cinco' },
   { url: 'https://www.onprocuradores.com', folder: 'on-procuradores-murcia', name: 'ON Procuradores' },
-  { url: 'https://www.ondeon.es', folder: 'ondeon-hilo-musical', name: 'Ondeón' },
   { url: 'https://www.rebecamedina.es', folder: 'rebeca-medina', name: 'Rebeca Medina' },
   { url: 'https://www.abogadoslaboralistasibiza.com', folder: 'bcm-abogados-ibiza', name: 'BCM Abogados' },
   { url: 'https://www.health4spain.com/es', folder: 'health4spain-marketplace-extranjeros', name: 'Health4Spain' },
   { url: 'https://www.retiru.com/es', folder: 'retiru-marketplace-retiros-wellness', name: 'Retiru' },
+  { url: 'https://www.optimalbreaks.com/es', folder: 'optimalbreaks-archivo-breakbeat', name: 'Optimal Breaks' },
 ];
+
+// Filtro opcional por CLI: node scripts/screenshot-portfolio.js <texto>
+// Captura solo las webs cuyo folder o name contengan el texto.
+const filterArg = process.argv[2]?.toLowerCase();
 
 const PORTFOLIO_DIR = path.join(__dirname, '../public/portfolio');
 
@@ -124,10 +128,14 @@ async function captureScreenshot(browser, web) {
 }
 
 async function main() {
+  const websToCapture = filterArg
+    ? PORTFOLIO_WEBS.filter(w => w.folder.toLowerCase().includes(filterArg) || w.name.toLowerCase().includes(filterArg))
+    : PORTFOLIO_WEBS;
+
   console.log('🚀 Iniciando captura de screenshots del portfolio...\n');
   console.log(`📁 Directorio de salida: ${PORTFOLIO_DIR}`);
   console.log(`📐 Viewport: ${VIEWPORT.width}x${VIEWPORT.height}`);
-  console.log(`🌐 Webs a capturar: ${PORTFOLIO_WEBS.length}\n`);
+  console.log(`🌐 Webs a capturar: ${websToCapture.length}\n`);
   
   // Iniciar navegador
   const browser = await puppeteer.launch({
@@ -145,7 +153,7 @@ async function main() {
   const results = [];
   
   // Capturar cada web
-  for (const web of PORTFOLIO_WEBS) {
+  for (const web of websToCapture) {
     const result = await captureScreenshot(browser, web);
     results.push(result);
   }
@@ -174,7 +182,7 @@ async function main() {
   console.log('📝 SQL PARA ACTUALIZAR SUPABASE:');
   console.log('='.repeat(50) + '\n');
   
-  PORTFOLIO_WEBS.forEach(web => {
+  websToCapture.forEach(web => {
     console.log(`UPDATE portfolio_projects SET featured_image = '/portfolio/${web.folder}/hero.jpg' WHERE slug = '${web.folder}';`);
   });
   
