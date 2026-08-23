@@ -216,7 +216,7 @@ const scene = new THREE.Scene();
 scene.background = new THREE.Color(0xeef1f5);
 scene.fog = new THREE.Fog(0xeef1f5, 14, 32);
 
-const camera = new THREE.PerspectiveCamera(46, innerWidth/innerHeight, 0.1, 100);
+const camera = new THREE.PerspectiveCamera(46, innerWidth/innerHeight, 0.1, 120);
 
 // lights (bright studio + sombras suaves)
 scene.add(new THREE.HemisphereLight(0xffffff, 0xc8d2dc, 0.72));
@@ -734,6 +734,28 @@ const STEPS = [
   {room:6, pos:V(0.2,4.1,11.2), look:V(0,2.2,-1)}         // 8 final
 ];
 
+// Dolly-out según viewport: PC un par de pasos atrás; móvil más para ver toda la estancia
+function camPull(){
+  const w = innerWidth;
+  if (w < 600) return 1.68;
+  if (w < 900) return 1.38;
+  return 1.2;
+}
+function framedPos(step){
+  const pull = camPull();
+  const dir = step.pos.clone().sub(step.look);
+  const p = step.look.clone().add(dir.multiplyScalar(pull));
+  if (innerWidth < 600) p.y += 0.45;
+  return p;
+}
+function applyFrame(i, instant){
+  const s = STEPS[i];
+  const next = framedPos(s);
+  tgtLook = s.look.clone();
+  if (instant){ camPos.copy(next); tgtPos.copy(next); camLook.copy(tgtLook); }
+  else tgtPos = next;
+}
+
 let curRoom = -1;
 function showRoom(idx){
   if (idx===curRoom) return;
@@ -747,7 +769,7 @@ function showRoom(idx){
 }
 
 // camera state
-let camPos = STEPS[0].pos.clone();
+let camPos = framedPos(STEPS[0]);
 let camLook = STEPS[0].look.clone();
 let tgtPos = camPos.clone();
 let tgtLook = camLook.clone();
@@ -766,9 +788,8 @@ let activeStep = -1;
 function setStep(i){
   if(i===activeStep) return;
   activeStep = i;
-  const s = STEPS[i];
-  tgtPos = s.pos.clone(); tgtLook = s.look.clone();
-  showRoom(s.room);
+  applyFrame(i, false);
+  showRoom(STEPS[i].room);
   dots.forEach((d,k)=>d.classList.toggle('on', k===i));
 }
 
@@ -784,7 +805,15 @@ addEventListener('scroll', ()=>{
 });
 
 // ---------- render loop ----------
-function resize(){ renderer.setSize(innerWidth,innerHeight); camera.aspect=innerWidth/innerHeight; camera.updateProjectionMatrix(); }
+function resize(){
+  renderer.setSize(innerWidth,innerHeight);
+  camera.aspect = innerWidth/innerHeight;
+  camera.fov = innerWidth < 600 ? 58 : innerWidth < 900 ? 50 : 46;
+  camera.updateProjectionMatrix();
+  scene.fog.far = innerWidth < 600 ? 40 : 32;
+  if (activeStep >= 0) applyFrame(activeStep, false);
+  else applyFrame(0, true);
+}
 addEventListener('resize', resize); resize();
 
 const tmp = new THREE.Vector3();
