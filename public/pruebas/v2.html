@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>ON Procuradores — Olga Navas</title>
+<meta name="description" content="ON Procuradores: representación procesal en la Región de Murcia y ante los tribunales superiores. 25 años tramitando escritos, notificaciones y ejecuciones con precisión.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,ital@9..144,300,0;9..144,500,0;9..144,600,0;9..144,700,0;9..144,600,1&family=IBM+Plex+Mono:wght@400;500;600&family=Work+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper: #f1ece1;
+    --paper-2: #e7e0cf;
+    --ink: #1b1a17;
+    --ink-70: rgba(27,26,23,0.7);
+    --ink-45: rgba(27,26,23,0.45);
+    --rust: #e4692b;
+    --rust-deep: #b3501f;
+    --line: rgba(27,26,23,0.14);
+    --rail-w: 236px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper); color:var(--ink);
+    font-family:'Work Sans', -apple-system, sans-serif;
+    font-size:16px; line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+  }
+  /* paper grain overlay */
+  body::before{
+    content:""; position:fixed; inset:0; pointer-events:none; z-index:200;
+    opacity:0.5; mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.35'/></svg>");
+  }
+  a{color:inherit; text-decoration:none;}
+  img{max-width:100%; display:block;}
+  h1,h2,h3{font-family:'Fraunces', Georgia, serif; font-weight:600; letter-spacing:-0.01em; line-height:1.08; color:var(--ink);}
+  em{font-family:'Fraunces', serif; font-style:italic; font-weight:500;}
+  .mono{font-family:'IBM Plex Mono', monospace;}
+  .container{max-width:900px; padding:0 64px;}
+  .rule{border-top:1px solid var(--line);}
+
+  /* ---------------- RAIL / NAV ---------------- */
+  .rail{
+    position:fixed; top:0; left:0; bottom:0; width:var(--rail-w); z-index:100;
+    border-right:1px solid var(--line); background:var(--paper);
+    display:flex; flex-direction:column; justify-content:space-between;
+    padding:36px 30px;
+  }
+  .rail-logo{display:block;}
+  .rail-logo strong{display:block; font-family:'Fraunces',serif; font-size:23px; font-weight:600;}
+  .rail-logo span{display:block; font-family:'IBM Plex Mono'; font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--rust); margin-top:6px;}
+  .rail-nav{margin-top:56px; display:flex; flex-direction:column;}
+  .rail-nav a{
+    display:flex; align-items:baseline; gap:10px; padding:9px 0;
+    font-family:'IBM Plex Mono'; font-size:11.5px; letter-spacing:1px; text-transform:uppercase;
+    color:var(--ink); opacity:0.5; border-bottom:1px solid transparent; transition:opacity .2s ease, border-color .2s ease;
+  }
+  .rail-nav a .n{color:var(--rust); font-size:11px;}
+  .rail-nav a:hover{opacity:1; border-color:var(--line);}
+  .rail-foot{font-family:'IBM Plex Mono'; font-size:11.5px; line-height:2;}
+  .rail-foot .lbl{display:block; color:var(--ink-45); text-transform:uppercase; letter-spacing:1.5px; font-size:9.5px; margin:14px 0 3px;}
+  .rail-foot a:hover{color:var(--rust);}
+
+  .mobile-bar{display:none;}
+
+  /* ---------------- MAIN ---------------- */
+  main{margin-left:var(--rail-w);}
+  section{position:relative; padding:130px 0 0; overflow:hidden;}
+  .eyebrow{
+    font-family:'IBM Plex Mono'; font-size:12px; letter-spacing:1.5px; text-transform:uppercase;
+    color:var(--rust); margin-bottom:26px; display:block;
+  }
+
+  /* ---------------- HERO ---------------- */
+  .hero{padding-top:70px;}
+  .hero-meta{
+    display:flex; justify-content:space-between; align-items:flex-start; gap:40px;
+    padding-bottom:56px; margin-bottom:56px; border-bottom:1px solid var(--line);
+  }
+  .hero-meta .file{font-family:'IBM Plex Mono'; font-size:12px; color:var(--ink-70); letter-spacing:0.5px;}
+  .hero-meta .file b{color:var(--rust); font-weight:600;}
+  .seal{flex-shrink:0;}
+  .hero h1{font-size:clamp(40px, 6vw, 72px); max-width:780px;}
+  .hero .lead{
+    max-width:520px; margin:34px 0 52px; font-size:17.5px; color:var(--ink-70);
+  }
+  .hero-links{display:flex; gap:36px; flex-wrap:wrap; margin-bottom:80px;}
+  .textlink{
+    font-family:'IBM Plex Mono'; font-size:13px; letter-spacing:0.4px; text-transform:uppercase;
+    padding-bottom:6px; border-bottom:1px solid var(--ink);
+    transition:border-color .2s ease, color .2s ease;
+  }
+  .textlink:hover{color:var(--rust); border-color:var(--rust);}
+  .hero-stats{display:flex; border-top:1px solid var(--line); padding-top:0;}
+  .hero-stats .stat{flex:1; padding:26px 34px 26px 0; border-right:1px solid var(--line);}
+  .hero-stats .stat:last-child{border-right:none;}
+  .hero-stats .stat strong{display:block; font-family:'Fraunces',serif; font-size:34px; font-weight:600;}
+  .hero-stats .stat span{font-family:'IBM Plex Mono'; font-size:10.5px; letter-spacing:1px; text-transform:uppercase; color:var(--ink-45);}
+
+  /* ---------------- ABOUT ---------------- */
+  .quote{
+    font-family:'Fraunces', serif; font-style:italic; font-weight:500;
+    font-size:clamp(24px,3vw,34px); color:var(--ink); max-width:760px; margin-bottom:64px; line-height:1.35;
+  }
+  .about-grid{display:grid; grid-template-columns:220px 1fr; gap:60px;}
+  .timeline{border-left:1px solid var(--line); padding-left:26px; display:flex; flex-direction:column; gap:34px;}
+  .timeline .t{position:relative;}
+  .timeline .t::before{content:""; position:absolute; left:-31px; top:4px; width:8px; height:8px; border-radius:50%; background:var(--rust);}
+  .timeline .t b{display:block; font-family:'Fraunces',serif; font-size:20px; font-weight:600;}
+  .timeline .t span{font-family:'IBM Plex Mono'; font-size:11.5px; color:var(--ink-45); text-transform:uppercase; letter-spacing:0.5px;}
+  .about-copy p{color:var(--ink-70); margin-bottom:18px; max-width:600px;}
+  .about-copy strong{color:var(--ink); font-weight:600;}
+
+  /* ---------------- SERVICES (table list) ---------------- */
+  .svc-row{
+    display:grid; grid-template-columns:56px 1fr 1.4fr 24px; gap:28px; align-items:start;
+    padding:30px 0; border-top:1px solid var(--line); transition:padding-left .25s ease, background .25s ease;
+    position:relative;
+  }
+  .svc-row:last-child{border-bottom:1px solid var(--line);}
+  .svc-row::before{content:""; position:absolute; left:-64px; top:0; bottom:0; width:3px; background:var(--rust); transform:scaleY(0); transform-origin:top; transition:transform .25s ease;}
+  .svc-row:hover{padding-left:16px;}
+  .svc-row:hover::before{transform:scaleY(1);}
+  .svc-num{font-family:'IBM Plex Mono'; font-size:13px; color:var(--rust); padding-top:4px;}
+  .svc-row h3{font-size:22px; font-weight:600;}
+  .svc-row p{color:var(--ink-70); font-size:14.5px; max-width:440px;}
+  .svc-arrow{font-family:'IBM Plex Mono'; font-size:18px; color:var(--ink-45); padding-top:2px;}
+
+  /* ---------------- VALUES (full bleed ink) ---------------- */
+  .values{
+    margin-top:130px; background:var(--ink); color:var(--paper);
+    padding:100px 0; margin-left:calc(-1 * var(--rail-w)); padding-left:var(--rail-w);
+  }
+  .values .eyebrow{color:#f4b285;}
+  .values h2{color:var(--paper); margin-bottom:56px; font-size:clamp(26px,3vw,36px); max-width:600px;}
+  .value-strip{display:flex; border-top:1px solid rgba(241,236,225,0.18);}
+  .value-item{flex:1; padding:36px 34px 0 0; border-right:1px solid rgba(241,236,225,0.18);}
+  .value-item:last-child{border-right:none;}
+  .value-item .num{font-family:'IBM Plex Mono'; font-size:11.5px; color:#f4b285; letter-spacing:1px;}
+  .value-item h3{color:var(--paper); font-size:26px; margin:14px 0 12px;}
+  .value-item p{color:rgba(241,236,225,0.62); font-size:14.5px; max-width:260px; padding-right:20px;}
+
+  /* ---------------- COVERAGE (directory / dot leaders) ---------------- */
+  .coverage{padding-bottom:130px;}
+  .coverage h2{max-width:640px; margin-bottom:20px; font-size:clamp(26px,3vw,36px);}
+  .coverage > p{max-width:560px; color:var(--ink-70); margin-bottom:56px;}
+  .dir-groups{display:grid; grid-template-columns:1fr 1fr; gap:56px;}
+  .dir-group h4{font-family:'IBM Plex Mono'; font-size:11px; text-transform:uppercase; letter-spacing:1.5px; color:var(--ink-45); margin-bottom:16px; padding-bottom:10px; border-bottom:1px solid var(--line);}
+  .dir-row{display:flex; align-items:baseline; gap:10px; padding:10px 0; border-bottom:1px dotted var(--line); font-family:'Fraunces',serif; font-size:16px;}
+  .dir-row .leader{flex:1; border-bottom:1px dotted var(--ink-45); transform:translateY(-4px); opacity:0.5;}
+  .dir-row .code{font-family:'IBM Plex Mono'; font-size:11px; color:var(--rust);}
+
+  /* ---------------- CTA ---------------- */
+  .cta{
+    background:var(--rust); color:var(--paper); text-align:left;
+    margin-left:calc(-1 * var(--rail-w)); padding:110px 0 110px var(--rail-w);
+  }
+  .cta .eyebrow{color:rgba(241,236,225,0.75);}
+  .cta h2{color:var(--paper); font-size:clamp(38px,6vw,68px); margin-bottom:40px;}
+  .cta-links{display:flex; gap:50px; flex-wrap:wrap;}
+  .cta-links a{font-family:'IBM Plex Mono'; font-size:15px; border-bottom:1px solid rgba(241,236,225,0.5); padding-bottom:8px;}
+  .cta-links a:hover{border-color:var(--paper);}
+
+  /* ---------------- FOOTER ---------------- */
+  footer{
+    background:var(--paper-2); position:relative; overflow:hidden;
+    margin-left:calc(-1 * var(--rail-w)); padding:70px 0 0 var(--rail-w);
+  }
+  .foot-grid{display:grid; grid-template-columns:1.6fr 1fr 1fr; gap:40px; padding-bottom:50px;}
+  .foot-brand strong{font-family:'Fraunces',serif; font-size:22px;}
+  .foot-brand p{color:var(--ink-70); margin-top:16px; max-width:280px; font-size:14px;}
+  footer h4{font-family:'IBM Plex Mono'; font-size:11px; text-transform:uppercase; letter-spacing:1.5px; color:var(--ink-45); margin-bottom:16px;}
+  footer ul{list-style:none;}
+  footer li{margin-bottom:10px; font-size:14.5px;}
+  footer li a:hover{color:var(--rust);}
+  .foot-bottom{
+    border-top:1px solid var(--line); display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;
+    padding:22px 0; font-family:'IBM Plex Mono'; font-size:11px; color:var(--ink-45); position:relative; z-index:2;
+  }
+  .watermark{
+    position:absolute; right:-40px; bottom:-60px; font-family:'Fraunces',serif; font-weight:700;
+    font-size:260px; color:rgba(27,26,23,0.045); line-height:1; pointer-events:none; user-select:none;
+  }
+
+  /* ---------------- RESPONSIVE ---------------- */
+  @media (max-width:1000px){
+    :root{--rail-w:0px;}
+    .rail{display:none;}
+    main{margin-left:0;}
+    .mobile-bar{
+      display:flex; justify-content:space-between; align-items:center;
+      position:sticky; top:0; z-index:100; background:var(--paper); border-bottom:1px solid var(--line);
+      padding:18px 24px;
+    }
+    .mobile-bar strong{font-family:'Fraunces',serif; font-size:19px;}
+    .mobile-bar button{background:none; border:1px solid var(--ink); font-family:'IBM Plex Mono'; font-size:11px; text-transform:uppercase; padding:8px 14px; letter-spacing:1px; cursor:pointer;}
+    .mobile-nav{
+      display:none; position:fixed; inset:0; background:var(--paper); z-index:150; padding:80px 32px 32px; flex-direction:column;
+    }
+    .mobile-nav.open{display:flex;}
+    .mobile-nav a{font-family:'Fraunces',serif; font-size:28px; padding:14px 0; border-bottom:1px solid var(--line);}
+    .mobile-nav .close{position:absolute; top:24px; right:28px; background:none; border:none; font-family:'IBM Plex Mono'; font-size:12px; text-transform:uppercase; cursor:pointer;}
+    .container{padding:0 24px;}
+    section{padding-top:80px;}
+    .hero{padding-top:20px;}
+    .hero-meta{flex-direction:column; gap:24px;}
+    .about-grid{grid-template-columns:1fr;}
+    .svc-row{grid-template-columns:36px 1fr; row-gap:10px;}
+    .svc-row p{grid-column:2 / 3;}
+    .svc-arrow{display:none;}
+    .value-strip{flex-direction:column;}
+    .value-item{border-right:none; border-bottom:1px solid rgba(241,236,225,0.18); padding:26px 0;}
+    .dir-groups{grid-template-columns:1fr;}
+    .values, .cta, footer{margin-left:0; padding-left:24px;}
+    .foot-grid{grid-template-columns:1fr;}
+    .watermark{font-size:140px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ===================== MOBILE BAR ===================== -->
+<div class="mobile-bar">
+  <strong>ON Procuradores</strong>
+  <button onclick="document.getElementById('mnav').classList.add('open')">Índice</button>
+</div>
+<nav class="mobile-nav" id="mnav">
+  <button class="close" onclick="document.getElementById('mnav').classList.remove('open')">Cerrar ✕</button>
+  <a href="#inicio" onclick="document.getElementById('mnav').classList.remove('open')">01 Inicio</a>
+  <a href="#despacho" onclick="document.getElementById('mnav').classList.remove('open')">02 El despacho</a>
+  <a href="#servicios" onclick="document.getElementById('mnav').classList.remove('open')">03 Servicios</a>
+  <a href="#valores" onclick="document.getElementById('mnav').classList.remove('open')">04 Valores</a>
+  <a href="#cobertura" onclick="document.getElementById('mnav').classList.remove('open')">05 Cobertura</a>
+  <a href="#contacto" onclick="document.getElementById('mnav').classList.remove('open')">06 Contacto</a>
+</nav>
+
+<!-- ===================== RAIL (desktop nav) ===================== -->
+<aside class="rail">
+  <div>
+    <a href="#inicio" class="rail-logo">
+      <strong>ON Procuradores</strong>
+      <span>Olga Navas · 1999</span>
+    </a>
+    <nav class="rail-nav">
+      <a href="#inicio"><span class="n">01</span> Inicio</a>
+      <a href="#despacho"><span class="n">02</span> El despacho</a>
+      <a href="#servicios"><span class="n">03</span> Servicios</a>
+      <a href="#valores"><span class="n">04</span> Valores</a>
+      <a href="#cobertura"><span class="n">05</span> Cobertura</a>
+      <a href="#contacto"><span class="n">06</span> Contacto</a>
+    </nav>
+  </div>
+  <div class="rail-foot">
+    <span class="lbl">Teléfono</span>
+    <a href="tel:+34968937142">968 93 71 42</a>
+    <span class="lbl">Email</span>
+    <a href="mailto:olga@navasprocuradora.com">olga@navasprocuradora.com</a>
+    <span class="lbl">Sede</span>
+    <span>Región de Murcia, ES</span>
+  </div>
+</aside>
+
+<main>
+
+  <!-- ===================== HERO ===================== -->
+  <section class="hero" id="inicio">
+    <div class="container">
+      <div class="hero-meta">
+        <div class="file mono">
+          EXPEDIENTE <b>ON/1999</b><br>
+          Procuradora de los Tribunales — Región de Murcia
+        </div>
+        <svg class="seal" width="108" height="108" viewBox="0 0 200 200">
+          <defs><path id="circlePath" d="M 100,100 m -76,0 a 76,76 0 1,1 152,0 a 76,76 0 1,1 -152,0"/></defs>
+          <circle cx="100" cy="100" r="94" fill="none" stroke="#1b1a17" stroke-opacity="0.12" stroke-width="1"/>
+          <circle cx="100" cy="100" r="76" fill="none" stroke="#e4692b" stroke-width="1.2"/>
+          <text font-family="IBM Plex Mono, monospace" font-size="9" letter-spacing="3" fill="#e4692b">
+            <textPath href="#circlePath">PROCURADORA · REGIÓN DE MURCIA · DESDE 1999 · </textPath>
+          </text>
+          <text x="100" y="94" text-anchor="middle" font-family="Fraunces, serif" font-size="28" font-weight="600" fill="#1b1a17">ON</text>
+          <text x="100" y="116" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="8.5" letter-spacing="2" fill="#1b1a17" opacity="0.55">PROCURADORES</text>
+        </svg>
+      </div>
+
+      <h1>Su representación<br>procesal, <em>sin</em><br>fricción.</h1>
+      <p class="lead">Tramitamos escritos, agilizamos notificaciones y hacemos seguimiento diario de cada procedimiento judicial. 25 años de experiencia al servicio de abogados y clientes en toda España.</p>
+      <div class="hero-links">
+        <a class="textlink" href="#contacto">Solicitar información</a>
+        <a class="textlink" href="#servicios">Ver servicios</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><strong>25+</strong><span>Años en ejercicio</span></div>
+        <div class="stat"><strong>11</strong><span>Partidos judiciales</span></div>
+        <div class="stat"><strong>2</strong><span>Altos tribunales</span></div>
+        <div class="stat"><strong>100%</strong><span>Expedientes digitales</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== ABOUT ===================== -->
+  <section id="despacho">
+    <div class="container">
+      <span class="eyebrow">02 — El despacho</span>
+      <p class="quote">"25 años de fiel dedicación a nuestros clientes, con la misma exigencia del primer expediente."</p>
+      <div class="about-grid">
+        <div class="timeline">
+          <div class="t"><b>1999</b><span>Fundación del despacho</span></div>
+          <div class="t"><b>2010</b><span>Digitalización de expedientes</span></div>
+          <div class="t"><b>2026</b><span>25 años de ejercicio</span></div>
+        </div>
+        <div class="about-copy">
+          <p>El despacho <strong>ON Procuradores</strong> fue fundado por Olga Navas en 1999. Desde entonces ejercemos la profesión con dedicación absoluta al servicio de nuestros clientes, apoyados en una amplia experiencia en la tramitación de los procedimientos que gestionamos.</p>
+          <p>Nuestro equipo trabaja para garantizar la mejor representación, velando siempre por los derechos de nuestros clientes y ofreciendo atención personalizada, experiencia y altos valores profesionales en cada expediente.</p>
+          <p>Implementamos todas las garantías procedimentales necesarias para facilitar la labor del letrado, fomentando el vínculo <strong>abogado&ndash;procurador</strong> con una comunicación ágil y constante.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SERVICES ===================== -->
+  <section id="servicios">
+    <div class="container">
+      <span class="eyebrow">03 — Ámbitos de actuación</span>
+      <h2 style="font-size:clamp(26px,3vw,36px); max-width:600px; margin-bottom:50px;">Servicios procesales</h2>
+
+      <div class="svc-row">
+        <div class="svc-num mono">01</div>
+        <h3>Representación procesal</h3>
+        <p>Representación integral ante todos los órganos jurisdiccionales en nombre de nuestros clientes.</p>
+        <div class="svc-arrow">→</div>
+      </div>
+      <div class="svc-row">
+        <div class="svc-num mono">02</div>
+        <h3>Ejecución de actos judiciales</h3>
+        <p>Tramitación de demandas de ejecución y seguimiento hasta la resolución del procedimiento.</p>
+        <div class="svc-arrow">→</div>
+      </div>
+      <div class="svc-row">
+        <div class="svc-num mono">03</div>
+        <h3>Actos de comunicación</h3>
+        <p>Diligencias de notificación, emplazamiento y traslado (art. 152.2 LEC) con la máxima diligencia.</p>
+        <div class="svc-arrow">→</div>
+      </div>
+      <div class="svc-row">
+        <div class="svc-num mono">04</div>
+        <h3>Control de plazos</h3>
+        <p>Recordatorio diario de vencimientos y señalamientos para evitar cualquier incidencia procesal.</p>
+        <div class="svc-arrow">→</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== VALUES ===================== -->
+  <section class="values" id="valores">
+    <div class="container">
+      <span class="eyebrow">04 — Valores</span>
+      <h2>Los tres pilares que sostienen nuestro trabajo diario.</h2>
+      <div class="value-strip">
+        <div class="value-item">
+          <div class="num mono">01</div>
+          <h3>Cercanía</h3>
+          <p>Tramitación personalizada de cualquier servicio, con trato directo y humano.</p>
+        </div>
+        <div class="value-item">
+          <div class="num mono">02</div>
+          <h3>Eficacia</h3>
+          <p>Preocupación constante por la rapidez de nuestros servicios en cada expediente.</p>
+        </div>
+        <div class="value-item">
+          <div class="num mono">03</div>
+          <h3>Innovación</h3>
+          <p>Evolución permanente y uso de herramientas tecnológicas actualizadas.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== COVERAGE ===================== -->
+  <section class="coverage" id="cobertura">
+    <div class="container">
+      <span class="eyebrow">05 — Cobertura territorial</span>
+      <h2>Presente en toda la Región de Murcia y ante los tribunales superiores.</h2>
+      <p>Prestamos servicio en un amplio número de partidos judiciales, además de representación ante el Tribunal Constitucional y el Tribunal Supremo en Madrid.</p>
+      <div class="dir-groups">
+        <div class="dir-group">
+          <h4>Región de Murcia</h4>
+          <div class="dir-row">Murcia <span class="leader"></span><span class="code mono">SEDE</span></div>
+          <div class="dir-row">Cartagena <span class="leader"></span><span class="code mono">P.J.</span></div>
+          <div class="dir-row">Lorca <span class="leader"></span><span class="code mono">P.J.</span></div>
+          <div class="dir-row">Cieza <span class="leader"></span><span class="code mono">P.J.</span></div>
+          <div class="dir-row">Molina de Segura <span class="leader"></span><span class="code mono">P.J.</span></div>
+          <div class="dir-row">Totana <span class="leader"></span><span class="code mono">P.J.</span></div>
+        </div>
+        <div class="dir-group">
+          <h4>Región de Murcia &amp; Orihuela</h4>
+          <div class="dir-row">Yecla <span class="leader"></span><span class="code mono">P.J.</span></div>
+          <div class="dir-row">Jumilla <span class="leader"></span><span class="code mono">P.J.</span></div>
+          <div class="dir-row">Mula <span class="leader"></span><span class="code mono">P.J.</span></div>
+          <div class="dir-row">San Javier <span class="leader"></span><span class="code mono">P.J.</span></div>
+          <div class="dir-row">Caravaca de la Cruz <span class="leader"></span><span class="code mono">P.J.</span></div>
+          <div class="dir-row">Orihuela <span class="leader"></span><span class="code mono">P.J.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CTA ===================== -->
+  <section class="cta">
+    <div class="container">
+      <span class="eyebrow">06 — Contacto</span>
+      <h2>¿Hablamos<br>de su caso?</h2>
+      <div class="cta-links">
+        <a href="tel:+34968937142">968 93 71 42</a>
+        <a href="mailto:olga@navasprocuradora.com">olga@navasprocuradora.com</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer id="contacto">
+    <div class="container foot-grid">
+      <div class="foot-brand">
+        <strong>ON Procuradores</strong>
+        <p>Servicio profesional de representación procesal en toda España desde 1999. Cercanía, eficacia e innovación al servicio de abogados y clientes.</p>
+      </div>
+      <div>
+        <h4>Índice</h4>
+        <ul>
+          <li><a href="#inicio">Inicio</a></li>
+          <li><a href="#despacho">El despacho</a></li>
+          <li><a href="#servicios">Servicios</a></li>
+          <li><a href="#cobertura">Cobertura</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="#">Aviso legal</a></li>
+          <li><a href="#">Términos y condiciones</a></li>
+          <li><a href="#">Política de privacidad</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="container foot-bottom">
+      <span>© 2026 ON Procuradores — Olga Navas</span>
+      <span>Diseño de ejemplo v2 · naranja corporativo — propuesta editorial</span>
+    </div>
+    <div class="watermark">ON</div>
+  </footer>
+
+</main>
+
+</body>
+</html>

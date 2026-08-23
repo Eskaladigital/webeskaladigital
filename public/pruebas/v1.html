@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>ON PROCURADORES — Olga Navas</title>
+<meta name="description" content="ON Procuradores. Representación procesal en la Región de Murcia y ante los tribunales superiores. 25 años de ejercicio.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --black:#0a0a0a;
+    --white:#fafaf7;
+    --signal:#e4692b;
+    --gray:#8a8a86;
+    --line: rgba(10,10,10,0.14);
+    --line-inv: rgba(250,250,247,0.18);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--white); color:var(--black);
+    font-family:'Space Grotesk', Arial, sans-serif;
+    font-size:16px; line-height:1.5; overflow-x:hidden;
+    cursor:none;
+  }
+  a{color:inherit; text-decoration:none;}
+  .mono{font-family:'Space Mono', monospace;}
+  img{max-width:100%; display:block;}
+  .wrap{max-width:1400px; margin:0 auto; padding:0 40px;}
+  ::selection{background:var(--signal); color:var(--white);}
+
+  /* custom cursor */
+  .cursor{
+    position:fixed; top:0; left:0; width:16px; height:16px; border-radius:50%;
+    background:var(--black); pointer-events:none; z-index:9999; mix-blend-mode:difference;
+    transform:translate(-50%,-50%); transition:width .2s ease, height .2s ease, background .2s ease;
+  }
+  .cursor.big{width:64px; height:64px; background:var(--white);}
+  @media (hover:none), (pointer:coarse){ .cursor{display:none;} body{cursor:auto;} }
+
+  /* grid overlay */
+  .grid-lines{position:fixed; inset:0; z-index:1; pointer-events:none; opacity:0.5;
+    background-image:repeating-linear-gradient(to right, rgba(10,10,10,0.06) 0, rgba(10,10,10,0.06) 1px, transparent 1px, transparent calc(100% / 12));
+  }
+
+  /* ---------------- TOPBAR ---------------- */
+  .topbar{
+    position:fixed; top:0; left:0; right:0; z-index:300; height:74px;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:0 40px; background:var(--white); border-bottom:2px solid var(--black);
+  }
+  .topbar .logo{font-weight:700; font-size:19px; letter-spacing:-0.02em;}
+  .topbar .logo span{color:var(--signal);}
+  .menu-btn{
+    display:flex; align-items:center; gap:14px; background:none; border:none; cursor:none;
+    font-family:'Space Mono'; font-size:12px; letter-spacing:2px; text-transform:uppercase;
+  }
+  .menu-btn .bars{width:28px; height:14px; position:relative;}
+  .menu-btn .bars span{position:absolute; left:0; width:100%; height:2px; background:var(--black); transition:transform .25s ease, top .25s ease;}
+  .menu-btn .bars span:nth-child(1){top:0;}
+  .menu-btn .bars span:nth-child(2){top:12px;}
+  .menu-open .menu-btn .bars span:nth-child(1){top:6px; transform:rotate(45deg);}
+  .menu-open .menu-btn .bars span:nth-child(2){top:6px; transform:rotate(-45deg);}
+
+  /* ---------------- FULLSCREEN MENU ---------------- */
+  .overlay{
+    position:fixed; inset:0; z-index:250; background:var(--black); color:var(--white);
+    transform:translateY(-100%); transition:transform .55s cubic-bezier(.77,0,.18,1);
+    display:flex; flex-direction:column; justify-content:space-between; padding:120px 40px 50px;
+  }
+  .menu-open .overlay{transform:translateY(0);}
+  .overlay-links{display:flex; flex-direction:column;}
+  .overlay-links a{
+    font-size:clamp(38px,7vw,84px); font-weight:700; padding:10px 0; border-bottom:1px solid var(--line-inv);
+    display:flex; justify-content:space-between; align-items:center; letter-spacing:-0.02em;
+    transition:padding-left .3s ease, color .3s ease;
+  }
+  .overlay-links a:hover{padding-left:24px; color:var(--signal);}
+  .overlay-links a .idx{font-family:'Space Mono'; font-size:14px; color:var(--gray);}
+  .overlay-foot{display:flex; justify-content:space-between; flex-wrap:wrap; gap:20px; font-family:'Space Mono'; font-size:13px; color:var(--gray);}
+  .overlay-foot a{color:var(--white);}
+  .overlay-foot a:hover{color:var(--signal);}
+
+  /* ---------------- MARQUEE ---------------- */
+  .marquee{
+    border-top:2px solid var(--black); border-bottom:2px solid var(--black);
+    overflow:hidden; white-space:nowrap; padding:16px 0; background:var(--white);
+  }
+  .marquee-track{display:inline-block; animation:scroll-left 22s linear infinite;}
+  .marquee span{font-family:'Space Mono'; font-size:14px; letter-spacing:2px; text-transform:uppercase; padding:0 24px;}
+  .marquee span:nth-child(even){color:var(--signal);}
+  @keyframes scroll-left{ from{transform:translateX(0);} to{transform:translateX(-50%);} }
+
+  /* ---------------- REVEAL ---------------- */
+  [data-reveal]{opacity:0; transform:translateY(30px); transition:opacity .7s ease, transform .7s ease;}
+  [data-reveal].in{opacity:1; transform:translateY(0);}
+
+  /* ---------------- HERO ---------------- */
+  .hero{position:relative; padding:190px 0 70px; overflow:hidden;}
+  .hero-watermark{
+    position:absolute; top:-6vw; right:-4vw; font-weight:700; font-size:clamp(220px,38vw,520px);
+    color:rgba(10,10,10,0.05); line-height:1; z-index:0; user-select:none;
+  }
+  .hero-tag{font-family:'Space Mono'; font-size:12.5px; letter-spacing:2px; text-transform:uppercase; color:var(--signal); margin-bottom:26px; position:relative; z-index:2;}
+  .hero h1{
+    position:relative; z-index:2; font-size:clamp(46px,8vw,108px); font-weight:700; line-height:0.96; letter-spacing:-0.03em; max-width:1100px;
+  }
+  .hero h1 .out{-webkit-text-stroke:2px var(--black); color:var(--white);}
+  .hero-bottom{position:relative; z-index:2; display:flex; justify-content:space-between; align-items:flex-end; gap:40px; margin-top:70px; padding-top:40px; border-top:2px solid var(--black); flex-wrap:wrap;}
+  .hero-lead{max-width:420px; font-size:16.5px; color:#3a3a38;}
+  .hero-cta{
+    display:inline-flex; align-items:center; gap:14px; font-family:'Space Mono'; font-size:13px; letter-spacing:1.5px; text-transform:uppercase;
+    padding:16px 28px; background:var(--black); color:var(--white); border:2px solid var(--black); transition:background .25s ease, color .25s ease;
+  }
+  .hero-cta:hover{background:var(--white); color:var(--black);}
+  .hero-stats{display:flex; gap:36px; flex-wrap:wrap;}
+  .hero-stats div strong{display:block; font-size:30px; font-weight:700;}
+  .hero-stats div span{font-family:'Space Mono'; font-size:10px; letter-spacing:1px; text-transform:uppercase; color:var(--gray);}
+
+  /* ---------------- ABOUT (invert) ---------------- */
+  .about{background:var(--black); color:var(--white); padding:120px 0;}
+  .about .hero-tag{color:#ffb27a;}
+  .about h2{font-size:clamp(30px,5vw,58px); font-weight:700; line-height:1.12; letter-spacing:-0.02em; max-width:1000px;}
+  .about h2 b{color:var(--signal); font-weight:700;}
+  .spec{margin-top:80px; display:grid; grid-template-columns:repeat(4,1fr); border-top:1px solid var(--line-inv); border-left:1px solid var(--line-inv);}
+  .spec div{border-right:1px solid var(--line-inv); border-bottom:1px solid var(--line-inv); padding:30px 26px;}
+  .spec strong{display:block; font-size:46px; font-weight:700;}
+  .spec span{font-family:'Space Mono'; font-size:11px; letter-spacing:1px; text-transform:uppercase; color:var(--gray);}
+
+  /* ---------------- SERVICES ---------------- */
+  .services{padding:120px 0;}
+  .sec-head{display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:60px; flex-wrap:wrap; gap:20px; border-bottom:2px solid var(--black); padding-bottom:26px;}
+  .sec-head h2{font-size:clamp(28px,4.5vw,52px); font-weight:700; letter-spacing:-0.02em;}
+  .svc-row{
+    display:flex; align-items:center; gap:36px; padding:34px 10px; border-bottom:1px solid var(--line);
+    transition:background .3s ease, color .3s ease, padding-left .3s ease; cursor:none; position:relative;
+  }
+  .svc-row:hover{background:var(--black); color:var(--white); padding-left:26px;}
+  .svc-idx{font-family:'Space Mono'; font-size:14px; color:var(--signal); width:40px; flex-shrink:0;}
+  .svc-title{font-size:clamp(22px,3.4vw,40px); font-weight:600; flex:1; letter-spacing:-0.01em;}
+  .svc-desc{
+    max-width:340px; font-size:14px; color:var(--gray); max-height:0; overflow:hidden; opacity:0; transition:max-height .35s ease, opacity .35s ease;
+  }
+  .svc-row:hover .svc-desc{max-height:120px; opacity:1;}
+  .svc-arrow{font-size:26px; transition:transform .3s ease;}
+  .svc-row:hover .svc-arrow{transform:rotate(45deg);}
+
+  /* ---------------- VALUES (angled signal) ---------------- */
+  .values{
+    background:var(--signal); color:var(--black); padding:150px 0;
+    clip-path:polygon(0 6vw, 100% 0, 100% calc(100% - 6vw), 0 100%);
+    margin:60px 0;
+  }
+  .values .sec-head{border-color:rgba(10,10,10,0.4);}
+  .value-strip{display:flex; flex-wrap:wrap;}
+  .value-item{flex:1; min-width:220px; padding:20px 30px 0 0; border-right:1px solid rgba(10,10,10,0.25);}
+  .value-item:last-child{border-right:none;}
+  .value-item .num{font-family:'Space Mono'; font-size:13px;}
+  .value-item h3{font-size:clamp(28px,3.6vw,44px); font-weight:700; margin:18px 0 14px; letter-spacing:-0.02em;}
+  .value-item p{max-width:260px; font-size:14.5px; color:rgba(10,10,10,0.7);}
+
+  /* ---------------- COVERAGE (typographic cloud) ---------------- */
+  .coverage{padding:100px 0 130px;}
+  .cloud{font-size:clamp(22px,4.2vw,52px); font-weight:600; line-height:1.25; letter-spacing:-0.01em; max-width:1180px;}
+  .cloud .w{transition:color .2s ease;}
+  .cloud .w:hover{color:var(--signal);}
+  .cloud .dim{color:var(--gray); font-weight:500;}
+  .cloud .sep{color:var(--gray); font-weight:400; padding:0 4px;}
+
+  /* ---------------- CTA ---------------- */
+  .cta{background:var(--black); color:var(--white); padding:150px 0 110px; position:relative; overflow:hidden;}
+  .cta .hero-tag{color:#ffb27a;}
+  .cta h2{
+    font-family:'Space Grotesk'; font-size:clamp(56px,11vw,180px); font-weight:700; letter-spacing:-0.03em; line-height:0.92;
+    -webkit-text-stroke:2px var(--white); color:transparent; transition:color .4s ease; cursor:none;
+  }
+  .cta h2:hover{color:var(--white);}
+  .cta-links{display:flex; gap:60px; flex-wrap:wrap; margin-top:70px; padding-top:40px; border-top:1px solid var(--line-inv);}
+  .cta-links a{font-family:'Space Mono'; font-size:17px; letter-spacing:0.5px; background-image:linear-gradient(var(--signal),var(--signal)); background-repeat:no-repeat; background-size:0% 2px; background-position:0 100%; transition:background-size .3s ease; padding-bottom:8px;}
+  .cta-links a:hover{background-size:100% 2px;}
+
+  /* ---------------- FOOTER ---------------- */
+  footer{background:var(--white); padding-top:0;}
+  .foot-cols{display:grid; grid-template-columns:1.4fr 1fr 1fr; gap:40px; padding:60px 0 40px; border-bottom:2px solid var(--black);}
+  .foot-cols h4{font-family:'Space Mono'; font-size:11px; letter-spacing:1.5px; text-transform:uppercase; color:var(--gray); margin-bottom:16px;}
+  .foot-cols p{max-width:280px; font-size:14px; color:#3a3a38;}
+  .foot-cols ul{list-style:none;}
+  .foot-cols li{margin-bottom:9px; font-size:14.5px;}
+  .foot-cols li a:hover{color:var(--signal);}
+  .foot-bottom{display:flex; justify-content:space-between; padding:20px 0; font-family:'Space Mono'; font-size:11px; color:var(--gray); flex-wrap:wrap; gap:8px;}
+
+  /* ---------------- RESPONSIVE ---------------- */
+  @media (max-width:900px){
+    .wrap{padding:0 22px;}
+    .topbar{padding:0 22px;}
+    .hero{padding:150px 0 50px;}
+    .hero-bottom{flex-direction:column; align-items:flex-start; gap:30px;}
+    .spec{grid-template-columns:1fr 1fr;}
+    .svc-row{gap:18px;}
+    .svc-desc{display:none;}
+    .value-strip{flex-direction:column;}
+    .value-item{border-right:none; border-bottom:1px solid rgba(10,10,10,0.25); padding:22px 0;}
+    .foot-cols{grid-template-columns:1fr;}
+    .overlay{padding:100px 22px 40px;}
+    .values{clip-path:polygon(0 4vw, 100% 0, 100% calc(100% - 4vw), 0 100%);}
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="grid-lines"></div>
+
+<!-- ===================== TOPBAR ===================== -->
+<header class="topbar" id="topbar">
+  <a href="#inicio" class="logo">ON<span>—</span>PROCURADORES</a>
+  <button class="menu-btn" id="menuBtn">
+    <span class="txt">Menú</span>
+    <span class="bars"><span></span><span></span></span>
+  </button>
+</header>
+
+<!-- ===================== FULLSCREEN OVERLAY MENU ===================== -->
+<nav class="overlay" id="overlay">
+  <div class="overlay-links">
+    <a href="#inicio" data-close><span>Inicio</span><span class="idx mono">01</span></a>
+    <a href="#despacho" data-close><span>El despacho</span><span class="idx mono">02</span></a>
+    <a href="#servicios" data-close><span>Servicios</span><span class="idx mono">03</span></a>
+    <a href="#valores" data-close><span>Valores</span><span class="idx mono">04</span></a>
+    <a href="#cobertura" data-close><span>Cobertura</span><span class="idx mono">05</span></a>
+    <a href="#contacto" data-close><span>Contacto</span><span class="idx mono">06</span></a>
+  </div>
+  <div class="overlay-foot">
+    <a href="tel:+34968937142">968 93 71 42</a>
+    <a href="mailto:olga@navasprocuradora.com">olga@navasprocuradora.com</a>
+    <span>Región de Murcia, España</span>
+  </div>
+</nav>
+
+<!-- ===================== MARQUEE ===================== -->
+<div class="marquee">
+  <div class="marquee-track">
+    <span>REPRESENTACIÓN PROCESAL</span><span>REGIÓN DE MURCIA</span><span>DESDE 1999</span><span>TRIBUNAL SUPREMO</span><span>TRIBUNAL CONSTITUCIONAL</span><span>REPRESENTACIÓN PROCESAL</span><span>REGIÓN DE MURCIA</span><span>DESDE 1999</span><span>TRIBUNAL SUPREMO</span><span>TRIBUNAL CONSTITUCIONAL</span>
+  </div>
+</div>
+
+<!-- ===================== HERO ===================== -->
+<section class="hero" id="inicio">
+  <div class="hero-watermark">25</div>
+  <div class="wrap">
+    <div class="hero-tag mono">Procuradora de los tribunales — Región de Murcia</div>
+    <h1 data-reveal>Su procedimiento<br>no espera. <span class="out">Nosotros</span><br>tampoco.</h1>
+    <div class="hero-bottom">
+      <p class="hero-lead">Tramitamos escritos, agilizamos notificaciones y hacemos seguimiento diario de cada expediente. 25 años de experiencia al servicio de abogados y clientes en toda España.</p>
+      <a href="#contacto" class="hero-cta">Hablar ahora →</a>
+    </div>
+    <div class="hero-stats" style="margin-top:56px;">
+      <div><strong>25+</strong><span>Años en ejercicio</span></div>
+      <div><strong>11</strong><span>Partidos judiciales</span></div>
+      <div><strong>2</strong><span>Altos tribunales</span></div>
+      <div><strong>100%</strong><span>Digital</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== ABOUT ===================== -->
+<section class="about" id="despacho">
+  <div class="wrap">
+    <div class="hero-tag mono">02 — El despacho</div>
+    <h2 data-reveal>Fundado en 1999. Veinticinco años después, seguimos <b>tramitando cada expediente</b> como si fuera el primero.</h2>
+    <div class="spec">
+      <div><strong>1999</strong><span>Fundación</span></div>
+      <div><strong>2010</strong><span>Digitalización total</span></div>
+      <div><strong>11</strong><span>Partidos judiciales</span></div>
+      <div><strong>2026</strong><span>25º aniversario</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SERVICES ===================== -->
+<section class="services" id="servicios">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Lo que<br>hacemos</h2>
+      <span class="mono" style="font-size:12px; letter-spacing:1.5px; color:var(--gray); text-transform:uppercase;">03 — Servicios procesales</span>
+    </div>
+
+    <div class="svc-row" data-reveal>
+      <div class="svc-idx">01</div>
+      <div class="svc-title">Representación procesal</div>
+      <div class="svc-desc">Representación integral ante todos los órganos jurisdiccionales.</div>
+      <div class="svc-arrow">↗</div>
+    </div>
+    <div class="svc-row" data-reveal>
+      <div class="svc-idx">02</div>
+      <div class="svc-title">Ejecución de actos judiciales</div>
+      <div class="svc-desc">Tramitación de demandas de ejecución hasta su resolución.</div>
+      <div class="svc-arrow">↗</div>
+    </div>
+    <div class="svc-row" data-reveal>
+      <div class="svc-idx">03</div>
+      <div class="svc-title">Actos de comunicación</div>
+      <div class="svc-desc">Notificación, emplazamiento y traslado (art. 152.2 LEC).</div>
+      <div class="svc-arrow">↗</div>
+    </div>
+    <div class="svc-row" data-reveal>
+      <div class="svc-idx">04</div>
+      <div class="svc-title">Control de plazos</div>
+      <div class="svc-desc">Aviso diario de vencimientos y señalamientos.</div>
+      <div class="svc-arrow">↗</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== VALUES ===================== -->
+<section class="values" id="valores">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Cómo<br>trabajamos</h2>
+      <span class="mono" style="font-size:12px; letter-spacing:1.5px; text-transform:uppercase;">04 — Valores</span>
+    </div>
+    <div class="value-strip">
+      <div class="value-item" data-reveal>
+        <div class="num mono">01</div>
+        <h3>Cercanía</h3>
+        <p>Trato directo y personalizado en cada expediente que gestionamos.</p>
+      </div>
+      <div class="value-item" data-reveal>
+        <div class="num mono">02</div>
+        <h3>Eficacia</h3>
+        <p>Rapidez y precisión constantes en la tramitación procesal.</p>
+      </div>
+      <div class="value-item" data-reveal>
+        <div class="num mono">03</div>
+        <h3>Innovación</h3>
+        <p>Herramientas tecnológicas actualizadas al servicio del cliente.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== COVERAGE ===================== -->
+<section class="coverage" id="cobertura">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Dónde<br>operamos</h2>
+      <span class="mono" style="font-size:12px; letter-spacing:1.5px; color:var(--gray); text-transform:uppercase;">05 — Cobertura territorial</span>
+    </div>
+    <p class="cloud">
+      <span class="w">Murcia</span><span class="sep">,</span> <span class="w">Cartagena</span><span class="sep">,</span> <span class="w">Lorca</span><span class="sep">,</span> <span class="w">Cieza</span><span class="sep">,</span> <span class="w">Molina de Segura</span><span class="sep">,</span> <span class="w">Totana</span><span class="sep">,</span> <span class="w">Yecla</span><span class="sep">,</span> <span class="w">Jumilla</span><span class="sep">,</span> <span class="w">Mula</span><span class="sep">,</span> <span class="w">San Javier</span><span class="sep">,</span> <span class="w">Caravaca de la Cruz</span> <span class="dim">y</span> <span class="w">Orihuela</span> <span class="dim">— además de representación ante el</span> <span class="w">Tribunal Constitucional</span> <span class="dim">y el</span> <span class="w">Tribunal Supremo</span> <span class="dim">en Madrid.</span>
+    </p>
+  </div>
+</section>
+
+<!-- ===================== CTA ===================== -->
+<section class="cta" id="contacto-cta">
+  <div class="wrap">
+    <div class="hero-tag mono">06 — Contacto</div>
+    <h2 data-reveal>Hablemos</h2>
+    <div class="cta-links">
+      <a href="tel:+34968937142">968 93 71 42</a>
+      <a href="mailto:olga@navasprocuradora.com">olga@navasprocuradora.com</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== MARQUEE ===================== -->
+<div class="marquee">
+  <div class="marquee-track">
+    <span>ON PROCURADORES</span><span>OLGA NAVAS</span><span>DESDE 1999</span><span>REGIÓN DE MURCIA</span><span>ON PROCURADORES</span><span>OLGA NAVAS</span><span>DESDE 1999</span><span>REGIÓN DE MURCIA</span>
+  </div>
+</div>
+
+<!-- ===================== FOOTER ===================== -->
+<footer id="contacto">
+  <div class="wrap foot-cols">
+    <div>
+      <h4>ON Procuradores</h4>
+      <p>Servicio profesional de representación procesal en toda España desde 1999.</p>
+    </div>
+    <div>
+      <h4>Índice</h4>
+      <ul>
+        <li><a href="#inicio">Inicio</a></li>
+        <li><a href="#despacho">El despacho</a></li>
+        <li><a href="#servicios">Servicios</a></li>
+        <li><a href="#cobertura">Cobertura</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="#">Aviso legal</a></li>
+        <li><a href="#">Términos y condiciones</a></li>
+        <li><a href="#">Política de privacidad</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap foot-bottom">
+    <span>© 2026 ON Procuradores — Olga Navas</span>
+    <span>Diseño de ejemplo v3 · naranja corporativo — propuesta brutalista</span>
+  </div>
+</footer>
+
+<script>
+  // custom cursor
+  const cursor = document.getElementById('cursor');
+  window.addEventListener('mousemove', e=>{
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+  });
+  document.querySelectorAll('a, button, .svc-row').forEach(el=>{
+    el.addEventListener('mouseenter', ()=>cursor.classList.add('big'));
+    el.addEventListener('mouseleave', ()=>cursor.classList.remove('big'));
+  });
+
+  // fullscreen menu
+  const body = document.body;
+  const menuBtn = document.getElementById('menuBtn');
+  menuBtn.addEventListener('click', ()=>body.classList.toggle('menu-open'));
+  document.querySelectorAll('[data-close]').forEach(a=>{
+    a.addEventListener('click', ()=>body.classList.remove('menu-open'));
+  });
+
+  // scroll reveal
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add('in'); } });
+  }, {threshold:0.15});
+  document.querySelectorAll('[data-reveal]').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>

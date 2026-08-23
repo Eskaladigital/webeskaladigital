@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Neotérmica — Propuesta Frío/Calor · ESCALA</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Propuesta split frío/calor para Neotérmica. Demo by ESCALA Marketing.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--cold:#7dd3fc;--cold-d:#0369a1;--cold-bg:#0a2740;--warm:#ffb057;--warm-d:#c23a0a;--warm-bg:#2a1206;--ink:#0a0f14;--white:#f6faff;--line:rgba(255,255,255,.14)}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--ink);color:var(--white);font-family:'Inter',sans-serif;font-weight:300;overflow-x:hidden}
+::selection{background:var(--warm);color:var(--ink)}
+a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
+h1,h2,h3,h4{font-family:'Oswald',sans-serif;font-weight:600;text-transform:uppercase;line-height:.98;letter-spacing:.01em}
+
+.ribbon{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:center;gap:.7rem;
+  padding:.42rem 1rem;font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;background:var(--ink);color:var(--white);font-weight:500}
+.ribbon a{color:var(--warm);font-weight:600;text-decoration:underline;text-underline-offset:2px}
+
+header{position:fixed;top:26px;left:0;right:0;z-index:90;display:flex;align-items:center;justify-content:space-between;padding:1.1rem 4vw;mix-blend-mode:difference}
+.logo{font-family:'Oswald';font-weight:700;font-size:1.5rem;letter-spacing:.06em;text-transform:uppercase;color:#fff}
+nav{display:flex;gap:1.8rem}
+nav a{font-family:'Oswald';font-weight:500;font-size:.82rem;letter-spacing:.1em;text-transform:uppercase;color:#fff}
+.hbtn{font-family:'Oswald';font-weight:600;font-size:.82rem;letter-spacing:.1em;text-transform:uppercase;color:#fff;border:1px solid #fff;padding:.6rem 1.2rem;border-radius:2px}
+.menu-t{display:none;color:#fff;font-size:1.4rem}
+
+/* ---------- SPLIT HERO ---------- */
+.split{position:relative;height:100vh;overflow:hidden;user-select:none}
+.side{position:absolute;top:0;height:100%;width:100%;display:flex;align-items:center;overflow:hidden}
+.cold{left:0;background:radial-gradient(120% 120% at 20% 20%,#123e5e,var(--cold-bg));clip-path:polygon(0 0,var(--split) 0,calc(var(--split) - 8vh) 100%,0 100%)}
+.warm{left:0;background:radial-gradient(120% 120% at 80% 80%,#5e2408,var(--warm-bg));clip-path:polygon(var(--split) 0,100% 0,100% 100%,calc(var(--split) - 8vh) 100%)}
+.side .inner{padding:0 6vw;max-width:52vw}
+.warm .inner{margin-left:auto;text-align:right}
+.side .kick{font-family:'Oswald';font-weight:500;font-size:.8rem;letter-spacing:.34em;text-transform:uppercase;opacity:.85;margin-bottom:1.2rem}
+.cold .kick{color:var(--cold)}.warm .kick{color:var(--warm)}
+.side h1{font-size:clamp(3rem,8vw,7rem);font-weight:700}
+.cold h1 em,.warm h1 em{font-style:normal;-webkit-text-stroke:1.5px currentColor;color:transparent}
+.cold h1{color:var(--white)}.warm h1{color:var(--white)}
+.side p{font-family:'Inter';font-weight:300;font-size:1.05rem;line-height:1.7;margin-top:1.4rem;max-width:360px;opacity:.85}
+.warm .inner p{margin-left:auto}
+.side .sbtn{display:inline-block;margin-top:1.8rem;font-family:'Oswald';font-weight:600;font-size:.82rem;letter-spacing:.14em;text-transform:uppercase;
+  padding:.9rem 1.7rem;border-radius:2px;transition:transform .25s}
+.cold .sbtn{background:var(--cold);color:var(--cold-bg)}.warm .sbtn{background:var(--warm);color:var(--warm-bg)}
+.side .sbtn:hover{transform:translateY(-3px)}
+
+/* frost + heat particles */
+.fx{position:absolute;inset:0;pointer-events:none}
+.flake,.spark{position:absolute;border-radius:50%}
+.flake{background:rgba(200,235,255,.8);box-shadow:0 0 6px rgba(200,235,255,.6)}
+.spark{background:rgba(255,180,90,.9);box-shadow:0 0 8px rgba(255,140,60,.7)}
+
+/* divider handle */
+.divider{position:absolute;top:0;height:100%;width:2px;background:linear-gradient(var(--cold),var(--warm));left:var(--split);transform:translateX(-1px);z-index:5;
+  box-shadow:0 0 30px rgba(255,255,255,.4)}
+.handle{position:absolute;top:50%;left:var(--split);transform:translate(-50%,-50%);z-index:6;width:72px;height:72px;border-radius:50%;
+  background:rgba(10,15,20,.6);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.5);display:grid;place-items:center;cursor:ew-resize;
+  font-size:1.3rem;transition:transform .2s;touch-action:none}
+.handle:hover{transform:translate(-50%,-50%) scale(1.08)}
+.handle::before{content:'⇄';color:#fff}
+.scrollcue{position:absolute;bottom:3vh;left:50%;transform:translateX(-50%);z-index:6;font-family:'Oswald';font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;opacity:.7;animation:bob 2.4s infinite}
+@keyframes bob{50%{transform:translate(-50%,6px);opacity:.35}}
+
+section{padding:6.5rem 6vw}
+.sh{text-align:center;max-width:760px;margin:0 auto 3.5rem}
+.sh .kick{font-family:'Oswald';font-weight:500;font-size:.8rem;letter-spacing:.32em;text-transform:uppercase;color:var(--warm);margin-bottom:1rem}
+.sh h2{font-size:clamp(2.2rem,5vw,3.8rem);font-weight:700}
+.sh h2 .c{color:var(--cold)}.sh h2 .w{color:var(--warm)}
+.sh p{margin-top:1rem;color:rgba(246,250,255,.7);line-height:1.8;font-size:1.05rem}
+
+/* services: alternating cold/warm rows */
+.svc-row{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--line);border-radius:16px;overflow:hidden;margin-bottom:1.2rem;transition:transform .3s}
+.svc-row:hover{transform:translateX(6px)}
+.svc-row:nth-child(even){direction:rtl}
+.svc-row:nth-child(even) *{direction:ltr}
+.svc-row .art{min-height:240px;display:grid;place-items:center;font-size:4rem;position:relative;overflow:hidden}
+.svc-row.c .art{background:radial-gradient(circle at 40% 40%,#124a6e,#0a2740)}
+.svc-row.w .art{background:radial-gradient(circle at 60% 60%,#6e2c0a,#2a1206)}
+.svc-row .txt{padding:2.6rem}
+.svc-row .txt .tag{font-family:'Oswald';font-weight:500;font-size:.74rem;letter-spacing:.22em;text-transform:uppercase;opacity:.7}
+.svc-row.c .txt .tag{color:var(--cold)}.svc-row.w .txt .tag{color:var(--warm)}
+.svc-row .txt h3{font-size:1.9rem;font-weight:700;margin:.6rem 0 .9rem}
+.svc-row .txt p{color:rgba(246,250,255,.72);line-height:1.7;font-size:.98rem}
+.svc-row .txt .lk{display:inline-block;margin-top:1.2rem;font-family:'Oswald';font-weight:600;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase}
+.svc-row.c .txt .lk{color:var(--cold)}.svc-row.w .txt .lk{color:var(--warm)}
+
+/* stats band dual */
+.band{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-radius:18px;overflow:hidden;border:1px solid var(--line)}
+.band div{padding:2.4rem 1.5rem;text-align:center}
+.band div:nth-child(odd){background:rgba(125,211,252,.08)}
+.band div:nth-child(even){background:rgba(255,176,87,.08)}
+.band b{display:block;font-family:'Oswald';font-weight:700;font-size:3rem;line-height:1}
+.band div:nth-child(odd) b{color:var(--cold)}.band div:nth-child(even) b{color:var(--warm)}
+.band span{font-family:'Oswald';font-weight:500;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;opacity:.7;margin-top:.4rem;display:block}
+
+/* reviews */
+.revs{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem}
+.rev{border:1px solid var(--line);border-radius:16px;padding:1.8rem;background:rgba(255,255,255,.02)}
+.rev .st{color:#ffc94d;margin-bottom:.9rem;letter-spacing:.1em}
+.rev p{line-height:1.7;font-size:.96rem}
+.rev .w{margin-top:1.2rem;font-family:'Oswald';font-weight:600;letter-spacing:.05em;font-size:.9rem;text-transform:uppercase}
+.rev .w small{display:block;font-family:'Inter';font-weight:300;font-size:.72rem;text-transform:none;letter-spacing:0;opacity:.6;margin-top:.2rem}
+
+/* CTA split */
+.cta{display:grid;grid-template-columns:1fr 1fr;border-radius:22px;overflow:hidden;border:1px solid var(--line)}
+.cta .h{padding:4rem;display:flex;flex-direction:column;justify-content:center}
+.cta .h.c{background:radial-gradient(circle at 30% 30%,#124a6e,#0a2740)}
+.cta .h.w{background:radial-gradient(circle at 70% 70%,#6e2c0a,#2a1206);text-align:right;align-items:flex-end}
+.cta h2{font-size:clamp(1.8rem,3vw,2.8rem);font-weight:700}
+.cta p{margin:1rem 0 1.8rem;color:rgba(246,250,255,.8);line-height:1.6;max-width:340px}
+.cta .b{font-family:'Oswald';font-weight:600;font-size:.82rem;letter-spacing:.12em;text-transform:uppercase;padding:1rem 1.9rem;border-radius:2px}
+.cta .h.c .b{background:var(--cold);color:var(--cold-bg);align-self:flex-start}
+.cta .h.w .b{background:var(--warm);color:var(--warm-bg)}
+
+footer{padding:4.5rem 6vw 2.5rem;border-top:1px solid var(--line)}
+.fg{display:grid;grid-template-columns:1.6fr repeat(3,1fr);gap:3rem;margin-bottom:2.5rem}
+.fg .lg{font-family:'Oswald';font-weight:700;font-size:1.5rem;letter-spacing:.05em;text-transform:uppercase}
+.fg p{color:rgba(246,250,255,.6);line-height:1.6;margin-top:1rem;max-width:300px;font-size:.9rem}
+.fg h5{font-family:'Oswald';font-weight:600;font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;color:var(--warm);margin-bottom:1rem}
+.fg ul{list-style:none;display:grid;gap:.5rem}
+.fg a{color:rgba(246,250,255,.65);font-size:.88rem}
+.fbot{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;padding-top:2rem;border-top:1px solid var(--line);font-size:.8rem;color:rgba(246,250,255,.6)}
+.fbot a{color:var(--warm)}
+
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s,transform .7s}
+.reveal.vis{opacity:1;transform:none}
+
+@media(max-width:860px){
+  nav,.hbtn{display:none}.menu-t{display:block}
+  .side .inner{max-width:80vw}
+  .cold{clip-path:polygon(0 0,100% 0,100% var(--splitY),0 calc(var(--splitY) - 6vw))}
+  .warm{clip-path:polygon(0 var(--splitY),100% calc(var(--splitY) - 6vw),100% 100%,0 100%)}
+  .warm .inner{text-align:left}.warm .inner p{margin-left:0}
+  .band{grid-template-columns:1fr 1fr}
+  .svc-row,.cta{grid-template-columns:1fr}
+  .revs{grid-template-columns:1fr}
+  .fg{grid-template-columns:1fr 1fr}
+  .divider,.handle{display:none}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="ribbon">Propuesta Frío/Calor para Neotérmica · <a href="https://www.eskaladigital.com/servicios" target="_blank" rel="noopener">ESCALA Marketing</a></div>
+
+<header>
+  <div class="logo">Neotérmica</div>
+  <nav><a href="#servicios">Servicios</a><a href="#datos">Nosotros</a><a href="#opiniones">Opiniones</a><a href="#contacto">Contacto</a></nav>
+  <a class="hbtn" href="#contacto">Presupuesto</a>
+  <button class="menu-t" aria-label="Menú">☰</button>
+</header>
+
+<div class="split" id="split" style="--split:50%;--splitY:50%">
+  <div class="side cold">
+    <div class="fx" id="fxCold"></div>
+    <div class="inner">
+      <div class="kick">❄ En verano</div>
+      <h1>Aire<br><em>fresco</em></h1>
+      <p>Splits, conductos y aire acondicionado que convierten el calor de Murcia en el clima ideal para vivir y trabajar.</p>
+      <a class="sbtn" href="#servicios">Refrigeración →</a>
+    </div>
+  </div>
+  <div class="side warm">
+    <div class="fx" id="fxWarm"></div>
+    <div class="inner">
+      <div class="kick">☀ En invierno</div>
+      <h1>Calor<br><em>envolvente</em></h1>
+      <p>Aerotermia, suelo radiante y calderas de alta eficiencia para que el frío se quede fuera de casa.</p>
+      <a class="sbtn" href="#servicios">Calefacción →</a>
+    </div>
+  </div>
+  <div class="divider" id="divider"></div>
+  <div class="handle" id="handle" title="Arrástrame"></div>
+  <div class="scrollcue">Scroll ↓ · Arrastra ⇄</div>
+</div>
+
+<section id="servicios">
+  <div class="sh reveal">
+    <div class="kick">Nuestros servicios</div>
+    <h2>Dominamos el <span class="c">frío</span> y el <span class="w">calor</span></h2>
+    <p>Más de 20 años instalando, reparando y renovando climatización en Murcia. Con Certificación del Ministerio de Industria.</p>
+  </div>
+
+  <div class="svc-row c reveal"><div class="art">❄️</div><div class="txt"><span class="tag">Refrigeración</span><h3>Aire acondicionado &amp; conductos</h3><p>Equipos split y sistemas por conductos dimensionados para cada estancia. Confort silencioso y eficiente en verano.</p><span class="lk">Más información →</span></div></div>
+  <div class="svc-row w reveal"><div class="art">♻️</div><div class="txt"><span class="tag">Eficiencia</span><h3>Aerotermia</h3><p>Frío, calor y agua caliente sanitaria con la energía del aire. La solución más eficiente y ecológica del mercado.</p><span class="lk">Más información →</span></div></div>
+  <div class="svc-row w reveal"><div class="art">🔥</div><div class="txt"><span class="tag">Calefacción</span><h3>Suelo radiante &amp; calderas</h3><p>Calor uniforme desde el suelo y calderas de condensación de bajo consumo. El invierno, bajo control.</p><span class="lk">Más información →</span></div></div>
+  <div class="svc-row c reveal"><div class="art">🌬️</div><div class="txt"><span class="tag">Aire sano</span><h3>Ventilación &amp; radiadores</h3><p>Renovación del aire interior y radiadores de última generación para mantener la temperatura ideal todo el año.</p><span class="lk">Más información →</span></div></div>
+</section>
+
+<section id="datos">
+  <div class="band reveal">
+    <div><b data-c="20">0</b><span>+ Años experiencia</span></div>
+    <div><b data-c="2012">0</b><span>Desde en Murcia</span></div>
+    <div><b data-c="100">0</b><span>% Certificados</span></div>
+    <div><b data-c="1000">0</b><span>+ Instalaciones</span></div>
+  </div>
+</section>
+
+<section id="opiniones">
+  <div class="sh reveal">
+    <div class="kick">Opiniones verificadas</div>
+    <h2>La gente de Murcia <span class="w">confía</span></h2>
+  </div>
+  <div class="revs">
+    <article class="rev reveal"><div class="st">★★★★★</div><p>“Te atienden rápido y te resuelven los problemas. Muy profesionales.”</p><div class="w">MaiteChu<small>Reseña de Google</small></div></article>
+    <article class="rev reveal"><div class="st">★★★★★</div><p>“Buena gestión y trato excelente. Se ajustaron justo a lo que necesitábamos.”</p><div class="w">José María M.<small>Reseña de Google</small></div></article>
+    <article class="rev reveal"><div class="st">★★★★★</div><p>“Formalidad y puntualidad de principio a fin. Instalación impecable y en plazo.”</p><div class="w">Salud B.<small>Reseña de Google</small></div></article>
+  </div>
+</section>
+
+<section id="contacto">
+  <div class="cta reveal">
+    <div class="h c"><h2>¿Necesitas frío?</h2><p>Prepara tu casa o negocio para el verano murciano con la instalación adecuada.</p><a class="b" href="#">Presupuesto A/A →</a></div>
+    <div class="h w"><h2>¿Necesitas calor?</h2><p>Aerotermia y calefacción eficiente para un invierno cálido sin disparar la factura.</p><a class="b" href="#">Presupuesto calefacción →</a></div>
+  </div>
+</section>
+
+<footer>
+  <div class="fg">
+    <div><div class="lg">Neotérmica</div><p>Tu empresa de climatización en Murcia. Frío en verano, calor en invierno, confort todo el año.</p><p style="color:var(--white)">678 495 046 · info@neotermica.es</p></div>
+    <div><h5>Servicios</h5><ul><li><a href="#">Aire acondicionado</a></li><li><a href="#">Aerotermia</a></li><li><a href="#">Suelo radiante</a></li><li><a href="#">Calderas</a></li></ul></div>
+    <div><h5>Empresa</h5><ul><li><a href="#">Inicio</a></li><li><a href="#">Nosotros</a></li><li><a href="#">Blog</a></li><li><a href="#">Contacto</a></li></ul></div>
+    <div><h5>Legal</h5><ul><li><a href="#">Aviso legal</a></li><li><a href="#">Privacidad</a></li><li><a href="#">Cookies</a></li></ul></div>
+  </div>
+  <div class="fbot"><span>© 2026 Neotérmica Climatización · Propuesta visual demo</span><span>Diseño por <a href="https://www.eskaladigital.com/servicios" target="_blank" rel="noopener">ESCALA Marketing</a></span></div>
+</footer>
+
+<script>
+const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const split = document.getElementById('split');
+const handle = document.getElementById('handle');
+const divider = document.getElementById('divider');
+const isMobile = () => matchMedia('(max-width:860px)').matches;
+
+let drag = false;
+function setSplit(px, py){
+  if (isMobile()){
+    const pct = Math.max(28, Math.min(72, py / split.clientHeight * 100));
+    split.style.setProperty('--splitY', pct + '%');
+  } else {
+    const pct = Math.max(22, Math.min(78, px / split.clientWidth * 100));
+    split.style.setProperty('--split', pct + '%');
+  }
+}
+handle.addEventListener('pointerdown', e => { drag = true; handle.setPointerCapture(e.pointerId); });
+addEventListener('pointermove', e => {
+  if (drag) setSplit(e.clientX, e.clientY - split.getBoundingClientRect().top);
+  else if (!isMobile() && !reduced){
+    // suave seguimiento del ratón dentro del hero
+    const r = split.getBoundingClientRect();
+    if (e.clientY > r.top && e.clientY < r.bottom){
+      const pct = Math.max(30, Math.min(70, (e.clientX / r.width) * 100));
+      split.style.setProperty('--split', pct + '%');
+    }
+  }
+});
+addEventListener('pointerup', () => drag = false);
+
+// frost & spark particles
+function spawn(container, cls, n){
+  for (let i=0;i<n;i++){
+    const p = document.createElement('div');
+    p.className = cls;
+    const s = Math.random()*4+2;
+    p.style.width = p.style.height = s+'px';
+    p.style.left = Math.random()*100+'%';
+    p.style.top = Math.random()*100+'%';
+    p.style.opacity = Math.random()*.6+.2;
+    container.appendChild(p);
+    animate(p, cls);
+  }
+}
+function animate(p, cls){
+  if (reduced) return;
+  const dur = Math.random()*6000+5000;
+  const dy = cls==='spark' ? -(Math.random()*40+30) : (Math.random()*40+30);
+  const dx = (Math.random()-.5)*30;
+  p.animate([{transform:'translate(0,0)'},{transform:`translate(${dx}px,${dy}px)`}],{duration:dur,iterations:Infinity,direction:'alternate',easing:'ease-in-out'});
+}
+spawn(document.getElementById('fxCold'),'flake',26);
+spawn(document.getElementById('fxWarm'),'spark',22);
+
+// reveal + counters
+const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting){ e.target.classList.add('vis'); io.unobserve(e.target);} }), {threshold:.12,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+const cio = new IntersectionObserver(es => es.forEach(e => {
+  if(!e.isIntersecting) return;
+  const el = e.target, to = +el.dataset.c; let n = 0;
+  const dur = 1200, t0 = performance.now();
+  const tick = t => { const p = Math.min(1,(t-t0)/dur); el.textContent = Math.round(to*p*(to===2012?1:1)); if(p<1) requestAnimationFrame(tick); else el.textContent = to; };
+  requestAnimationFrame(tick); cio.unobserve(el);
+}), {threshold:.6});
+document.querySelectorAll('[data-c]').forEach(el => cio.observe(el));
+</script>
+</body>
+</html>

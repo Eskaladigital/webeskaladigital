@@ -3,305 +3,407 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Neotérmica — Propuesta Eficiencia · ESCALA</title>
+<title>Neotérmica — Propuesta web (colores corporativos) · ESCALA</title>
 <meta name="robots" content="noindex, nofollow">
-<meta name="description" content="Propuesta data/eficiencia energética para Neotérmica. Demo by ESCALA Marketing.">
+<meta name="description" content="Propuesta de rediseño para Neotérmica, climatización en Murcia, con colores corporativos. Demo by ESCALA Marketing.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#070b12;--panel:#0f1622;--panel2:#161f30;--white:#eaf1fb;--soft:#8695ad;--green:#34e39a;--green-d:#0fae70;--amber:#ffcf5c;--red:#ff6b6b;--line:rgba(234,241,251,.09)}
+:root{
+  --bg:#0c131d;--panel:#141d2b;--panel2:#1c2838;--white:#eef3fb;--text:rgba(238,243,251,.72);
+  /* colores corporativos Neotérmica: azul pizarra (frío) ↔ carmesí (calor) */
+  --cold:#597D95;--cold-deep:#3f5f75;--warm:#CB0A3D;--warm-deep:#9c0730;
+  --line:rgba(238,243,251,.1);
+  /* accent se interpola con el termostato */
+  --accent:#597D95;--accent-deep:#3f5f75;--glow:rgba(89,125,149,.35);
+}
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--white);font-family:'Space Grotesk',sans-serif;overflow-x:hidden}
-::selection{background:var(--green);color:#04140c}
+body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;font-weight:300;overflow-x:hidden;transition:background .6s}
+::selection{background:var(--accent);color:#031018}
 a{color:inherit;text-decoration:none}
 button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
-.mono{font-family:'JetBrains Mono',monospace}
-h1,h2,h3,h4{font-weight:700;line-height:1.05;letter-spacing:-.01em}
+h1,h2,h3,h4{font-family:'Space Grotesk',sans-serif;font-weight:700;line-height:1.05}
 
-/* subtle grid bg */
-body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.4;
-  background-image:linear-gradient(rgba(52,227,154,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(52,227,154,.04) 1px,transparent 1px);
-  background-size:44px 44px;mask:radial-gradient(circle at 50% 30%,#000,transparent 80%)}
+/* ambient background reacts to temp */
+.ambient{position:fixed;inset:0;z-index:0;pointer-events:none;transition:background .6s;
+  background:radial-gradient(60vw 60vw at 80% -10%,var(--glow),transparent 60%),radial-gradient(50vw 50vw at 0% 100%,rgba(203,10,61,.06),transparent 60%)}
 
 .ribbon{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:center;gap:.7rem;
-  padding:.42rem 1rem;font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;background:var(--green);color:#04140c;font-weight:600}
-.ribbon a{color:#04140c;font-weight:700;text-decoration:underline;text-underline-offset:2px}
+  padding:.45rem 1rem;font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;
+  background:linear-gradient(90deg,var(--cold),var(--warm));color:#04121f;font-weight:600}
+.ribbon a{color:#04121f;font-weight:700;text-decoration:underline;text-underline-offset:2px}
 
-header{position:fixed;top:26px;left:0;right:0;z-index:90;display:flex;align-items:center;justify-content:space-between;padding:1.1rem 4vw;transition:background .35s,backdrop-filter .35s}
-header.scrolled{background:rgba(7,11,18,.85);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
-.logo{display:flex;align-items:center;gap:.6rem;font-weight:700;font-size:1.15rem}
-.logo .sq{width:32px;height:32px;border-radius:9px;background:linear-gradient(135deg,var(--green),var(--green-d));display:grid;place-items:center;color:#04140c;font-weight:700}
-nav{display:flex;gap:1.8rem}
-nav a{font-size:.82rem;color:var(--soft);transition:color .2s}
+header{position:fixed;top:28px;left:0;right:0;z-index:90;display:flex;align-items:center;justify-content:space-between;
+  padding:1.1rem 5vw;transition:background .35s,backdrop-filter .35s,padding .35s}
+header.scrolled{background:rgba(10,15,26,.82);backdrop-filter:blur(16px);border-bottom:1px solid var(--line);padding:.8rem 5vw}
+.logo{display:flex;align-items:center;gap:.7rem;font-family:'Space Grotesk';font-weight:700;font-size:1.2rem;letter-spacing:.01em}
+.logo .mk{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;font-size:1.1rem;
+  background:linear-gradient(135deg,var(--cold),var(--warm));box-shadow:0 0 22px var(--glow);transition:box-shadow .6s}
+nav{display:flex;gap:1.9rem}
+nav a{font-size:.82rem;color:var(--text);letter-spacing:.02em;transition:color .2s}
 nav a:hover{color:var(--white)}
-.hbtn{font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;font-weight:600;padding:.7rem 1.3rem;border-radius:8px;background:var(--green);color:#04140c;transition:transform .25s}
-.hbtn:hover{transform:translateY(-2px)}
-.menu-t{display:none;font-size:1.3rem}
-
-.wrap{position:relative;z-index:1;max-width:1320px;margin:0 auto;padding:0 4vw}
-
-/* hero dashboard */
-.hero{padding:8rem 0 3rem}
-.hero-top{display:grid;grid-template-columns:1.1fr .9fr;gap:2.5rem;align-items:center}
-.badge{display:inline-flex;align-items:center;gap:.5rem;font-family:'JetBrains Mono';font-size:.72rem;letter-spacing:.08em;color:var(--green);
-  background:rgba(52,227,154,.1);border:1px solid rgba(52,227,154,.25);padding:.4rem .9rem;border-radius:99px;margin-bottom:1.6rem}
-.badge .live{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 10px var(--green);animation:pulse 1.6s infinite}
-@keyframes pulse{50%{opacity:.3}}
-.hero h1{font-size:clamp(2.6rem,5.5vw,4.6rem);letter-spacing:-.03em;margin-bottom:1.3rem}
-.hero h1 .g{background:linear-gradient(120deg,var(--green),var(--amber));-webkit-background-clip:text;background-clip:text;color:transparent}
-.hero p{font-size:1.1rem;line-height:1.75;color:var(--soft);max-width:480px;margin-bottom:2rem}
-.hero-btns{display:flex;gap:1rem;flex-wrap:wrap}
-.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.95rem 1.7rem;border-radius:10px;font-weight:600;font-size:.82rem;background:var(--green);color:#04140c;transition:transform .25s,box-shadow .25s;box-shadow:0 10px 30px rgba(52,227,154,.25)}
+.head-r{display:flex;align-items:center;gap:1rem}
+.phone{font-family:'Space Grotesk';font-weight:600;font-size:.92rem;letter-spacing:.02em;display:flex;align-items:center;gap:.5rem}
+.phone::before{content:'📞';font-size:.9rem}
+.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.8rem 1.4rem;border-radius:99px;font-family:'Space Grotesk';font-weight:600;
+  font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;background:linear-gradient(135deg,var(--accent),var(--accent-deep));
+  color:#04121f;box-shadow:0 8px 30px var(--glow);transition:transform .25s,box-shadow .6s}
 .btn:hover{transform:translateY(-2px)}
-.btn.line{background:transparent;border:1px solid var(--line);color:var(--white);box-shadow:none}
+.menu-t{display:none}
 
-/* calculator card */
-.calc{background:linear-gradient(160deg,var(--panel2),var(--panel));border:1px solid var(--line);border-radius:22px;padding:2rem;position:relative;overflow:hidden}
-.calc h3{font-size:1rem;display:flex;align-items:center;gap:.5rem;margin-bottom:1.6rem}
-.calc h3 .tag{margin-left:auto;font-family:'JetBrains Mono';font-size:.66rem;color:var(--green);border:1px solid rgba(52,227,154,.3);border-radius:6px;padding:.15rem .5rem}
-.ctrl{margin-bottom:1.5rem}
-.ctrl label{display:flex;justify-content:space-between;font-size:.82rem;color:var(--soft);margin-bottom:.6rem}
-.ctrl label b{color:var(--white);font-family:'JetBrains Mono'}
-input[type=range]{-webkit-appearance:none;width:100%;height:6px;border-radius:99px;background:var(--panel2);outline:none}
-input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:var(--green);cursor:pointer;box-shadow:0 0 14px rgba(52,227,154,.5);border:3px solid var(--panel)}
-input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:var(--green);cursor:pointer;border:3px solid var(--panel)}
-.seg{display:flex;gap:.4rem}
-.seg button{flex:1;padding:.55rem;border-radius:8px;font-size:.74rem;font-weight:500;background:var(--panel2);border:1px solid var(--line);color:var(--soft);transition:all .2s}
-.seg button.on{background:rgba(52,227,154,.15);border-color:var(--green);color:var(--green)}
-.calc-out{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1.8rem;padding-top:1.6rem;border-top:1px solid var(--line)}
-.calc-out .o small{font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--soft)}
-.calc-out .o .v{font-family:'JetBrains Mono';font-weight:700;font-size:1.9rem;margin-top:.3rem}
-.calc-out .o .v.green{color:var(--green)}
-.calc-note{font-size:.7rem;color:var(--soft);margin-top:1rem;font-family:'JetBrains Mono'}
+/* hero */
+.hero{position:relative;z-index:1;min-height:100vh;display:grid;grid-template-columns:1.05fr .95fr;gap:3rem;align-items:center;padding:8rem 5vw 4rem}
+.hero-copy .eyebrow{display:inline-flex;align-items:center;gap:.6rem;font-size:.68rem;letter-spacing:.3em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:1.5rem;transition:color .6s}
+.hero-copy .eyebrow::before{content:'';width:34px;height:1px;background:currentColor}
+.hero-copy h1{font-size:clamp(2.7rem,6vw,5rem);letter-spacing:-.02em;margin-bottom:1.4rem}
+.hero-copy h1 .grad{background:linear-gradient(90deg,var(--cold),var(--warm));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero-copy p{font-size:1.1rem;line-height:1.8;color:var(--text);max-width:500px;margin-bottom:2.2rem}
+.hero-btns{display:flex;flex-wrap:wrap;gap:1rem;margin-bottom:2.6rem}
+.btn-ghost{display:inline-flex;align-items:center;gap:.55rem;padding:.9rem 1.6rem;border-radius:99px;border:1px solid var(--line);
+  font-family:'Space Grotesk';font-weight:600;font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;transition:background .25s}
+.btn-ghost:hover{background:rgba(255,255,255,.05)}
+.hero-stats{display:flex;gap:2.4rem;flex-wrap:wrap}
+.hero-stats b{display:block;font-family:'Space Grotesk';font-size:1.7rem;margin-bottom:.2rem}
+.hero-stats span{font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--text)}
 
-/* stat bento */
-.bento{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:3rem}
-.cell{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:1.5rem;position:relative;overflow:hidden}
-.cell small{font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--soft)}
-.cell .big{font-family:'JetBrains Mono';font-weight:700;font-size:2.2rem;margin-top:.5rem}
-.cell.wide{grid-column:span 2}
-.spark{display:flex;align-items:flex-end;gap:3px;height:44px;margin-top:1rem}
-.spark i{flex:1;background:linear-gradient(var(--green),var(--green-d));border-radius:2px;opacity:.85}
-.gauge-cell{display:flex;align-items:center;gap:1.2rem}
-.gauge{position:relative;width:96px;height:96px;flex-shrink:0}
-.gauge svg{transform:rotate(-90deg)}
-.gauge .lbl{position:absolute;inset:0;display:grid;place-items:center;font-family:'JetBrains Mono';font-weight:700;font-size:1.1rem}
+/* thermostat */
+.thermo-wrap{position:relative;display:grid;place-items:center}
+.thermo{position:relative;width:min(400px,80vw);aspect-ratio:1;border-radius:50%;display:grid;place-items:center;
+  background:radial-gradient(circle at 50% 40%,var(--panel2),var(--panel));
+  border:1px solid var(--line);box-shadow:0 40px 100px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.06)}
+.dial{position:absolute;inset:8%;border-radius:50%;background:conic-gradient(from 135deg,var(--cold) 0deg,#8a6a86 90deg,var(--warm) 180deg,var(--warm) 270deg,var(--cold) 360deg);
+  -webkit-mask:radial-gradient(circle,transparent 60%,#000 61%);mask:radial-gradient(circle,transparent 60%,#000 61%);opacity:.9}
+.dial-track{position:absolute;inset:8%;border-radius:50%;cursor:grab;touch-action:none}
+.dial-track:active{cursor:grabbing}
+.knob{position:absolute;top:50%;left:50%;width:22px;height:22px;border-radius:50%;background:var(--white);
+  box-shadow:0 0 20px var(--glow);transform:translate(-50%,-50%);transition:box-shadow .6s}
+.thermo-center{text-align:center;pointer-events:none}
+.thermo-center .temp{font-family:'Space Grotesk';font-weight:700;font-size:4rem;line-height:1;transition:color .3s}
+.thermo-center .temp sup{font-size:1.4rem;vertical-align:super}
+.thermo-center .mode{font-size:.7rem;letter-spacing:.24em;text-transform:uppercase;color:var(--text);margin-top:.5rem}
+.thermo-hint{position:absolute;bottom:-2.6rem;left:50%;transform:translateX(-50%);font-size:.72rem;letter-spacing:.1em;color:var(--text);white-space:nowrap}
 
-section{position:relative;z-index:1;padding:5.5rem 0}
-.sh{max-width:640px;margin-bottom:3rem}
-.sh .kick{font-family:'JetBrains Mono';font-size:.72rem;letter-spacing:.14em;color:var(--green);display:block;margin-bottom:.9rem}
-.sh h2{font-size:clamp(2rem,4.5vw,3.2rem)}
-.sh p{margin-top:1rem;color:var(--soft);line-height:1.8;font-size:1.05rem}
+section{position:relative;z-index:1;padding:6rem 5vw}
+.sh{max-width:640px;margin-bottom:3.2rem}
+.sh .eyebrow{font-size:.68rem;letter-spacing:.3em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:1rem;transition:color .6s}
+.sh h2{font-size:clamp(2rem,4.5vw,3.2rem);letter-spacing:-.01em}
+.sh p{margin-top:1rem;color:var(--text);line-height:1.8;font-size:1.05rem}
 
-.svcs{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.svc{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:1.8rem;transition:transform .3s,border-color .3s}
-.svc:hover{transform:translateY(-6px);border-color:rgba(52,227,154,.4)}
-.svc .top{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem}
-.svc .ic{font-size:1.5rem}
-.svc .kpi{font-family:'JetBrains Mono';font-size:.72rem;color:var(--green);border:1px solid rgba(52,227,154,.3);border-radius:6px;padding:.15rem .5rem}
-.svc h3{font-size:1.2rem;margin-bottom:.5rem}
-.svc p{color:var(--soft);line-height:1.65;font-size:.92rem}
+/* services */
+.services{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem}
+.svc{position:relative;padding:2rem;border-radius:20px;background:var(--panel);border:1px solid var(--line);overflow:hidden;
+  transition:transform .3s,border-color .3s}
+.svc:hover{transform:translateY(-6px);border-color:var(--accent)}
+.svc::before{content:'';position:absolute;top:0;left:0;width:100%;height:3px;background:linear-gradient(90deg,var(--cold),var(--warm));
+  transform:scaleX(0);transform-origin:left;transition:transform .4s}
+.svc:hover::before{transform:scaleX(1)}
+.svc .ic{width:52px;height:52px;border-radius:14px;display:grid;place-items:center;font-size:1.5rem;margin-bottom:1.3rem;
+  background:rgba(89,125,149,.14);border:1px solid var(--line)}
+.svc h3{font-size:1.2rem;margin-bottom:.6rem}
+.svc p{color:var(--text);line-height:1.65;font-size:.92rem;margin-bottom:1.2rem}
+.svc a{font-family:'Space Grotesk';font-weight:600;font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);transition:color .6s}
 
-.revs{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.rev{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:1.8rem}
-.rev .st{color:var(--amber);margin-bottom:.9rem;letter-spacing:.1em}
-.rev p{line-height:1.7;font-size:.95rem}
-.rev .w{margin-top:1.2rem;font-weight:600;font-size:.9rem}
-.rev .w small{display:block;color:var(--soft);font-size:.72rem;font-weight:400;margin-top:.2rem;font-family:'JetBrains Mono'}
+/* process */
+.process{background:var(--panel);border-radius:28px;padding:4rem;border:1px solid var(--line)}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;margin-top:2.5rem}
+.step{position:relative}
+.step .n{font-family:'Space Grotesk';font-weight:700;font-size:2.6rem;background:linear-gradient(135deg,var(--cold),var(--warm));
+  -webkit-background-clip:text;background-clip:text;color:transparent;line-height:1}
+.step h4{font-size:1.05rem;margin:.8rem 0 .5rem}
+.step p{color:var(--text);font-size:.9rem;line-height:1.6}
 
-.cta{background:linear-gradient(135deg,var(--green-d),#0a3b52);border-radius:24px;padding:4rem;text-align:center;position:relative;overflow:hidden}
-.cta h2{font-size:clamp(2rem,4vw,3rem);margin-bottom:1rem}
-.cta p{color:rgba(234,241,251,.9);max-width:520px;margin:0 auto 2rem;line-height:1.7}
-.cta .btn{background:#04140c;color:var(--green)}
+/* why / split */
+.why{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+.why-visual{aspect-ratio:1;border-radius:24px;position:relative;overflow:hidden;border:1px solid var(--line);
+  background:linear-gradient(160deg,var(--panel2),var(--bg))}
+.why-visual .halfcold,.why-visual .halfwarm{position:absolute;inset:0}
+.why-visual .halfcold{background:radial-gradient(circle at 30% 30%,rgba(89,125,149,.4),transparent 55%)}
+.why-visual .halfwarm{background:radial-gradient(circle at 75% 75%,rgba(203,10,61,.34),transparent 55%)}
+.why-visual .ring{position:absolute;top:50%;left:50%;width:60%;height:60%;transform:translate(-50%,-50%);border-radius:50%;
+  border:1px solid var(--line);display:grid;place-items:center;font-family:'Space Grotesk';font-weight:700;font-size:3rem}
+.why-list{display:grid;gap:1.3rem;margin-top:2rem}
+.why-item{display:flex;gap:1rem;align-items:flex-start}
+.why-item .chk{width:30px;height:30px;border-radius:50%;flex-shrink:0;display:grid;place-items:center;font-size:.85rem;
+  background:linear-gradient(135deg,var(--cold),var(--warm));color:#04121f;font-weight:700}
+.why-item strong{display:block;font-family:'Space Grotesk';font-size:1rem;margin-bottom:.2rem}
+.why-item span{color:var(--text);line-height:1.6;font-size:.92rem}
 
-footer{position:relative;z-index:1;padding:5rem 0 2.5rem;border-top:1px solid var(--line);margin-top:5rem}
-.fg{display:grid;grid-template-columns:1.6fr repeat(3,1fr);gap:3rem;margin-bottom:2.5rem}
-.fg .lg{display:flex;align-items:center;gap:.6rem;font-weight:700;font-size:1.2rem}
-.fg p{color:var(--soft);line-height:1.7;margin-top:1rem;max-width:300px;font-size:.9rem}
-.fg h5{font-family:'JetBrains Mono';font-size:.72rem;letter-spacing:.1em;color:var(--green);margin-bottom:1rem}
-.fg ul{list-style:none;display:grid;gap:.5rem}
-.fg a{color:var(--soft);font-size:.88rem}
-.fg a:hover{color:var(--white)}
-.fbot{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;padding-top:2rem;border-top:1px solid var(--line);font-size:.8rem;color:var(--soft)}
-.fbot a{color:var(--green)}
+/* brands marquee */
+.brands{border-block:1px solid var(--line);padding:1.4rem 0;overflow:hidden}
+.bt{display:flex;gap:3rem;width:max-content;animation:mq 26s linear infinite}
+.bt span{font-family:'Space Grotesk';font-weight:600;font-size:1rem;letter-spacing:.16em;text-transform:uppercase;color:var(--text);opacity:.6;white-space:nowrap}
+@keyframes mq{to{transform:translateX(-50%)}}
 
-.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s,transform .7s}
+/* reviews */
+.reviews{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem}
+.rev{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:1.8rem}
+.rev .stars{color:#ffc94d;letter-spacing:.1em;margin-bottom:1rem}
+.rev p{color:var(--white);line-height:1.7;font-size:.95rem;font-weight:300}
+.rev .who{display:flex;align-items:center;gap:.8rem;margin-top:1.4rem}
+.rev .av{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--cold),var(--warm));display:grid;place-items:center;font-family:'Space Grotesk';font-weight:700;color:#04121f}
+.rev .who b{font-family:'Space Grotesk';font-size:.9rem;display:block}
+.rev .who small{color:var(--text);font-size:.72rem}
+
+/* CTA */
+.cta-band{margin:0 5vw;border-radius:28px;padding:4rem;position:relative;overflow:hidden;text-align:center;
+  background:linear-gradient(120deg,var(--cold-deep),#14202e 55%,var(--warm-deep))}
+.cta-band h2{font-size:clamp(2rem,4vw,3rem);margin-bottom:1rem}
+.cta-band p{color:rgba(238,243,251,.85);max-width:520px;margin:0 auto 2rem;line-height:1.7}
+.cta-band .btn{background:var(--white);color:#04121f;box-shadow:0 12px 40px rgba(0,0,0,.3)}
+
+footer{position:relative;z-index:1;padding:5rem 5vw 2.5rem;border-top:1px solid var(--line);margin-top:6rem}
+.fgrid{display:grid;grid-template-columns:1.6fr repeat(3,1fr);gap:3rem;margin-bottom:3rem}
+.fgrid h5{font-family:'Space Grotesk';font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem;transition:color .6s}
+.fgrid ul{list-style:none;display:grid;gap:.55rem}
+.fgrid a{font-size:.88rem;color:var(--text);transition:color .2s}
+.fgrid a:hover{color:var(--white)}
+.fbrand p{color:var(--text);line-height:1.7;max-width:300px;margin-top:1rem;font-size:.9rem}
+.fbrand .cert{margin-top:1rem;font-size:.8rem;color:var(--accent);transition:color .6s}
+.fbot{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;padding-top:2rem;border-top:1px solid var(--line);font-size:.8rem;color:var(--text)}
+.fbot a{color:var(--accent);transition:color .6s}
+
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s,transform .7s}
 .reveal.vis{opacity:1;transform:none}
 
 @media(max-width:960px){
-  nav,.hbtn{display:none}.menu-t{display:block}
-  .hero-top{grid-template-columns:1fr}
-  .bento{grid-template-columns:1fr 1fr}
-  .cell.wide{grid-column:span 2}
-  .svcs,.revs{grid-template-columns:1fr}
-  .fg{grid-template-columns:1fr 1fr}
-  .cta{padding:2.5rem}
+  nav{display:none}.menu-t{display:grid}
+  .hero,.why{grid-template-columns:1fr}
+  .services,.reviews{grid-template-columns:1fr}
+  .steps{grid-template-columns:1fr 1fr}
+  .fgrid{grid-template-columns:1fr 1fr}
+  .process{padding:2.2rem}
 }
-@media(max-width:560px){.bento{grid-template-columns:1fr}.cell.wide{grid-column:span 1}.fg{grid-template-columns:1fr}.calc-out{grid-template-columns:1fr}}
-@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media(max-width:600px){
+  header,section{padding-left:6vw;padding-right:6vw}
+  .steps{grid-template-columns:1fr}
+  .fgrid{grid-template-columns:1fr}
+  .phone{display:none}
+}
+@media(prefers-reduced-motion:reduce){*,.bt{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
-<div class="ribbon">Propuesta Eficiencia para Neotérmica · <a href="https://www.eskaladigital.com/servicios" target="_blank" rel="noopener">ESCALA Marketing</a></div>
+<div class="ambient" id="ambient"></div>
+
+<div class="ribbon">Propuesta de diseño para Neotérmica · <a href="https://www.eskaladigital.com/servicios" target="_blank" rel="noopener">ESCALA Marketing</a></div>
 
 <header id="header">
-  <a class="logo" href="#"><span class="sq">N</span>Neotérmica</a>
-  <nav><a href="#calc">Calculadora</a><a href="#servicios">Servicios</a><a href="#opiniones">Opiniones</a><a href="#contacto">Contacto</a></nav>
-  <a class="hbtn" href="#contacto">Presupuesto</a>
-  <button class="menu-t" aria-label="Menú">☰</button>
+  <a class="logo" href="#"><span class="mk" id="logomk">❄</span>Neotérmica</a>
+  <nav>
+    <a href="#servicios">Servicios</a>
+    <a href="#proceso">Cómo trabajamos</a>
+    <a href="#nosotros">Nosotros</a>
+    <a href="#opiniones">Opiniones</a>
+    <a href="#contacto">Contacto</a>
+  </nav>
+  <div class="head-r">
+    <span class="phone">678 495 046</span>
+    <a class="btn" href="#contacto">Presupuesto</a>
+    <button class="icon menu-t" aria-label="Menú">☰</button>
+  </div>
 </header>
 
-<div class="wrap">
-  <section class="hero" id="calc">
-    <div class="hero-top">
-      <div class="reveal">
-        <span class="badge"><span class="live"></span>Eficiencia energética en tiempo real</span>
-        <h1>Gasta menos.<br>Vive <span class="g">mejor climatizado</span>.</h1>
-        <p>La aerotermia y los equipos de alta eficiencia recortan tu factura hasta un 60%. Calcula tu ahorro ahora mismo y pídenos el presupuesto.</p>
-        <div class="hero-btns">
-          <a class="btn" href="#contacto">Quiero ahorrar →</a>
-          <a class="btn line" href="#servicios">Ver servicios</a>
-        </div>
+<section class="hero">
+  <div class="hero-copy reveal">
+    <div class="eyebrow" id="eyebrow">Climatización en Murcia · desde 2012</div>
+    <h1>La temperatura<br>perfecta,<br><span class="grad">todo el año</span></h1>
+    <p>Instalación, reparación y renovación de sistemas de climatización con más de 20 años de experiencia y Certificación del Ministerio de Industria. Frío en verano, calor en invierno, confort siempre.</p>
+    <div class="hero-btns">
+      <a class="btn" href="#contacto">Solicitar presupuesto →</a>
+      <a class="btn-ghost" href="#servicios">Ver servicios</a>
+    </div>
+    <div class="hero-stats">
+      <div><b>+20</b><span>Años de experiencia</span></div>
+      <div><b>2012</b><span>Fundada en Murcia</span></div>
+      <div><b>100%</b><span>Certificados</span></div>
+    </div>
+  </div>
+  <div class="thermo-wrap reveal">
+    <div class="thermo">
+      <div class="dial"></div>
+      <div class="dial-track" id="dialTrack"><div class="knob" id="knob"></div></div>
+      <div class="thermo-center">
+        <div class="temp" id="tempVal">21<sup>°</sup></div>
+        <div class="mode" id="tempMode">Confort</div>
       </div>
+      <div class="thermo-hint">Gira el termostato ↻</div>
+    </div>
+  </div>
+</section>
 
-      <div class="calc reveal">
-        <h3>⚡ Calculadora de ahorro <span class="tag">DEMO</span></h3>
-        <div class="ctrl">
-          <label>Superficie a climatizar <b><span id="m2v">90</span> m²</b></label>
-          <input type="range" id="m2" min="30" max="250" value="90" step="5">
-        </div>
-        <div class="ctrl">
-          <label>Sistema actual</label>
-          <div class="seg" id="sys">
-            <button data-f="1" class="on">Eléctrico</button>
-            <button data-f="0.75">Gasoil</button>
-            <button data-f="0.6">Gas</button>
-          </div>
-        </div>
-        <div class="calc-out">
-          <div class="o"><small>Ahorro anual estimado</small><div class="v green mono" id="save">—</div></div>
-          <div class="o"><small>Menos CO₂ al año</small><div class="v mono" id="co2">—</div></div>
-        </div>
-        <div class="calc-note" id="note">// con aerotermia de alta eficiencia</div>
-      </div>
-    </div>
-
-    <div class="bento">
-      <div class="cell reveal"><small>Reducción factura</small><div class="big" style="color:var(--green)"><span data-c="60">0</span>%</div></div>
-      <div class="cell reveal"><small>Años experiencia</small><div class="big"><span data-c="20">0</span>+</div></div>
-      <div class="cell wide reveal gauge-cell">
-        <div class="gauge">
-          <svg width="96" height="96" viewBox="0 0 96 96">
-            <circle cx="48" cy="48" r="40" fill="none" stroke="rgba(234,241,251,.1)" stroke-width="8"/>
-            <circle id="arc" cx="48" cy="48" r="40" fill="none" stroke="url(#gg)" stroke-width="8" stroke-linecap="round" stroke-dasharray="251" stroke-dashoffset="251"/>
-            <defs><linearGradient id="gg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#34e39a"/><stop offset="1" stop-color="#ffcf5c"/></linearGradient></defs>
-          </svg>
-          <div class="lbl" id="glbl">A+++</div>
-        </div>
-        <div><small>Etiqueta energética objetivo</small><div class="big" style="font-size:1.4rem">Máxima eficiencia</div><p style="color:var(--soft);font-size:.82rem;margin-top:.3rem">Equipos con SCOP y SEER líderes del mercado.</p></div>
-      </div>
-    </div>
-  </section>
-
-  <section id="servicios">
-    <div class="sh reveal">
-      <span class="kick">// servicios</span>
-      <h2>Tecnología que se paga sola</h2>
-      <p>Cada sistema, elegido y dimensionado con datos. Confort máximo, consumo mínimo.</p>
-    </div>
-    <div class="svcs">
-      <article class="svc reveal"><div class="top"><span class="ic">♻️</span><span class="kpi">SCOP 5.1</span></div><h3>Aerotermia</h3><p>Frío, calor y ACS con una sola máquina. La opción más eficiente y sostenible.</p></article>
-      <article class="svc reveal"><div class="top"><span class="ic">❄️</span><span class="kpi">A+++</span></div><h3>Aire acondicionado</h3><p>Splits y conductos inverter que ajustan el consumo a cada momento del día.</p></article>
-      <article class="svc reveal"><div class="top"><span class="ic">🔥</span><span class="kpi">−30%</span></div><h3>Suelo radiante</h3><p>Trabaja a baja temperatura: máximo confort con el mínimo gasto energético.</p></article>
-      <article class="svc reveal"><div class="top"><span class="ic">🚿</span><span class="kpi">109%</span></div><h3>Calderas condensación</h3><p>Rendimiento superior al 100% aprovechando el calor de los gases de combustión.</p></article>
-      <article class="svc reveal"><div class="top"><span class="ic">🌬️</span><span class="kpi">CO₂↓</span></div><h3>Ventilación con recuperador</h3><p>Aire limpio sin perder la temperatura interior. Salud y eficiencia a la vez.</p></article>
-      <article class="svc reveal"><div class="top"><span class="ic">📊</span><span class="kpi">24/7</span></div><h3>Mantenimiento</h3><p>Revisiones que mantienen tus equipos en su punto óptimo de rendimiento.</p></article>
-    </div>
-  </section>
-
-  <section id="opiniones">
-    <div class="sh reveal">
-      <span class="kick">// opiniones</span>
-      <h2>Datos y confianza</h2>
-    </div>
-    <div class="revs">
-      <article class="rev reveal"><div class="st">★★★★★</div><p>“Te atienden rápido y te resuelven los problemas. Muy profesionales.”</p><div class="w">MaiteChu<small>Reseña de Google</small></div></article>
-      <article class="rev reveal"><div class="st">★★★★★</div><p>“Buena gestión y trato excelente. Se ajustaron justo a lo que necesitábamos.”</p><div class="w">José María M.<small>Reseña de Google</small></div></article>
-      <article class="rev reveal"><div class="st">★★★★★</div><p>“Formalidad y puntualidad. Instalación impecable y en plazo.”</p><div class="w">Salud B.<small>Reseña de Google</small></div></article>
-    </div>
-  </section>
-
-  <section id="contacto">
-    <div class="cta reveal">
-      <h2>¿Cuánto podrías ahorrar en tu caso?</h2>
-      <p>Te hacemos un estudio energético gratuito y un presupuesto a medida para tu hogar o negocio.</p>
-      <a class="btn" href="#">Solicitar estudio gratis →</a>
-    </div>
-  </section>
-
-  <footer>
-    <div class="fg">
-      <div><div class="lg"><span class="sq">N</span>Neotérmica</div><p>Climatización eficiente en Murcia desde 2012. Menos consumo, más confort, con Certificación del Ministerio de Industria.</p><p style="color:var(--white)">678 495 046 · info@neotermica.es</p></div>
-      <div><h5>Servicios</h5><ul><li><a href="#">Aerotermia</a></li><li><a href="#">Aire acondicionado</a></li><li><a href="#">Suelo radiante</a></li><li><a href="#">Calderas</a></li></ul></div>
-      <div><h5>Empresa</h5><ul><li><a href="#">Inicio</a></li><li><a href="#">Nosotros</a></li><li><a href="#">Blog</a></li><li><a href="#">Contacto</a></li></ul></div>
-      <div><h5>Legal</h5><ul><li><a href="#">Aviso legal</a></li><li><a href="#">Privacidad</a></li><li><a href="#">Cookies</a></li></ul></div>
-    </div>
-    <div class="fbot"><span>© 2026 Neotérmica Climatización · Propuesta visual demo</span><span>Diseño por <a href="https://www.eskaladigital.com/servicios" target="_blank" rel="noopener">ESCALA Marketing</a></span></div>
-  </footer>
+<div class="brands" aria-hidden="true">
+  <div class="bt">
+    <span>Daikin</span><span>Mitsubishi</span><span>Fujitsu</span><span>Bosch</span><span>Saunier Duval</span><span>Panasonic</span><span>Baxi</span><span>Junkers</span>
+    <span>Daikin</span><span>Mitsubishi</span><span>Fujitsu</span><span>Bosch</span><span>Saunier Duval</span><span>Panasonic</span><span>Baxi</span><span>Junkers</span>
+  </div>
 </div>
+
+<section id="servicios">
+  <div class="sh reveal">
+    <span class="eyebrow">Nuestros servicios</span>
+    <h2>Todo tu confort térmico, un solo equipo</h2>
+    <p>Del aire acondicionado a la aerotermia. Instalamos, reparamos y mantenemos cada sistema con criterio técnico real.</p>
+  </div>
+  <div class="services">
+    <article class="svc reveal"><div class="ic">❄️</div><h3>Aire acondicionado Split</h3><p>Instalación de equipos split para viviendas y locales, con la potencia justa para cada estancia.</p><a href="#contacto">Más información →</a></article>
+    <article class="svc reveal"><div class="ic">🌬️</div><h3>Conductos</h3><p>Climatización por conductos: confort uniforme e invisible, ideal para reformas y obra nueva.</p><a href="#contacto">Más información →</a></article>
+    <article class="svc reveal"><div class="ic">♻️</div><h3>Aerotermia</h3><p>La opción más eficiente: calefacción, refrigeración y agua caliente con energía del aire.</p><a href="#contacto">Más información →</a></article>
+    <article class="svc reveal"><div class="ic">🔥</div><h3>Suelo radiante</h3><p>Calor envolvente desde el suelo, sin ruido ni corrientes. El máximo confort en invierno.</p><a href="#contacto">Más información →</a></article>
+    <article class="svc reveal"><div class="ic">🚿</div><h3>Calderas</h3><p>Instalación y sustitución de calderas de condensación de alta eficiencia y bajo consumo.</p><a href="#contacto">Más información →</a></article>
+    <article class="svc reveal"><div class="ic">📡</div><h3>Radiadores &amp; ventilación</h3><p>Radiadores y sistemas de ventilación para renovar el aire y mantener la temperatura ideal.</p><a href="#contacto">Más información →</a></article>
+  </div>
+</section>
+
+<section id="proceso">
+  <div class="process reveal">
+    <div class="sh" style="margin-bottom:0">
+      <span class="eyebrow">Cómo trabajamos</span>
+      <h2>Sencillo, puntual y sin sorpresas</h2>
+    </div>
+    <div class="steps">
+      <div class="step"><div class="n">01</div><h4>Contacto</h4><p>Nos cuentas qué necesitas por teléfono o formulario. Respondemos rápido.</p></div>
+      <div class="step"><div class="n">02</div><h4>Visita y presupuesto</h4><p>Estudiamos tu espacio y te damos un presupuesto claro y ajustado.</p></div>
+      <div class="step"><div class="n">03</div><h4>Instalación</h4><p>Ejecutamos el trabajo con profesionalidad, limpieza y en los plazos acordados.</p></div>
+      <div class="step"><div class="n">04</div><h4>Postventa</h4><p>Mantenimiento y revisiones periódicas para que todo dure temporadas.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="nosotros">
+  <div class="why">
+    <div class="why-visual reveal">
+      <div class="halfcold"></div><div class="halfwarm"></div>
+      <div class="ring" id="whyRing">21°</div>
+    </div>
+    <div>
+      <div class="sh reveal" style="margin-bottom:1.5rem">
+        <span class="eyebrow">Por qué Neotérmica</span>
+        <h2>Experiencia que se nota en cada instalación</h2>
+        <p>Neotérmica nació en 2012 de la mano de José Carlos Moya, con toda una vida dedicada a la climatización. Formalidad, puntualidad y profesionalidad.</p>
+      </div>
+      <div class="why-list reveal">
+        <div class="why-item"><span class="chk">✓</span><div><strong>Certificación del Ministerio de Industria</strong><span>Instalaciones legales, seguras y con todas las garantías.</span></div></div>
+        <div class="why-item"><span class="chk">✓</span><div><strong>Trato cercano y personal</strong><span>Nos adaptamos a los plazos, objetivos y posibilidades de tu proyecto.</span></div></div>
+        <div class="why-item"><span class="chk">✓</span><div><strong>Eficiencia y durabilidad</strong><span>Equipos de bajo consumo que cuidan tu factura y el planeta.</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="opiniones">
+  <div class="sh reveal">
+    <span class="eyebrow">Opiniones verificadas</span>
+    <h2>Clientes que ya viven a la temperatura ideal</h2>
+  </div>
+  <div class="reviews">
+    <article class="rev reveal"><div class="stars">★★★★★</div><p>“Te atienden rápido y te resuelven los problemas. Un servicio muy profesional y cercano.”</p><div class="who"><span class="av">M</span><div><b>MaiteChu</b><small>Reseña de Google</small></div></div></article>
+    <article class="rev reveal"><div class="stars">★★★★★</div><p>“Buena gestión y trato excelente. Ajustaron el trabajo justo a lo que necesitábamos. La recomendaría.”</p><div class="who"><span class="av">J</span><div><b>José María M.</b><small>Reseña de Google</small></div></div></article>
+    <article class="rev reveal"><div class="stars">★★★★★</div><p>“Formalidad y puntualidad de principio a fin. La instalación quedó impecable y en plazo.”</p><div class="who"><span class="av">S</span><div><b>Salud B.</b><small>Reseña de Google</small></div></div></article>
+  </div>
+</section>
+
+<div class="cta-band reveal">
+  <h2>¿Necesitas un presupuesto para tu hogar o empresa?</h2>
+  <p>Estamos centrados en tus necesidades. Cuéntanos tu proyecto y te damos una solución de climatización a medida.</p>
+  <a class="btn" href="#contacto">Solicitar presupuesto gratis →</a>
+</div>
+
+<footer id="contacto">
+  <div class="fgrid">
+    <div class="fbrand">
+      <a class="logo" href="#"><span class="mk">❄</span>Neotérmica</a>
+      <p>Tu empresa de climatización en Murcia. Instalación, reparación y renovación de sistemas de frío y calor.</p>
+      <p class="cert">Certificación del Ministerio de Industria</p>
+      <p style="margin-top:1rem;color:var(--white)">678 495 046 · info@neotermica.es</p>
+    </div>
+    <div><h5>Servicios</h5><ul><li><a href="#">Aire acondicionado</a></li><li><a href="#">Aerotermia</a></li><li><a href="#">Suelo radiante</a></li><li><a href="#">Calderas</a></li><li><a href="#">Ventilación</a></li></ul></div>
+    <div><h5>Empresa</h5><ul><li><a href="#">Inicio</a></li><li><a href="#">Nosotros</a></li><li><a href="#">Blog</a></li><li><a href="#">Contacto</a></li></ul></div>
+    <div><h5>Legal</h5><ul><li><a href="#">Aviso legal</a></li><li><a href="#">Accesibilidad</a></li><li><a href="#">Privacidad</a></li><li><a href="#">Cookies</a></li></ul></div>
+  </div>
+  <div class="fbot">
+    <span>© 2026 Neotérmica Climatización · Propuesta visual demo</span>
+    <span>Diseño por <a href="https://www.eskaladigital.com/servicios" target="_blank" rel="noopener">ESCALA Marketing</a></span>
+  </div>
+</footer>
 
 <script>
 const header = document.getElementById('header');
 addEventListener('scroll', () => header.classList.toggle('scrolled', scrollY > 40));
 
-const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting){ e.target.classList.add('vis'); io.unobserve(e.target);} }), {threshold:.12,rootMargin:'0px 0px -40px 0px'});
+const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); io.unobserve(e.target); } }), { threshold: .12, rootMargin: '0px 0px -40px 0px' });
 document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
-const cio = new IntersectionObserver(es => es.forEach(e => {
-  if(!e.isIntersecting) return;
-  const el = e.target, to = +el.dataset.c, t0 = performance.now(), dur = 1200;
-  const tick = t => { const p = Math.min(1,(t-t0)/dur); el.textContent = Math.round(to*p); if(p<1) requestAnimationFrame(tick); else el.textContent = to; };
-  requestAnimationFrame(tick); cio.unobserve(el);
-}), {threshold:.6});
-document.querySelectorAll('[data-c]').forEach(el => cio.observe(el));
+// ---- Termostato interactivo: interpola paleta frío→calor ----
+const root = document.documentElement;
+const track = document.getElementById('dialTrack');
+const knob = document.getElementById('knob');
+const tempVal = document.getElementById('tempVal');
+const tempMode = document.getElementById('tempMode');
+const whyRing = document.getElementById('whyRing');
+const logomk = document.getElementById('logomk');
 
-// gauge fill on view
-const arc = document.getElementById('arc');
-const gio = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting){ arc.style.transition='stroke-dashoffset 1.6s ease'; arc.style.strokeDashoffset = 251*0.08; gio.unobserve(e.target);} }), {threshold:.5});
-gio.observe(arc.closest('.cell'));
+const COLD = [89, 125, 149], WARM = [203, 10, 61];
+const COLD_D = [63, 95, 117], WARM_D = [156, 7, 48];
+const lerp = (a, b, t) => Math.round(a + (b - a) * t);
+const mix = (c1, c2, t) => `rgb(${lerp(c1[0],c2[0],t)},${lerp(c1[1],c2[1],t)},${lerp(c1[2],c2[2],t)})`;
 
-// ---- Calculadora de ahorro ----
-const m2 = document.getElementById('m2'), m2v = document.getElementById('m2v');
-const save = document.getElementById('save'), co2 = document.getElementById('co2');
-const seg = document.getElementById('sys');
-let factor = 1;
-function fmt(n){ return n.toLocaleString('es-ES'); }
-function calc(){
-  const m = +m2.value;
-  m2v.textContent = m;
-  // coste base anual aprox por m² segun sistema actual, y ahorro ~55-62% con aerotermia
-  const baseCostM2 = 18 * factor;             // €/m² año sistema actual
-  const currentCost = m * baseCostM2;
-  const savingPct = 0.58;
-  const saving = Math.round(currentCost * savingPct / 10) * 10;
-  const co2kg = Math.round(m * 9 * factor);
-  save.textContent = fmt(saving) + ' €';
-  co2.textContent = fmt(co2kg) + ' kg';
+let angle = 0; // -135 (frío) .. +135 (calor)
+const MIN = -135, MAX = 135;
+
+function setTemp(a) {
+  angle = Math.max(MIN, Math.min(MAX, a));
+  const t = (angle - MIN) / (MAX - MIN);          // 0 frío .. 1 calor
+  const temp = Math.round(16 + t * 14);           // 16° .. 30°
+  const accent = mix(COLD, WARM, t);
+  const accentD = mix(COLD_D, WARM_D, t);
+  root.style.setProperty('--accent', accent);
+  root.style.setProperty('--accent-deep', accentD);
+  root.style.setProperty('--glow', mix(COLD, WARM, t).replace('rgb', 'rgba').replace(')', ',.35)'));
+  tempVal.textContent = temp;
+  tempVal.style.color = accent;
+  tempVal.insertAdjacentHTML('beforeend', '');
+  tempVal.innerHTML = temp + '<sup>°</sup>';
+  tempMode.textContent = temp <= 20 ? 'Modo frío' : temp >= 25 ? 'Modo calor' : 'Confort';
+  logomk.textContent = t < .45 ? '❄' : t > .6 ? '☀' : '❄';
+  if (whyRing) { whyRing.textContent = temp + '°'; whyRing.style.color = accent; }
+  document.getElementById('ambient').style.background =
+    `radial-gradient(60vw 60vw at 80% -10%, ${mix(COLD,WARM,t).replace('rgb','rgba').replace(')',',.28)')}, transparent 60%),`+
+    `radial-gradient(50vw 50vw at 0% 100%, rgba(203,10,61,${.04+t*.08}), transparent 60%)`;
+  // posición del knob en el arco
+  const rad = (angle - 90) * Math.PI / 180;
+  const r = 50; // % radius within track
+  knob.style.left = (50 + Math.cos(rad) * r) + '%';
+  knob.style.top = (50 + Math.sin(rad) * r) + '%';
 }
-m2.addEventListener('input', calc);
-seg.addEventListener('click', e => {
-  const b = e.target.closest('button'); if(!b) return;
-  seg.querySelectorAll('button').forEach(x => x.classList.remove('on'));
-  b.classList.add('on'); factor = +b.dataset.f; calc();
-});
-calc();
 
-// sparkline bars random-ish (decorative in wide cell not present; keep hook safe)
-document.querySelectorAll('.spark').forEach(s => {
-  for(let i=0;i<12;i++){ const b=document.createElement('i'); b.style.height=(20+Math.random()*80)+'%'; s.appendChild(b); }
-});
+function pointerAngle(e) {
+  const b = track.getBoundingClientRect();
+  const cx = b.left + b.width / 2, cy = b.top + b.height / 2;
+  const a = Math.atan2(e.clientY - cy, e.clientX - cx) * 180 / Math.PI + 90;
+  return a > 180 ? a - 360 : a;
+}
+let dragging = false;
+track.addEventListener('pointerdown', e => { dragging = true; track.setPointerCapture(e.pointerId); setTemp(pointerAngle(e)); });
+track.addEventListener('pointermove', e => { if (dragging) setTemp(pointerAngle(e)); });
+addEventListener('pointerup', () => dragging = false);
+// init
+setTemp(-20);
+
+// pequeña demo automática al cargar (una pasada suave)
+const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+if (!reduced) {
+  let demo = -20, dir = 1, ticks = 0;
+  const iv = setInterval(() => {
+    if (dragging) { clearInterval(iv); return; }
+    demo += dir * 3; ticks++;
+    if (demo > 120 || demo < -120) dir *= -1;
+    setTemp(demo);
+    if (ticks > 90) { clearInterval(iv); setTemp(-20); }
+  }, 30);
+}
 </script>
 </body>
 </html>
