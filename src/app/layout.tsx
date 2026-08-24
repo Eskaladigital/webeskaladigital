@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next'
 import { Outfit } from 'next/font/google'
 import Script from 'next/script'
+import { CookieConsentBar } from '@/components/CookieConsentBar'
 import './globals.css'
 
 const outfit = Outfit({
@@ -182,9 +183,29 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
+        <Script
+          id="gtag-consent-default"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){window.dataLayer.push(arguments);}
+              window.gtag = gtag;
+              var granted = false;
+              try { granted = localStorage.getItem('eskala_cookie_consent') === 'granted'; } catch (e) {}
+              var v = granted ? 'granted' : 'denied';
+              gtag('consent', 'default', {
+                analytics_storage: v,
+                ad_storage: v,
+                ad_user_data: v,
+                ad_personalization: v,
+                wait_for_update: 500
+              });
+            `,
+          }}
+        />
       </head>
       <body>
-        {/* Google Analytics */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-XFXHM9KC3H"
           strategy="afterInteractive"
@@ -199,6 +220,7 @@ export default function RootLayout({
           `}
         </Script>
         {children}
+        <CookieConsentBar />
       </body>
     </html>
   )
