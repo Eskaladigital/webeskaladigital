@@ -13,27 +13,28 @@ export const dynamic = 'force-dynamic'
 export const revalidate = 0
 
 interface Props {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const supabase = createClient()
+  const { slug } = await params
+  const supabase = await createClient()
 
   // Usar EXACTAMENTE la misma consulta que el componente principal
   const { data: project, error } = await supabase
     .from('portfolio_projects')
     .select('title, short_description, meta_title, meta_description, keywords, featured_image, og_image, client')
-    .eq('slug', params.slug)
+    .eq('slug', slug)
     .eq('published', true)
     .single()
 
   // URL base del sitio
   const siteUrl = 'https://www.eskaladigital.com'
-  const projectUrl = `${siteUrl}/portfolio/${params.slug}`
+  const projectUrl = `${siteUrl}/portfolio/${slug}`
 
   // Si hay error o no encuentra, usar fallback basado en slug
   if (error || !project) {
-    const slugFormatted = params.slug
+    const slugFormatted = slug
       .split('-')
       .map(word => word.charAt(0).toUpperCase() + word.slice(1))
       .join(' ')
@@ -112,13 +113,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function ProjectPage({ params }: Props) {
-  const supabase = createClient()
+  const { slug } = await params
+  const supabase = await createClient()
 
   // Fetch el proyecto
   const { data: project, error } = await supabase
     .from('portfolio_projects')
     .select('*')
-    .eq('slug', params.slug)
+    .eq('slug', slug)
     .eq('published', true)
     .single()
 

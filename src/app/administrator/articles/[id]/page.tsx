@@ -2,8 +2,9 @@ import { createClient } from '@/lib/supabase/server'
 import { redirect, notFound } from 'next/navigation'
 import ArticleEditor from '../../ArticleEditor'
 
-export default async function EditArticlePage({ params }: { params: { id: string } }) {
-  const supabase = createClient()
+export default async function EditArticlePage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params
+  const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
 
   if (!user) {
@@ -14,7 +15,7 @@ export default async function EditArticlePage({ params }: { params: { id: string
   const { data: article, error } = await supabase
     .from('articles')
     .select('*')
-    .eq('id', params.id)
+    .eq('id', id)
     .single()
 
   if (error || !article) {

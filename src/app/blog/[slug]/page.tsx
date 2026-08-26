@@ -1,4 +1,5 @@
 import { Metadata } from 'next'
+import type { JSX } from 'react'
 import { notFound } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { StandardLayout } from '@/components/layout'
@@ -13,17 +14,18 @@ import { getBlogImageUrl } from '@/lib/supabase/storage'
 import { decodeHtmlEntities } from '@/lib/htmlUtils'
 
 interface Props {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const supabase = createClient()
+  const { slug } = await params
+  const supabase = await createClient()
   
   // Solo generar metadatos si el artículo está publicado Y la fecha es <= ahora
   const { data: article } = await supabase
     .from('articles')
     .select('title, excerpt, meta_title, meta_description, keywords, featured_image, slug')
-    .eq('slug', params.slug)
+    .eq('slug', slug)
     .eq('published', true)
     .lte('published_at', new Date().toISOString())
     .single()
@@ -80,7 +82,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function ArticlePage({ params }: Props) {
-  const supabase = createClient()
+  const { slug } = await params
+  const supabase = await createClient()
 
   // Fetch el artículo con su categoría
   // Solo mostrar si está publicado Y la fecha es <= ahora
@@ -90,7 +93,7 @@ export default async function ArticlePage({ params }: Props) {
       *,
       category:categories(name)
     `)
-    .eq('slug', params.slug)
+    .eq('slug', slug)
     .eq('published', true)
     .lte('published_at', new Date().toISOString())
     .single()

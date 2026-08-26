@@ -2,7 +2,7 @@ import { StandardLayout } from '@/components/layout'
 import Link from 'next/link'
 import type { Metadata } from 'next'
 import styles from './sitemap.module.css'
-import { createClient } from '@/lib/supabase/server'
+import { createPublicClient } from '@/lib/supabase/server'
 
 export const metadata: Metadata = {
   title: 'Mapa del Sitio | ESKALA Marketing Digital',
@@ -37,7 +37,7 @@ const PAGES = [
 
 export default async function SitemapPage() {
   // Obtener artículos del blog
-  const supabase = await createClient()
+  const supabase = createPublicClient()
   const { data: articles } = await supabase
     .from('articles')
     .select('slug, title')

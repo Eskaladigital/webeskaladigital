@@ -6,7 +6,7 @@ import { redirect } from 'next/navigation'
 
 export async function createArticle(formData: FormData) {
   try {
-    const supabase = createClient()
+    const supabase = await createClient()
     const { data: { user } } = await supabase.auth.getUser()
 
     if (!user) {
@@ -189,7 +189,7 @@ function stripHtml(html: string): string {
 
 export async function updateArticle(id: string, formData: FormData) {
   try {
-    const supabase = createClient()
+    const supabase = await createClient()
     const { data: { user } } = await supabase.auth.getUser()
 
     if (!user) {
@@ -265,7 +265,7 @@ export async function updateArticle(id: string, formData: FormData) {
 }
 
 export async function deleteArticle(id: string) {
-  const supabase = createClient()
+  const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
 
   if (!user) {
@@ -288,7 +288,7 @@ export async function deleteArticle(id: string) {
 // Toggle estado de publicación de un artículo
 export async function togglePublished(id: string, currentState: boolean) {
   try {
-    const supabase = createClient()
+    const supabase = await createClient()
     const { data: { user } } = await supabase.auth.getUser()
 
     if (!user) {

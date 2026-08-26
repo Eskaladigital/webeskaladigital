@@ -1,28 +1,6 @@
-import dynamic from 'next/dynamic'
 import WhatsAppButton from '@/components/layout/WhatsAppButton'
+import Universo3DClient from '@/components/sections/Servicios/Universo3DClient'
 import type { Metadata } from 'next'
-
-const Universo3D = dynamic(() => import('@/components/sections/Servicios/Universo3D'), {
-  ssr: false,
-  loading: () => (
-    <div
-      style={{
-        minHeight: '100vh',
-        background: '#0F1729',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        color: '#F4F2EE',
-        fontFamily: 'system-ui, sans-serif',
-        letterSpacing: '0.3em',
-        textTransform: 'uppercase',
-        fontSize: '0.75rem',
-      }}
-    >
-      Despegando…
-    </div>
-  ),
-})
 
 export const metadata: Metadata = {
   title: 'Servicios | ESCALA Marketing Digital',
@@ -70,7 +48,7 @@ export const metadata: Metadata = {
 export default function ServiciosPage() {
   return (
     <>
-      <Universo3D />
+      <Universo3DClient />
       <WhatsAppButton />
     </>
   )

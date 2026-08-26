@@ -1,5 +1,5 @@
 import { MetadataRoute } from 'next'
-import { createClient } from '@/lib/supabase/server'
+import { createPublicClient } from '@/lib/supabase/server'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://www.eskaladigital.com'
@@ -78,7 +78,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Obtener posts del blog desde Supabase
   let blogPages: MetadataRoute.Sitemap = []
   try {
-    const supabase = await createClient()
+    const supabase = createPublicClient()
     const { data: posts } = await supabase
       .from('articles')
       .select('slug, updated_at, published_at')
@@ -101,7 +101,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Obtener proyectos del portfolio desde Supabase
   let portfolioPages: MetadataRoute.Sitemap = []
   try {
-    const supabase = await createClient()
+    const supabase = createPublicClient()
     const { data: projects } = await supabase
       .from('portfolio_projects')
       .select('slug, updated_at')

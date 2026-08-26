@@ -34,7 +34,7 @@ async function findVersions(family: string): Promise<number[]> {
   const re = new RegExp(`^${family}-(\\d+)$`)
   for (const base of PRUEBAS_DIRS) {
     try {
-      const entries = await readdir(base, { withFileTypes: true })
+      const entries = await readdir(/*turbopackIgnore: true*/ base, { withFileTypes: true })
       const nums = entries
         .filter((e) => e.isDirectory() && re.test(e.name))
         .map((e) => parseInt(e.name.match(re)![1], 10))
@@ -110,9 +110,9 @@ function buildSwitcher(family: string, current: number, versions: number[]): str
 
 export async function GET(
   _request: NextRequest,
-  { params }: { params: { slug: string } }
+  { params }: { params: Promise<{ slug: string }> }
 ) {
-  const { slug } = params
+  const { slug } = await params
 
   if (!SLUG_PATTERN.test(slug)) {
     return new NextResponse('Not found', { status: 404 })
