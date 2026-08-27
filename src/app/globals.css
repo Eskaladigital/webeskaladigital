@@ -511,3 +511,44 @@ body {
   opacity: 1;
   transform: translateY(0);
 }
+
+/* Markdown del chatbot (mismo molde que Laura / ACTTAX; colores Eskala) */
+.chat-markdown .chat-link {
+  color: #e84a23;
+  text-decoration: underline;
+}
+.chat-markdown ul.chat-list {
+  margin: 0.25rem 0;
+  padding-left: 1.1rem;
+  list-style: disc;
+}
+.chat-markdown ol.chat-list {
+  margin: 0.25rem 0;
+  padding-left: 1.25rem;
+  list-style: decimal;
+}
+.chat-markdown .chat-list li {
+  margin: 0.15rem 0;
+}
+.chat-markdown .chat-heading {
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin: 0.75rem 0 0.35rem;
+  color: #e84a23;
+  line-height: 1.35;
+}
+.chat-markdown .chat-heading:first-child {
+  margin-top: 0;
+}
+.chat-markdown h4.chat-heading {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #374151;
+}
+.chat-markdown p {
+  margin: 0.25rem 0;
+}
+.chat-markdown strong {
+  font-weight: 600;
+  color: #1f2937;
+}

@@ -3,6 +3,7 @@ import { Outfit } from 'next/font/google'
 import Script from 'next/script'
 import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google'
 import { CookieConsentBar } from '@/components/CookieConsentBar'
+import ChatWidget from '@/components/chatbot/ChatWidget'
 import './globals.css'
 
 const outfit = Outfit({
@@ -236,6 +237,7 @@ export default function RootLayout({
           </>
         ) : null}
         {children}
+        <ChatWidget />
         <CookieConsentBar />
       </body>
     </html>

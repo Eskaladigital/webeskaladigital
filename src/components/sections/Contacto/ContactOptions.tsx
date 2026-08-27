@@ -29,7 +29,7 @@ const contactOptions: {
   {
     Icon: MessageCircle,
     title: 'WhatsApp',
-    description: 'Chatea con nosotros de forma rápida y directa',
+    description: 'Si prefieres escribir al móvil, el mismo número de la agencia',
     action: 'whatsapp',
     link: 'https://wa.me/34626823404?text=Hola,%20me%20gustaría%20información%20sobre...',
   },
@@ -127,7 +127,7 @@ export default function ContactOptions() {
 
             {option.action === 'whatsapp' && (
               <>
-                <div className={styles.optionInfo}>Chat directo</div>
+                <div className={styles.optionInfo}>+34 626 82 34 04</div>
                 <a 
                   href={option.link}
                   target="_blank"

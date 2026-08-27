@@ -2,7 +2,6 @@ import { StripeNav } from './StripeNav'
 import { Header } from './Header'
 import { Footer } from './Footer'
 import BackToTop from './BackToTop'
-import WhatsAppButton from './WhatsAppButton'
 
 export default function StandardLayout({
   children,
@@ -18,9 +17,7 @@ export default function StandardLayout({
       </main>
       <Footer />
       
-      {/* Botones flotantes */}
       <BackToTop />
-      <WhatsAppButton />
     </>
   )
 }

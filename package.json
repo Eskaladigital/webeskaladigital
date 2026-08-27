@@ -12,6 +12,7 @@
     "watch:images": "node scripts/auto-optimize-images.js --watch",
     "scraper": "node scripts/scraper-empresas-murcia.js",
     "redact:blog": "npx tsx scripts/redact-blog-article.ts",
+    "ingest:chatbot-kb": "npx tsx scripts/ingest-chatbot-kb.ts",
     "postinstall": "npm run optimize:images"
   },
   "dependencies": {

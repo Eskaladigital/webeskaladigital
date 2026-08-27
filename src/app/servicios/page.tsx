@@ -1,4 +1,3 @@
-import WhatsAppButton from '@/components/layout/WhatsAppButton'
 import Universo3DClient from '@/components/sections/Servicios/Universo3DClient'
 import type { Metadata } from 'next'
 
@@ -49,7 +48,6 @@ export default function ServiciosPage() {
   return (
     <>
       <Universo3DClient />
-      <WhatsAppButton />
     </>
   )
 }
