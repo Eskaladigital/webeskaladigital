@@ -6,7 +6,7 @@
 -- 
 -- INSTRUCCIONES:
 -- 1. Ve a https://supabase.com/dashboard
--- 2. Selecciona tu proyecto (qmbmwqepnnhkqniyqtrm)
+-- 2. Selecciona tu proyecto (yivdoyjjcwvevznwzrph · ESCALA Marketing)
 -- 3. Ve a "SQL Editor" en el menú lateral
 -- 4. Pega este script completo
 -- 5. Haz clic en "Run" (o Ctrl+Enter)

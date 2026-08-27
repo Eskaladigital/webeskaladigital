@@ -67,7 +67,7 @@ En Amplify Console → App settings → Environment variables:
 ```
 NODE_ENV=production
 NEXT_PUBLIC_SITE_URL=https://escalamarketing.es
-NEXT_PUBLIC_SUPABASE_URL=https://yivdoyjjcwvezvnwzrph.supabase.co
+NEXT_PUBLIC_SUPABASE_URL=https://yivdoyjjcwvevznwzrph.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=[tu-anon-key]
 SUPABASE_SERVICE_ROLE_KEY=[tu-service-role-key]
 ```
@@ -99,7 +99,7 @@ npm start
 | Entorno | URL |
 |---------|-----|
 | **Producción** | https://main.d1romvrvb9wihr.amplifyapp.com |
-| **Supabase Dashboard** | https://supabase.com/dashboard/project/yivdoyjjcwvezvnwzrph |
+| **Supabase Dashboard** | https://supabase.com/dashboard/project/yivdoyjjcwvevznwzrph |
 | **GitHub** | https://github.com/ActtaxIA/ESCALA-Agencia-Marketing |
 | **Local** | http://localhost:3000 |
 
