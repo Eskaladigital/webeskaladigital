@@ -118,6 +118,9 @@ export default function AdminDashboard() {
             <Link href="/administrator/contactos" className={styles.btnSecondary}>
               Consultas
             </Link>
+            <Link href="/administrator/chatbot" className={styles.btnSecondary}>
+              Nora
+            </Link>
             <Link href="/blog" className={styles.btnSecondary}>
               Ver Blog
             </Link>

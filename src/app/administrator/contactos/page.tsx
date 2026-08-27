@@ -104,6 +104,9 @@ export default function AdminContactosPage() {
             <Link href="/administrator" className={styles.btnSecondary}>
               Artículos
             </Link>
+            <Link href="/administrator/chatbot" className={styles.btnSecondary}>
+              Nora
+            </Link>
             <LogoutButton />
           </div>
         </div>
