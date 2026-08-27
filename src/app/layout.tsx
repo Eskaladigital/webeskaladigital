@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next'
 import { Outfit } from 'next/font/google'
 import Script from 'next/script'
+import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google'
 import { CookieConsentBar } from '@/components/CookieConsentBar'
 import './globals.css'
 
@@ -162,6 +163,10 @@ const jsonLd = {
   },
 }
 
+const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID
+const GA_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || process.env.NEXT_PUBLIC_GA_ID
+const AW_ID = process.env.NEXT_PUBLIC_AW_ID
+
 export default function RootLayout({
   children,
 }: {
@@ -206,19 +211,22 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-XFXHM9KC3H"
-          strategy="afterInteractive"
-        />
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-XFXHM9KC3H');
-            gtag('config', 'AW-17848858427');
-          `}
-        </Script>
+        {GTM_ID ? (
+          <GoogleTagManager gtmId={GTM_ID} />
+        ) : GA_ID ? (
+          <>
+            <GoogleAnalytics gaId={GA_ID} />
+            {AW_ID ? (
+              <Script id="google-ads-config" strategy="afterInteractive">
+                {`
+                  window.dataLayer = window.dataLayer || [];
+                  function gtag(){dataLayer.push(arguments);}
+                  gtag('config', '${AW_ID}');
+                `}
+              </Script>
+            ) : null}
+          </>
+        ) : null}
         {children}
         <CookieConsentBar />
       </body>
