@@ -72,6 +72,22 @@
   text-decoration: underline;
 }
 
+.cookieBtn {
+  display: inline-flex;
+  margin-top: 0.25rem;
+  padding: 0.75rem 1.25rem;
+  background: #ff8c1a;
+  color: #0a0f1a;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.cookieBtn:hover {
+  background: #ffb366;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .legalPage {

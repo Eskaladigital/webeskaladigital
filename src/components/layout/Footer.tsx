@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import styles from './Footer.module.css'
+import { CookieSettingsButton } from '@/components/CookieConsentBar'
 
 const SERVICES = [
   { href: '/servicios/diseno-web', label: 'Diseño Web' },
@@ -83,6 +84,7 @@ export function Footer() {
           <span>© {new Date().getFullYear()} ESKALA Marketing Digital. Todos los derechos reservados.</span>
           <Link href="/politica-privacidad" className={styles.sitemapLink}>Política de Privacidad</Link>
           <Link href="/aviso-legal" className={styles.sitemapLink}>Aviso Legal</Link>
+          <CookieSettingsButton className={styles.sitemapLink} />
           <Link href="/sitemap-html" className={styles.sitemapLink}>Mapa del Sitio</Link>
         </div>
         <span>Hecho con 🧡 en Murcia</span>

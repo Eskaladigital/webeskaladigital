@@ -196,14 +196,22 @@ export default function RootLayout({
               window.dataLayer = window.dataLayer || [];
               function gtag(){window.dataLayer.push(arguments);}
               window.gtag = gtag;
-              var granted = false;
-              try { granted = localStorage.getItem('eskala_cookie_consent') === 'granted'; } catch (e) {}
-              var v = granted ? 'granted' : 'denied';
+              var analytics = 'denied', ads = 'denied';
+              try {
+                var prefsRaw = localStorage.getItem('eskala_cookie_preferences');
+                if (prefsRaw) {
+                  var prefs = JSON.parse(prefsRaw);
+                  if (prefs.analytics) analytics = 'granted';
+                  if (prefs.marketing) ads = 'granted';
+                } else if (localStorage.getItem('eskala_cookie_consent') === 'granted') {
+                  analytics = ads = 'granted';
+                }
+              } catch (e) {}
               gtag('consent', 'default', {
-                analytics_storage: v,
-                ad_storage: v,
-                ad_user_data: v,
-                ad_personalization: v,
+                analytics_storage: analytics,
+                ad_storage: ads,
+                ad_user_data: ads,
+                ad_personalization: ads,
                 wait_for_update: 500
               });
             `,

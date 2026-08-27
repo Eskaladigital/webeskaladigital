@@ -1,6 +1,7 @@
 import { StandardLayout } from '@/components/layout'
 import type { Metadata } from 'next'
 import styles from './legal.module.css'
+import { CookieSettingsButton } from '@/components/CookieConsentBar'
 
 export const metadata: Metadata = {
   title: 'Política de Privacidad | ESKALA Marketing Digital',
@@ -103,8 +104,11 @@ export default function PoliticaPrivacidad() {
             <h2>8. Cookies</h2>
             <p>
               Utilizamos cookies propias y de terceros para mejorar la experiencia de 
-              navegación y analizar el uso de nuestra web. Puedes configurar tu navegador 
-              para rechazar las cookies, aunque esto puede afectar a la funcionalidad del sitio.
+              navegación y analizar el uso de nuestra web. Puedes cambiar tus preferencias
+              en cualquier momento:
+            </p>
+            <p>
+              <CookieSettingsButton className={styles.cookieBtn} />
             </p>
           </section>
 
