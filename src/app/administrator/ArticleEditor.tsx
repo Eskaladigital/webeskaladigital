@@ -3,6 +3,7 @@
 import { useState, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { Editor } from '@tinymce/tinymce-react'
+import { Sparkles } from 'lucide-react'
 import { createArticle, updateArticle } from './actions'
 import ImagePicker from './ImagePicker'
 import styles from './editor.module.css'
@@ -83,6 +84,7 @@ export default function ArticleEditor({ article, categories }: ArticleEditorProp
   const router = useRouter()
   const editorRef = useRef<any>(null)
   const [loading, setLoading] = useState(false)
+  const [redacting, setRedacting] = useState(false)
   const [error, setError] = useState('')
 
   const [formData, setFormData] = useState({
@@ -268,6 +270,46 @@ export default function ArticleEditor({ article, categories }: ArticleEditorProp
     }
   }
 
+  const handleRedactArticle = async () => {
+    if (!article?.id) {
+      setError('Guarda primero el artículo como borrador (título y categoría).')
+      return
+    }
+    const current = editorRef.current?.getContent() || formData.content
+    if (current && current !== '<p></p>' && current.trim().length > 0) {
+      const ok = window.confirm('Esto reescribirá el contenido del artículo. La portada no se toca. ¿Continuar?')
+      if (!ok) return
+    }
+    setRedacting(true)
+    setError('')
+    try {
+      const response = await fetch('/api/admin/blog/redact', {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ postId: article.id }),
+      })
+      const result = await response.json().catch(() => null)
+      if (!response.ok || !result?.ok) {
+        throw new Error(result?.error || `No se pudo redactar (${response.status})`)
+      }
+      if (editorRef.current) editorRef.current.setContent(result.content || '')
+      setFormData((prev) => ({
+        ...prev,
+        content: result.content || prev.content,
+        meta_title: result.metaTitle || prev.meta_title,
+        meta_description: result.metaDescription || prev.meta_description,
+        keywords: Array.isArray(result.metaKeywords)
+          ? result.metaKeywords.join(', ')
+          : prev.keywords,
+      }))
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'Error al redactar el artículo')
+    } finally {
+      setRedacting(false)
+    }
+  }
+
   return (
     <div className={styles.editorContainer}>
       {/* Header */}
@@ -278,14 +320,24 @@ export default function ArticleEditor({ article, categories }: ArticleEditorProp
             <button
               onClick={() => router.back()}
               className={styles.btnSecondary}
-              disabled={loading}
+              disabled={loading || redacting}
             >
               Cancelar
             </button>
             <button
+              type="button"
+              onClick={handleRedactArticle}
+              className={styles.btnSecondary}
+              disabled={loading || redacting || !article?.id}
+              title={article?.id ? 'Redactar el cuerpo con IA' : 'Guarda primero el artículo'}
+            >
+              <Sparkles size={16} style={{ marginRight: 6, verticalAlign: 'middle' }} />
+              {redacting ? 'Redactando…' : 'Redactar con IA'}
+            </button>
+            <button
               onClick={handleSave}
               className={styles.btnPrimary}
-              disabled={loading}
+              disabled={loading || redacting}
             >
               {loading ? 'Guardando...' : 'Guardar y Cerrar'}
             </button>
