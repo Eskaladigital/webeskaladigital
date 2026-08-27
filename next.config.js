@@ -1,7 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Optimizado para AWS Amplify
-  output: 'standalone',
+  // Amplify necesita standalone. En Vercel (Next 16.3) standalone
+  // rompe onBuildComplete: ENOENT .next/next-server.js.nft.json
+  output: process.env.VERCEL ? undefined : 'standalone',
   
   // Configuración de imágenes
   images: {
