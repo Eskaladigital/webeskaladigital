@@ -1,5 +1,6 @@
 import { StandardLayout } from '@/components/layout'
 import Hero from '@/components/sections/Contacto/Hero'
+import ContactForm from '@/components/sections/Contacto/ContactForm'
 import ContactOptions from '@/components/sections/Contacto/ContactOptions'
 import ContactInfo from '@/components/sections/Contacto/ContactInfo'
 import type { Metadata } from 'next'
@@ -44,6 +45,7 @@ export default function ContactoPage() {
   return (
     <StandardLayout>
       <Hero />
+      <ContactForm />
       <ContactOptions />
       <ContactInfo />
     </StandardLayout>

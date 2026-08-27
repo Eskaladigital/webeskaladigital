@@ -1,11 +1,19 @@
 .contactForm {
   background: linear-gradient(180deg, #f8fafc 0%, var(--white) 100%);
-  padding: 8rem 5%;
+  padding: 6rem 5%;
 }
 
-.sectionHeader {
-  text-align: center;
-  margin-bottom: 4rem;
+.split {
+  max-width: 1180px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(260px, 0.9fr) minmax(0, 1.2fr);
+  gap: 4rem;
+  align-items: start;
+}
+
+.infoCol {
+  padding-top: 1rem;
 }
 
 .sectionLabel {
@@ -20,19 +28,83 @@
   margin-bottom: 1rem;
 }
 
-.sectionTitle {
-  font-size: clamp(2rem, 4vw, 3rem);
+.infoTitle {
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
   font-weight: 700;
+  color: var(--stripe-1);
+  margin: 0 0 1rem;
+  line-height: 1.2;
+}
+
+.infoLead {
+  color: var(--text-light);
+  line-height: 1.6;
+  margin: 0 0 2rem;
+}
+
+.infoList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.infoList li {
+  display: flex;
+  gap: 0.9rem;
+  align-items: flex-start;
   color: var(--stripe-1);
 }
 
+.infoList svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: var(--stripe-7);
+}
+
+.infoList strong {
+  display: block;
+  font-size: 0.85rem;
+  margin-bottom: 0.15rem;
+}
+
+.infoList a,
+.infoList span {
+  color: var(--text-light);
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+
+.infoList a:hover {
+  color: var(--stripe-7);
+}
+
+.formWrap {
+  min-width: 0;
+}
+
 .form {
-  max-width: 800px;
-  margin: 0 auto;
   background: white;
-  padding: 3rem;
+  padding: 2.5rem;
   border-radius: 30px;
-  box-shadow: 0 10px 50px rgba(0,0,0,0.05);
+  box-shadow: 0 10px 50px rgba(0, 0, 0, 0.05);
+}
+
+.formIntro {
+  margin-bottom: 1.75rem;
+}
+
+.formIntro h2 {
+  margin: 0 0 0.4rem;
+  font-size: 1.5rem;
+  color: var(--stripe-1);
+}
+
+.formIntro p {
+  margin: 0;
+  color: var(--text-light);
 }
 
 .formRow {
@@ -46,19 +118,26 @@
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  margin-bottom: 1.5rem;
 }
 
-.formGroup label {
+.formRow .formGroup {
+  margin-bottom: 0;
+}
+
+.formGroup label,
+.radioLegend {
   font-weight: 600;
   font-size: 0.9rem;
   color: var(--stripe-1);
+  margin: 0;
 }
 
 .formGroup input,
 .formGroup select,
 .formGroup textarea {
   padding: 1rem 1.5rem;
-  border: 2px solid rgba(0,0,0,0.1);
+  border: 2px solid rgba(0, 0, 0, 0.1);
   border-radius: 15px;
   font-family: inherit;
   font-size: 1rem;
@@ -83,15 +162,68 @@
   cursor: pointer;
 }
 
-.successMessage {
-  padding: 1rem 1.5rem;
-  background: linear-gradient(135deg, rgba(76, 175, 80, 0.1), rgba(76, 175, 80, 0.05));
-  border: 2px solid rgba(76, 175, 80, 0.3);
-  border-radius: 15px;
-  color: #2e7d32;
-  font-weight: 600;
+.radioRow {
+  display: flex;
+  gap: 1.75rem;
+  flex-wrap: wrap;
+}
+
+.radioRow label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.privacyRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.privacyRow input {
+  margin-top: 0.3rem;
+}
+
+.privacyRow label {
+  font-size: 0.9rem;
+  color: var(--text-light);
+  font-weight: 400;
+}
+
+.privacyRow a {
+  color: var(--stripe-7);
+}
+
+.fieldError {
+  color: #c62828;
+  font-size: 0.85rem;
+}
+
+.successBlock {
+  background: white;
+  padding: 3rem 2.5rem;
+  border-radius: 30px;
+  box-shadow: 0 10px 50px rgba(0, 0, 0, 0.05);
   text-align: center;
-  margin-bottom: 1.5rem;
+}
+
+.successBlock svg {
+  color: #2e7d32;
+  margin-bottom: 1rem;
+}
+
+.successBlock h3 {
+  margin: 0 0 0.75rem;
+  font-size: 1.6rem;
+  color: var(--stripe-1);
+}
+
+.successBlock p {
+  margin: 0 0 1.5rem;
+  color: var(--text-light);
 }
 
 .submitBtn {
@@ -106,7 +238,7 @@
   cursor: pointer;
   transition: all 0.3s ease;
   font-family: inherit;
-  margin-top: 2rem;
+  margin-top: 1.25rem;
 }
 
 .submitBtn:hover:not(:disabled) {
@@ -119,12 +251,20 @@
   cursor: not-allowed;
 }
 
+@media (max-width: 900px) {
+  .split {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+}
+
 @media (max-width: 768px) {
   .contactForm {
-    padding: 5rem 1.5rem;
+    padding: 4rem 1.5rem;
   }
 
-  .form {
+  .form,
+  .successBlock {
     padding: 2rem;
   }
 
@@ -132,7 +272,3 @@
     grid-template-columns: 1fr;
   }
 }
-
-
-
-

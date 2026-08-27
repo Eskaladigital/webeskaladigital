@@ -1,173 +1,333 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
+import { Mail, Phone, MapPin, Clock, CheckCircle } from 'lucide-react'
 import styles from './ContactForm.module.css'
 
+interface FormData {
+  contact_type: 'particular' | 'professional'
+  name: string
+  email: string
+  phone: string
+  company: string
+  inquiry_type: string
+  referral_source: string
+  message: string
+  privacy: boolean
+}
+
+interface FormErrors {
+  name?: string
+  email?: string
+  inquiry_type?: string
+  message?: string
+  privacy?: string
+  submit?: string
+}
+
+const INQUIRY_OPTIONS = [
+  { value: 'diseno-web', label: 'Diseño Web' },
+  { value: 'seo-local', label: 'SEO Local' },
+  { value: 'redes-sociales', label: 'Redes Sociales' },
+  { value: 'google-ads', label: 'Google Ads' },
+  { value: 'apps-ia', label: 'Apps con IA' },
+  { value: 'chatbots', label: 'Chatbots' },
+  { value: 'branding', label: 'Branding' },
+  { value: 'email-marketing', label: 'Email Marketing' },
+  { value: 'otro', label: 'Otro' },
+]
+
+const emptyForm: FormData = {
+  contact_type: 'particular',
+  name: '',
+  email: '',
+  phone: '',
+  company: '',
+  inquiry_type: '',
+  referral_source: '',
+  message: '',
+  privacy: false,
+}
+
 export default function ContactForm() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    company: '',
-    service: '',
-    message: '',
-  })
+  const [formData, setFormData] = useState<FormData>(emptyForm)
+  const [errors, setErrors] = useState<FormErrors>({})
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [submitMessage, setSubmitMessage] = useState('')
+  const [isSubmitted, setIsSubmitted] = useState(false)
 
-  useEffect(() => {
-    const fadeElements = document.querySelectorAll('.fade-up')
-    const fadeObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible')
-          }
-        })
-      },
-      { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
-    )
+  const validateEmail = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
 
-    fadeElements.forEach((el) => fadeObserver.observe(el))
-    return () => fadeObserver.disconnect()
-  }, [])
+  const validateForm = (): boolean => {
+    const newErrors: FormErrors = {}
+    if (!formData.name.trim()) newErrors.name = 'El nombre es obligatorio'
+    if (!formData.email.trim()) newErrors.email = 'El email es obligatorio'
+    else if (!validateEmail(formData.email)) newErrors.email = 'El email no es válido'
+    if (!formData.inquiry_type) newErrors.inquiry_type = 'Elige el tipo de consulta'
+    if (!formData.message.trim()) newErrors.message = 'El mensaje es obligatorio'
+    else if (formData.message.length < 20) newErrors.message = 'El mensaje debe tener al menos 20 caracteres'
+    if (!formData.privacy) newErrors.privacy = 'Debes aceptar la política de privacidad'
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setIsSubmitting(true)
-    setSubmitMessage('')
+    if (!validateForm()) return
 
-    // Simulamos el envío
-    setTimeout(() => {
-      setIsSubmitting(false)
-      setSubmitMessage('¡Mensaje enviado! Te contactaremos pronto.')
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        company: '',
-        service: '',
-        message: '',
+    setIsSubmitting(true)
+    setErrors({})
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...formData,
+          gdpr_consent: formData.privacy,
+        }),
       })
-    }, 1500)
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}))
+        setErrors({ submit: data.error || 'No se pudo enviar. Inténtalo de nuevo.' })
+        return
+      }
+      setIsSubmitted(true)
+    } catch (error) {
+      console.error('Error submitting form:', error)
+      setErrors({ submit: 'No se pudo enviar. Inténtalo de nuevo.' })
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    })
+    const { name, value, type } = e.target
+    const checked = (e.target as HTMLInputElement).checked
+    setFormData((prev) => ({ ...prev, [name]: type === 'checkbox' ? checked : value }))
+    if (errors[name as keyof FormErrors]) setErrors((prev) => ({ ...prev, [name]: undefined }))
   }
 
   return (
     <section className={styles.contactForm} id="formulario">
-        <div className={`${styles.sectionHeader} fade-up`}>
-          <span className={styles.sectionLabel}>Formulario de contacto</span>
-          <h2 className={styles.sectionTitle}>Envíanos un mensaje</h2>
-        </div>
+      <div className={styles.split}>
+        <aside className={styles.infoCol}>
+          <span className={styles.sectionLabel}>Hablemos</span>
+          <h2 className={styles.infoTitle}>Cuéntanos qué necesitas</h2>
+          <p className={styles.infoLead}>
+            Particular o empresa, el servicio que te interesa y de dónde nos has oído. Te preparamos una propuesta sin compromiso.
+          </p>
+          <ul className={styles.infoList}>
+            <li>
+              <Mail size={20} strokeWidth={2} aria-hidden="true" />
+              <div>
+                <strong>Email</strong>
+                <a href="mailto:contacto@eskaladigital.com">contacto@eskaladigital.com</a>
+              </div>
+            </li>
+            <li>
+              <Phone size={20} strokeWidth={2} aria-hidden="true" />
+              <div>
+                <strong>Teléfono</strong>
+                <a href="tel:+34626823404">+34 626 82 34 04</a>
+              </div>
+            </li>
+            <li>
+              <Clock size={20} strokeWidth={2} aria-hidden="true" />
+              <div>
+                <strong>Horario</strong>
+                <span>Lunes a viernes, 9:00–18:00</span>
+              </div>
+            </li>
+            <li>
+              <MapPin size={20} strokeWidth={2} aria-hidden="true" />
+              <div>
+                <strong>Ubicación</strong>
+                <span>Murcia, España · presencial con cita</span>
+              </div>
+            </li>
+          </ul>
+        </aside>
 
-        <form onSubmit={handleSubmit} className={`${styles.form} fade-up`}>
-          <div className={styles.formRow}>
-            <div className={styles.formGroup}>
-              <label htmlFor="name">Nombre *</label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                required
-                placeholder="Tu nombre completo"
-              />
+        <div className={styles.formWrap}>
+          {isSubmitted ? (
+            <div className={styles.successBlock}>
+              <CheckCircle size={40} strokeWidth={2} aria-hidden="true" />
+              <h3>¡Mensaje enviado!</h3>
+              <p>Gracias por contactar con nosotros. Te responderemos en menos de 24 horas.</p>
+              <button
+                type="button"
+                className={styles.submitBtn}
+                onClick={() => {
+                  setIsSubmitted(false)
+                  setFormData(emptyForm)
+                }}
+              >
+                Enviar otro mensaje
+              </button>
             </div>
+          ) : (
+            <form onSubmit={handleSubmit} className={styles.form} noValidate>
+              <div className={styles.formIntro}>
+                <h2>Envíanos un mensaje</h2>
+                <p>Cuéntanos tu proyecto y nos pondremos en contacto contigo.</p>
+              </div>
 
-            <div className={styles.formGroup}>
-              <label htmlFor="email">Email *</label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-                placeholder="tu@email.com"
-              />
-            </div>
-          </div>
+              <div className={styles.formGroup}>
+                <p className={styles.radioLegend}>Tipo de consulta</p>
+                <div className={styles.radioRow}>
+                  <label>
+                    <input
+                      type="radio"
+                      name="contact_type"
+                      value="particular"
+                      checked={formData.contact_type === 'particular'}
+                      onChange={handleChange}
+                    />
+                    Particular
+                  </label>
+                  <label>
+                    <input
+                      type="radio"
+                      name="contact_type"
+                      value="professional"
+                      checked={formData.contact_type === 'professional'}
+                      onChange={handleChange}
+                    />
+                    Empresa
+                  </label>
+                </div>
+              </div>
 
-          <div className={styles.formRow}>
-            <div className={styles.formGroup}>
-              <label htmlFor="phone">Teléfono</label>
-              <input
-                type="tel"
-                id="phone"
-                name="phone"
-                value={formData.phone}
-                onChange={handleChange}
-                placeholder="+34 XXX XXX XXX"
-              />
-            </div>
+              {formData.contact_type === 'professional' && (
+                <div className={styles.formGroup}>
+                  <label htmlFor="company">Empresa</label>
+                  <input
+                    type="text"
+                    id="company"
+                    name="company"
+                    value={formData.company}
+                    onChange={handleChange}
+                    placeholder="Nombre de tu empresa"
+                  />
+                </div>
+              )}
 
-            <div className={styles.formGroup}>
-              <label htmlFor="company">Empresa</label>
-              <input
-                type="text"
-                id="company"
-                name="company"
-                value={formData.company}
-                onChange={handleChange}
-                placeholder="Nombre de tu empresa"
-              />
-            </div>
-          </div>
+              <div className={styles.formRow}>
+                <div className={styles.formGroup}>
+                  <label htmlFor="name">Nombre *</label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    placeholder="Tu nombre completo"
+                    aria-invalid={Boolean(errors.name)}
+                  />
+                  {errors.name && <span className={styles.fieldError}>{errors.name}</span>}
+                </div>
+                <div className={styles.formGroup}>
+                  <label htmlFor="email">Email *</label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    placeholder="tu@email.com"
+                    aria-invalid={Boolean(errors.email)}
+                  />
+                  {errors.email && <span className={styles.fieldError}>{errors.email}</span>}
+                </div>
+              </div>
 
-          <div className={styles.formGroup}>
-            <label htmlFor="service">Servicio de interés</label>
-            <select
-              id="service"
-              name="service"
-              value={formData.service}
-              onChange={handleChange}
-            >
-              <option value="">Selecciona un servicio</option>
-              <option value="diseno-web">Diseño Web</option>
-              <option value="seo-local">SEO Local</option>
-              <option value="redes-sociales">Redes Sociales</option>
-              <option value="google-ads">Google Ads</option>
-              <option value="apps-ia">Apps con IA</option>
-              <option value="chatbots">Chatbots</option>
-              <option value="branding">Branding</option>
-              <option value="email-marketing">Email Marketing</option>
-              <option value="otro">Otro</option>
-            </select>
-          </div>
+              <div className={styles.formRow}>
+                <div className={styles.formGroup}>
+                  <label htmlFor="phone">Teléfono</label>
+                  <input
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    placeholder="+34 600 000 000"
+                  />
+                </div>
+                <div className={styles.formGroup}>
+                  <label htmlFor="inquiry_type">Tipo de consulta *</label>
+                  <select
+                    id="inquiry_type"
+                    name="inquiry_type"
+                    value={formData.inquiry_type}
+                    onChange={handleChange}
+                    aria-invalid={Boolean(errors.inquiry_type)}
+                  >
+                    <option value="">Selecciona un servicio</option>
+                    {INQUIRY_OPTIONS.map((opt) => (
+                      <option key={opt.value} value={opt.value}>
+                        {opt.label}
+                      </option>
+                    ))}
+                  </select>
+                  {errors.inquiry_type && <span className={styles.fieldError}>{errors.inquiry_type}</span>}
+                </div>
+              </div>
 
-          <div className={styles.formGroup}>
-            <label htmlFor="message">Mensaje *</label>
-            <textarea
-              id="message"
-              name="message"
-              value={formData.message}
-              onChange={handleChange}
-              required
-              rows={6}
-              placeholder="Cuéntanos sobre tu proyecto..."
-            />
-          </div>
+              <div className={styles.formGroup}>
+                <label htmlFor="referral_source">¿Cómo nos has conocido?</label>
+                <select
+                  id="referral_source"
+                  name="referral_source"
+                  value={formData.referral_source}
+                  onChange={handleChange}
+                >
+                  <option value="">Selecciona una opción</option>
+                  <option value="google">Búsqueda en Google</option>
+                  <option value="social">Redes sociales</option>
+                  <option value="referral">Recomendación</option>
+                  <option value="other">Otro</option>
+                </select>
+              </div>
 
-          {submitMessage && (
-            <div className={styles.successMessage}>{submitMessage}</div>
+              <div className={styles.formGroup}>
+                <label htmlFor="message">Mensaje *</label>
+                <textarea
+                  id="message"
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
+                  rows={6}
+                  placeholder="Cuéntanos sobre tu proyecto..."
+                  aria-invalid={Boolean(errors.message)}
+                />
+                {errors.message && <span className={styles.fieldError}>{errors.message}</span>}
+              </div>
+
+              <div className={styles.privacyRow}>
+                <input
+                  type="checkbox"
+                  id="privacy"
+                  name="privacy"
+                  checked={formData.privacy}
+                  onChange={handleChange}
+                />
+                <label htmlFor="privacy">
+                  He leído y acepto la{' '}
+                  <a href="/politica-privacidad" target="_blank" rel="noreferrer">
+                    política de privacidad
+                  </a>
+                  . *
+                </label>
+              </div>
+              {errors.privacy && <span className={styles.fieldError}>{errors.privacy}</span>}
+              {errors.submit && <span className={styles.fieldError}>{errors.submit}</span>}
+
+              <button type="submit" disabled={isSubmitting} className={styles.submitBtn}>
+                {isSubmitting ? 'Enviando...' : 'Enviar mensaje →'}
+              </button>
+            </form>
           )}
-
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className={styles.submitBtn}
-          >
-            {isSubmitting ? 'Enviando...' : 'Enviar mensaje →'}
-          </button>
-        </form>
-      </section>
+        </div>
+      </div>
+    </section>
   )
 }
-

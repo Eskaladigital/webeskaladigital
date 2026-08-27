@@ -115,6 +115,9 @@ export default function AdminDashboard() {
             <p>{user?.email}</p>
           </div>
           <div className={styles.headerActions}>
+            <Link href="/administrator/contactos" className={styles.btnSecondary}>
+              Consultas
+            </Link>
             <Link href="/blog" className={styles.btnSecondary}>
               Ver Blog
             </Link>

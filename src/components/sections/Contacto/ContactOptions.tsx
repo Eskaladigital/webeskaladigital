@@ -1,6 +1,5 @@
 /**
- * Opciones de Contacto
- * Reemplaza el formulario tradicional con métodos directos de contacto
+ * Canales directos (mail, WhatsApp, teléfono) además del formulario.
  */
 
 'use client'
@@ -92,12 +91,12 @@ export default function ContactOptions() {
     <section className={styles.contactOptions} id="contacto">
       {/* Header */}
       <div className={`${styles.header} fade-up`}>
-        <span className={styles.label}>Elige tu método favorito</span>
+        <span className={styles.label}>También por canal directo</span>
         <h2 className={styles.title}>
-          ¿Cómo prefieres <span>contactarnos</span>?
+          ¿Prefieres <span>escribir o llamar</span>?
         </h2>
         <p className={styles.subtitle}>
-          Sin formularios complicados. Elige la forma que más cómoda te resulte.
+          Si no quieres rellenar el formulario, elige la forma que más cómoda te resulte.
         </p>
       </div>
 

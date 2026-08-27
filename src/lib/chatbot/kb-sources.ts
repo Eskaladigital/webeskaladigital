@@ -33,7 +33,7 @@ export function chunksFromEmpresa(): IngestChunk[] {
     makeChunk(
       'empresa',
       'Contacto',
-      `Email: ${CONTACT_EMAIL}\nTeléfono: ${CONTACT_PHONE}\nHorario: lunes a viernes 9:00–18:00\nUbicación: Murcia, España (presencial con cita)\nContacto: ${SITE_URL}/contacto\nWhatsApp del mismo número es un canal de la ficha de contacto, no el chat flotante de la web.`
+      `Email: ${CONTACT_EMAIL}\nTeléfono: ${CONTACT_PHONE}\nHorario: lunes a viernes 9:00–18:00\nUbicación: Murcia, España (presencial con cita)\nFormulario de contacto (particular/empresa, temática, origen): ${SITE_URL}/contacto\nWhatsApp del mismo número es un canal de la ficha de contacto, no el chat flotante de la web. El chat flotante es Nora.`
     ),
   ]
 }
@@ -48,7 +48,7 @@ export function chunksFromFaqs(): IngestChunk[] {
     makeChunk(
       'faqs',
       '¿Cómo puedo contactar?',
-      `P: ¿Cómo puedo contactar con ESKALA?\nR: Sin formulario: email ${CONTACT_EMAIL}, teléfono ${CONTACT_PHONE} (L-V 9–18 h) o la página ${SITE_URL}/contacto. Primera consultoría gratuita.`
+      `P: ¿Cómo puedo contactar con ESKALA?\nR: Formulario en ${SITE_URL}/contacto (particular o empresa, servicio y de dónde nos has oído). También email ${CONTACT_EMAIL} y teléfono ${CONTACT_PHONE} (L-V 9–18 h). Primera consultoría gratuita.`
     ),
     makeChunk(
       'faqs',

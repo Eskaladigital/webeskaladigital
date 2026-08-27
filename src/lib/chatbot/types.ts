@@ -45,3 +45,14 @@ export interface IngestChunk {
   content: string
   content_hash: string
 }
+
+export type RagGap = 'none' | 'missing' | 'not_retrieved' | 'ignored'
+
+export interface AuditorResult {
+  quality: Exclude<ResponseQuality, 'sin_tipo'>
+  notes: string
+  suggested_fix?: string
+  rag_gap: RagGap
+  rag_title?: string
+  rag_body?: string
+}
