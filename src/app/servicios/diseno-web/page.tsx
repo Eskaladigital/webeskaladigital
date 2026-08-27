@@ -54,6 +54,8 @@ const heroData = {
   titleHighlight: 'en Murcia que Convierten',
   description: 'Somos una agencia de diseño web en Murcia especializada en crear páginas web modernas, rápidas y optimizadas para SEO. Trabajamos con empresas de Murcia, Cartagena, Lorca y toda la Región de Murcia. Tu web es tu mejor comercial, disponible 24/7. Diseño responsive, velocidad de carga optimizada y estrategia de conversión incluida.',
   stripeColor: 1,
+  jsonLdName: 'Diseño web',
+  jsonLdSlug: 'diseno-web',
 }
 
 const features = [
@@ -145,7 +147,7 @@ export default function DisenoWebPage() {
     provider: {
       '@type': 'MarketingAgency',
       name: 'ESKALA Marketing Digital',
-      image: 'https://www.eskaladigital.com/logo.png',
+      image: 'https://www.eskaladigital.com/icon.png',
       address: {
         '@type': 'PostalAddress',
         addressLocality: 'Murcia',

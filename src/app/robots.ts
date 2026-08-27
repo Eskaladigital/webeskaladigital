@@ -6,7 +6,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/api/', '/admin/'],
+        disallow: ['/api/', '/administrator/', '/pruebas/', '/private/'],
       },
     ],
     sitemap: 'https://www.eskaladigital.com/sitemap.xml',

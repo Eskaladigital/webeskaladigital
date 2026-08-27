@@ -50,6 +50,8 @@ const heroData = {
   titleHighlight: '42€ por Cada 1€ Invertido',
   description: 'Servicio profesional de email marketing para empresas en Murcia. El email marketing sigue siendo el rey de la conversión en 2026: ROI promedio de 42€ por cada euro invertido (DMA 2024), superior a redes sociales, Google Ads o cualquier otro canal. Llegamos directo al buzón de tus clientes con mensajes personalizados que generan ventas recurrentes. Diseño de newsletters profesionales, automatizaciones inteligentes (bienvenida, carritos abandonados, cumpleaños), segmentación avanzada y análisis de resultados. Trabajamos con Mailchimp, Brevo (Sendinblue), ActiveCampaign, MailerLite. Tu lista de emails es oro: explotamos su potencial. Empresas en Murcia, Cartagena y Lorca ya generan miles de euros mensuales con email marketing.',
   stripeColor: 8,
+  jsonLdName: 'Email marketing',
+  jsonLdSlug: 'email-marketing',
 }
 
 const features = [
@@ -141,7 +143,7 @@ export default function EmailMarketingPage() {
     provider: {
       '@type': 'MarketingAgency',
       name: 'ESKALA Marketing Digital',
-      image: 'https://www.eskaladigital.com/logo.png',
+      image: 'https://www.eskaladigital.com/icon.png',
       address: {
         '@type': 'PostalAddress',
         addressLocality: 'Murcia',

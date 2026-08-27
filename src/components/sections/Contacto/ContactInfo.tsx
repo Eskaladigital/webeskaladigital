@@ -2,24 +2,38 @@
 
 import styles from './ContactInfo.module.css'
 import { Mail, Phone, MapPin, type LucideIcon } from 'lucide-react'
+import {
+  CONTACT_EMAIL,
+  CONTACT_PHONE,
+  CONTACT_PHONE_TEL,
+  formatShortAddress,
+} from '@/lib/site'
 
-const contactMethods: { Icon: LucideIcon; title: string; info: string; desc: string }[] = [
+const contactMethods: {
+  Icon: LucideIcon
+  title: string
+  info: string
+  desc: string
+  href?: string
+}[] = [
   {
     Icon: Mail,
     title: 'Email',
-    info: 'contacto@eskaladigital.com',
+    info: CONTACT_EMAIL,
     desc: 'Respuesta en menos de 24h',
+    href: `mailto:${CONTACT_EMAIL}`,
   },
   {
     Icon: Phone,
     title: 'Teléfono',
-    info: '+34 626 82 34 04',
+    info: CONTACT_PHONE,
     desc: 'Lun-Vie 9:00-18:00',
+    href: `tel:${CONTACT_PHONE_TEL}`,
   },
   {
     Icon: MapPin,
     title: 'Ubicación',
-    info: 'Murcia, España',
+    info: formatShortAddress(),
     desc: 'Atención presencial con cita',
   },
 ]
@@ -40,7 +54,13 @@ export default function ContactInfo() {
                 <method.Icon size={30} strokeWidth={2} aria-hidden="true" />
               </div>
               <h3 className={styles.methodTitle}>{method.title}</h3>
-              <p className={styles.methodInfo}>{method.info}</p>
+              {method.href ? (
+                <a href={method.href} className={styles.methodInfo}>
+                  {method.info}
+                </a>
+              ) : (
+                <p className={styles.methodInfo}>{method.info}</p>
+              )}
               <p className={styles.methodDesc}>{method.desc}</p>
             </div>
           ))}

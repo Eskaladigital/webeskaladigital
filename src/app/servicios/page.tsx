@@ -2,7 +2,7 @@ import Universo3DClient from '@/components/sections/Servicios/Universo3DClient'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Servicios | ESCALA Marketing Digital',
+  title: 'Servicios | ESKALA Marketing Digital',
   description:
     'Explora el universo ESKALA: 8 servicios de marketing digital en 3D. Diseño web, SEO local, redes sociales, Google Ads, apps con IA, chatbots, branding y email marketing en Murcia.',
   keywords: [

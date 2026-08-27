@@ -52,6 +52,8 @@ const heroData = {
   titleHighlight: 'para Empresas Innovadoras',
   description: 'Desarrollamos aplicaciones y soluciones con inteligencia artificial para empresas en Murcia. Automatización inteligente de procesos, análisis predictivo con Machine Learning, procesamiento de lenguaje natural (NLP) y soluciones personalizadas con GPT-4, Claude y otros modelos avanzados. La IA no es el futuro: es el presente. Empresas en Murcia, Cartagena y Lorca ya están usando IA para reducir costes, mejorar eficiencia y ofrecer mejor servicio. Consultoría IA gratuita para identificar oportunidades en tu negocio.',
   stripeColor: 5,
+  jsonLdName: 'Apps con IA',
+  jsonLdSlug: 'apps-ia',
 }
 
 const features = [
@@ -143,7 +145,7 @@ export default function AppsIAPage() {
     provider: {
       '@type': 'MarketingAgency',
       name: 'ESKALA Marketing Digital',
-      image: 'https://www.eskaladigital.com/logo.png',
+      image: 'https://www.eskaladigital.com/icon.png',
       address: {
         '@type': 'PostalAddress',
         addressLocality: 'Murcia',

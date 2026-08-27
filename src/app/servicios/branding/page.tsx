@@ -52,6 +52,8 @@ const heroData = {
   titleHighlight: 'que Deja Huella',
   description: 'Agencia de branding en Murcia especializada en crear identidades visuales memorables. Tu marca es mucho más que un logotipo: es la promesa que haces a tus clientes, la emoción que generas, el valor que transmites. Creamos marcas que conectan emocionalmente con tu audiencia. Trabajamos con empresas de Murcia, Cartagena, Lorca y toda la Región de Murcia. Diseño de logotipo, paleta de colores, tipografías, manual de marca y aplicaciones. Desde naming y estrategia de marca hasta implementación completa. Rebranding y creación de marca desde cero.',
   stripeColor: 7,
+  jsonLdName: 'Branding',
+  jsonLdSlug: 'branding',
 }
 
 const features = [
@@ -143,7 +145,7 @@ export default function BrandingPage() {
     provider: {
       '@type': 'MarketingAgency',
       name: 'ESKALA Marketing Digital',
-      image: 'https://www.eskaladigital.com/logo.png',
+      image: 'https://www.eskaladigital.com/icon.png',
       address: {
         '@type': 'PostalAddress',
         addressLocality: 'Murcia',

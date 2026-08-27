@@ -55,6 +55,8 @@ const heroData = {
   titleHighlight: 'para Negocios en Murcia',
   description: 'Somos especialistas en SEO local en Murcia. El 46% de las búsquedas en Google tienen intención local. Si no apareces en Google Maps cuando buscan "tu servicio + Murcia", estás perdiendo clientes cada día. Optimizamos tu Google My Business, posicionamos tu web para búsquedas locales y te ayudamos a dominar tu zona: Murcia capital, Cartagena, Lorca, Molina de Segura y toda la Región. Más visibilidad local = más llamadas, más visitas, más ventas.',
   stripeColor: 2,
+  jsonLdName: 'SEO local',
+  jsonLdSlug: 'seo-local',
 }
 
 const features = [
@@ -146,7 +148,7 @@ export default function SeoLocalPage() {
     provider: {
       '@type': 'MarketingAgency',
       name: 'ESKALA Marketing Digital',
-      image: 'https://www.eskaladigital.com/logo.png',
+      image: 'https://www.eskaladigital.com/icon.png',
       address: {
         '@type': 'PostalAddress',
         addressLocality: 'Murcia',

@@ -153,14 +153,15 @@ export default async function ArticlePage({ params }: Props) {
     dateModified: article.updated_at || article.published_at,
     author: {
       '@type': 'Organization',
-      name: article.author || 'ESCALA Marketing',
+      name: article.author || 'ESKALA Marketing Digital',
     },
     publisher: {
       '@type': 'Organization',
-      name: 'ESCALA Marketing',
+      name: 'ESKALA Marketing Digital',
+      url: baseUrl,
       logo: {
         '@type': 'ImageObject',
-        url: `${baseUrl}/images/logo.png`,
+        url: `${baseUrl}/icon.png`,
       },
     },
   }
@@ -237,7 +238,7 @@ export default async function ArticlePage({ params }: Props) {
             <div className={styles.authorInfo}>
               <div className={styles.avatar}>EM</div>
               <div>
-                <p className={styles.authorName}>{article.author || 'ESCALA Marketing'}</p>
+                <p className={styles.authorName}>{article.author || 'ESKALA Marketing Digital'}</p>
                 <p className={styles.views}>{article.views} lecturas</p>
               </div>
             </div>

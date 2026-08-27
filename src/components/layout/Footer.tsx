@@ -1,6 +1,12 @@
 import Link from 'next/link'
 import styles from './Footer.module.css'
 import { CookieSettingsButton } from '@/components/CookieConsentBar'
+import {
+  CONTACT_EMAIL,
+  CONTACT_PHONE,
+  CONTACT_PHONE_TEL,
+  formatShortAddress,
+} from '@/lib/site'
 
 const SERVICES = [
   { href: '/servicios/diseno-web', label: 'Diseño Web' },
@@ -72,9 +78,13 @@ export function Footer() {
         <div>
           <h4 className={styles.title}>Contacto</h4>
           <ul className={styles.links}>
-            <li>📍 Murcia, España</li>
-            <li>✉️ contacto@eskaladigital.com</li>
-            <li>📱 +34 626 82 34 04</li>
+            <li>📍 {formatShortAddress()}</li>
+            <li>
+              <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
+            </li>
+            <li>
+              <a href={`tel:${CONTACT_PHONE_TEL}`}>{CONTACT_PHONE}</a>
+            </li>
           </ul>
         </div>
       </div>

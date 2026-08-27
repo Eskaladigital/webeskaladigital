@@ -2,6 +2,7 @@ import { StandardLayout } from '@/components/layout'
 import type { Metadata } from 'next'
 import styles from './legal.module.css'
 import { CookieSettingsButton } from '@/components/CookieConsentBar'
+import { CONTACT_EMAIL, CONTACT_PHONE, formatFullAddress } from '@/lib/site'
 
 export const metadata: Metadata = {
   title: 'Política de Privacidad | ESKALA Marketing Digital',
@@ -25,9 +26,9 @@ export default function PoliticaPrivacidad() {
             <p>
               <strong>ESKALA Marketing Digital</strong><br />
               CIF: [Tu CIF]<br />
-              Dirección: Murcia, España<br />
-              Email: contacto@eskaladigital.com<br />
-              Teléfono: +34 626 82 34 04
+              Dirección: {formatFullAddress()}<br />
+              Email: {CONTACT_EMAIL}<br />
+              Teléfono: {CONTACT_PHONE}
             </p>
           </section>
 

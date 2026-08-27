@@ -1,4 +1,5 @@
 import { CONTACT_EMAIL, CONTACT_PHONE, SITE_NAME, SITE_URL } from './config'
+import { formatShortAddress } from '@/lib/site'
 
 export const ESKALA_SERVICES = [
   {
@@ -57,7 +58,7 @@ export function buildContactBlock(): string {
     `- Email: ${CONTACT_EMAIL}`,
     `- Teléfono: ${CONTACT_PHONE}`,
     `- Horario: lunes a viernes, 9:00–18:00 (Murcia)`,
-    `- Ubicación: Murcia, España. Atención presencial con cita.`,
+    `- Ubicación: ${formatShortAddress()}. Atención presencial con cita.`,
     `- Página de contacto: ${SITE_URL}/contacto`,
     '- Primera consultoría: gratuita. Respuesta habitual en menos de 24 h laborables.',
     '- WhatsApp (+34 626 82 34 04) es un canal de contacto, no el chat de esta web.',

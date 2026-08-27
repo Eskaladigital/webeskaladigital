@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     'consultoria marketing',
   ],
   openGraph: {
-    title: 'Metodología | ESCALA Marketing Murcia',
+    title: 'Metodología | ESKALA Marketing Murcia',
     description: 'Proceso de trabajo transparente y orientado a resultados. Conoce cómo trabajamos.',
     url: 'https://www.eskaladigital.com/metodologia',
     siteName: 'ESKALA Marketing Digital',

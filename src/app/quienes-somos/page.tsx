@@ -6,6 +6,7 @@ import Services from '@/components/sections/QuienesSomos/Services'
 import Values from '@/components/sections/QuienesSomos/Values'
 import CTA from '@/components/sections/QuienesSomos/CTA'
 import type { Metadata } from 'next'
+import { AGENCY_ID, SITE_URL, generateBreadcrumbSchema } from '@/lib/site'
 
 export const metadata: Metadata = {
   title: 'Agencia de Marketing Digital en Murcia | ESKALA - Expertos Locales',
@@ -54,109 +55,31 @@ export const metadata: Metadata = {
 }
 
 export default function QuienesSomosPage() {
-  // Schema LocalBusiness para SEO local
-  const localBusinessSchema = {
+  const aboutSchema = {
     '@context': 'https://schema.org',
-    '@type': 'MarketingAgency',
-    name: 'ESKALA Marketing Digital',
-    alternateName: 'ESKALA Agencia de Marketing Murcia',
-    description: 'Agencia de marketing digital en Murcia especializada en SEO local, diseño web, redes sociales, Google Ads y aplicaciones con inteligencia artificial. Ayudamos a empresas murcianas a crecer online.',
-    url: 'https://www.eskaladigital.com',
-    logo: 'https://www.eskaladigital.com/logo.png',
-    image: 'https://www.eskaladigital.com/eskala_digital_opengraph.png',
-    telephone: '+34626823404',
-    email: 'contacto@eskaladigital.com',
-    address: {
-      '@type': 'PostalAddress',
-      addressLocality: 'Murcia',
-      addressRegion: 'Región de Murcia',
-      addressCountry: 'ES',
-      postalCode: '30001',
-    },
-    geo: {
-      '@type': 'GeoCoordinates',
-      latitude: 37.9922,
-      longitude: -1.1307,
-    },
-    areaServed: [
-      {
-        '@type': 'City',
-        name: 'Murcia',
-        sameAs: 'https://es.wikipedia.org/wiki/Murcia',
-      },
-      {
-        '@type': 'State',
-        name: 'Región de Murcia',
-      },
-      {
-        '@type': 'Country',
-        name: 'España',
-      },
-    ],
-    priceRange: '€€',
-    openingHoursSpecification: {
-      '@type': 'OpeningHoursSpecification',
-      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
-      opens: '09:00',
-      closes: '18:00',
-    },
-    sameAs: [
-      'https://www.instagram.com/eskaladigital',
-      'https://www.linkedin.com/company/eskaladigital',
-      'https://www.facebook.com/eskaladigital',
-    ],
-    hasOfferCatalog: {
-      '@type': 'OfferCatalog',
-      name: 'Servicios de Marketing Digital en Murcia',
-      itemListElement: [
-        {
-          '@type': 'Offer',
-          itemOffered: {
-            '@type': 'Service',
-            name: 'Diseño Web en Murcia',
-            description: 'Diseño y desarrollo de páginas web profesionales para empresas murcianas',
-          },
-        },
-        {
-          '@type': 'Offer',
-          itemOffered: {
-            '@type': 'Service',
-            name: 'SEO Local Murcia',
-            description: 'Posicionamiento en Google para negocios locales en Murcia',
-          },
-        },
-        {
-          '@type': 'Offer',
-          itemOffered: {
-            '@type': 'Service',
-            name: 'Gestión de Redes Sociales Murcia',
-            description: 'Community management y estrategia de contenidos para empresas',
-          },
-        },
-        {
-          '@type': 'Offer',
-          itemOffered: {
-            '@type': 'Service',
-            name: 'Google Ads Murcia',
-            description: 'Campañas de publicidad en Google optimizadas para negocios locales',
-          },
-        },
-      ],
-    },
-    aggregateRating: {
-      '@type': 'AggregateRating',
-      ratingValue: '4.9',
-      reviewCount: '47',
-      bestRating: '5',
-      worstRating: '1',
-    },
+    '@type': 'AboutPage',
+    '@id': `${SITE_URL}/quienes-somos#about`,
+    url: `${SITE_URL}/quienes-somos`,
+    name: 'Quiénes somos | ESKALA Marketing Digital',
+    description:
+      'ESKALA es la agencia de marketing digital en Murcia. SEO local, diseño web, redes sociales y Google Ads desde 2020.',
+    about: { '@id': AGENCY_ID },
+    isPartOf: { '@id': `${SITE_URL}/#website` },
   }
+  const breadcrumbJsonLd = generateBreadcrumbSchema([
+    { name: 'Inicio', path: '/' },
+    { name: 'Quiénes somos', path: '/quienes-somos' },
+  ])
 
   return (
     <StandardLayout>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(aboutSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
       <Hero />
       <About />

@@ -1,5 +1,6 @@
 import { createHash } from 'crypto'
 import { CONTACT_EMAIL, CONTACT_PHONE, SITE_URL } from './config'
+import { formatShortAddress } from '@/lib/site'
 import { ESKALA_SERVICES } from './business-data'
 import type { IngestChunk } from './types'
 
@@ -33,7 +34,7 @@ export function chunksFromEmpresa(): IngestChunk[] {
     makeChunk(
       'empresa',
       'Contacto',
-      `Email: ${CONTACT_EMAIL}\nTeléfono: ${CONTACT_PHONE}\nHorario: lunes a viernes 9:00–18:00\nUbicación: Murcia, España (presencial con cita)\nFormulario de contacto (particular/empresa, temática, origen): ${SITE_URL}/contacto\nWhatsApp del mismo número es un canal de la ficha de contacto, no el chat flotante de la web. El chat flotante es Nora.`
+      `Email: ${CONTACT_EMAIL}\nTeléfono: ${CONTACT_PHONE}\nHorario: lunes a viernes 9:00–18:00\nUbicación: ${formatShortAddress()} (presencial con cita)\nFormulario de contacto (particular/empresa, temática, origen): ${SITE_URL}/contacto\nWhatsApp del mismo número es un canal de la ficha de contacto, no el chat flotante de la web. El chat flotante es Nora.`
     ),
   ]
 }

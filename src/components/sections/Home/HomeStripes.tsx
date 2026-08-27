@@ -437,16 +437,15 @@ export default function HomeStripes() {
       <main className={styles.content}>
         <section className={styles.intro}>
           <div className={styles.introInner}>
-            <span className={styles.kicker}>Agencia de Marketing Digital en Murcia</span>
+            <span className={styles.kicker}>Desde 2020 · Murcia y la Región</span>
             <h1 className={styles.h1}>
-              Hacemos crecer tu negocio con{' '}
-              <span>marketing digital que funciona</span>
+              Agencia de marketing digital{' '}
+              <span>en Murcia</span>
             </h1>
             <p className={styles.lead}>
-              Somos <strong>ESKALA</strong>, la agencia de marketing digital en Murcia que ayuda
-              a negocios locales a vender más online. Desde 2020 combinamos diseño web, SEO local,
-              redes sociales, Google Ads y aplicaciones con IA para conseguir resultados reales y
-              medibles.
+              Hacemos crecer tu negocio con marketing digital que funciona. Somos{' '}
+              <strong>ESKALA</strong>: diseño web, SEO local, redes sociales, Google Ads y
+              aplicaciones con IA para empresas de Murcia, Cartagena, Lorca y toda la Región.
             </p>
             <div className={styles.ctaRow}>
               <Link href="/contacto" className={`${styles.btn} ${styles.btnPrimary}`}>

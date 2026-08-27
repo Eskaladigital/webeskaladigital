@@ -51,6 +51,8 @@ const heroData = {
   titleHighlight: 'con Chatbots Inteligentes',
   description: 'Desarrollamos chatbots con inteligencia artificial avanzada para empresas en Murcia. Chatbots para WhatsApp Business, web, Facebook Messenger, Instagram y llamadas de voz. Powered by GPT-4 y Claude. No son bots simples con respuestas prefabricadas: entienden lenguaje natural, contexto y aprenden de cada conversación. Atienden a tus clientes 24/7, responden al instante, reservan citas, califican leads y venden mientras duermes. Trabajamos con clínicas, despachos, tiendas online y empresas de servicios en Murcia, Cartagena y toda la Región. Atención personalizada, siempre disponible.',
   stripeColor: 6,
+  jsonLdName: 'Chatbots con IA',
+  jsonLdSlug: 'chatbots',
   ctaPrimary: 'Solicitar demo',
   ctaSecondary: 'Ver proyectos',
 }
@@ -118,8 +120,40 @@ const testimonial = {
 }
 
 export default function ChatbotsPage() {
+  const serviceSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    serviceType: 'Chatbots con IA',
+    name: 'Chatbots con IA en Murcia',
+    description:
+      'Desarrollo de chatbots inteligentes para WhatsApp, web y voz. Atención 24/7 y captación de leads para empresas de Murcia y la Región.',
+    provider: {
+      '@type': 'MarketingAgency',
+      name: 'ESKALA Marketing Digital',
+      image: 'https://www.eskaladigital.com/icon.png',
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: 'Murcia',
+        addressRegion: 'Región de Murcia',
+        addressCountry: 'ES',
+      },
+      telephone: '+34626823404',
+      priceRange: '€€',
+    },
+    areaServed: [
+      { '@type': 'City', name: 'Murcia' },
+      { '@type': 'City', name: 'Cartagena' },
+      { '@type': 'City', name: 'Lorca' },
+      { '@type': 'AdministrativeArea', name: 'Región de Murcia' },
+    ],
+  }
+
   return (
     <StandardLayout>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
+      />
       <ServiceHero {...heroData} />
       <ServiceFeatures features={features} title="Tipos de chatbots" />
       <ServiceBenefits benefits={benefits} />

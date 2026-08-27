@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { Mail, Phone, MapPin, Clock, CheckCircle } from 'lucide-react'
 import styles from './ContactForm.module.css'
+import { formatShortAddress } from '@/lib/site'
 
 interface FormData {
   contact_type: 'particular' | 'professional'
@@ -141,7 +142,7 @@ export default function ContactForm() {
               <MapPin size={20} strokeWidth={2} aria-hidden="true" />
               <div>
                 <strong>Ubicación</strong>
-                <span>Murcia, España · presencial con cita</span>
+                <span>{formatShortAddress()} · presencial con cita</span>
               </div>
             </li>
           </ul>

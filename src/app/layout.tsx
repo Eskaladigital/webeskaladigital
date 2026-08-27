@@ -4,6 +4,10 @@ import Script from 'next/script'
 import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google'
 import { CookieConsentBar } from '@/components/CookieConsentBar'
 import ChatWidget from '@/components/chatbot/ChatWidget'
+import {
+  generateMarketingAgencySchema,
+  generateWebSiteSchema,
+} from '@/lib/site'
 import './globals.css'
 
 const outfit = Outfit({
@@ -109,60 +113,8 @@ export const metadata: Metadata = {
   category: 'marketing',
 }
 
-// Schema JSON-LD para datos estructurados
-const jsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'MarketingAgency',
-  name: 'ESKALA Marketing Digital',
-  description: 'Agencia de marketing digital en Murcia especializada en diseño web, SEO, redes sociales, Google Ads y aplicaciones con inteligencia artificial.',
-  url: 'https://www.eskaladigital.com',
-  logo: 'https://www.eskaladigital.com/logo.png',
-  image: 'https://www.eskaladigital.com/eskala_digital_opengraph.png',
-  telephone: '+34626823404',
-  email: 'contacto@eskaladigital.com',
-  address: {
-    '@type': 'PostalAddress',
-    addressLocality: 'Murcia',
-    addressRegion: 'Región de Murcia',
-    addressCountry: 'ES',
-  },
-  geo: {
-    '@type': 'GeoCoordinates',
-    latitude: 37.9922,
-    longitude: -1.1307,
-  },
-  areaServed: [
-    { '@type': 'City', name: 'Murcia' },
-    { '@type': 'State', name: 'Región de Murcia' },
-    { '@type': 'Country', name: 'España' },
-  ],
-  priceRange: '€€',
-  openingHoursSpecification: {
-    '@type': 'OpeningHoursSpecification',
-    dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
-    opens: '09:00',
-    closes: '18:00',
-  },
-  sameAs: [
-    'https://www.instagram.com/eskaladigital',
-    'https://www.linkedin.com/company/eskaladigital',
-    'https://www.facebook.com/eskaladigital',
-  ],
-  hasOfferCatalog: {
-    '@type': 'OfferCatalog',
-    name: 'Servicios de Marketing Digital',
-    itemListElement: [
-      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Diseño Web' } },
-      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'SEO Local' } },
-      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Gestión de Redes Sociales' } },
-      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Google Ads' } },
-      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Aplicaciones con IA' } },
-      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Chatbots con IA' } },
-      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Branding' } },
-      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Email Marketing' } },
-    ],
-  },
-}
+const agencyJsonLd = generateMarketingAgencySchema()
+const websiteJsonLd = generateWebSiteSchema()
 
 const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID
 const GA_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || process.env.NEXT_PUBLIC_GA_ID
@@ -184,10 +136,13 @@ export default function RootLayout({
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="msapplication-TileColor" content="#0f1729" />
         
-        {/* JSON-LD Schema */}
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(agencyJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
         />
         <Script
           id="gtag-consent-default"

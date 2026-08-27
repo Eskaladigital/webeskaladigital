@@ -54,6 +54,8 @@ const heroData = {
   titleHighlight: 'que Generan Clientes Reales',
   description: 'Somos agencia Google Ads certificada en Murcia. Aparece en la primera posición de Google cuando tus clientes potenciales buscan tus servicios. Gestionamos campañas SEM de búsqueda, display, shopping y YouTube optimizadas para conseguir el máximo retorno de tu inversión publicitaria. Trabajamos con empresas de Murcia, Cartagena, Lorca y toda la Región. No malgastes presupuesto: cada euro invertido en Google Ads está optimizado para generar conversiones. Resultados medibles desde el primer día. Google Partner certificado.',
   stripeColor: 4,
+  jsonLdName: 'Google Ads',
+  jsonLdSlug: 'google-ads',
 }
 
 const features = [
@@ -145,7 +147,7 @@ export default function GoogleAdsPage() {
     provider: {
       '@type': 'MarketingAgency',
       name: 'ESKALA Marketing Digital',
-      image: 'https://www.eskaladigital.com/logo.png',
+      image: 'https://www.eskaladigital.com/icon.png',
       address: {
         '@type': 'PostalAddress',
         addressLocality: 'Murcia',

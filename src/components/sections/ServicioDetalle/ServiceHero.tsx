@@ -2,6 +2,7 @@
 
 import styles from './ServiceHero.module.css'
 import Link from 'next/link'
+import { generateServiceBreadcrumb } from '@/lib/site'
 
 interface ServiceHeroProps {
   badge: string
@@ -9,6 +10,8 @@ interface ServiceHeroProps {
   titleHighlight: string
   description: string
   stripeColor: number
+  jsonLdName?: string
+  jsonLdSlug?: string
 }
 
 const stripes = [
@@ -22,9 +25,25 @@ const stripes = [
   { label: 'Contacto', href: '/contacto' },
 ]
 
-export default function ServiceHero({ badge, title, titleHighlight, description }: ServiceHeroProps) {
+export default function ServiceHero({
+  badge,
+  title,
+  titleHighlight,
+  description,
+  jsonLdName,
+  jsonLdSlug,
+}: ServiceHeroProps) {
+  const breadcrumbJsonLd =
+    jsonLdName && jsonLdSlug ? generateServiceBreadcrumb(jsonLdName, jsonLdSlug) : null
+
   return (
     <section className={styles.hero}>
+      {breadcrumbJsonLd ? (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+        />
+      ) : null}
       <div className={styles.heroStripes}>
         {stripes.map((stripe, index) => (
           <Link key={index} href={stripe.href}>

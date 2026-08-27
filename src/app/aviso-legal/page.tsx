@@ -1,6 +1,7 @@
 import { StandardLayout } from '@/components/layout'
 import type { Metadata } from 'next'
 import styles from '../politica-privacidad/legal.module.css'
+import { CONTACT_EMAIL, CONTACT_PHONE, SITE_URL, formatFullAddress } from '@/lib/site'
 
 export const metadata: Metadata = {
   title: 'Aviso Legal | ESKALA Marketing Digital',
@@ -28,10 +29,10 @@ export default function AvisoLegal() {
             <ul>
               <li><strong>Denominación social:</strong> ESKALA Marketing Digital</li>
               <li><strong>CIF:</strong> [Tu CIF]</li>
-              <li><strong>Domicilio:</strong> Murcia, España</li>
-              <li><strong>Email:</strong> contacto@eskaladigital.com</li>
-              <li><strong>Teléfono:</strong> +34 626 82 34 04</li>
-              <li><strong>Sitio web:</strong> www.eskaladigital.com</li>
+              <li><strong>Domicilio:</strong> {formatFullAddress()}</li>
+              <li><strong>Email:</strong> {CONTACT_EMAIL}</li>
+              <li><strong>Teléfono:</strong> {CONTACT_PHONE}</li>
+              <li><strong>Sitio web:</strong> {SITE_URL.replace(/^https:\/\//, '')}</li>
             </ul>
           </section>
 

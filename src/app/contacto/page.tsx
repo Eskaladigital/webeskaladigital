@@ -4,10 +4,11 @@ import ContactForm from '@/components/sections/Contacto/ContactForm'
 import ContactOptions from '@/components/sections/Contacto/ContactOptions'
 import ContactInfo from '@/components/sections/Contacto/ContactInfo'
 import type { Metadata } from 'next'
+import { AGENCY_ID, SITE_URL, generateBreadcrumbSchema } from '@/lib/site'
 
 export const metadata: Metadata = {
   title: 'Contacto | Presupuesto Sin Compromiso',
-  description: 'Contacta con ESCALA Marketing en Murcia. Solicita presupuesto sin compromiso para tu proyecto de marketing digital, web o SEO. Respuesta en 24h.',
+  description: 'Contacta con ESKALA Marketing en Murcia. Solicita presupuesto sin compromiso para tu proyecto de marketing digital, web o SEO. Respuesta en 24h.',
   keywords: [
     'contacto agencia marketing murcia',
     'presupuesto marketing digital',
@@ -42,8 +43,29 @@ export const metadata: Metadata = {
 }
 
 export default function ContactoPage() {
+  const contactSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'ContactPage',
+    '@id': `${SITE_URL}/contacto#page`,
+    url: `${SITE_URL}/contacto`,
+    name: 'Contacto | ESKALA Marketing Digital',
+    about: { '@id': AGENCY_ID },
+  }
+  const breadcrumbJsonLd = generateBreadcrumbSchema([
+    { name: 'Inicio', path: '/' },
+    { name: 'Contacto', path: '/contacto' },
+  ])
+
   return (
     <StandardLayout>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(contactSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       <Hero />
       <ContactForm />
       <ContactOptions />

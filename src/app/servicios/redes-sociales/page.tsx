@@ -54,6 +54,8 @@ const heroData = {
   titleHighlight: 'para Empresas en Murcia',
   description: 'Somos tu Community Manager en Murcia. Gestionamos tus redes sociales (Instagram, Facebook, LinkedIn, TikTok) de forma profesional. Las redes sociales son el escaparate digital de tu marca. Creamos contenido que engancha a tu audiencia, construimos comunidad y convertimos seguidores en clientes. Trabajamos con empresas de Murcia, Cartagena, Lorca y toda la Región de Murcia. Estrategia, diseño, copywriting, gestión de comunidad y análisis de métricas. Tu marca siempre activa y profesional en redes.',
   stripeColor: 3,
+  jsonLdName: 'Redes sociales',
+  jsonLdSlug: 'redes-sociales',
 }
 
 const features = [
@@ -145,7 +147,7 @@ export default function RedesSocialesPage() {
     provider: {
       '@type': 'MarketingAgency',
       name: 'ESKALA Marketing Digital',
-      image: 'https://www.eskaladigital.com/logo.png',
+      image: 'https://www.eskaladigital.com/icon.png',
       address: {
         '@type': 'PostalAddress',
         addressLocality: 'Murcia',
