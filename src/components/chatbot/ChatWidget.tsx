@@ -16,7 +16,6 @@ const ASSISTANT_NAME = process.env.NEXT_PUBLIC_CHATBOT_ASSISTANT_NAME?.trim() ||
 const STORAGE_SESSION = 'eskala_chat_session_id'
 const STORAGE_CONV = 'eskala_chat_conversation_id'
 const STORAGE_MESSAGES = 'eskala_chat_messages'
-const STORAGE_OPEN = 'eskala_chat_open'
 
 type ChatMsg = { id: string; role: 'user' | 'assistant'; content: string }
 
@@ -48,7 +47,8 @@ export default function ChatWidget() {
     localStorage.setItem(STORAGE_SESSION, sid)
     setSessionId(sid)
     setConversationId(localStorage.getItem(STORAGE_CONV))
-    setOpen(localStorage.getItem(STORAGE_OPEN) === '1')
+    // Molde Andrea: el hilo se restaura; el panel no. Al entrar a la página siempre se ve el icono.
+    setOpen(false)
     try {
       const saved = localStorage.getItem(STORAGE_MESSAGES)
       if (saved) setMessages(JSON.parse(saved))
@@ -70,7 +70,6 @@ export default function ChatWidget() {
 
   const persistOpen = (v: boolean) => {
     setOpen(v)
-    localStorage.setItem(STORAGE_OPEN, v ? '1' : '0')
   }
 
   const refreshConversation = () => {
@@ -171,6 +170,10 @@ export default function ChatWidget() {
     if (isInternalEskalaUrl(href)) {
       e.preventDefault()
       const path = href.startsWith('http') ? new URL(href).pathname : href
+      // En móvil el panel cubre toda la pantalla: si no se cierra, parece que el enlace no ha hecho nada.
+      if (typeof window !== 'undefined' && !window.matchMedia('(min-width: 640px)').matches) {
+        persistOpen(false)
+      }
       router.push(path)
     }
   }

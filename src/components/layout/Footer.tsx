@@ -87,17 +87,39 @@ export function Footer() {
             </li>
           </ul>
         </div>
+
+        <div>
+          <h4 className={styles.title}>Legal</h4>
+          <ul className={styles.links}>
+            <li>
+              <Link href="/aviso-legal">Aviso legal</Link>
+            </li>
+            <li>
+              <Link href="/politica-privacidad">Política de privacidad</Link>
+            </li>
+            <li>
+              <Link href="/politica-cookies">Política de cookies</Link>
+            </li>
+            <li>
+              <CookieSettingsButton className={styles.linkButton} />
+            </li>
+          </ul>
+        </div>
       </div>
 
       <div className={styles.bottom}>
         <div className={styles.bottomLinks}>
           <span>© {new Date().getFullYear()} ESKALA Marketing Digital. Todos los derechos reservados.</span>
-          <Link href="/politica-privacidad" className={styles.sitemapLink}>Política de Privacidad</Link>
-          <Link href="/aviso-legal" className={styles.sitemapLink}>Aviso Legal</Link>
-          <CookieSettingsButton className={styles.sitemapLink} />
           <Link href="/sitemap-html" className={styles.sitemapLink}>Mapa del Sitio</Link>
         </div>
-        <span>Hecho con 🧡 en Murcia</span>
+        <span className={styles.credit}>
+          Hecho con <span className={styles.heart}>❤️</span> en Murcia
+          <span className={styles.creditDot}> · </span>
+          Web desarrollada por{' '}
+          <a href="https://www.eskaladigital.com" target="_blank" rel="noopener noreferrer">
+            ESKALA Agencia de Marketing Digital
+          </a>
+        </span>
       </div>
     </footer>
   )

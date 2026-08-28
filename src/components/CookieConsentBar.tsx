@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from 'react'
 import Link from 'next/link'
-import { BarChart3, Cookie, Megaphone, Shield, X } from 'lucide-react'
+import { BarChart3, Cookie, Megaphone, Settings, Shield, X } from 'lucide-react'
 
 export const OPEN_COOKIE_SETTINGS = 'openCookieSettings'
 const KEY = 'eskala_cookie_consent'
@@ -11,11 +11,12 @@ const PREFS_KEY = 'eskala_cookie_preferences'
 type Prefs = {
   necessary: true
   analytics: boolean
+  functional: boolean
   marketing: boolean
 }
 
-const ALL_ON: Prefs = { necessary: true, analytics: true, marketing: true }
-const ONLY_NECESSARY: Prefs = { necessary: true, analytics: false, marketing: false }
+const ALL_ON: Prefs = { necessary: true, analytics: true, functional: true, marketing: true }
+const ONLY_NECESSARY: Prefs = { necessary: true, analytics: false, functional: false, marketing: false }
 
 function updateGtag(prefs: Prefs) {
   if (typeof window === 'undefined' || !(window as any).gtag) return
@@ -30,8 +31,8 @@ function updateGtag(prefs: Prefs) {
 }
 
 function persist(prefs: Prefs) {
-  const granted = prefs.analytics || prefs.marketing
-  localStorage.setItem(KEY, granted ? 'granted' : 'denied')
+  // KEY solo refleja analítica: el default de gtag en el layout la lee al recargar.
+  localStorage.setItem(KEY, prefs.analytics ? 'granted' : 'denied')
   localStorage.setItem(PREFS_KEY, JSON.stringify(prefs))
   updateGtag(prefs)
 }
@@ -41,7 +42,12 @@ function readPrefs(): Prefs | null {
     const raw = localStorage.getItem(PREFS_KEY)
     if (raw) {
       const parsed = JSON.parse(raw) as Partial<Prefs>
-      return { necessary: true, analytics: Boolean(parsed.analytics), marketing: Boolean(parsed.marketing) }
+      return {
+        necessary: true,
+        analytics: Boolean(parsed.analytics),
+        functional: Boolean(parsed.functional),
+        marketing: Boolean(parsed.marketing),
+      }
     }
     const legacy = localStorage.getItem(KEY)
     if (legacy === 'granted') return ALL_ON
@@ -124,10 +130,13 @@ export function CookieConsentBar() {
             </button>
           </div>
           <div className="flex-1 overflow-y-auto p-6">
-            <p className="text-slate-600 mb-6">Elige qué tipos de cookies deseas aceptar. Las cookies necesarias no se pueden desactivar.</p>
-            <Category icon={Shield} title="Cookies necesarias" description="Esenciales para el funcionamiento del sitio y recordar tu consentimiento." enabled required />
-            <Category icon={BarChart3} title="Cookies analíticas" description="Nos permiten medir visitas y mejorar eskaladigital.com (Google Analytics)." enabled={prefs.analytics} onChange={(v) => setPrefs((p) => ({ ...p, analytics: v }))} />
-            <Category icon={Megaphone} title="Cookies de marketing" description="Miden campañas y anuncios (Google Ads / GTM)." enabled={prefs.marketing} onChange={(v) => setPrefs((p) => ({ ...p, marketing: v }))} />
+            <p className="text-slate-600 mb-6">Elige qué tipos de cookies deseas aceptar. Las cookies necesarias no se pueden desactivar ya que son imprescindibles para el funcionamiento del sitio.</p>
+            <div className="space-y-4">
+              <Category icon={Shield} title="Cookies necesarias" description="Estas cookies son esenciales para el funcionamiento del sitio web. Sin ellas, el sitio no funcionaría correctamente." enabled required />
+              <Category icon={BarChart3} title="Cookies analíticas" description="Nos permiten contar las visitas y analizar cómo los usuarios navegan por el sitio para mejorarlo (Google Analytics)." enabled={prefs.analytics} onChange={(v) => setPrefs((p) => ({ ...p, analytics: v }))} />
+              <Category icon={Settings} title="Cookies funcionales" description="Permiten recordar tus preferencias para una experiencia más personalizada." enabled={prefs.functional} onChange={(v) => setPrefs((p) => ({ ...p, functional: v }))} />
+              <Category icon={Megaphone} title="Cookies de marketing" description="Se utilizan para mostrarte anuncios relevantes y medir la efectividad de las campañas publicitarias." enabled={prefs.marketing} onChange={(v) => setPrefs((p) => ({ ...p, marketing: v }))} />
+            </div>
             <p className="text-sm text-slate-500 mt-6">
               Más información en la{' '}
               <Link href="/politica-privacidad" className="text-orange-500 hover:underline" onClick={() => setView('hidden')}>
@@ -154,7 +163,7 @@ export function CookieConsentBar() {
           <div>
             <h3 className="text-lg font-bold text-slate-900 mb-1">Utilizamos cookies</h3>
             <p className="text-slate-600 text-sm">
-              Usamos cookies de analítica y publicidad para medir visitas y mejorar la web. Puedes aceptar todas o configurar tus preferencias.{' '}
+              Usamos cookies propias y de terceros para mejorar tu experiencia, analizar el tráfico y mostrarte contenido personalizado. Puedes aceptar todas o configurar tus preferencias.{' '}
               <Link href="/politica-privacidad" className="text-orange-500 hover:underline">Política de privacidad</Link>
             </p>
           </div>
@@ -184,7 +193,7 @@ function Category({
   onChange?: (v: boolean) => void
 }) {
   return (
-    <div className={`p-4 rounded-xl border-2 mb-4 ${enabled ? 'border-orange-500 bg-orange-50' : 'border-gray-200 bg-gray-50'}`}>
+    <div className={`p-4 rounded-xl border-2 ${enabled ? 'border-orange-500 bg-orange-50' : 'border-gray-200 bg-gray-50'}`}>
       <div className="flex items-start gap-4">
         <div className={`w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 ${enabled ? 'bg-orange-500 text-white' : 'bg-gray-200 text-gray-500'}`} aria-hidden="true">
           <Icon className="h-5 w-5" />

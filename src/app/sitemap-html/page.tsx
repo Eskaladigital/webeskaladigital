@@ -115,6 +115,15 @@ export default async function SitemapPage() {
               <h2>Legal y Contacto</h2>
               <ul>
                 <li>
+                  <Link href="/aviso-legal">Aviso legal</Link>
+                </li>
+                <li>
+                  <Link href="/politica-privacidad">Política de privacidad</Link>
+                </li>
+                <li>
+                  <Link href="/politica-cookies">Política de cookies</Link>
+                </li>
+                <li>
                   <Link href="/contacto">Formulario de Contacto</Link>
                 </li>
                 <li>
