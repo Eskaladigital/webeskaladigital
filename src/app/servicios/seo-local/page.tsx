@@ -8,7 +8,8 @@ import ServiceCTA from '@/components/sections/ServicioDetalle/ServiceCTA'
 
 export const metadata = {
   title: 'SEO Local en Murcia | Posicionamiento Web Google Maps | ESKALA',
-  description: 'Expertos en SEO local en Murcia. Aparece en Google Maps y búsquedas locales cuando tus clientes te buscan. Optimizamos Google My Business, keywords locales y contenido. Trabajamos con empresas de Murcia, Cartagena, Lorca y toda la Región. Más visibilidad local = más clientes. Auditoría SEO gratuita.',
+  description:
+    'SEO local en Murcia: ficha de Google, pack local y búsquedas «servicio + Murcia». Auditoría gratuita.',
   keywords: [
     'seo local murcia',
     'seo murcia',
@@ -20,8 +21,6 @@ export const metadata = {
     'consultoria seo murcia',
     'expertos seo murcia',
     'agencia seo murcia',
-    'seo cartagena',
-    'posicionamiento web cartagena',
     'google maps murcia',
   ],
   openGraph: {
@@ -53,7 +52,8 @@ const heroData = {
   badge: '📈 SEO Local en Murcia',
   title: 'Posicionamiento SEO Local',
   titleHighlight: 'para Negocios en Murcia',
-  description: 'Somos especialistas en SEO local en Murcia. El 46% de las búsquedas en Google tienen intención local. Si no apareces en Google Maps cuando buscan "tu servicio + Murcia", estás perdiendo clientes cada día. Optimizamos tu Google My Business, posicionamos tu web para búsquedas locales y te ayudamos a dominar tu zona: Murcia capital, Cartagena, Lorca, Molina de Segura y toda la Región. Más visibilidad local = más llamadas, más visitas, más ventas.',
+  description:
+    'Si no apareces en Google Maps cuando buscan «tu servicio + Murcia», el clic se lo lleva otro. Optimizamos tu ficha de Google Business, la web y las citaciones NAP. La zona es la de tu negocio, no una sucursal nuestra.',
   stripeColor: 2,
   jsonLdName: 'SEO local',
   jsonLdSlug: 'seo-local',
@@ -73,7 +73,8 @@ const features = [
   {
     icon: '📝',
     title: 'Contenido SEO Localizado',
-    description: 'Creamos contenido optimizado para tu zona geográfica: páginas específicas por barrios de Murcia (El Carmen, La Flota, Zarandona), ciudades cercanas (Cartagena, Lorca, Molina) y servicios locales. Artículos de blog con keywords locales que atraen tráfico cualificado de Google.',
+    description:
+      'Contenido localizado para el negocio del cliente: la ciudad o zona donde opera. No fabricamos landings de barrio en eskaladigital.com. Blog y páginas de servicio con keywords locales que sí tienen demanda.',
   },
   {
     icon: '⭐',
@@ -121,7 +122,8 @@ const process = [
   { 
     step: '03', 
     title: 'Estrategia de Posicionamiento', 
-    description: 'Trabajamos keywords locales mes a mes, creamos contenido SEO localizado (artículos de blog sobre Murcia, páginas por zonas), construimos citaciones en directorios relevantes y gestionamos estrategia de reseñas. Link building local con sitios murcianos.' 
+    description:
+      'Keywords locales mes a mes, contenido en el blog y en las URLs de servicio del cliente, citaciones en directorios y reseñas. Link building local con sitios murcianos. Sin doorway de pedanías.' 
   },
   { 
     step: '04', 

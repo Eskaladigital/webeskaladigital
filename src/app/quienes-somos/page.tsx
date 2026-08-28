@@ -9,27 +9,12 @@ import type { Metadata } from 'next'
 import { AGENCY_ID, SITE_URL, generateBreadcrumbSchema } from '@/lib/site'
 
 export const metadata: Metadata = {
-  title: 'Agencia de Marketing Digital en Murcia | ESKALA - Expertos Locales',
-  description: 'ESKALA es tu agencia de marketing digital en Murcia. Especialistas en SEO local, diseño web, redes sociales y Google Ads. Ayudamos a empresas murcianas a crecer online desde 2020. Resultados reales, estrategias personalizadas.',
-  keywords: [
-    'agencia marketing digital murcia',
-    'marketing digital murcia',
-    'agencia marketing murcia',
-    'seo murcia',
-    'diseño web murcia',
-    'agencia publicidad murcia',
-    'marketing online murcia',
-    'consultora marketing murcia',
-    'agencia digital murcia',
-    'expertos marketing murcia',
-    'community manager murcia',
-    'google ads murcia',
-    'redes sociales murcia',
-    'branding murcia',
-  ],
+  title: 'Quiénes somos',
+  description:
+    'El equipo de ESKALA: desde 2020 en Murcia. Cómo trabajamos SEO local, diseño web, redes y Google Ads con pymes de la Región.',
   openGraph: {
-    title: 'Agencia de Marketing Digital en Murcia | ESKALA',
-    description: 'Agencia de marketing digital en Murcia especializada en hacer crecer negocios locales. SEO, diseño web, redes sociales y más.',
+    title: 'Quiénes somos | ESKALA Marketing Digital',
+    description: 'Equipo y forma de trabajar. Agencia en Murcia desde 2020.',
     url: 'https://www.eskaladigital.com/quienes-somos',
     siteName: 'ESKALA Marketing Digital',
     locale: 'es_ES',
@@ -39,14 +24,14 @@ export const metadata: Metadata = {
         url: '/eskala_digital_opengraph.png',
         width: 1200,
         height: 630,
-        alt: 'ESKALA - Agencia de Marketing Digital en Murcia',
+        alt: 'Quiénes somos — ESKALA Marketing Digital',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Agencia de Marketing Digital en Murcia | ESKALA',
-    description: 'Especialistas en marketing digital para empresas murcianas. Hacemos crecer tu negocio online.',
+    title: 'Quiénes somos | ESKALA Marketing Digital',
+    description: 'Equipo y forma de trabajar. Agencia en Murcia desde 2020.',
     images: ['/eskala_digital_opengraph.png'],
   },
   alternates: {
@@ -62,7 +47,7 @@ export default function QuienesSomosPage() {
     url: `${SITE_URL}/quienes-somos`,
     name: 'Quiénes somos | ESKALA Marketing Digital',
     description:
-      'ESKALA es la agencia de marketing digital en Murcia. SEO local, diseño web, redes sociales y Google Ads desde 2020.',
+      'Página de equipo de ESKALA Marketing Digital. Agencia en Murcia desde 2020.',
     about: { '@id': AGENCY_ID },
     isPartOf: { '@id': `${SITE_URL}/#website` },
   }

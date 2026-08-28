@@ -27,16 +27,15 @@ export default function Hero() {
       </div>
 
       <div className={styles.heroContent}>
-        <div className={styles.heroBadge}>📍 Agencia de Marketing Digital en Murcia</div>
+        <div className={styles.heroBadge}>Desde 2020 en Murcia</div>
         <h1 className={styles.heroTitle}>
-          Tu <span>Agencia de Marketing Digital</span> en Murcia
+          Quiénes <span>somos</span>
         </h1>
         <p className={styles.heroDesc}>
-          Somos ESKALA, la <strong>agencia de marketing digital en Murcia</strong> que impulsa 
-          negocios locales con estrategias digitales que funcionan. Desde 2020 ayudamos a empresas 
-          murcianas a crecer online con <strong>SEO local</strong>, <strong>diseño web</strong>, 
-          <strong>redes sociales</strong> y <strong>publicidad en Google</strong>. Trabajamos codo a codo 
-          contigo para conseguir resultados reales y medibles.
+          Somos el equipo de ESKALA. Desde 2020 trabajamos con pymes de Murcia en{' '}
+          <strong>SEO local</strong>, <strong>diseño web</strong>, <strong>redes sociales</strong> y{' '}
+          <strong>Google Ads</strong>. Sin postureo: brief claro, ejecución y números que se pueden
+          mirar juntos.
         </p>
         <div className={styles.heroButtons}>
           <Link href="/contacto" className={`${styles.btn} ${styles.btnPrimary}`}>

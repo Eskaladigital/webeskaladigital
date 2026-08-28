@@ -7,25 +7,20 @@ import ServiceTestimonial from '@/components/sections/ServicioDetalle/ServiceTes
 import ServiceCTA from '@/components/sections/ServicioDetalle/ServiceCTA'
 
 export const metadata = {
-  title: 'Google Ads en Murcia | Campañas SEM y Publicidad Google | ESKALA',
-  description: 'Agencia Google Ads en Murcia. Gestión profesional de campañas SEM: búsqueda, display, shopping y YouTube. Optimizamos tu inversión publicitaria para máximo ROI. Trabajamos con empresas de Murcia, Cartagena y toda la Región. Certificados Google Partner. Resultados medibles y transparentes. Auditoría gratuita.',
+  title: 'Agencia Google Ads en Murcia',
+  description:
+    'Agencia Google Ads en Murcia. Campañas SEM de búsqueda, display, shopping y YouTube. Presupuesto controlado, medición clara, auditoría gratuita.',
   keywords: [
+    'agencia google ads murcia',
     'google ads murcia',
     'sem murcia',
-    'publicidad google murcia',
     'adwords murcia',
     'campañas google murcia',
-    'agencia google ads murcia',
-    'google shopping murcia',
-    'ppc murcia',
-    'publicidad online murcia',
-    'marketing sem murcia',
-    'google ads cartagena',
     'gestión google ads murcia',
   ],
   openGraph: {
-    title: 'Google Ads en Murcia | Campañas SEM Profesionales | ESKALA',
-    description: 'Agencia Google Ads certificada en Murcia. Campañas SEM optimizadas para máximo ROI y conversiones.',
+    title: 'Agencia Google Ads en Murcia | ESKALA',
+    description: 'Campañas SEM desde Murcia: búsqueda, display, shopping y YouTube. Auditoría gratuita.',
     url: 'https://www.eskaladigital.com/servicios/google-ads',
     siteName: 'ESKALA Marketing Digital',
     locale: 'es_ES',
@@ -39,8 +34,8 @@ export const metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Google Ads en Murcia | ESKALA Marketing Digital',
-    description: 'Campañas de Google Ads optimizadas. Más clics, más conversiones, mejor ROI.',
+    title: 'Agencia Google Ads en Murcia | ESKALA',
+    description: 'Campañas SEM desde Murcia. Más clics, más conversiones, mejor ROI.',
     images: ['/eskala_digital_opengraph.png'],
   },
   alternates: { 
@@ -49,10 +44,11 @@ export const metadata = {
 }
 
 const heroData = {
-  badge: '🎯 Google Ads en Murcia',
-  title: 'Campañas de Google Ads',
-  titleHighlight: 'que Generan Clientes Reales',
-  description: 'Somos agencia Google Ads certificada en Murcia. Aparece en la primera posición de Google cuando tus clientes potenciales buscan tus servicios. Gestionamos campañas SEM de búsqueda, display, shopping y YouTube optimizadas para conseguir el máximo retorno de tu inversión publicitaria. Trabajamos con empresas de Murcia, Cartagena, Lorca y toda la Región. No malgastes presupuesto: cada euro invertido en Google Ads está optimizado para generar conversiones. Resultados medibles desde el primer día. Google Partner certificado.',
+  badge: 'Google Ads en Murcia',
+  title: 'Agencia Google Ads',
+  titleHighlight: 'en Murcia',
+  description:
+    'Gestionamos campañas SEM de búsqueda, display, shopping y YouTube para negocios de Murcia. Presupuesto que controlas, conversiones que se miden. Sin permanencia. Auditoría gratuita de la cuenta.',
   stripeColor: 4,
   jsonLdName: 'Google Ads',
   jsonLdSlug: 'google-ads',
@@ -115,7 +111,7 @@ const process = [
   { 
     step: '02', 
     title: 'Configuración de Campañas', 
-    description: 'Estructuramos campañas por tipo (búsqueda, display, shopping), grupos de anuncios por temas y keywords. Creamos los textos de anuncios con copys persuasivos y CTAs efectivos. Configuración de extensiones (llamada, ubicación, enlaces). Configuración de tracking de conversiones (Google Analytics 4, Google Tag Manager). Configuración de audiencias y segmentación geográfica Murcia/Cartagena.' 
+    description: 'Estructuramos campañas por tipo (búsqueda, display, shopping), grupos de anuncios por temas y keywords. Creamos los textos de anuncios con copys persuasivos y CTAs efectivos. Configuración de extensiones (llamada, ubicación, enlaces). Tracking de conversiones (GA4, Tag Manager). Segmentación geográfica en Murcia y el radio que pida el cliente.' 
   },
   { 
     step: '03', 
