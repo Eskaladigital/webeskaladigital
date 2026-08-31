@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Mail, Phone, MapPin, Clock, CheckCircle } from 'lucide-react'
 import styles from './ContactForm.module.css'
 import { formatShortAddress } from '@/lib/site'
@@ -11,6 +11,7 @@ interface FormData {
   email: string
   phone: string
   company: string
+  website: string
   inquiry_type: string
   referral_source: string
   message: string
@@ -44,6 +45,7 @@ const emptyForm: FormData = {
   email: '',
   phone: '',
   company: '',
+  website: '',
   inquiry_type: '',
   referral_source: '',
   message: '',
@@ -55,6 +57,11 @@ export default function ContactForm() {
   const [errors, setErrors] = useState<FormErrors>({})
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const [formStartedAt, setFormStartedAt] = useState(0)
+
+  useEffect(() => {
+    setFormStartedAt(Date.now())
+  }, [])
 
   const validateEmail = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
 
@@ -84,6 +91,7 @@ export default function ContactForm() {
         body: JSON.stringify({
           ...formData,
           gdpr_consent: formData.privacy,
+          form_started_at: formStartedAt,
         }),
       })
       if (!res.ok) {
@@ -160,6 +168,7 @@ export default function ContactForm() {
                 onClick={() => {
                   setIsSubmitted(false)
                   setFormData(emptyForm)
+                  setFormStartedAt(Date.now())
                 }}
               >
                 Enviar otro mensaje
@@ -196,6 +205,19 @@ export default function ContactForm() {
                     Empresa
                   </label>
                 </div>
+              </div>
+
+              <div className={styles.hp} aria-hidden="true">
+                <label htmlFor="website">Sitio web</label>
+                <input
+                  type="text"
+                  id="website"
+                  name="website"
+                  value={formData.website}
+                  onChange={handleChange}
+                  tabIndex={-1}
+                  autoComplete="off"
+                />
               </div>
 
               {formData.contact_type === 'professional' && (

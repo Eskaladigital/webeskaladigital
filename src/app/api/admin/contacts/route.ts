@@ -25,6 +25,7 @@ export async function GET() {
   const { data, error } = await sb
     .from('contact_submissions')
     .select('*')
+    .neq('status', 'spam')
     .order('created_at', { ascending: false })
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })
