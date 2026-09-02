@@ -46,19 +46,19 @@ const socialLinks: { name: string; Icon: LucideIcon; url: string; color: string 
   {
     name: 'Instagram',
     Icon: Instagram,
-    url: 'https://instagram.com/eskalamarketing',
+    url: 'https://www.instagram.com/eskalamarketingdigital/',
     color: '#E1306C',
   },
   {
     name: 'Facebook',
     Icon: Facebook,
-    url: 'https://facebook.com/eskalamarketing',
+    url: 'https://www.facebook.com/eskalamarketing',
     color: '#1877F2',
   },
   {
     name: 'LinkedIn',
     Icon: Linkedin,
-    url: 'https://linkedin.com/company/eskala-marketing',
+    url: 'https://www.linkedin.com/company/eskala-marketing-digital',
     color: '#0A66C2',
   },
   {

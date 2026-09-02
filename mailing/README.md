@@ -2,6 +2,30 @@
 
 ## 📁 Catálogo de Emails
 
+### Firma Outlook (1 sep 2026)
+
+Archivo: [`firma-outlook.html`](firma-outlook.html). **v3** es la buena (asuntos v1/v2/v3 en `contacto@eskaladigital.com`; copiar la v3).
+
+| Campo | Valor |
+|---|---|
+| Nombre | Narciso Pardo |
+| Cargo | Fundador · ESKALA Marketing Digital |
+| Teléfono | +34 626 82 34 04 (sin la palabra WhatsApp) |
+| Email | contacto@eskaladigital.com |
+| Web | www.eskaladigital.com · Murcia (sin calle) |
+| Icono | `https://www.eskaladigital.com/icon.png` |
+| Instagram | https://www.instagram.com/eskalamarketingdigital/ |
+| LinkedIn | https://www.linkedin.com/company/eskala-marketing-digital |
+| Facebook | https://www.facebook.com/eskalamarketing |
+
+No usar `/eskaladigital` en redes. Twitter de la web (`eskalamarketing`) no está confirmado; no va en la firma.
+
+**Outlook:** Archivo → Opciones → Correo → Firmas → Nueva («ESKALA»). Copiar solo el bloque del icono + franja naranja (no las instrucciones del mail). Si el icono sale en blanco, dejar descargar imágenes.
+
+**Por qué v2/v3 no usan `<p>`:** Outlook les mete margen y parte la franja naranja. La naranja es `border-left` en la celda del texto; los saltos van con `<br>`.
+
+El HTML de `src/lib/email.ts` es el aviso automático del formulario, no esta firma.
+
 ### 🎨 Emails de Marca (Presentación General)
 
 | Archivo | Descripción | Estilo |

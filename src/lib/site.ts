@@ -94,10 +94,11 @@ export function generateMarketingAgencySchema() {
       opens: '09:00',
       closes: '18:00',
     },
+    // Redes oficiales (Narciso, 1 sep 2026). No usar /eskaladigital.
     sameAs: [
-      'https://www.instagram.com/eskaladigital',
-      'https://www.linkedin.com/company/eskaladigital',
-      'https://www.facebook.com/eskaladigital',
+      'https://www.instagram.com/eskalamarketingdigital/',
+      'https://www.linkedin.com/company/eskala-marketing-digital',
+      'https://www.facebook.com/eskalamarketing',
     ],
     knowsLanguage: 'es',
     hasOfferCatalog: {

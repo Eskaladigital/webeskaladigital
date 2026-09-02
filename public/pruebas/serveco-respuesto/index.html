@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="es" class="is-locked">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SERVECO — Presupuesto detallado · ESCALA</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Presupuesto técnico SERVECO: fases, hitos, stack y precios. Documento privado ESCALA.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,500;0,8..60,600;0,8..60,700;1,8..60,500&family=Source+Sans+3:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f7f6f3;--paper:#fff;--ink:#2a2b2e;--muted:#6d6e71;--soft:#8b8c8f;
+  --orange:#e07a2f;--orange-d:#c4621c;--orange-s:rgba(224,122,47,.12);
+  --line:#e4e2dc;--line-2:#d4d2cb;--ink-2:#3d3e42;--green:#3d6b2e;--green-bg:#eef4ea;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:'Source Sans 3',sans-serif;font-weight:400;overflow-x:hidden}
+::selection{background:var(--orange);color:#fff}
+a{color:inherit;text-decoration:none}
+h1,h2,h3,.serif{font-family:'Source Serif 4',Georgia,serif;font-weight:600;line-height:1.15}
+.mono{font-family:'IBM Plex Mono',monospace;font-size:.78rem;font-weight:500;letter-spacing:-.01em}
+.ribbon{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:center;gap:.65rem;
+  padding:.5rem 1rem;font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;background:var(--ink);color:#fff;font-weight:600}
+.ribbon a{color:#fff;text-decoration:underline;text-underline-offset:2px}
+.nav{position:sticky;top:34px;z-index:40;background:rgba(247,246,243,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.nav-in{max-width:1180px;margin:0 auto;padding:.7rem 5vw;display:flex;gap:.3rem;overflow-x:auto;scrollbar-width:none}
+.nav-in::-webkit-scrollbar{display:none}
+.nav a{flex:none;padding:.38rem .85rem;border-radius:999px;font-size:.78rem;font-weight:600;letter-spacing:.04em;color:var(--muted)}
+.nav a:hover,.nav a.on{background:#fff;color:var(--ink);box-shadow:0 0 0 1px var(--line)}
+.wrap{max-width:1180px;margin:0 auto;padding:4.5rem 5vw 2rem}
+.head{max-width:860px;margin:0 auto 2.8rem;text-align:center}
+.head .logo{height:52px;width:auto;margin-bottom:1.4rem}
+.head .kick{font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;color:var(--orange);font-weight:700;display:block;margin-bottom:.75rem}
+.head h1{font-size:clamp(2rem,4.2vw,3rem);letter-spacing:-.02em;margin-bottom:.85rem}
+.head h1 em{font-style:italic;color:var(--orange);font-weight:500}
+.head p{color:var(--muted);line-height:1.75;font-size:1.05rem}
+.badge{display:inline-block;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;
+  padding:.22rem .55rem;border-radius:99px;vertical-align:middle}
+.badge-in{background:var(--green-bg);color:var(--green)}
+.badge-ex{background:var(--orange-s);color:var(--orange-d)}
+.badge-op{background:#eef0f4;color:#4a5568}
+
+.totals{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2.8rem}
+.tbox{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:1.25rem 1.35rem;text-align:center}
+.tbox .k{font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--soft);margin-bottom:.35rem}
+.tbox .v{font-family:'Source Serif 4',Georgia,serif;font-size:1.75rem;font-weight:600;color:var(--ink)}
+.tbox .v small{font-size:.95rem;font-weight:500;color:var(--muted)}
+.tbox.feat{border-color:rgba(224,122,47,.5);background:linear-gradient(180deg,#fff 0%,#fffaf6 100%)}
+.tbox.feat .v{color:var(--orange-d)}
+
+.sec{padding:3.5rem 0 0;border-top:1px solid var(--line)}
+.sec-h{max-width:760px;margin-bottom:1.8rem}
+.sec-h .n{font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;color:var(--orange);font-weight:700}
+.sec-h h2{font-size:clamp(1.55rem,2.8vw,2.1rem);margin:.4rem 0 .65rem}
+.sec-h p{color:var(--muted);line-height:1.65;font-size:.98rem}
+
+.phase{background:var(--paper);border:1px solid var(--line);border-radius:18px;margin-bottom:1.25rem;overflow:hidden}
+.phase-head{display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:space-between;gap:1rem;
+  padding:1.35rem 1.5rem;border-bottom:1px solid var(--line);background:#fafaf8}
+.phase-head h3{font-size:1.2rem;flex:1;min-width:200px}
+.phase-head .meta{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center}
+.phase-head .price{font-family:'Source Serif 4',Georgia,serif;font-size:1.45rem;font-weight:600;color:var(--orange-d);white-space:nowrap}
+.phase-head .pct{font-size:.75rem;color:var(--soft);font-weight:600}
+.stack{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.65rem}
+.tag{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:.62rem;font-weight:500;
+  padding:.18rem .5rem;border-radius:6px;background:#f0efeb;color:var(--ink-2);border:1px solid var(--line)}
+
+table{width:100%;border-collapse:collapse;font-size:.88rem}
+th,td{padding:.72rem 1.5rem;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--soft);background:#fafaf8}
+td:last-child,th:last-child{text-align:right;white-space:nowrap;font-weight:600;color:var(--ink)}
+tr:last-child td{border-bottom:0}
+td .hit{font-weight:600;color:var(--ink);display:block;margin-bottom:.2rem}
+td .tech{color:var(--muted);font-size:.82rem;line-height:1.5;max-width:520px}
+.phase-foot{padding:.85rem 1.5rem;background:#fafaf8;border-top:1px solid var(--line);
+  display:flex;justify-content:space-between;align-items:center;font-size:.88rem;color:var(--muted)}
+.phase-foot strong{color:var(--ink);font-size:1rem}
+
+.grand{background:var(--ink);color:#fff;border-radius:18px;padding:1.6rem 1.75rem;margin:2.5rem 0 1rem;
+  display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1rem}
+.grand .lbl{font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;opacity:.75;font-weight:600}
+.grand .amt{font-family:'Source Serif 4',Georgia,serif;font-size:clamp(1.8rem,4vw,2.4rem);font-weight:600}
+.grand .sub{font-size:.9rem;opacity:.8;margin-top:.25rem}
+
+.two{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:1.45rem 1.55rem}
+.card h3{font-size:1.1rem;margin:.1rem 0 .75rem}
+.card ul{list-style:none}
+.card li{padding:.38rem 0;border-bottom:1px solid var(--line);font-size:.9rem;color:var(--ink-2);
+  display:flex;justify-content:space-between;gap:1rem;align-items:baseline}
+.card li:last-child{border-bottom:0}
+.card li span{color:var(--soft);font-size:.78rem;flex:1}
+.card li em{font-style:normal;font-weight:700;color:var(--ink);white-space:nowrap}
+.card .note{margin-top:.85rem;font-size:.84rem;color:var(--muted);line-height:1.55}
+
+.footer{text-align:center;margin:4rem 0 2rem;color:var(--muted);font-size:.88rem;line-height:1.7}
+.footer a{color:var(--orange);font-weight:600}
+
+html.is-locked,body.is-locked{overflow:hidden;height:100%;touch-action:none}
+.gate{position:fixed;inset:0;z-index:200;display:grid;place-items:center;padding:1.5rem;
+  background:rgba(42,43,46,.58);backdrop-filter:blur(11px)}
+.gate[hidden]{display:none}
+.gate-card{width:min(420px,100%);background:var(--paper);border:1px solid var(--line);border-radius:20px;
+  padding:2rem 1.8rem;box-shadow:0 28px 70px rgba(42,43,46,.22);text-align:center}
+.gate-card .k{font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;font-weight:700;color:var(--orange);margin-bottom:.7rem}
+.gate-card h2{font-size:1.55rem;margin-bottom:.55rem}
+.gate-card p{color:var(--muted);font-size:.95rem;line-height:1.55;margin-bottom:1.2rem}
+.gate-card input{width:100%;font:inherit;font-size:1.05rem;letter-spacing:.12em;text-align:center;
+  border:1px solid var(--line-2);border-radius:12px;padding:.85rem;background:#fafaf8;outline:none}
+.gate-card input:focus{border-color:var(--orange);box-shadow:0 0 0 3px var(--orange-s)}
+.gate-card button{margin-top:.85rem;width:100%;border:0;border-radius:12px;padding:.85rem;font:inherit;font-weight:700;
+  letter-spacing:.06em;text-transform:uppercase;font-size:.78rem;background:var(--orange);color:#fff;cursor:pointer}
+.gate-err{margin-top:.7rem;color:#b42318;font-size:.85rem;font-weight:600}
+.gate-card.is-bad{animation:gateShake .35s}
+@keyframes gateShake{20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+
+@media(max-width:960px){.totals{grid-template-columns:1fr 1fr}.two{grid-template-columns:1fr}}
+@media(max-width:620px){
+  .totals{grid-template-columns:1fr}
+  th:nth-child(3),td:nth-child(3){display:none}
+  .wrap{padding-top:3.2rem}
+}
+</style>
+</head>
+<body class="is-locked">
+<div class="gate" id="gate" role="dialog" aria-modal="true" aria-labelledby="gateT">
+  <form class="gate-card" id="gateForm" autocomplete="off">
+    <p class="k">Documento de trabajo</p>
+    <h2 id="gateT">Carpeta privada</h2>
+    <p>Escribe la clave que te hemos pasado para ver el presupuesto.</p>
+    <input id="gatePw" type="password" inputmode="text" autocomplete="off" placeholder="Clave" aria-label="Clave">
+    <button type="submit">Entrar</button>
+    <p class="gate-err" id="gateErr" hidden>Clave incorrecta</p>
+  </form>
+</div>
+
+<div class="ribbon">Presupuesto SERVECO · <a href="/pruebas/serveco">Volver a la propuesta visual</a> · <a href="https://www.eskaladigital.com/servicios" target="_blank" rel="noopener">ESCALA</a></div>
+
+<nav class="nav" aria-label="Secciones">
+  <div class="nav-in">
+    <a href="#resumen">Resumen</a>
+    <a href="#fases">Fases</a>
+    <a href="#opcional">Opcional</a>
+    <a href="#mensual">Mensual</a>
+    <a href="#despues">Después</a>
+  </div>
+</nav>
+
+<div class="wrap">
+  <header class="head">
+    <img class="logo" src="/pruebas/serveco/logo.png" alt="SERVECO Abogados">
+    <span class="kick">Pack único · desglose técnico</span>
+    <h1>Presupuesto por <em>fase e hito</em></h1>
+    <p>Desglose numérico del encargo: qué se entrega en cada fase, con qué stack, y a qué precio. Base <strong>2.600 € + IVA</strong>. El agente redactor del blog va aparte (+600 €).</p>
+  </header>
+
+  <div class="totals" id="resumen">
+    <div class="tbox feat">
+      <p class="k">Pack base</p>
+      <p class="v">2.600 <small>€</small></p>
+    </div>
+    <div class="tbox">
+      <p class="k">IVA 21 %</p>
+      <p class="v">546 <small>€</small></p>
+    </div>
+    <div class="tbox feat">
+      <p class="k">Total base</p>
+      <p class="v">3.146 <small>€</small></p>
+    </div>
+    <div class="tbox">
+      <p class="k">Con agente blog</p>
+      <p class="v">3.872 <small>€</small></p>
+    </div>
+  </div>
+
+  <section class="sec" id="fases">
+    <div class="sec-h">
+      <span class="n">01 · Fases del pack</span>
+      <h2>Seis partidas, reparto por esfuerzo</h2>
+      <p>La web concentra el 45 %. El resto escala con volumen (landings), traducción, CMS, IA y captación. Stack alineado con Neotérmica, GVC y ACTTAX del taller.</p>
+    </div>
+
+    <!-- FASE 1 WEB -->
+    <article class="phase">
+      <div class="phase-head">
+        <div>
+          <span class="badge badge-in">Fase 1</span>
+          <h3>Web corporativa</h3>
+          <div class="stack">
+            <span class="tag">Next.js 16</span>
+            <span class="tag">React 19</span>
+            <span class="tag">TypeScript</span>
+            <span class="tag">Tailwind CSS</span>
+            <span class="tag">App Router</span>
+            <span class="tag">proxy.ts</span>
+            <span class="tag">Vercel</span>
+            <span class="tag">Supabase</span>
+          </div>
+        </div>
+        <div class="meta">
+          <span class="pct">45 % del pack</span>
+          <span class="price">1.170 €</span>
+        </div>
+      </div>
+      <table>
+        <thead><tr><th>Hito</th><th>Entrega técnica</th><th>Importe</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><span class="hit">H1.1 · Scaffold y despliegue</span></td>
+            <td><span class="tech">Repo GitHub · proyecto Vercel · Supabase (Auth admin) · variables de entorno · <code class="mono">proxy.ts</code> · build Next 16 verificado</span></td>
+            <td>180 €</td>
+          </tr>
+          <tr>
+            <td><span class="hit">H1.2 · Plantillas core (~20 URLs)</span></td>
+            <td><span class="tech">Home · /la-firma · /la-firma/equipo · hub /servicios + 8 áreas · /subvenciones (embed Fandit) · /internacional · /punto-pae · /contacto · 6 fichas /la-firma/despachos/[sede] · <code class="mono">generateMetadata</code> + JSON-LD</span></td>
+            <td>520 €</td>
+          </tr>
+          <tr>
+            <td><span class="hit">H1.3 · Diseño sobre línea elegida</span></td>
+            <td><span class="tech">Adaptación de la demo serveco-N elegida · componentes reutilizables · responsive · tipografía y tokens de marca · footer legal en columna propia (molde Furgocasa)</span></td>
+            <td>280 €</td>
+          </tr>
+          <tr>
+            <td><span class="hit">H1.4 · Legal y cookies</span></td>
+            <td><span class="tech">/aviso-legal · /privacidad · /cookies · banner Consent Mode v2 · enlace «Configurar cookies»</span></td>
+            <td>70 €</td>
+          </tr>
+          <tr>
+            <td><span class="hit">H1.5 · SEO base y analítica</span></td>
+            <td><span class="tech"><code class="mono">sitemap.ts</code> · <code class="mono">robots.ts</code> (11 UAs + OAI-SearchBot) · <code class="mono">llms.txt</code> · GA4 vía <code class="mono">@next/third-parties/google</code></span></td>
+            <td>60 €</td>
+          </tr>
+          <tr>
+            <td><span class="hit">H1.6 · Puesta en marcha serveco.es</span></td>
+            <td><span class="tech">DNS al proyecto Vercel · certificado SSL · redirecciones WP → Next (301 mapa acordado) · smoke test producción</span></td>
+            <td>60 €</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="phase-foot"><span>Subtotal fase 1</span><strong>1.170 €</strong></div>
+    </article>
+
+    <!-- FASE 2 LANDINGS -->
+    <article class="phase">
+      <div class="phase-head">
+        <div>
+          <span class="badge badge-in">Fase 2</span>
+          <h3>12 landings SEO</h3>
+          <div class="stack">
+            <span class="tag">App Router dinámico</span>
+            <span class="tag">FAQ schema</span>
+            <span class="tag">NAP local</span>
+            <span class="tag">internal linking</span>
+          </div>
+        </div>
+        <div class="meta">
+          <span class="pct">15 % del pack</span>
+          <span class="price">400 €</span>
+        </div>
+      </div>
+      <table>
+        <thead><tr><th>Hito</th><th>Entrega técnica</th><th>Importe</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><span class="hit">H2.1 · Plantilla landing</span></td>
+            <td><span class="tech">Ruta <code class="mono">/servicios/[area]/[localidad]</code> · H1 + H2 pregunta · migas · bloque equipo sede · FAQs <code class="mono">FAQPage</code> · enlaces cruzados silo</span></td>
+            <td>120 €</td>
+          </tr>
+          <tr>
+            <td><span class="hit">H2.2 · 12 URLs con copy único</span></td>
+            <td><span class="tech">12 combinaciones servicio × sede real (no ciudades inventadas) · ~800–1.200 palabras/unidad · keywords acordadas con el informe interno</span></td>
+            <td>240 €</td>
+          </tr>
+          <tr>
+            <td><span class="hit">H2.3 · Indexación silo</span></td>
+            <td><span class="tech">Bloques fijos en pie de área · entrada en sitemap · enlaces desde hub /servicios y fichas de sede</span></td>
+            <td>40 €</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="phase-foot"><span>Subtotal fase 2 · ~33 €/landing</span><strong>400 €</strong></div>
+    </article>
+
+    <!-- FASE 3 EN -->
+    <article class="phase">
+      <div class="phase-head">
+        <div>
+          <span class="badge badge-in">Fase 3</span>
+          <h3>Multidioma inglés</h3>
+          <div class="stack">
+            <span class="tag">/en/</span>
+            <span class="tag">hreflang</span>
+            <span class="tag">metadata i18n</span>
+          </div>
+        </div>
+        <div class="meta">
+          <span class="pct">12 % del pack</span>
+          <span class="price">315 €</span>
+        </div>
+      </div>
+      <table>
+        <thead><tr><th>Hito</th><th>Entrega técnica</th><th>Importe</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><span class="hit">H3.1 · Routing EN</span></td>
+            <td><span class="tech">Segmento <code class="mono">/en/</code> en App Router · selector ES/EN · <code class="mono">alternates.languages</code> · sitemap bilingüe</span></td>
+            <td>95 €</td>
+          </tr>
+          <tr>
+            <td><span class="hit">H3.2 · Silo internacional</span></td>
+            <td><span class="tech">Traducción /internacional + landings Benidorm/NIE/IRNR · copy orientado a no residentes · mismas plantillas que ES</span></td>
+            <td>120 €</td>
+          </tr>
+          <tr>
+            <td><span class="hit">H3.3 · Núcleo web (~20 páginas)</span></td>
+            <td><span class="tech">Home · firma · servicios hub · contacto · legal · navegación y CTAs en EN</span></td>
+            <td>100 €</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="phase-foot"><span>Subtotal fase 3</span><strong>315 €</strong></div>
+    </article>
+
+    <!-- FASE 4 BLOG -->
+    <article class="phase">
+      <div class="phase-head">
+        <div>
+          <span class="badge badge-in">Fase 4</span>
+          <h3>Blog — panel CMS (publicación propia)</h3>
+          <div class="stack">
+            <span class="tag">blog_articles</span>
+            <span class="tag">TinyMCE</span>
+            <span class="tag">Supabase Storage</span>
+            <span class="tag">/administrator</span>
+          </div>
+        </div>
+        <div class="meta">
+          <span class="pct">11 % del pack</span>
+          <span class="price">285 €</span>
+        </div>
+      </div>
+      <table>
+        <thead><tr><th>Hito</th><th>Entrega técnica</th><th>Importe</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><span class="hit">H4.1 · Modelo y API</span></td>
+            <td><span class="tech">Tabla <code class="mono">blog_articles</code> (slug, title, excerpt, body, cover, status, published_at) · RLS · migración Supabase</span></td>
+            <td>70 €</td>
+          </tr>
+          <tr>
+            <td><span class="hit">H4.2 · Front público</span></td>
+            <td><span class="tech"><code class="mono">/blog</code> listado dinámico · <code class="mono">/blog/[slug]</code> · autor y etiquetas · OG image · <code class="mono">force-dynamic</code></span></td>
+            <td>85 €</td>
+          </tr>
+          <tr>
+            <td><span class="hit">H4.3 · Admin tipo Joomla</span></td>
+            <td><span class="tech"><code class="mono">/administrator/blog</code> CRUD · TinyMCE React · subida portada manual a Storage <code class="mono">blog/covers</code> · borrador / programado · formación 1 h</span></td>
+            <td>130 €</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="phase-foot"><span>Subtotal fase 4 · sin agente IA</span><strong>285 €</strong></div>
+    </article>
+
+    <!-- FASE 5 CHATBOT -->
+    <article class="phase">
+      <div class="phase-head">
+        <div>
+          <span class="badge badge-in">Fase 5</span>
+          <h3>Chatbot IA</h3>
+          <div class="stack">
+            <span class="tag">SSE</span>
+            <span class="tag">chatbot_kb</span>
+            <span class="tag">text-embedding-3-small</span>
+            <span class="tag">gpt-5.6-terra</span>
+          </div>
+        </div>
+        <div class="meta">
+          <span class="pct">10 % del pack</span>
+          <span class="price">260 €</span>
+        </div>
+      </div>
+      <table>
+        <thead><tr><th>Hito</th><th>Entrega técnica</th><th>Importe</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><span class="hit">H5.1 · Widget visitante</span></td>
+            <td><span class="tech">Molde Laura/Nora: widget flotante · SSE streaming · <code class="mono">chat-markdown</code> · temas sugeridos · deriva a /contacto</span></td>
+            <td>80 €</td>
+          </tr>
+          <tr>
+            <td><span class="hit">H5.2 · RAG y prompt</span></td>
+            <td><span class="tech">Tablas <code class="mono">chat_threads</code> / <code class="mono">chat_messages</code> · <code class="mono">chatbot_kb</code> + script <code class="mono">ingest:chatbot-kb</code> · prompt SERVECO (límites: no honorarios, no consejo personalizado)</span></td>
+            <td>110 €</td>
+          </tr>
+          <tr>
+            <td><span class="hit">H5.3 · Panel admin</span></td>
+            <td><span class="tech"><code class="mono">/administrator/chatbot</code> · listado conversaciones · calificación 10/5/0 · avatar y nombre acordados</span></td>
+            <td>70 €</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="phase-foot"><span>Subtotal fase 5 · API OpenAI aparte (60 €/mes)</span><strong>260 €</strong></div>
+    </article>
+
+    <!-- FASE 6 LEADS -->
+    <article class="phase">
+      <div class="phase-head">
+        <div>
+          <span class="badge badge-in">Fase 6</span>
+          <h3>Formularios y leads</h3>
+          <div class="stack">
+            <span class="tag">Server Actions</span>
+            <span class="tag">contact_submissions</span>
+            <span class="tag">SMTP OVH</span>
+          </div>
+        </div>
+        <div class="meta">
+          <span class="pct">7 % del pack</span>
+          <span class="price">170 €</span>
+        </div>
+      </div>
+      <table>
+        <thead><tr><th>Hito</th><th>Entrega técnica</th><th>Importe</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><span class="hit">H6.1 · Formulario</span></td>
+            <td><span class="tech">Particular/empresa · área (fiscal, laboral, jurídico…) · sede · mensaje · GDPR · honeypot + tiempo (molde Tricholand/GVC)</span></td>
+            <td>55 €</td>
+          </tr>
+          <tr>
+            <td><span class="hit">H6.2 · Persistencia</span></td>
+            <td><span class="tech">Tabla <code class="mono">contact_submissions</code> · Server Action · fila por envío · estados leído/export</span></td>
+            <td>45 €</td>
+          </tr>
+          <tr>
+            <td><span class="hit">H6.3 · Correo y admin</span></td>
+            <td><span class="tech">Par SMTP: aviso despacho + confirmación visitante (HTML tablas) · <code class="mono">/administrator/contactos</code></span></td>
+            <td>70 €</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="phase-foot"><span>Subtotal fase 6</span><strong>170 €</strong></div>
+    </article>
+
+    <div class="grand">
+      <div>
+        <p class="lbl">Total pack base</p>
+        <p class="amt">2.600 € + IVA</p>
+        <p class="sub">3.146 € en factura · 6 fases · una sola entrega acordada por hitos</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="opcional">
+    <div class="sec-h">
+      <span class="n">02 · Opcional</span>
+      <h2>Agente redactor del blog</h2>
+      <p>No entra en los 2.600 €. Es la palanca: el panel (fase 4) lo usáis vosotros; el agente escribe y genera portadas.</p>
+    </div>
+    <article class="phase">
+      <div class="phase-head">
+        <div>
+          <span class="badge badge-ex">Opcional</span>
+          <h3>Agente redactor + portadas IA</h3>
+          <div class="stack">
+            <span class="tag">redact-blog-article.ts</span>
+            <span class="tag">Responses API</span>
+            <span class="tag">web_search</span>
+            <span class="tag">gpt-image-2</span>
+          </div>
+        </div>
+        <div class="meta">
+          <span class="price">+600 €</span>
+        </div>
+      </div>
+      <table>
+        <thead><tr><th>Hito</th><th>Entrega técnica</th><th>Importe</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><span class="hit">O1 · Motor redactor</span></td>
+            <td><span class="tech">CLI + botón admin «Redactar con IA» · dos pasadas · SEO en description · línea editorial acordada (pactos socios, autónomo→SL…)</span></td>
+            <td>320 €</td>
+          </tr>
+          <tr>
+            <td><span class="hit">O2 · Portadas automáticas</span></td>
+            <td><span class="tech">Generación post-texto con <code class="mono">gpt-image-2</code> · subida a Storage · fallback manual en admin</span></td>
+            <td>180 €</td>
+          </tr>
+          <tr>
+            <td><span class="hit">O3 · Ingesta RAG chatbot</span></td>
+            <td><span class="tech">Cada post publicado entra en <code class="mono">chatbot_kb</code> vía <code class="mono">ingest:chatbot-kb</code></span></td>
+            <td>100 €</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="phase-foot"><span>Pack base + agente = 3.200 € + IVA (3.872 €)</span><strong>+600 €</strong></div>
+    </article>
+  </section>
+
+  <section class="sec" id="mensual">
+    <div class="sec-h">
+      <span class="n">03 · Recurrente</span>
+      <h2>Costes mensuales (fuera del pack)</h2>
+      <p>Solo aplican cuando el servicio está activo. Hosting Vercel/Supabase free tier al inicio; el variable es la API de OpenAI.</p>
+    </div>
+    <div class="two">
+      <div class="card">
+        <span class="badge badge-ex">Si hay chatbot</span>
+        <h3>API chatbot</h3>
+        <ul>
+          <li><span>Conversaciones + embeddings RAG</span><em>60 €/mes</em></li>
+        </ul>
+        <p class="note">Estimación según tráfico moderado de una asesoría regional. Se revisa a los 3 meses.</p>
+      </div>
+      <div class="card">
+        <span class="badge badge-op">Solo con agente blog</span>
+        <h3>Cadencia redacción</h3>
+        <ul>
+          <li><span>2 artículos/mes redactados + portada</span><em>130 €/mes</em></li>
+          <li><span>4 artículos/mes</span><em>220 €/mes</em></li>
+        </ul>
+        <p class="note">Revisión y publicación las hace el despacho. No sustituye validación jurídica.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="despues">
+    <div class="sec-h">
+      <span class="n">04 · Fuera del pack</span>
+      <h2>Si lo piden después</h2>
+      <p>Ampliaciones sobre la web ya entregada. Precio unitario, no «SEO en abstracto».</p>
+    </div>
+    <div class="card">
+      <ul>
+        <li><span>Landing SEO suelta (más allá de las 12)</span><em>60 €</em></li>
+        <li><span>Pack 24 landings (sustituye las 12; descuenta 400 € del pack)</span><em>1.200 €</em></li>
+        <li><span>Pack 48 landings</span><em>2.200 €</em></li>
+        <li><span>SERVECO Legal (mini silo submarca)</span><em>400 €</em></li>
+        <li><span>Newsletter (captación + plantilla + primer envío)</span><em>220 € + 70 €/mes</em></li>
+        <li><span>Identidad / manual de marca</span><em>Diseñador externo</em></li>
+      </ul>
+      <p class="note">Válido sep 2026 · Documento interno de reunión · No indexado · Misma clave que la propuesta visual.</p>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <p><span style="color:var(--ink)">SERVECO Asesores · 968 90 90 20 · serveco@serveco.es</span></p>
+    <p style="margin-top:.75rem"><a href="/pruebas/serveco">← Propuesta visual (12 demos)</a> · <a href="https://www.eskaladigital.com/servicios" target="_blank" rel="noopener">ESCALA Marketing</a></p>
+  </footer>
+</div>
+
+<script>
+function markNav(){
+  var ids=['resumen','fases','opcional','mensual','despues'];
+  var y=window.scrollY+120,cur=ids[0];
+  ids.forEach(function(id){var el=document.getElementById(id);if(el&&el.offsetTop<=y)cur=id;});
+  document.querySelectorAll('.nav a').forEach(function(a){
+    a.classList.toggle('on',a.getAttribute('href')==='#'+cur);
+  });
+}
+addEventListener('scroll',markNav,{passive:true});
+addEventListener('load',markNav);
+
+(function(){
+  var KEY='8932z3',STORE='esk_sv_ok';
+  var gate=document.getElementById('gate');
+  var form=document.getElementById('gateForm');
+  var input=document.getElementById('gatePw');
+  var err=document.getElementById('gateErr');
+  function unlock(){
+    document.documentElement.classList.remove('is-locked');
+    document.body.classList.remove('is-locked');
+    gate.hidden=true;
+    try{sessionStorage.setItem(STORE,'1');}catch(e){}
+  }
+  function lockMove(e){if(!gate.hidden)e.preventDefault();}
+  try{if(sessionStorage.getItem(STORE)==='1'){unlock();return;}}catch(e){}
+  document.documentElement.classList.add('is-locked');
+  document.addEventListener('wheel',lockMove,{passive:false});
+  document.addEventListener('touchmove',lockMove,{passive:false});
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    if((input.value||'').trim()===KEY){unlock();return;}
+    err.hidden=false;
+    form.classList.remove('is-bad');
+    void form.offsetWidth;
+    form.classList.add('is-bad');
+    input.select();
+  });
+  input.focus();
+})();
+</script>
+</body>
+</html>
