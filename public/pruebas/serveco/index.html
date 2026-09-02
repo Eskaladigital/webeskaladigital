@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SERVECO — Propuesta de web · ESCALA</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Propuesta de rediseño web para SERVECO Asesores: doce líneas de diseño y partidas extra (páginas SEO, blog, chatbot, leads). ESCALA Marketing.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,500;0,8..60,600;0,8..60,700;1,8..60,500;1,8..60,600&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f7f6f3;
+  --paper:#fff;
+  --ink:#2a2b2e;
+  --muted:#6d6e71;
+  --soft:#8b8c8f;
+  --orange:#e07a2f;
+  --orange-d:#c4621c;
+  --orange-s:rgba(224,122,47,.12);
+  --line:#e4e2dc;
+  --line-2:#d4d2cb;
+  --ink-2:#3d3e42;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:'Source Sans 3',sans-serif;font-weight:400;overflow-x:hidden}
+::selection{background:var(--orange);color:#fff}
+a{color:inherit;text-decoration:none}
+h1,h2,h3,.serif{font-family:'Source Serif 4',Georgia,serif;font-weight:600;line-height:1.15}
+.ribbon{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:center;gap:.65rem;
+  padding:.5rem 1rem;font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;background:var(--ink);color:#fff;font-weight:600}
+.ribbon a{color:#fff;text-decoration:underline;text-underline-offset:2px}
+
+.nav{position:sticky;top:34px;z-index:40;background:rgba(247,246,243,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.nav-in{max-width:1180px;margin:0 auto;padding:.7rem 5vw;display:flex;gap:.3rem;overflow-x:auto;scrollbar-width:none}
+.nav-in::-webkit-scrollbar{display:none}
+.nav a{flex:none;padding:.38rem .85rem;border-radius:999px;font-size:.78rem;font-weight:600;letter-spacing:.04em;color:var(--muted)}
+.nav a:hover,.nav a.on{background:#fff;color:var(--ink);box-shadow:0 0 0 1px var(--line)}
+
+.wrap{max-width:1180px;margin:0 auto;padding:4.5rem 5vw 2rem}
+.head{max-width:820px;margin:0 auto 3.2rem;text-align:center}
+.head .logo{height:52px;width:auto;margin-bottom:1.6rem}
+.head .kick{font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;color:var(--orange);font-weight:700;display:block;margin-bottom:.9rem}
+.head h1{font-size:clamp(2.1rem,4.6vw,3.35rem);letter-spacing:-.02em;margin-bottom:1rem;font-weight:600}
+.head h1 em{font-style:italic;color:var(--orange);font-weight:500}
+.head p{color:var(--muted);line-height:1.75;font-size:1.08rem}
+
+.sec{padding:4.2rem 0 1rem;border-top:1px solid var(--line)}
+.sec-h{max-width:720px;margin-bottom:2.2rem}
+.sec-h .n{font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;color:var(--orange);font-weight:700}
+.sec-h h2{font-size:clamp(1.7rem,3vw,2.35rem);margin:.45rem 0 .8rem}
+.sec-h p{color:var(--muted);line-height:1.7;font-size:1.02rem}
+.badge{display:inline-block;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;
+  padding:.22rem .55rem;border-radius:99px;vertical-align:middle}
+.badge-in{background:#eef4ea;color:#3d6b2e}
+.badge-ex{background:var(--orange-s);color:var(--orange-d)}
+
+.group{margin:2.4rem 0 0}
+.group h3{font-size:1.15rem;margin-bottom:.35rem}
+.group .sub{color:var(--soft);font-size:.9rem;margin-bottom:1.1rem}
+
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem}
+.demo{position:relative;display:flex;flex-direction:column;background:var(--paper);border:1px solid var(--line);border-radius:18px;overflow:hidden;
+  transition:transform .3s,border-color .3s,box-shadow .3s}
+.demo:hover{transform:translateY(-6px);border-color:rgba(224,122,47,.45);box-shadow:0 22px 50px rgba(42,43,46,.08)}
+.demo .thumb{height:176px;position:relative;overflow:hidden;background:#efece6}
+.demo .thumb iframe{position:absolute;top:0;left:0;width:1280px;height:960px;border:0;transform-origin:0 0;pointer-events:none}
+.demo .thumb::after{content:'';position:absolute;inset:0;z-index:1;box-shadow:inset 0 -22px 24px -20px rgba(42,43,46,.12)}
+.demo .lbl{position:absolute;top:.8rem;left:.8rem;z-index:2;font-size:.68rem;font-weight:700;letter-spacing:.1em;
+  background:rgba(255,255,255,.9);border:1px solid var(--line);padding:.22rem .6rem;border-radius:99px}
+.demo .tag{position:absolute;bottom:.8rem;right:.8rem;z-index:2;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;font-weight:600;
+  padding:.2rem .55rem;border-radius:99px;background:rgba(255,255,255,.9);border:1px solid var(--line);color:var(--muted)}
+.demo .body{padding:1.25rem 1.35rem 1.4rem;flex:1;display:flex;flex-direction:column}
+.demo h4{font-family:'Source Serif 4',Georgia,serif;font-size:1.15rem;margin-bottom:.4rem;font-weight:600}
+.demo p{color:var(--muted);line-height:1.55;font-size:.88rem;flex:1;margin-bottom:1rem}
+.demo .open{font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:var(--orange);transition:gap .25s;display:inline-flex;gap:.4rem}
+.demo:hover .open{gap:.75rem}
+.demo .link-abs{position:absolute;inset:0;z-index:2}
+.demo.feat{border-color:rgba(224,122,47,.55);box-shadow:0 16px 40px rgba(224,122,47,.1)}
+.demo .star{position:absolute;top:.8rem;right:.8rem;z-index:3;background:var(--orange);color:#fff;font-size:.58rem;letter-spacing:.1em;font-weight:700;padding:.26rem .65rem;border-radius:99px}
+
+.tree{display:grid;grid-template-columns:1.1fr .9fr;gap:1.4rem;align-items:start}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:1.5rem 1.6rem}
+.card h3{font-size:1.15rem;margin:.15rem 0 .85rem}
+.card ul{list-style:none}
+.card li{padding:.38rem 0;border-bottom:1px solid var(--line);font-size:.92rem;color:var(--ink-2);display:flex;justify-content:space-between;gap:1rem}
+.card li:last-child{border-bottom:0}
+.card li span{color:var(--soft);font-size:.78rem}
+.card .note{margin-top:1rem;font-size:.86rem;color:var(--muted);line-height:1.55}
+
+.silos{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem;margin-top:1.2rem}
+.silo{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:1rem 1.1rem}
+.silo strong{display:block;font-size:.92rem;margin-bottom:.25rem}
+.silo p{font-size:.8rem;color:var(--muted);line-height:1.45}
+
+.two{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem}
+.opt{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:1.6rem 1.7rem;display:flex;flex-direction:column}
+.opt .k{font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;font-weight:700;color:var(--orange);margin-bottom:.5rem}
+.opt h3{font-size:1.25rem;margin-bottom:.6rem}
+.opt p{color:var(--muted);line-height:1.65;font-size:.95rem;flex:1}
+.opt ul{margin:1rem 0 0;padding-left:1.1rem;color:var(--ink-2);font-size:.9rem;line-height:1.7}
+
+.extras{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.ex{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:1.35rem 1.4rem}
+.ex .k{font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--orange);margin-bottom:.4rem}
+.ex h3{font-size:1.08rem;margin-bottom:.45rem}
+.ex p{color:var(--muted);font-size:.88rem;line-height:1.55}
+
+.inc-ex{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin:0 0 2.6rem}
+.inc-ex h3{font-size:1.05rem;margin-bottom:.7rem}
+.inc-ex li{padding:.32rem 0;font-size:.92rem;color:var(--ink-2);padding-left:1.15rem;position:relative}
+.inc-ex li::before{position:absolute;left:0}
+.inc .card{border-color:#c9d6c0}
+.exbox .card{border-color:#edd4bc}
+.inc li::before{content:'✓';color:#3d6b2e;font-weight:700}
+.exbox li::before{content:'+';color:var(--orange);font-weight:700}
+
+.footer{text-align:center;margin:4.5rem 0 2rem;color:var(--muted);font-size:.88rem;line-height:1.7}
+.footer a{color:var(--orange);font-weight:600}
+.footer .contact{margin-top:.45rem;color:var(--ink);font-weight:600}
+
+@media(max-width:960px){
+  .grid,.silos,.extras{grid-template-columns:1fr 1fr}
+  .tree,.two,.inc-ex{grid-template-columns:1fr}
+}
+@media(max-width:620px){
+  .grid,.silos,.extras{grid-template-columns:1fr}
+  .wrap{padding-top:3.2rem}
+  .head .logo{height:44px}
+}
+</style>
+</head>
+<body>
+<div class="ribbon">Propuesta de web para SERVECO · <a href="https://www.eskaladigital.com/servicios" target="_blank" rel="noopener">ESCALA Marketing</a></div>
+
+<nav class="nav" aria-label="Secciones">
+  <div class="nav-in">
+    <a href="#diseno">Diseño</a>
+    <a href="#paginas">Páginas</a>
+    <a href="#blog">Blog</a>
+    <a href="#chatbot">Chatbot IA</a>
+    <a href="#leads">Formularios</a>
+    <a href="#extras">Otros extras</a>
+  </div>
+</nav>
+
+<div class="wrap">
+  <header class="head">
+    <img class="logo" src="/pruebas/serveco/logo.png" alt="SERVECO Abogados">
+    <span class="kick">12 líneas de diseño · partidas claras</span>
+    <h1>Una web de firma, no de <em>asesoría genérica</em></h1>
+    <p>Hemos preparado esta carpeta para la reunión: primero elegís la dirección visual; después vemos qué entra en la web y qué se cobra aparte. Así nadie se lleva una sorpresa cuando el alcance crece.</p>
+  </header>
+
+  <div class="inc-ex">
+    <div class="inc">
+      <div class="card">
+        <span class="badge badge-in">Incluido · la web</span>
+        <h3>La página web</h3>
+        <ul>
+          <li>Una línea de diseño (la que elijáis)</li>
+          <li>Home, firma, equipo, 8 servicios, 6 sedes, contacto</li>
+          <li>Aviso legal, privacidad, cookies y banner</li>
+          <li>Sitemap y SEO on-page de esas URLs</li>
+          <li>Responsive y puesta en marcha</li>
+        </ul>
+      </div>
+    </div>
+    <div class="exbox">
+      <div class="card">
+        <span class="badge badge-ex">Aparte · se presupuesta</span>
+        <h3>No es «la web»</h3>
+        <ul>
+          <li>Cada landing SEO (servicio × localidad)</li>
+          <li>Un segundo idioma (inglés para no residentes)</li>
+          <li>Blog — lo publicáis vosotros o lo redacta un agente</li>
+          <li>Panel / backend para gestionar la web</li>
+          <li>Formulario que guarda el lead + aviso</li>
+          <li>Chatbot de inteligencia artificial</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <section class="sec" id="diseno">
+    <div class="sec-h">
+      <span class="n">01 · Diseño</span>
+      <h2>Doce visiones, agrupadas por estilo</h2>
+      <p>Ábrelas, recórrelas y decidid cuál os representa. Son demos de portada: el desarrollo vendrá después, sobre la línea que elijáis. La 10 es la que más ha gustado hasta ahora: aguanta texto largo y el plan de páginas.</p>
+    </div>
+
+    <div class="group">
+      <h3>Clásico / institucional</h3>
+      <p class="sub">La que aprueba un socio conservador sin discutir. Papel, latón, personas.</p>
+      <div class="grid">
+        <article class="demo">
+          <a class="link-abs" href="/pruebas/serveco-1" target="_blank" rel="noopener" aria-label="Abrir propuesta 1"></a>
+          <div class="thumb"><iframe src="/pruebas/serveco-1" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true" title="Vista previa 1"></iframe><span class="lbl">01</span><span class="tag">Editorial</span></div>
+          <div class="body"><h4>Expediente</h4><p>Papel con grano, tipografía de revista y raíl lateral. Aguanta bien el texto largo de un despacho.</p><span class="open">Abrir demo →</span></div>
+        </article>
+        <article class="demo">
+          <a class="link-abs" href="/pruebas/serveco-3" target="_blank" rel="noopener" aria-label="Abrir propuesta 3"></a>
+          <div class="thumb"><iframe src="/pruebas/serveco-3" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true" title="Vista previa 3"></iframe><span class="lbl">03</span><span class="tag">Institucional</span></div>
+          <div class="body"><h4>Azul y latón</h4><p>Tarjetas, cifra y tono de firma consolidada. La más segura si el criterio es «que no moleste».</p><span class="open">Abrir demo →</span></div>
+        </article>
+        <article class="demo">
+          <a class="link-abs" href="/pruebas/serveco-9" target="_blank" rel="noopener" aria-label="Abrir propuesta 9"></a>
+          <div class="thumb"><iframe src="/pruebas/serveco-9" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true" title="Vista previa 9"></iframe><span class="lbl">09</span><span class="tag">Personas</span></div>
+          <div class="body"><h4>Las personas primero</h4><p>El equipo es el producto. Retratos, bios y el menú empieza por quienes sois, no por el listado de trámites.</p><span class="open">Abrir demo →</span></div>
+        </article>
+      </div>
+    </div>
+
+    <div class="group">
+      <h3>Contemporáneo</h3>
+      <p class="sub">Más gesto, menos adorno. Sirven para portada; el silo SEO se resuelve en plantillas interiores.</p>
+      <div class="grid">
+        <article class="demo">
+          <a class="link-abs" href="/pruebas/serveco-2" target="_blank" rel="noopener" aria-label="Abrir propuesta 2"></a>
+          <div class="thumb"><iframe src="/pruebas/serveco-2" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true" title="Vista previa 2"></iframe><span class="lbl">02</span><span class="tag">Señal</span></div>
+          <div class="body"><h4>Marquesina</h4><p>La más rompedora: menú a pantalla, cursor propio. Impresiona; no es la mejor para textos SEO largos.</p><span class="open">Abrir demo →</span></div>
+        </article>
+        <article class="demo">
+          <a class="link-abs" href="/pruebas/serveco-7" target="_blank" rel="noopener" aria-label="Abrir propuesta 7"></a>
+          <div class="thumb"><iframe src="/pruebas/serveco-7" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true" title="Vista previa 7"></iframe><span class="lbl">07</span><span class="tag">Monocromo</span></div>
+          <div class="body"><h4>Sin color de más</h4><p>Negro, blanco y un gris. La jerarquía la llevan el tipo y los filetes, no el acento naranja.</p><span class="open">Abrir demo →</span></div>
+        </article>
+        <article class="demo">
+          <a class="link-abs" href="/pruebas/serveco-12" target="_blank" rel="noopener" aria-label="Abrir propuesta 12"></a>
+          <div class="thumb"><iframe src="/pruebas/serveco-12" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true" title="Vista previa 12"></iframe><span class="lbl">12</span><span class="tag">Recorrido</span></div>
+          <div class="body"><h4>Tramos</h4><p>Siete paneles a pantalla que avanzan de lado. Vale para contar la firma; no para el mapa de 80 URLs.</p><span class="open">Abrir demo →</span></div>
+        </article>
+      </div>
+    </div>
+
+    <div class="group">
+      <h3>Firma de escala</h3>
+      <p class="sub">Registro Mazars / PwC: menús de doble eje, datos, «soy / necesito». Encajan si queréis parecer grupo, no despacho suelto.</p>
+      <div class="grid">
+        <article class="demo">
+          <a class="link-abs" href="/pruebas/serveco-5" target="_blank" rel="noopener" aria-label="Abrir propuesta 5"></a>
+          <div class="thumb"><iframe src="/pruebas/serveco-5" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true" title="Vista previa 5"></iframe><span class="lbl">05</span><span class="tag">Datos</span></div>
+          <div class="body"><h4>Grid suizo</h4><p>Retícula fina, tablas y contadores. Muy buena cuando el contenido es denso y hay que ordenarlo.</p><span class="open">Abrir demo →</span></div>
+        </article>
+        <article class="demo">
+          <a class="link-abs" href="/pruebas/serveco-6" target="_blank" rel="noopener" aria-label="Abrir propuesta 6"></a>
+          <div class="thumb"><iframe src="/pruebas/serveco-6" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true" title="Vista previa 6"></iframe><span class="lbl">06</span><span class="tag">Global</span></div>
+          <div class="body"><h4>Firma global</h4><p>Mega-menú servicios × sectores. Es la que mejor escala si el plan llega a 100–150 páginas.</p><span class="open">Abrir demo →</span></div>
+        </article>
+        <article class="demo">
+          <a class="link-abs" href="/pruebas/serveco-8" target="_blank" rel="noopener" aria-label="Abrir propuesta 8"></a>
+          <div class="thumb"><iframe src="/pruebas/serveco-8" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true" title="Vista previa 8"></iframe><span class="lbl">08</span><span class="tag">Matriz</span></div>
+          <div class="body"><h4>Soy… / Necesito…</h4><p>El visitante se sitúa (pyme, autónomo, no residente) y aterriza en el servicio. Una puerta que Carrillo no tiene.</p><span class="open">Abrir demo →</span></div>
+        </article>
+      </div>
+    </div>
+
+    <div class="group">
+      <h3>Territorio y relato</h3>
+      <p class="sub">Las más distintivas. La red de sedes y los sistemas A.D. dejan de ser un pie de página.</p>
+      <div class="grid">
+        <article class="demo feat">
+          <a class="link-abs" href="/pruebas/serveco-10" target="_blank" rel="noopener" aria-label="Abrir propuesta 10"></a>
+          <span class="star">★ Recomendada</span>
+          <div class="thumb"><iframe src="/pruebas/serveco-10" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true" title="Vista previa 10"></iframe><span class="lbl">10</span><span class="tag">Índice</span></div>
+          <div class="body"><h4>Capítulos 01–06</h4><p>Una home en capítulos, índice filtrable de servicios y equipo con bio en el sitio. La que mejor casa diseño y plan de páginas.</p><span class="open">Abrir demo →</span></div>
+        </article>
+        <article class="demo">
+          <a class="link-abs" href="/pruebas/serveco-11" target="_blank" rel="noopener" aria-label="Abrir propuesta 11"></a>
+          <div class="thumb"><iframe src="/pruebas/serveco-11" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true" title="Vista previa 11"></iframe><span class="lbl">11</span><span class="tag">Territorio</span></div>
+          <div class="body"><h4>Seis sedes</h4><p>Dos tintas y un mapa de la red. Murcia, Yecla, Jumilla, Lorca, Balsicas y Benidorm como una sola firma.</p><span class="open">Abrir demo →</span></div>
+        </article>
+        <article class="demo">
+          <a class="link-abs" href="/pruebas/serveco-13" target="_blank" rel="noopener" aria-label="Abrir propuesta 13"></a>
+          <div class="thumb"><iframe src="/pruebas/serveco-13" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true" title="Vista previa 13"></iframe><span class="lbl">13</span><span class="tag">Mando</span></div>
+          <div class="body"><h4>Cuadro de mando</h4><p>Los sistemas A.D. como salpicadero de la empresa. La única que tutea. Pie preparado para el silo SEO.</p><span class="open">Abrir demo →</span></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="paginas">
+    <div class="sec-h">
+      <span class="n">02 · Páginas</span>
+      <h2>Mapa de la web y plan de SEO</h2>
+      <p>La web incluye las páginas de la firma. Las landings «servicio × pueblo» se presupuestan <strong>por página</strong>: cada una es una URL que Google puede rankear. Solo sedes reales; no inventamos oficinas.</p>
+    </div>
+
+    <div class="tree">
+      <div class="card">
+        <span class="badge badge-in">Incluido</span>
+        <h3>Sitemap de la web</h3>
+        <ul>
+          <li>/ <span>Home</span></li>
+          <li>/la-firma <span>1977, valores, cifras</span></li>
+          <li>/la-firma/equipo <span>30+ profesionales</span></li>
+          <li>/la-firma/despachos <span>+ 6 fichas de sede</span></li>
+          <li>/servicios <span>hub</span></li>
+          <li>/servicios/fiscal … formacion <span>8 áreas</span></li>
+          <li>/subvenciones <span>Fandit, no en subdominio</span></li>
+          <li>/internacional <span>NIE, IRNR, sucesiones</span></li>
+          <li>/punto-pae <span>alta de empresas</span></li>
+          <li>/contacto + legal <span>4 páginas</span></li>
+        </ul>
+        <p class="note">Unas 20 URLs. Eso es «hacer la web». Plantillas: home, área de servicio, ficha de sede, contacto.</p>
+      </div>
+      <div class="card">
+        <span class="badge badge-ex">Extra · por página</span>
+        <h3>Landings SEO</h3>
+        <p class="note" style="margin-top:0">Carrillo gana porque tiene silos, no porque el diseño sea mejor. El esquema:</p>
+        <p class="note"><strong>/servicios/fiscal/murcia</strong><br><strong>/servicios/laboral/yecla</strong><br><strong>/servicios/juridico/benidorm</strong></p>
+        <p class="note">8 áreas × 6 sedes = hasta <strong>48 landings</strong>. Luego, si se quiere, sectores (agro, vino, no residentes) y la línea <strong>SERVECO Legal</strong> como primera submarca visible.</p>
+        <p class="note">Cada landing lleva pregunta real, equipo de esa sede y enlace al resto. Se cobra la unidad, no «el SEO» en abstracto.</p>
+      </div>
+    </div>
+
+    <div class="silos">
+      <div class="silo"><strong>Fiscal · Murcia</strong><p>Pymes, autónomos, no residentes. La sede central justifica la plaza.</p></div>
+      <div class="silo"><strong>Laboral · Yecla / Jumilla</strong><p>Nóminas e inspecciones donde está el tejido industrial y el vino.</p></div>
+      <div class="silo"><strong>Jurídico · Benidorm</strong><p>Internacional: NIE, IRNR, compraventa. La puerta que Carrillo no tiene.</p></div>
+    </div>
+  </section>
+
+  <section class="sec" id="blog">
+    <div class="sec-h">
+      <span class="n">03 · Blog</span>
+      <h2>Publicar es un extra. Hay dos caminos</h2>
+      <p>Una web sin actualidad se queda en tarjeta de visita. El blog no va en el precio de la web: es otra partida. Elegís quién escribe.</p>
+    </div>
+    <div class="two">
+      <article class="opt">
+        <span class="k">Opción A</span>
+        <h3>Lo publicáis vosotros</h3>
+        <p>Panel tipo WordPress: título, cuerpo, autor, etiquetas y fecha. El despacho (o Rafael) sube la nota fiscal o la alerta laboral cuando quiera. Nosotros dejamos la máquina lista y formamos a quien vaya a usarla.</p>
+        <ul>
+          <li>Sin dependencia de la agencia para cada post</li>
+          <li>El ritmo lo marcáis vosotros</li>
+          <li>Encaja si ya hay alguien que escribe</li>
+        </ul>
+      </article>
+      <article class="opt">
+        <span class="k">Opción B</span>
+        <h3>Agente redactor de IA</h3>
+        <p>Un agente que redacta artículos con vuestra línea (pactos de socios, paso de autónomo a sociedad, rentabilidad de un cliente…) y los deja programados. Vosotros revisáis y publicáis. Es el sistema que usamos en despachos y comercios del taller.</p>
+        <ul>
+          <li>Cadencia mensual sin atascar al equipo</li>
+          <li>Títulos y temas acordados de antemano</li>
+          <li>No sustituye al abogado: él valida</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <section class="sec" id="chatbot">
+    <div class="sec-h">
+      <span class="n">04 · Chatbot IA</span>
+      <h2>Un agente del despacho, no un widget de «hola»</h2>
+      <p>Partida propia. El visitante pregunta a las 23:00 y recibe una respuesta con el conocimiento de SERVECO: áreas, sedes, A.D., internacional. Si no puede resolver, le lleva al formulario o al teléfono.</p>
+    </div>
+    <div class="two">
+      <article class="opt">
+        <span class="k">Qué hace</span>
+        <h3>Atiende con vuestro criterio</h3>
+        <p>Se entrena con la web, los servicios y lo que acordemos (límites: no inventa honorarios ni da consejo jurídico personalizado). Queda el historial de conversaciones para que el despacho vea qué pregunta la gente.</p>
+        <ul>
+          <li>Horario 24 h, tono de firma</li>
+          <li>Deriva a consulta cuando toca</li>
+          <li>Panel para revisar respuestas</li>
+        </ul>
+      </article>
+      <article class="opt">
+        <span class="k">Qué no es</span>
+        <h3>Ni WhatsApp ni un becario</h3>
+        <p>No sustituye a un abogado ni al teléfono de Gran Vía. Es la capa que filtra, orienta y captura al que hoy se va a Carrillo o a Google. El nombre y el avatar los decidís vosotros.</p>
+        <ul>
+          <li>No calcula impuestos a medida</li>
+          <li>No publica solo en redes</li>
+          <li>Se cobra aparte de la web y del blog</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <section class="sec" id="leads">
+    <div class="sec-h">
+      <span class="n">05 · Formularios</span>
+      <h2>El lead tiene que quedar registrado</h2>
+      <p>Un formulario que solo manda un correo se pierde. La partida es: el visitante rellena, la consulta se guarda en base de datos, el despacho recibe aviso, el visitante recibe confirmación, y hay un listado para no cazar mails en la bandeja.</p>
+    </div>
+    <div class="silos">
+      <div class="silo"><strong>1. El formulario</strong><p>Particular o empresa, área (fiscal, laboral, jurídico…), sede y mensaje. GDPR visible.</p></div>
+      <div class="silo"><strong>2. La base de datos</strong><p>Cada envío es una fila. Se puede filtrar, marcar leído y exportar. No depende de que alguien abra el Outlook.</p></div>
+      <div class="silo"><strong>3. El par de correos</strong><p>Aviso al despacho + confirmación al que escribió. Así el socio ve volumen y el cliente no se queda a ciegas.</p></div>
+    </div>
+    <p class="sec-h" style="margin:1.4rem 0 0;max-width:720px;color:var(--muted);font-size:.95rem;line-height:1.65">Esto es backend, no «un recuadro en Contacto». Si no se encarga, la web puede quedarse en teléfono, mail y WhatsApp — más barato, y se pierde la medición que pide el propio informe interno.</p>
+  </section>
+
+  <section class="sec" id="extras">
+    <div class="sec-h">
+      <span class="n">06 · Otros extras</span>
+      <h2>Lo que no es diseñar páginas</h2>
+      <p>Cualquiera de estas partidas se puede dejar para una segunda fase. Las declaramos ahora para que el presupuesto de la web no se coma lo demás.</p>
+    </div>
+    <div class="extras">
+      <article class="ex">
+        <span class="k">Idioma</span>
+        <h3>Multidioma</h3>
+        <p>Inglés para Benidorm y el cliente extranjero (NIE, IRNR, compraventa). No hace falta traducir las 20 páginas el primer día: se puede empezar por el silo internacional.</p>
+      </article>
+      <article class="ex">
+        <span class="k">Sistema</span>
+        <h3>Backend / panel</h3>
+        <p>Zona de administración: leads, artículos, conversaciones del chatbot. Sin panel, cada cambio pasa por la agencia. Con panel, el despacho es autónomo.</p>
+      </article>
+      <article class="ex">
+        <span class="k">Marca</span>
+        <h3>Identidad y logos</h3>
+        <p>Los logos que habéis avanzado nos valen como punto de partida. Si hay que cerrar manual, versiones o submarcas (SERVECO Legal, Tax…), colaboramos con diseñadores gráficos: no lo improvisamos nosotros.</p>
+      </article>
+      <article class="ex">
+        <span class="k">Medición</span>
+        <h3>Analítica</h3>
+        <p>Google Analytics con consentimiento de cookies y objetivos (consulta enviada, llamada). El informe pide medir leads y conversión: eso no viene «de serie» en una web estática.</p>
+      </article>
+      <article class="ex">
+        <span class="k">Relación</span>
+        <h3>Newsletter</h3>
+        <p>Lista propia y envío mensual a empresas. El informe lo marca como acción inmediata. Es otro producto: captación de altas + plantilla + cadencia.</p>
+      </article>
+      <article class="ex">
+        <span class="k">Arranque</span>
+        <h3>Migración de la web actual</h3>
+        <p>Pasar dominio, correos y lo que merezca salvarse de serveco.es. Trabajo de infraestructura, no de diseño. Lo separamos para no mezclarlo con las plantillas nuevas.</p>
+      </article>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <p>Demos visuales · <span style="color:var(--ink)">SERVECO Asesores · desde 1977 · Murcia, Yecla, Jumilla, Lorca, Balsicas, Benidorm</span></p>
+    <p class="contact">968 90 90 20 · serveco@serveco.es</p>
+    <p style="margin-top:1rem">Propuesta de <a href="https://www.eskaladigital.com/servicios" target="_blank" rel="noopener">ESCALA Marketing</a> · Documento de trabajo, no indexado</p>
+  </footer>
+</div>
+<script>
+function fitPreviews(){
+  document.querySelectorAll('.thumb iframe').forEach(function(f){
+    var w = f.parentElement.clientWidth;
+    if (w > 0) f.style.transform = 'scale(' + (w / 1280) + ')';
+  });
+}
+function markNav(){
+  var ids = ['diseno','paginas','blog','chatbot','leads','extras'];
+  var y = window.scrollY + 120;
+  var cur = ids[0];
+  ids.forEach(function(id){
+    var el = document.getElementById(id);
+    if (el && el.offsetTop <= y) cur = id;
+  });
+  document.querySelectorAll('.nav a').forEach(function(a){
+    a.classList.toggle('on', a.getAttribute('href') === '#' + cur);
+  });
+}
+addEventListener('resize', fitPreviews);
+addEventListener('scroll', markNav, {passive:true});
+addEventListener('load', function(){ fitPreviews(); markNav(); });
+fitPreviews();
+</script>
+</body>
+</html>
