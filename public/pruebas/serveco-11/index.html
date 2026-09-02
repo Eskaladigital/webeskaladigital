@@ -34,7 +34,6 @@
     --ink-15:rgba(26,11,13,.15);
     --ink-07:rgba(26,11,13,.07);
     --paper:#fff;
-    --mar:#4a7aa8;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
@@ -71,8 +70,6 @@
   /* ---------- MAPA DE LA REGIÓN ---------- */
   .mapa{width:100%;display:block;overflow:visible}
   .mapa .region{fill:rgba(190,22,34,.045);stroke:var(--tinta);stroke-width:2.2;stroke-linejoin:round;fill-rule:evenodd}
-  .mapa .rotulo{font-family:'Azeret Mono';font-size:12px;fill:var(--ink-35);letter-spacing:1.5px}
-  .mapa .rotulo.mar{fill:var(--mar);opacity:.7}
   .mapa .draw{stroke-dasharray:4000;stroke-dashoffset:4000;animation:draw 3.1s cubic-bezier(.35,0,.15,1) forwards .25s}
   @keyframes draw{to{stroke-dashoffset:0}}
   .mapa .fade{opacity:0;animation:fade .8s ease forwards}
@@ -115,16 +112,20 @@
   .s:hover h3{color:var(--tinta)}
 
   /* territorio */
-  .terr{display:grid;grid-template-columns:1.25fr .75fr;gap:52px;align-items:center}
-  .terr-map{border:1px solid var(--ink-15);padding:20px;background:var(--paper)}
-  .terr-info .lbl{margin-bottom:12px;display:block}
+  .terr{display:grid;grid-template-columns:1fr minmax(220px,300px);gap:52px;align-items:start}
+  .terr-list{display:flex;flex-direction:column;border-top:1px solid var(--ink-15)}
+  .terr-list button{display:flex;justify-content:space-between;align-items:baseline;gap:16px;width:100%;text-align:left;font-family:inherit;border:none;border-bottom:1px solid var(--ink-07);background:none;padding:18px 0;cursor:pointer;transition:.18s;color:var(--ink-60)}
+  .terr-list button:hover{color:var(--tinta)}
+  .terr-list button.on{color:var(--tinta)}
+  .terr-list button strong{font-size:22px;font-weight:600;letter-spacing:-.03em}
+  .terr-list button span{font-family:'Azeret Mono';font-size:10.5px;letter-spacing:.8px;text-transform:uppercase}
+  .terr-osm{border:1px solid var(--ink-15);background:var(--ink-07);aspect-ratio:4/3;overflow:hidden;width:100%;max-width:300px}
+  .terr-osm iframe{width:100%;height:100%;border:0;display:block}
+  .terr-info{margin-top:22px}
+  .terr-info .lbl{margin-bottom:10px;display:block}
   .terr-info h3{font-size:clamp(28px,3.6vw,44px);margin-bottom:10px}
   .terr-info .addr{color:var(--ink-60);margin-bottom:6px}
   .terr-info .tel{font-family:'Azeret Mono';font-size:15px;color:var(--tinta)}
-  .terr-list{display:flex;flex-wrap:wrap;gap:6px;margin-top:26px}
-  .terr-list button{font-family:'Azeret Mono';font-size:11px;letter-spacing:.6px;border:1px solid var(--ink-15);background:none;padding:8px 14px;cursor:pointer;transition:.18s;color:var(--ink-60)}
-  .terr-list button:hover{border-color:var(--tinta);color:var(--tinta)}
-  .terr-list button.on{background:var(--tinta);border-color:var(--tinta);color:#fff}
 
   /* herramientas */
   .tools{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--ink-15)}
@@ -190,37 +191,11 @@
       </div>
     </div>
 
-    <!-- Región de Murcia y las sedes que están dentro. -->
-    <svg class="mapa" viewBox="-30 -16 920 960" role="img" aria-label="Mapa de la Región de Murcia con los despachos de Serveco">
+    <!-- Región de Murcia + Benidorm al noreste, fuera de la silueta. -->
+    <svg class="mapa" viewBox="-24 -40 1020 940" role="img" aria-label="Mapa de la Región de Murcia y Benidorm con los despachos de Serveco">
       <defs>
         <path id="silueta-murcia" fill-rule="evenodd" d="M578,0L570,0L564,6L540,12L522,32L508,38L500,46L494,46L486,34L478,34L454,50L444,66L442,108L424,120L418,138L428,176L428,238L400,258L390,270L376,278L362,278L354,282L336,280L326,268L328,246L320,240L308,244L296,236L284,238L282,244L272,244L272,252L266,254L258,266L242,268L216,290L198,292L178,300L164,288L146,284L138,290L128,312L114,326L90,332L64,350L62,362L48,384L44,402L8,434L4,446L0,448L0,462L24,476L24,486L32,502L42,508L48,518L76,534L84,546L110,540L122,554L132,556L136,552L144,552L156,558L174,554L180,558L168,600L172,648L168,650L166,682L170,694L178,700L182,716L194,728L196,740L240,800L250,820L264,830L268,820L280,824L300,824L316,840L338,852L350,866L356,866L372,850L396,846L396,842L408,832L416,832L424,838L430,832L426,822L434,802L450,788L466,784L470,776L494,754L504,750L534,754L540,752L540,746L546,740L552,740L554,744L560,742L574,746L582,762L612,768L604,754L608,748L618,746L626,738L640,738L656,744L662,736L668,736L680,744L678,752L706,754L732,740L754,742L772,730L798,726L814,708L820,706L818,702L812,704L806,696L794,666L794,642L802,636L790,626L794,618L786,602L788,586L784,584L782,572L772,574L764,564L750,562L706,512L684,468L654,428L648,390L672,352L680,320L680,294L670,274L648,262L624,256L622,208L628,206L628,198L658,166L654,144L664,120L658,94L658,76L652,72L652,64L638,56L608,28L608,12L580,4ZM774,590L780,590L784,596L782,610L790,626L790,638L792,640L790,660L796,682L788,684L792,690L800,692L800,702L798,704L790,704L788,700L780,696L774,696L760,688L736,656L740,636L746,630L750,630L764,612L762,602Z"/>
-        <path id="ola" fill="none" stroke="#4a7aa8" stroke-width="1.4" stroke-linecap="round" d="M0,16 Q8,2 16,16 Q24,30 32,16 Q40,2 48,16"/>
-        <g id="contexto-geo">
-          <g transform="translate(72,398)" fill="none" stroke="#be1622" stroke-width="1.35" stroke-linejoin="round">
-            <path d="M0,44 L16,16 L32,44"/>
-            <path d="M24,44 L42,4 L60,44"/>
-            <path d="M52,44 L66,18 L80,44"/>
-            <path d="M74,44 L88,10 L102,44"/>
-            <path d="M94,44 L106,22 L118,44"/>
-          </g>
-          <text class="rotulo" x="400" y="58">ALTIPLANO</text>
-          <text class="rotulo mar" x="760" y="868">MAR</text>
-          <use href="#ola" x="268" y="848"/>
-          <use href="#ola" x="340" y="862"/>
-          <use href="#ola" x="412" y="872"/>
-          <use href="#ola" x="484" y="868"/>
-          <use href="#ola" x="556" y="858"/>
-          <use href="#ola" x="300" y="896"/>
-          <use href="#ola" x="390" y="908"/>
-          <use href="#ola" x="480" y="900"/>
-          <use href="#ola" x="790" y="620"/>
-          <use href="#ola" x="810" y="678"/>
-          <use href="#ola" x="778" y="736"/>
-          <use href="#ola" x="800" y="790"/>
-          <use href="#ola" x="720" y="880"/>
-        </g>
       </defs>
-      <use href="#contexto-geo" fill="none" class="fade" style="animation-delay:2.2s"/>
       <use href="#silueta-murcia" class="region draw"/>
 
       <g class="fade" style="animation-delay:1.6s">
@@ -229,6 +204,7 @@
         <g class="pin" data-i="2" transform="translate(526,178)"><circle class="halo" r="26"/><circle class="p" r="7"/><text x="-15" y="5" text-anchor="end">JUMILLA</text></g>
         <g class="pin" data-i="3" transform="translate(332,684)"><circle class="halo" r="26"/><circle class="p" r="7"/><text x="-15" y="5" text-anchor="end">LORCA</text></g>
         <g class="pin" data-i="4" transform="translate(716,590)"><circle class="halo" r="26"/><circle class="p" r="7"/><text x="-15" y="5" text-anchor="end">BALSICAS</text></g>
+        <g class="pin" data-i="5" transform="translate(888,48)"><circle class="halo" r="26"/><circle class="p" r="7"/><text x="15" y="5">BENIDORM</text></g>
       </g>
     </svg>
   </div>
@@ -285,31 +261,24 @@
       <h2 data-r>Seis despachos, una <em>región</em>.</h2>
     </div>
     <div class="terr">
-      <div class="terr-map" data-r>
-        <svg class="mapa" viewBox="-30 -16 920 960" style="width:100%;display:block" role="img" aria-label="Mapa de la Región de Murcia con los despachos de Serveco">
-          <use href="#contexto-geo" fill="none"/>
-          <use href="#silueta-murcia" class="region"/>
-          <g id="pins">
-            <g class="pin on" data-i="0" transform="translate(626,482)"><circle class="halo" r="26"/><circle class="p" r="7"/><text x="15" y="5">MURCIA</text></g>
-            <g class="pin" data-i="1" transform="translate(634,92)"><circle class="halo" r="26"/><circle class="p" r="7"/><text x="15" y="5">YECLA</text></g>
-            <g class="pin" data-i="2" transform="translate(526,178)"><circle class="halo" r="26"/><circle class="p" r="7"/><text x="-15" y="5" text-anchor="end">JUMILLA</text></g>
-            <g class="pin" data-i="3" transform="translate(332,684)"><circle class="halo" r="26"/><circle class="p" r="7"/><text x="-15" y="5" text-anchor="end">LORCA</text></g>
-            <g class="pin" data-i="4" transform="translate(716,590)"><circle class="halo" r="26"/><circle class="p" r="7"/><text x="-15" y="5" text-anchor="end">BALSICAS</text></g>
-          </g>
-        </svg>
+      <div class="terr-list" id="tList" data-r>
+        <button class="on" data-i="0"><strong>Murcia</strong><span>Sede central</span></button>
+        <button data-i="1"><strong>Yecla</strong><span>Altiplano</span></button>
+        <button data-i="2"><strong>Jumilla</strong><span>Altiplano</span></button>
+        <button data-i="3"><strong>Lorca</strong><span>Guadalentín</span></button>
+        <button data-i="4"><strong>Balsicas</strong><span>Campo de Cartagena</span></button>
+        <button data-i="5"><strong>Benidorm</strong><span>Costa</span></button>
       </div>
-      <div class="terr-info">
-        <span class="lbl" id="tLbl">Sede central</span>
-        <h3 id="tCity">Murcia</h3>
-        <p class="addr" id="tAddr">Gran Vía, 28 — 5º</p>
-        <a class="tel" id="tTel" href="tel:+34968909020">968 909 020</a>
-        <div class="terr-list" id="tList">
-          <button class="on" data-i="0">Murcia</button>
-          <button data-i="1">Yecla</button>
-          <button data-i="2">Jumilla</button>
-          <button data-i="3">Lorca</button>
-          <button data-i="4">Balsicas</button>
-          <button data-i="5">Benidorm</button>
+      <div data-r>
+        <div class="terr-osm">
+          <iframe id="tOsm" title="Mapa de la sede" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+            src="https://www.openstreetmap.org/export/embed.html?bbox=-1.1437,37.9756,-1.1197,37.9916&amp;layer=mapnik&amp;marker=37.9836,-1.1317"></iframe>
+        </div>
+        <div class="terr-info">
+          <span class="lbl" id="tLbl">Sede central</span>
+          <h3 id="tCity">Murcia</h3>
+          <p class="addr" id="tAddr">Gran Vía, 28 — 5º · y C/ Acisclo Díaz, 2</p>
+          <a class="tel" id="tTel" href="tel:+34968909020">968 909 020</a>
         </div>
       </div>
     </div>
@@ -363,27 +332,32 @@
 
   /* territorio */
   const SEDES=[
-    {lbl:'Sede central',city:'Murcia',addr:'Gran Vía, 28 — 5º · y C/ Acisclo Díaz, 2',tel:'968 909 020',h:'+34968909020'},
-    {lbl:'Altiplano',city:'Yecla',addr:'C/ Pío Baroja, 7 · C/ Esteban Díaz, 53',tel:'968 753 640',h:'+34968753640'},
-    {lbl:'Altiplano',city:'Jumilla',addr:'C/ Valencia, 2',tel:'968 780 040',h:'+34968780040'},
-    {lbl:'Guadalentín',city:'Lorca',addr:'Antigua Plaza de Abastos, 15 — Local 10',tel:'968 471 431',h:'+34968471431'},
-    {lbl:'Campo de Cartagena',city:'Balsicas',addr:'Avda. Cdad. de Murcia, 90 — Bajo',tel:'968 909 020',h:'+34968909020'},
-    {lbl:'Costa · Cliente internacional',city:'Benidorm',addr:'Calle Jaén, 1 (esq. Avda. de Europa)',tel:'665 912 758',h:'+34665912758'}
+    {lbl:'Sede central',city:'Murcia',addr:'Gran Vía, 28 — 5º · y C/ Acisclo Díaz, 2',tel:'968 909 020',h:'+34968909020',lat:37.9836,lon:-1.1317},
+    {lbl:'Altiplano',city:'Yecla',addr:'C/ Pío Baroja, 7 · C/ Esteban Díaz, 53',tel:'968 753 640',h:'+34968753640',lat:38.6165,lon:-1.1193},
+    {lbl:'Altiplano',city:'Jumilla',addr:'C/ Valencia, 2',tel:'968 780 040',h:'+34968780040',lat:38.4720,lon:-1.3260},
+    {lbl:'Guadalentín',city:'Lorca',addr:'Antigua Plaza de Abastos, 15 — Local 10',tel:'968 471 431',h:'+34968471431',lat:37.6752,lon:-1.6994},
+    {lbl:'Campo de Cartagena',city:'Balsicas',addr:'Avda. Cdad. de Murcia, 90 — Bajo',tel:'968 909 020',h:'+34968909020',lat:37.8203,lon:-0.9635},
+    {lbl:'Costa · Cliente internacional',city:'Benidorm',addr:'Calle Jaén, 1 (esq. Avda. de Europa)',tel:'665 912 758',h:'+34665912758',lat:38.5410,lon:-0.1196}
   ];
   const el={l:document.getElementById('tLbl'),c:document.getElementById('tCity'),a:document.getElementById('tAddr'),t:document.getElementById('tTel')};
-  const pines=[...document.querySelectorAll('.pin')];
+  const tOsm=document.getElementById('tOsm');
+  const pines=[...document.querySelectorAll('.hero .pin')];
+  function osmSrc(lat,lon){
+    const dLon=.012,dLat=.008;
+    return 'https://www.openstreetmap.org/export/embed.html?bbox='+(lon-dLon)+','+(lat-dLat)+','+(lon+dLon)+','+(lat+dLat)+'&layer=mapnik&marker='+lat+','+lon;
+  }
   function sede(i){
     const s=SEDES[i];
     el.l.textContent=s.lbl; el.c.textContent=s.city; el.a.textContent=s.addr;
     el.t.textContent=s.tel; el.t.href='tel:'+s.h;
     document.querySelectorAll('#tList button').forEach(b=>b.classList.toggle('on',+b.dataset.i===i));
     pines.forEach(p=>p.classList.toggle('on',+p.dataset.i===i));
+    if(tOsm) tOsm.src=osmSrc(s.lat,s.lon);
   }
   document.getElementById('tList').addEventListener('click',e=>{
     const b=e.target.closest('button'); if(b)sede(+b.dataset.i);
   });
   pines.forEach(p=>{
-    p.addEventListener('mouseenter',()=>sede(+p.dataset.i));
     p.addEventListener('click',()=>{
       sede(+p.dataset.i);
       document.getElementById('territorio').scrollIntoView({behavior:'smooth'});
