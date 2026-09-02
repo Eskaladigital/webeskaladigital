@@ -14,11 +14,6 @@ const FAMILY_LABELS: Record<string, string> = {
   serveco: 'SERVECO',
 }
 
-/** Código de la carpeta SERVECO. Sin este slug el índice y las demos responden 404. */
-const SERVECO_TOKEN = '8932z3'
-const SERVECO_HUB = `serveco-${SERVECO_TOKEN}`
-const SERVECO_COOKIE = 'esk_sv'
-
 const PRUEBAS_HEADERS = {
   'Content-Type': 'text/html; charset=utf-8',
   'Cache-Control': 'private, no-store',
@@ -30,24 +25,6 @@ function notFound() {
     status: 404,
     headers: { 'X-Robots-Tag': 'noindex, nofollow', 'Cache-Control': 'private, no-store' },
   })
-}
-
-function servecoUnlocked(request: NextRequest): boolean {
-  if (request.cookies.get(SERVECO_COOKIE)?.value === SERVECO_TOKEN) return true
-  const ref = request.headers.get('referer') || ''
-  return ref.includes(`/pruebas/${SERVECO_HUB}`)
-}
-
-function withServecoCookie(html: string) {
-  const res = new NextResponse(html, { headers: PRUEBAS_HEADERS })
-  res.cookies.set(SERVECO_COOKIE, SERVECO_TOKEN, {
-    httpOnly: true,
-    sameSite: 'lax',
-    secure: process.env.NODE_ENV === 'production',
-    path: '/pruebas',
-    maxAge: 60 * 60 * 24 * 30,
-  })
-  return res
 }
 
 const PRUEBAS_DIRS = [
@@ -146,7 +123,7 @@ function buildSwitcher(family: string, current: number, versions: number[]): str
 }
 
 export async function GET(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: { params: Promise<{ slug: string }> }
 ) {
   const { slug } = await params
@@ -155,14 +132,7 @@ export async function GET(
     return notFound()
   }
 
-  const isServecoDemo = /^serveco-\d+$/.test(slug)
-  const isServecoHub = slug === SERVECO_HUB
-  if (slug === 'serveco' || (isServecoDemo && !servecoUnlocked(request))) {
-    return notFound()
-  }
-
-  const fileSlug = isServecoHub ? 'serveco' : slug
-  let html = await loadDemoHtml(fileSlug)
+  let html = await loadDemoHtml(slug)
   if (!html) {
     return notFound()
   }
@@ -179,10 +149,6 @@ export async function GET(
         ? html.replace(/<\/body>/i, `${switcher}\n</body>`)
         : html + switcher
     }
-  }
-
-  if (isServecoHub || isServecoDemo) {
-    return withServecoCookie(html)
   }
 
   return new NextResponse(html, { headers: PRUEBAS_HEADERS })

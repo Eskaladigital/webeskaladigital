@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="is-locked">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -130,9 +130,38 @@ h1,h2,h3,.serif{font-family:'Source Serif 4',Georgia,serif;font-weight:600;line-
   .wrap{padding-top:3.2rem}
   .head .logo{height:44px}
 }
+
+html.is-locked,body.is-locked{overflow:hidden;height:100%;touch-action:none}
+.gate{position:fixed;inset:0;z-index:200;display:grid;place-items:center;padding:1.5rem;
+  background:rgba(42,43,46,.58);backdrop-filter:blur(11px);-webkit-backdrop-filter:blur(11px)}
+.gate[hidden]{display:none}
+.gate-card{width:min(420px,100%);background:var(--paper);border:1px solid var(--line);border-radius:20px;
+  padding:2rem 1.8rem 1.8rem;box-shadow:0 28px 70px rgba(42,43,46,.22);text-align:center}
+.gate-card .k{font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;font-weight:700;color:var(--orange);margin-bottom:.7rem}
+.gate-card h2{font-size:1.55rem;margin-bottom:.55rem}
+.gate-card p{color:var(--muted);font-size:.95rem;line-height:1.55;margin-bottom:1.2rem}
+.gate-card input{width:100%;font:inherit;font-size:1.05rem;letter-spacing:.12em;text-align:center;
+  border:1px solid var(--line-2);border-radius:12px;padding:.85rem .9rem;background:#fafaf8;color:var(--ink);outline:none}
+.gate-card input:focus{border-color:var(--orange);box-shadow:0 0 0 3px var(--orange-s)}
+.gate-card button{margin-top:.85rem;width:100%;border:0;border-radius:12px;padding:.85rem;font:inherit;font-weight:700;
+  letter-spacing:.06em;text-transform:uppercase;font-size:.78rem;background:var(--orange);color:#fff;cursor:pointer}
+.gate-card button:hover{background:var(--orange-d)}
+.gate-err{margin-top:.7rem;color:#b42318;font-size:.85rem;font-weight:600}
+.gate-card.is-bad{animation:gateShake .35s}
+@keyframes gateShake{20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
 </style>
 </head>
-<body>
+<body class="is-locked">
+<div class="gate" id="gate" role="dialog" aria-modal="true" aria-labelledby="gateT">
+  <form class="gate-card" id="gateForm" autocomplete="off">
+    <p class="k">Documento de trabajo</p>
+    <h2 id="gateT">Carpeta privada</h2>
+    <p>Escribe la clave que te hemos pasado para ver la propuesta.</p>
+    <input id="gatePw" type="password" inputmode="text" autocomplete="off" placeholder="Clave" aria-label="Clave">
+    <button type="submit">Entrar</button>
+    <p class="gate-err" id="gateErr" hidden>Clave incorrecta</p>
+  </form>
+</div>
 <div class="ribbon">Propuesta de web para SERVECO · <a href="https://www.eskaladigital.com/servicios" target="_blank" rel="noopener">ESCALA Marketing</a></div>
 
 <nav class="nav" aria-label="Secciones">
@@ -457,6 +486,36 @@ addEventListener('resize', fitPreviews);
 addEventListener('scroll', markNav, {passive:true});
 addEventListener('load', function(){ fitPreviews(); markNav(); });
 fitPreviews();
+
+(function(){
+  var KEY='8932z3', STORE='esk_sv_ok';
+  var gate=document.getElementById('gate');
+  var form=document.getElementById('gateForm');
+  var input=document.getElementById('gatePw');
+  var err=document.getElementById('gateErr');
+  function unlock(){
+    document.documentElement.classList.remove('is-locked');
+    document.body.classList.remove('is-locked');
+    gate.hidden=true;
+    try{ sessionStorage.setItem(STORE,'1'); }catch(e){}
+    fitPreviews();
+  }
+  function lockMove(e){ if(!gate.hidden) e.preventDefault(); }
+  try{ if(sessionStorage.getItem(STORE)==='1'){ unlock(); return; } }catch(e){}
+  document.documentElement.classList.add('is-locked');
+  document.addEventListener('wheel', lockMove, {passive:false});
+  document.addEventListener('touchmove', lockMove, {passive:false});
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    if((input.value||'').trim()===KEY){ unlock(); return; }
+    err.hidden=false;
+    form.classList.remove('is-bad');
+    void form.offsetWidth;
+    form.classList.add('is-bad');
+    input.select();
+  });
+  input.focus();
+})();
 </script>
 </body>
 </html>
