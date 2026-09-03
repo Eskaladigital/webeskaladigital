@@ -24,6 +24,7 @@ const PORTFOLIO_WEBS = [
   { url: 'https://www.health4spain.com/es', folder: 'health4spain-marketplace-extranjeros', name: 'Health4Spain' },
   { url: 'https://www.retiru.com/es', folder: 'retiru-marketplace-retiros-wellness', name: 'Retiru' },
   { url: 'https://www.optimalbreaks.com/es', folder: 'optimalbreaks-archivo-breakbeat', name: 'Optimal Breaks' },
+  { url: 'https://www.neotermica.com', folder: 'neotermica-climatizacion-murcia', name: 'Neotérmica' },
 ];
 
 // Filtro opcional por CLI: node scripts/screenshot-portfolio.js <texto>
@@ -62,24 +63,40 @@ async function captureScreenshot(browser, web) {
     
     // Cerrar posibles popups de cookies o modales
     try {
-      // Intentar cerrar modales comunes
-      const closeSelectors = [
-        '[class*="cookie"] button',
-        '[class*="consent"] button',
-        '[class*="modal"] button[class*="close"]',
-        '.cookie-banner button',
-        '#cookie-accept',
-        '.accept-cookies',
-        'button[aria-label="Cerrar"]',
-        'button[aria-label="Close"]',
-      ];
-      
-      for (const selector of closeSelectors) {
-        const button = await page.$(selector);
-        if (button) {
-          await button.click();
-          await new Promise(resolve => setTimeout(resolve, 500));
-          break;
+      const closed = await page.evaluate(() => {
+        const buttons = [...document.querySelectorAll('button')];
+        const byText = (t) =>
+          buttons.find((b) => b.textContent && b.textContent.trim() === t) ||
+          buttons.find((b) => b.textContent && b.textContent.includes(t));
+        const accept =
+          byText('Aceptar todas') || byText('Aceptar') || byText('Accept');
+        if (accept) {
+          accept.click();
+          return accept.textContent.trim();
+        }
+        return null;
+      });
+      if (closed) {
+        console.log(`   Cookie banner: ${closed}`);
+        await new Promise((resolve) => setTimeout(resolve, 1500));
+      } else {
+        const closeSelectors = [
+          '[class*="cookie"] button',
+          '[class*="consent"] button',
+          '[class*="modal"] button[class*="close"]',
+          '.cookie-banner button',
+          '#cookie-accept',
+          '.accept-cookies',
+          'button[aria-label="Cerrar"]',
+          'button[aria-label="Close"]',
+        ];
+        for (const selector of closeSelectors) {
+          const button = await page.$(selector);
+          if (button) {
+            await button.click();
+            await new Promise((resolve) => setTimeout(resolve, 500));
+            break;
+          }
         }
       }
     } catch (e) {
