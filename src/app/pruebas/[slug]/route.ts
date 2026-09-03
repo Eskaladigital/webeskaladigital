@@ -132,6 +132,10 @@ export async function GET(
     return notFound()
   }
 
+  if (slug === 'serveco-respuesto') {
+    return NextResponse.redirect(new URL('/pruebas/serveco-presupuesto', _request.url), 301)
+  }
+
   let html = await loadDemoHtml(slug)
   if (!html) {
     return notFound()
