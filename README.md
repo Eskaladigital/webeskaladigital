@@ -170,7 +170,7 @@ La web tiene **3 tipos de layouts** según el tipo de página:
 | Portfolio | `/portfolio` | 2 (mínimo necesario) |
 | Éxitos | `/exitos` | 1 (antes de CTA) |
 | Blog | `/blog` | 2 (mínimo necesario) |
-| Contacto | `/contacto` | 1 (antes de info) |
+| Contacto | `/contacto` | 1 (antes de info). Lead en Supabase + SMTP. Anti-spam 9 sep (`8ad5cf8`): honeypot, tiempo, venta B2B. |
 
 ### Páginas de Servicios (Landings SEO)
 | Servicio | URL |
