@@ -14,9 +14,31 @@ const PORTFOLIO_WEBS = [
   { url: 'https://www.furgocasa.com', folder: 'furgocasa-alquiler-camper', name: 'Furgocasa' },
   { url: 'https://www.mapafurgocasa.com', folder: 'mapa-furgocasa-ia', name: 'Mapa Furgocasa' },
   { url: 'https://www.tricholand.com', folder: 'tricholand-tienda-cactus', name: 'Tricholand' },
+  {
+    url: 'https://www.tricholand.com/es',
+    folder: 'tricholand-tienda-mayorista-2026',
+    name: 'Tricholand 2026',
+    extra: [
+      { url: 'https://www.tricholand.com/es/tienda', file: 'tienda.jpg' },
+      { url: 'https://www.tricholand.com/es/variedades', file: 'variedades.jpg' },
+      { url: 'https://www.tricholand.com/es/blog', file: 'blog.jpg' },
+      { url: 'https://www.tricholand.com/es/contacto', file: 'contacto.jpg' },
+    ],
+  },
   { url: 'https://www.acttax.es', folder: 'acttax-asesoria-fiscal', name: 'Acttax' },
   { url: 'https://www.gvcexpertos.com', folder: 'gvc-expertos-abogados', name: 'GVC Expertos' },
   { url: 'https://www.gvcabogados.com', folder: 'gvc-abogados-murcia', name: 'GVC Abogados' },
+  {
+    url: 'https://www.gvcabogados.com/es',
+    folder: 'gvc-abogados-murcia-2026',
+    name: 'GVC Abogados 2026',
+    extra: [
+      { url: 'https://www.gvcabogados.com/es/servicios', file: 'servicios.jpg' },
+      { url: 'https://www.gvcabogados.com/es/servicios/accidentes-trafico', file: 'accidentes.jpg' },
+      { url: 'https://www.gvcabogados.com/es/blog', file: 'blog.jpg' },
+      { url: 'https://www.gvcabogados.com/es/contacto', file: 'contacto.jpg' },
+    ],
+  },
   { url: 'https://www.casicinco.com', folder: 'casi-cinco-recomendaciones', name: 'Casi Cinco' },
   { url: 'https://www.onprocuradores.com', folder: 'on-procuradores-murcia', name: 'ON Procuradores' },
   { url: 'https://www.rebecamedina.es', folder: 'rebeca-medina', name: 'Rebeca Medina' },
@@ -132,6 +154,21 @@ async function captureScreenshot(browser, web) {
     });
     
     console.log(`   ✅ Guardado: ${fullPath}`);
+
+    if (Array.isArray(web.extra)) {
+      for (const extra of web.extra) {
+        await page.goto(extra.url, { waitUntil: 'networkidle2', timeout: 30000 });
+        await new Promise((resolve) => setTimeout(resolve, 1500));
+        const extraPath = path.join(outputDir, extra.file);
+        await page.screenshot({
+          path: extraPath,
+          type: 'jpeg',
+          quality: 85,
+          fullPage: false,
+        });
+        console.log(`   ✅ Guardado: ${extraPath}`);
+      }
+    }
     
     return { success: true, web: web.name };
     

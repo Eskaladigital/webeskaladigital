@@ -82,7 +82,7 @@ export function buildBusinessDataBlock(): string {
     `Web: ${SITE_URL}`,
     'Quiénes somos: ' + SITE_URL + '/quienes-somos',
     'Blog: ' + SITE_URL + '/blog',
-    'Portfolio: ' + SITE_URL + '/portfolio',
+    'Portfolio: ' + SITE_URL + '/portfolio (las fichas salen de Supabase). Casos 2026: Neotérmica, Tricholand tienda B2B, GVC Abogados Next, Furgocasa, Optimal, Retiru. Las fichas antiguas de Tricholand 2021 y GVC 2022 se quedan.',
     '',
     buildContactBlock(),
     '',

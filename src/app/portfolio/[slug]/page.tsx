@@ -155,6 +155,7 @@ export default async function ProjectPage({ params }: Props) {
   const serviceColors: Record<string, string> = {
     'diseño-web': '#4a7c9b',
     'diseno-web': '#4a7c9b',
+    'desarrollo-web': '#2d5f7f',
     'seo-local': '#1e3a5f',
     'seo': '#1e3a5f',
     'redes-sociales': '#ffb366',

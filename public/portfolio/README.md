@@ -8,10 +8,12 @@ Cada proyecto tiene su propia carpeta donde debes subir las capturas de pantalla
 
 1. **furgocasa-alquiler-camper/** - www.furgocasa.com ⭐ **PROYECTO DESTACADO**
 2. **mapa-furgocasa-ia/** - www.mapafurgocasa.com
-3. **tricholand-tienda-cactus/** - www.tricholand.com
+3. **tricholand-tienda-cactus/** - www.tricholand.com (ficha 2021)
+3b. **tricholand-tienda-mayorista-2026/** - tienda B2B Next.js (ficha 2026; la de 2021 se queda)
 4. **acttax-asesoria-fiscal/** - www.acttax.es
 5. **gvc-expertos-abogados/** - www.gvcexpertos.com
-6. **gvc-abogados-murcia/** - www.gvcabogados.com
+6. **gvc-abogados-murcia/** - www.gvcabogados.com (ficha 2022)
+6b. **gvc-abogados-murcia-2026/** - web Next.js del bufete (ficha 2026; la de 2022 se queda)
 7. **casi-cinco-recomendaciones/** - www.casicinco.com
 8. **hakadogs-adiestramiento-canino/** - www.hakadogs.com
 9. **on-procuradores-murcia/** - www.onprocuradores.com

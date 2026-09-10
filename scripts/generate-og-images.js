@@ -18,9 +18,11 @@ const PROJECTS = [
   'furgocasa-alquiler-camper',
   'mapa-furgocasa-ia',
   'tricholand-tienda-cactus',
+  'tricholand-tienda-mayorista-2026',
   'acttax-asesoria-fiscal',
   'gvc-expertos-abogados',
   'gvc-abogados-murcia',
+  'gvc-abogados-murcia-2026',
   'casi-cinco-recomendaciones',
   'on-procuradores-murcia',
   'rebeca-medina',
@@ -64,11 +66,17 @@ async function generateOGImage(projectFolder) {
   }
 }
 
+const filterArg = process.argv[2]?.toLowerCase();
+
 async function main() {
+  const projects = filterArg
+    ? PROJECTS.filter((p) => p.toLowerCase().includes(filterArg))
+    : PROJECTS;
+
   console.log('🚀 Generando imágenes Open Graph para el portfolio...\n');
   console.log(`📁 Directorio: ${PORTFOLIO_DIR}`);
   console.log(`📐 Tamaño OG: ${OG_WIDTH}x${OG_HEIGHT} (proporción 1.91:1)`);
-  console.log(`🌐 Proyectos a procesar: ${PROJECTS.length}\n`);
+  console.log(`🌐 Proyectos a procesar: ${projects.length}\n`);
 
   // Verificar que Sharp está instalado
   try {
@@ -81,7 +89,7 @@ async function main() {
 
   const results = [];
 
-  for (const project of PROJECTS) {
+  for (const project of projects) {
     const result = await generateOGImage(project);
     results.push(result);
   }
@@ -107,7 +115,7 @@ async function main() {
   console.log('📝 SQL PARA ACTUALIZAR SUPABASE:');
   console.log('='.repeat(50) + '\n');
 
-  PROJECTS.forEach(project => {
+  projects.forEach(project => {
     const slug = project;
     console.log(`UPDATE portfolio_projects SET og_image = '/portfolio/${project}/og-image.jpg' WHERE slug = '${slug}';`);
   });
