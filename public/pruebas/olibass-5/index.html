@@ -221,22 +221,23 @@ const pistas=[
   {n:'Bombo',c:'var(--pad-n)'},{n:'Caja',c:'var(--pad-a)'},{n:'Charles',c:'var(--pad-v)'},{n:'Bajo',c:'#E8EAEE'}
 ];
 const X=1,_=0;
-/* Cada edición = un patrón de break distinto (bombo, caja, charles, bajo) */
+/* Cada edición = un compás de breakbeat en 4/4 (16 semicorcheas).
+   La caja cae en los tiempos 2 y 4. El bombo va roto, no a negras. */
 const ediciones=[
   {id:'A1',t:'Primera edición',f:'9 sep 2023',l:'IFEJA, Jaén',c:'var(--pad-v)',txt:'Breaks y drum & bass con Friction, Delta Heavy, The Caracal Project y Breakbeat Connection. Sets especiales Spanish Kings y Retro Legends.',
-   p:[[X,_,_,_,_,_,_,_,_,_,X,_,_,_,_,_],[_,_,_,_,X,_,_,_,_,_,_,_,X,_,_,_],[X,_,X,_,X,_,X,_,X,_,X,_,X,_,X,_],[X,_,_,X,_,_,_,_,_,_,X,_,_,_,_,_]]},
+   p:[[X,_,_,_, _,_,X,_, _,_,X,_, _,_,_,_],[_,_,_,_, X,_,_,_, _,_,_,_, X,_,_,_],[X,_,X,_, X,_,X,_, X,_,X,_, X,_,X,_],[X,_,_,_, _,_,X,_, _,_,X,_, _,_,_,X]]},
   {id:'A2',t:'Edición de invierno',f:'24 feb 2024',l:'IFEJA, Jaén',c:'#8FC3E8',txt:'Krafty Kuts, Future Flex, Plump DJs, ED 209 y Ragga Twins. Más de 30 artistas, dos escenarios, 12 horas.',
-   p:[[X,_,_,_,_,_,_,_,_,_,X,_,_,_,_,_],[_,_,_,_,X,_,_,X,_,X,_,_,X,_,_,_],[X,_,X,_,X,_,X,_,X,_,X,_,X,_,X,X],[X,_,_,_,_,_,X,_,_,_,X,_,_,_,X,_]]},
+   p:[[X,_,_,_, _,X,_,_, _,_,X,_, _,_,X,_],[_,_,_,_, X,_,_,X, _,_,_,_, X,_,_,_],[X,_,X,_, X,_,X,X, X,_,X,_, X,_,X,_],[X,_,_,_, _,X,_,_, _,_,X,_, _,_,X,_]]},
   {id:'A3',t:'Tres escenarios',f:'7 sep 2024',l:'IFEJA, Jaén',c:'var(--pad-a)',txt:'Breaks actual, breaks retro y drum & bass a la vez. Fran Break, Godino, Muriel y Voltage; MCs Speaker Reality, Cellux MC y Lizard MC.',
-   p:[[X,_,_,_,_,_,_,X,_,_,X,_,_,_,_,_],[_,_,_,_,X,_,_,_,_,_,_,_,X,_,_,X],[X,X,X,_,X,X,X,_,X,X,X,_,X,X,X,_],[X,_,_,_,_,_,_,X,_,_,X,_,_,_,_,_]]},
+   p:[[X,_,_,_, _,_,X,_, X,_,_,_, _,_,X,_],[_,_,_,_, X,_,_,_, _,X,_,_, X,_,_,_],[X,X,X,_, X,X,X,_, X,X,X,_, X,X,X,_],[X,_,_,_, _,_,X,_, X,_,_,_, _,_,X,_]]},
   {id:'A4',t:'Snow Edition',f:'1 feb 2025',l:'Pabellón semicubierto de IFEJA',c:'#CFE6F3',txt:'Krafty Kuts, Atomic Hooligan, Cut & Run y Future Funk Squad. Retro, bassline, big beat, electro alternativo y UK garage.',
-   p:[[X,_,_,_,_,_,X,_,_,_,X,_,_,_,_,_],[_,_,_,_,X,_,_,_,_,_,_,_,X,_,X,_],[_,_,X,_,_,_,X,_,_,_,X,_,_,_,X,_],[X,_,X,_,_,_,X,_,X,_,_,_,X,_,_,_]]},
+   p:[[X,_,_,_, _,_,_,X, _,_,X,_, _,_,_,_],[_,_,_,_, X,_,_,_, _,_,_,_, X,_,_,X],[X,_,_,X, X,_,_,X, X,_,_,X, X,_,_,X],[X,_,_,_, _,_,_,X, _,_,X,_, _,_,_,_]]},
   {id:'A5',t:'Lady Waks',f:'6 sep 2025',l:'Pabellón semicubierto de IFEJA',c:'var(--pad-n)',txt:'Lady Waks como cabeza de cartel, con Backdraft, CTRL-Z, Alex Sunsha, Tryple D, Rasco y Godino. De 17:00 a 06:00.',
-   p:[[X,_,_,X,_,_,_,_,_,_,X,_,_,_,_,_],[_,_,_,_,X,_,_,_,_,X,_,_,X,_,_,_],[X,_,X,X,X,_,X,_,X,_,X,X,X,_,X,_],[X,_,_,X,_,_,X,_,_,_,X,_,_,X,_,_]]},
+   p:[[X,_,_,X, _,_,X,_, _,_,X,_, _,_,_,X],[_,_,_,_, X,_,_,_, _,_,_,X, X,_,_,_],[X,_,X,_, X,_,X,_, X,_,X,_, X,_,X,_],[X,_,_,X, _,_,X,_, _,_,X,_, _,_,_,X]]},
   {id:'A6',t:'Víspera del 28F',f:'27 feb 2026',l:'La Carpa, Torredonjimeno',c:'#B5E08B',txt:'Primera edición en Torredonjimeno, la noche antes del Día de Andalucía. De 20:00 a 06:00.',
-   p:[[X,_,_,_,_,_,_,_,X,_,X,_,_,_,_,_],[_,_,_,_,X,_,_,_,_,_,_,_,X,_,_,_],[X,_,X,_,X,_,X,_,X,_,X,_,X,_,X,_],[X,_,_,_,_,_,_,_,X,_,X,_,_,_,_,_]]},
+   p:[[X,_,_,_, _,_,_,_, _,_,X,_, _,_,_,X],[_,_,_,_, X,_,_,_, _,_,X,_, X,_,_,_],[_,X,_,X, _,X,_,X, _,X,_,X, _,X,_,X],[X,_,_,_, _,_,X,_, _,X,_,_, _,_,X,_]]},
   {id:'A7',t:'Open Air',f:'19 sep 2026',l:'Polígono Industrial, C/ Chile, Torredonjimeno',c:'#FF8E5E',txt:'El primer Olibass al aire libre, con catorce artistas de 19:00 a 07:00. Aplazado desde el 15 de agosto tras un reventón térmico que dañó el recinto.',
-   p:[[X,_,_,_,_,_,_,X,_,_,X,_,_,_,_,_],[_,_,_,_,X,_,_,_,_,X,_,_,X,_,_,_],[X,_,X,_,X,_,X,X,X,_,X,_,X,_,X,X],[X,_,_,_,_,_,_,X,_,_,X,_,_,_,X,_]]}
+   p:[[X,_,_,_, _,_,X,X, _,_,X,_, _,_,X,_],[_,_,_,_, X,_,_,_, _,_,_,_, X,_,_,_],[X,_,X,X, X,_,X,X, X,_,X,X, X,_,X,X],[X,_,_,_, _,_,X,_, _,_,X,_, _,_,X,_]]}
 ];
 
 /* ---------- Secuenciador ---------- */
