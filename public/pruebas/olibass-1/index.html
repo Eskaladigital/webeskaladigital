@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Olibass — Propuesta Olivar · ESCALA</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Propuesta Olivar para Olibass Music Festival. Demo by ESCALA Marketing.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,500;12..96,700;12..96,800&display=swap" rel="stylesheet">
+<style>
+  /* PROPUESTA 01 — OLIVAR
+     Idea: el nombre es oliva + bass. Las hileras de olivos de Jaén se convierten en un ecualizador. */
+  :root{
+    --plata:#DCE0D2;     /* envés de la hoja de olivo */
+    --olivar:#2F3D23;    /* verde profundo del árbol */
+    --aceite:#D9A21B;    /* aceite recién prensado */
+    --tierra:#8B4A2B;    /* tierra roja de la campiña */
+    --ocaso:#F1B98A;     /* atardecer sobre la sierra */
+    --texto:#1D2616;
+    --fs-xs:.8125rem; --fs-s:1rem; --fs-m:1.25rem; --fs-l:1.953rem; --fs-xl:3.052rem; --fs-xxl:clamp(4.5rem,15vw,12rem);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:"Bricolage Grotesque",system-ui,sans-serif;background:var(--plata);color:var(--texto);font-size:var(--fs-s);line-height:1.6;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  :focus-visible{outline:3px solid var(--aceite);outline-offset:3px}
+
+  /* NAV */
+  .nav{position:absolute;inset:0 0 auto 0;z-index:5;display:flex;justify-content:space-between;align-items:center;padding:calc(1.25rem + env(safe-area-inset-top,0px)) clamp(1.25rem,4vw,3rem) 1.25rem;color:var(--plata)}
+  .nav .logo{font-weight:800;font-size:1.25rem;letter-spacing:-.02em;text-decoration:none}
+  .nav ul{display:flex;gap:1.75rem;list-style:none;font-weight:500}
+  .nav ul a{text-decoration:none;opacity:.85}
+  .nav ul a:hover{opacity:1;text-decoration:underline;text-underline-offset:4px}
+  .btn{display:inline-block;background:var(--aceite);color:var(--olivar);font-weight:700;padding:.8rem 1.4rem;border-radius:999px;text-decoration:none;transition:transform .15s}
+  .btn:hover{transform:translateY(-2px)}
+  .btn.ghost{background:transparent;color:inherit;box-shadow:inset 0 0 0 2px currentColor}
+
+  /* HERO */
+  .hero{position:relative;min-height:100vh;min-height:100svh;background:linear-gradient(180deg,#3A2A4A 0%,#9B4E4A 30%,var(--ocaso) 46%,var(--ocaso) 47%);overflow:hidden;color:var(--plata);display:flex;flex-direction:column;justify-content:flex-end}
+  .hero svg.grove{position:absolute;inset:auto 0 0 0;width:100%;height:78%;}
+  .sun{position:absolute;left:62%;top:27%;width:clamp(120px,16vw,230px);aspect-ratio:1;border-radius:50%;background:var(--aceite);box-shadow:0 0 120px 40px rgba(217,162,27,.45)}
+  .tree{transform-box:fill-box;transform-origin:50% 100%;animation:beat .444s ease-in-out infinite alternate}
+  @keyframes beat{from{transform:scaleY(.72)}to{transform:scaleY(1.08)}}
+  .hero-copy{position:relative;z-index:2;padding:0 clamp(1.25rem,4vw,3rem) clamp(2rem,6vh,4rem)}
+  .hero h1{font-size:var(--fs-xxl);font-weight:800;line-height:.82;letter-spacing:-.055em;color:var(--plata);text-shadow:0 4px 40px rgba(0,0,0,.25)}
+  .hero-row{display:flex;flex-wrap:wrap;gap:1.5rem 3rem;align-items:flex-end;justify-content:space-between;margin-top:1.5rem}
+  .hero p.lead{max-width:34ch;font-size:var(--fs-m);line-height:1.4;font-weight:500}
+  .next{background:var(--olivar);border-radius:1.25rem;padding:1.1rem 1.4rem;display:grid;gap:.2rem;min-width:260px}
+  .next small{opacity:.75}
+  .next strong{font-size:var(--fs-l);line-height:1.1;color:var(--aceite)}
+
+  /* SECCIONES */
+  section{padding:clamp(4rem,10vw,8rem) clamp(1.25rem,4vw,3rem)}
+  .wrap{max-width:1180px;margin:0 auto}
+  h2{font-size:var(--fs-xl);font-weight:800;letter-spacing:-.035em;line-height:1;margin-bottom:2rem}
+  .que{display:grid;grid-template-columns:1.2fr 1fr;gap:clamp(2rem,6vw,6rem);align-items:start}
+  .que p{font-size:var(--fs-m);line-height:1.55;max-width:58ch;margin-bottom:1.25rem}
+  .datos{border-top:2px solid var(--olivar)}
+  .datos div{display:flex;justify-content:space-between;gap:1rem;padding:1rem 0;border-bottom:1px solid rgba(47,61,35,.3)}
+  .datos dt{font-weight:500}
+  .datos dd{font-weight:800;text-align:right}
+
+  /* HISTORIA */
+  .historia{background:var(--olivar);color:var(--plata)}
+  .historia .cols{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,6vw,6rem)}
+  .historia blockquote{font-size:clamp(1.8rem,3.6vw,3rem);font-weight:700;line-height:1.12;letter-spacing:-.03em;color:var(--ocaso)}
+  .historia p{margin-bottom:1.2rem;max-width:60ch;font-size:1.075rem}
+  .etimo{margin-top:2.5rem;display:flex;align-items:center;gap:1rem;font-size:var(--fs-l);font-weight:800;flex-wrap:wrap}
+  .etimo span{background:var(--plata);color:var(--olivar);padding:.2rem .9rem;border-radius:999px}
+  .etimo b{color:var(--aceite)}
+
+  /* EDICIONES: cada edición es una hilera del olivar */
+  .ediciones .intro{max-width:60ch;margin-bottom:3rem;font-size:1.075rem}
+  .hileras{list-style:none;border-top:2px solid var(--olivar)}
+  .hilera{display:grid;grid-template-columns:9rem 1fr 1.4fr auto;gap:1.5rem;align-items:center;padding:1.4rem 0;border-bottom:1px solid rgba(47,61,35,.3);position:relative}
+  .hilera .fecha{font-weight:800;font-size:1.35rem;line-height:1.1}
+  .hilera .fecha small{display:block;font-weight:500;font-size:var(--fs-xs);opacity:.7}
+  .hilera h3{font-size:var(--fs-m);font-weight:700;line-height:1.2}
+  .hilera h3 small{display:block;font-weight:500;font-size:.9rem;opacity:.75}
+  .hilera .cartel{font-size:.95rem;line-height:1.45}
+  .plantas{display:flex;gap:4px;align-items:flex-end;height:36px}
+  .plantas i{display:block;width:10px;border-radius:50% 50% 2px 2px;background:var(--olivar)}
+  .hilera.invierno .plantas i{background:#6E8C9E}
+  .hilera.proxima{background:var(--aceite);padding-left:1rem;padding-right:1rem;border-radius:1rem;border:0;margin-top:1rem}
+  .leyenda{display:flex;gap:1.5rem;margin-top:1.5rem;font-size:var(--fs-xs)}
+  .leyenda span::before{content:"";display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:.4rem;background:var(--olivar);vertical-align:middle}
+  .leyenda span.inv::before{background:#6E8C9E}
+
+  /* INFO */
+  .info{background:var(--tierra);color:#F7E6D6}
+  .info .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2.5rem}
+  .info h3{font-size:var(--fs-m);margin-bottom:.4rem;color:var(--ocaso)}
+  .info p{font-size:.975rem;max-width:36ch}
+
+  footer{background:var(--olivar);color:var(--plata);padding:3rem clamp(1.25rem,4vw,3rem) calc(3rem + env(safe-area-inset-bottom,0px));display:flex;flex-wrap:wrap;justify-content:space-between;gap:1.5rem;font-size:.9rem}
+  footer .big{font-size:clamp(3rem,10vw,7rem);font-weight:800;letter-spacing:-.05em;line-height:.9;width:100%;color:var(--aceite)}
+  footer a{text-decoration:none}
+  footer nav{display:flex;gap:1.5rem}
+
+  @media (max-width:860px){
+    .nav ul{display:none}
+    .que,.historia .cols{grid-template-columns:1fr}
+    .hilera{grid-template-columns:1fr;gap:.5rem}
+    .plantas{display:none}
+    .info .grid{grid-template-columns:1fr}
+  }
+  @media (prefers-reduced-motion:reduce){.tree{animation:none}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<header class="hero" id="inicio">
+  <nav class="nav" aria-label="Principal">
+    <a class="logo" href="#inicio">olibass</a>
+    <ul>
+      <li><a href="#festival">El festival</a></li>
+      <li><a href="#historia">Historia</a></li>
+      <li><a href="#ediciones">Ediciones</a></li>
+      <li><a href="#info">Información</a></li>
+    </ul>
+    <a class="btn" href="#ediciones">Próxima edición</a>
+  </nav>
+
+  <div class="sun" aria-hidden="true"></div>
+  <svg class="grove" id="grove" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMax slice" aria-hidden="true"></svg>
+
+  <div class="hero-copy">
+    <h1>Olibass</h1>
+    <div class="hero-row">
+      <p class="lead">Breakbeat desde el mar de olivos. Doce horas de ritmos rotos en la provincia de Jaén, dos veces al año.</p>
+      <div class="next">
+        <small>Última edición: Open Air, 19 de septiembre de 2026</small>
+        <strong>Invierno 2027</strong>
+        <small>Fecha y cartel, muy pronto</small>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section id="festival">
+    <div class="wrap que">
+      <div>
+        <h2>Qué es Olibass</h2>
+        <p>Olibass Music Festival es un festival de breakbeat nacido en Jaén. Reúne en una misma noche a los nombres británicos que escribieron la historia del género, a la escena andaluza que lo mantuvo vivo durante años y a la generación que lo está reinventando ahora.</p>
+        <p>Suenan dos maneras de entender los ritmos rotos: el breaks retro que llenaba salas a finales de los noventa y el sonido actual, con bassline, big beat y guiños al drum &amp; bass. Por eso cada edición mezcla a quien lo bailó entonces con quien lo descubre hoy.</p>
+      </div>
+      <dl class="datos">
+        <div><dt>Género</dt><dd>Breakbeat retro y actual</dd></div>
+        <div><dt>Duración</dt><dd>12 horas seguidas</dd></div>
+        <div><dt>Citas al año</dt><dd>Invierno y septiembre</dd></div>
+        <div><dt>Escenarios</dt><dd>Hasta 3</dd></div>
+        <div><dt>Asistentes</dt><dd>Más de 2.000</dd></div>
+        <div><dt>Sede actual</dt><dd>Torredonjimeno, Jaén</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="historia" id="historia">
+    <div class="wrap">
+      <h2>Una historia con raíces</h2>
+      <div class="cols">
+        <blockquote>El breakbeat tuvo en Andalucía una segunda casa. Olibass nació para devolverlo a la tierra donde creció.</blockquote>
+        <div>
+          <p>A finales de los noventa y primeros dos mil, el breakbeat se convirtió en el sonido de las noches andaluzas: salas llenas, carreteras de fin de semana y una escena de DJs propia. Después llegaron años más discretos, pero la afición nunca se fue.</p>
+          <p>En septiembre de 2023, Olibass abrió sus puertas en IFEJA, el recinto ferial de Jaén, uniendo breaks y drum &amp; bass en un mismo cartel. La respuesta fue tal que el festival pasó a celebrarse dos veces al año, creció de dos a tres escenarios y en 2025 estrenó su Snow Edition.</p>
+          <p>En 2026 el festival se mudó a Torredonjimeno, a pocos kilómetros de la capital, y celebró su primer Open Air. Un reventón térmico dañó el recinto días antes de la fecha prevista de agosto y la cita se trasladó al 19 de septiembre. No se canceló: se esperó.</p>
+        </div>
+      </div>
+      <div class="etimo" aria-label="Origen del nombre: oliva más bass">
+        <span>Oliva</span> <b>+</b> <span>Bass</span> <b>=</b> Olibass
+      </div>
+    </div>
+  </section>
+
+  <section class="ediciones" id="ediciones">
+    <div class="wrap">
+      <h2>Ediciones</h2>
+      <p class="intro">Siete ediciones en tres años, alternando invierno y septiembre. Cada hilera del olivar es una cita.</p>
+      <ol class="hileras">
+        <li class="hilera">
+          <div class="fecha">9 sep<small>2023</small></div>
+          <h3>Primera edición<small>IFEJA, Jaén</small></h3>
+          <p class="cartel">Friction, Delta Heavy, The Caracal Project, Breakbeat Connection, Spanish Kings y el set Retro Legends. Breaks y drum &amp; bass en el mismo recinto.</p>
+          <div class="plantas" aria-hidden="true"><i style="height:26px"></i><i style="height:26px"></i></div>
+        </li>
+        <li class="hilera invierno">
+          <div class="fecha">24 feb<small>2024</small></div>
+          <h3>Edición de invierno<small>IFEJA, Jaén</small></h3>
+          <p class="cartel">Krafty Kuts, Future Flex, Plump DJs, ED 209 y Ragga Twins. Más de 30 artistas y dos escenarios durante 12 horas.</p>
+          <div class="plantas" aria-hidden="true"><i style="height:26px"></i><i style="height:26px"></i></div>
+        </li>
+        <li class="hilera">
+          <div class="fecha">7 sep<small>2024</small></div>
+          <h3>Edición de septiembre<small>IFEJA, Jaén</small></h3>
+          <p class="cartel">Tres escenarios: breaks actual, breaks retro y drum &amp; bass. Escena jiennense con Fran Break, Godino, Muriel y Voltage.</p>
+          <div class="plantas" aria-hidden="true"><i style="height:26px"></i><i style="height:26px"></i><i style="height:26px"></i></div>
+        </li>
+        <li class="hilera invierno">
+          <div class="fecha">1 feb<small>2025</small></div>
+          <h3>Snow Edition<small>Pabellón semicubierto de IFEJA</small></h3>
+          <p class="cartel">Krafty Kuts, Atomic Hooligan, Cut &amp; Run y Future Funk Squad al frente. Retro, bassline, big beat y UK garage.</p>
+          <div class="plantas" aria-hidden="true"><i style="height:26px"></i><i style="height:26px"></i></div>
+        </li>
+        <li class="hilera">
+          <div class="fecha">6 sep<small>2025</small></div>
+          <h3>Edición de septiembre<small>Pabellón semicubierto de IFEJA</small></h3>
+          <p class="cartel">Lady Waks como cabeza de cartel, con Backdraft, CTRL-Z, Alex Sunsha, Tryple D, Rasco y Godino. De 17:00 a 06:00.</p>
+          <div class="plantas" aria-hidden="true"><i style="height:26px"></i><i style="height:26px"></i></div>
+        </li>
+        <li class="hilera invierno">
+          <div class="fecha">27 feb<small>2026</small></div>
+          <h3>Víspera de Andalucía<small>La Carpa, Torredonjimeno</small></h3>
+          <p class="cartel">Primera edición en Torredonjimeno, la noche antes del 28F. De 20:00 a 06:00.</p>
+          <div class="plantas" aria-hidden="true"><i style="height:26px"></i></div>
+        </li>
+        <li class="hilera">
+          <div class="fecha">19 sep<small>2026</small></div>
+          <h3>Open Air<small>Polígono Industrial, C/ Chile, Torredonjimeno</small></h3>
+          <p class="cartel">Primer festival al aire libre, catorce artistas de 19:00 a 07:00. Aplazado desde el 15 de agosto tras los daños de un reventón térmico.</p>
+          <div class="plantas" aria-hidden="true"><i style="height:26px"></i><i style="height:26px"></i></div>
+        </li>
+        <li class="hilera proxima">
+          <div class="fecha">2027</div>
+          <h3>Próxima edición de invierno<small>Fecha por anunciar</small></h3>
+          <p class="cartel">Síguenos en Instagram para enterarte primero del cartel y de la salida de entradas.</p>
+          <a class="btn ghost" href="https://www.instagram.com/olibassmusicfestival/">Seguir en Instagram</a>
+        </li>
+      </ol>
+      <div class="leyenda"><span>Septiembre</span><span class="inv">Invierno</span></div>
+    </div>
+  </section>
+
+  <section class="info" id="info">
+    <div class="wrap">
+      <h2>Antes de venir</h2>
+      <div class="grid">
+        <div><h3>Edad</h3><p>Acceso a partir de 16 años. Entre 16 y 18, con autorización firmada por madre, padre o tutor.</p></div>
+        <div><h3>Entradas</h3><p>Nominativas, en papel o en el móvil. Compra solo en puntos oficiales; se puede pagar con el Bono Cultural Joven.</p></div>
+        <div><h3>Pago en barra</h3><p>Pulsera cashless recargable con tarjeta o efectivo. El saldo sobrante se devuelve días después.</p></div>
+        <div><h3>Cómo llegar</h3><p>Parking a la entrada del recinto y autobuses desde localidades cercanas, anunciados en redes.</p></div>
+        <div><h3>Salir y volver</h3><p>Para salir y volver a entrar necesitas una pulsera de reentrada, a la venta dentro del recinto.</p></div>
+        <div><h3>Asistencia médica</h3><p>Servicio de ambulancia durante todo el festival.</p></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="big">olibass</div>
+  <span>Olibass Music Festival, Torredonjimeno (Jaén)</span>
+  <nav aria-label="Redes"><a href="https://www.instagram.com/olibassmusicfestival/">Instagram</a><a href="#">Facebook</a><a href="#">TikTok</a><a href="mailto:olibassmusicfestival@gmail.com">Contacto</a></nav>
+</footer>
+
+<script>
+/* Genera el olivar en perspectiva. Cada árbol "late" a 135 BPM con un retraso según su posición: una ola de graves recorriendo las hileras. */
+(function(){
+  const svg=document.getElementById('grove'), NS='http://www.w3.org/2000/svg';
+  const hills=[
+    {d:'M0 170 C200 120 380 150 560 130 C760 108 980 150 1200 120 L1200 600 L0 600Z',f:'#6B4A5C'},
+    {d:'M0 210 C260 170 520 200 760 180 C940 165 1080 190 1200 175 L1200 600 L0 600Z',f:'#8B4A2B'},
+  ];
+  hills.forEach(h=>{const p=document.createElementNS(NS,'path');p.setAttribute('d',h.d);p.setAttribute('fill',h.f);svg.appendChild(p)});
+  const ground=document.createElementNS(NS,'rect');ground.setAttribute('x',0);ground.setAttribute('y',220);ground.setAttribute('width',1200);ground.setAttribute('height',380);ground.setAttribute('fill','#7A3F22');svg.appendChild(ground);
+  const horizon=220, rows=13;
+  for(let r=0;r<rows;r++){
+    const t=(r+1)/rows, y=horizon+Math.pow(t,1.7)*380, s=.25+t*2.1, gap=26+t*95;
+    const n=Math.ceil(1200/gap)+2, off=(r%2)*gap/2-gap;
+    for(let i=0;i<n;i++){
+      const x=off+i*gap;
+      const g=document.createElementNS(NS,'g');g.setAttribute('class','tree');
+      g.style.animationDelay=(-(x/1200)*.9 - r*.05).toFixed(3)+'s';
+      const trunk=document.createElementNS(NS,'rect');
+      trunk.setAttribute('x',x-1.5*s);trunk.setAttribute('y',y-8*s);trunk.setAttribute('width',3*s);trunk.setAttribute('height',8*s);trunk.setAttribute('fill','#3A2A1C');
+      const c=document.createElementNS(NS,'ellipse');
+      c.setAttribute('cx',x);c.setAttribute('cy',y-14*s);c.setAttribute('rx',11*s);c.setAttribute('ry',9*s);
+      const l=Math.round(28+t*20);c.setAttribute('fill',`hsl(${80+t*6} 22% ${l}%)`);
+      g.appendChild(trunk);g.appendChild(c);svg.appendChild(g);
+    }
+  }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="es" data-estacion="invierno">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Olibass — Propuesta Dos estaciones · ESCALA</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Propuesta Dos estaciones para Olibass Music Festival. Demo by ESCALA Marketing.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anybody:ital,wdth,wght@0,50..150,300..900;1,50..150,700..900&family=Figtree:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  /* PROPUESTA 04 — DOS ESTACIONES
+     Idea: Olibass vive dos veces al año, en pleno frío y al final del calor. Toda la web cambia de estación con un interruptor,
+     y la línea de ediciones se parte en dos carriles: invierno a la izquierda, septiembre a la derecha.
+     Tipografía Anybody: su eje de anchura se estira y se comprime como un break troceado. */
+  :root{
+    --hielo:#D6EBF5; --escarcha:#F4FAFD; --marino:#15223F; --calor:#FF5A1F; --arena:#F4CE85; --tierra:#5B2A12;
+  }
+  html[data-estacion="invierno"]{--fondo:var(--escarcha);--fondo-2:var(--hielo);--texto:var(--marino);--acento:#2F6FE0;--acento-txt:#fff}
+  html[data-estacion="verano"]{--fondo:#FFF3DC;--fondo-2:var(--arena);--texto:var(--tierra);--acento:var(--calor);--acento-txt:#fff}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:"Figtree",system-ui,sans-serif;background:var(--fondo);color:var(--texto);line-height:1.6;font-size:1.0625rem;transition:background .6s,color .6s}
+  a{color:inherit}
+  :focus-visible{outline:3px solid var(--acento);outline-offset:3px}
+  .anch{font-family:"Anybody",sans-serif}
+
+  /* CABECERA + INTERRUPTOR */
+  .top{position:sticky;top:0;z-index:10;display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:calc(.9rem + env(safe-area-inset-top,0px)) clamp(1.25rem,4vw,3rem) .9rem;background:var(--fondo);transition:background .6s}
+  .logo{font-family:"Anybody";font-weight:900;font-stretch:150%;font-size:1.3rem;text-decoration:none}
+  .top nav{display:flex;gap:1.6rem;font-weight:500}
+  .top nav a{text-decoration:none}
+  .switch{display:flex;background:var(--fondo-2);border-radius:999px;padding:4px;transition:background .6s}
+  .switch button{border:0;background:transparent;color:var(--texto);font:inherit;font-weight:700;padding:.45rem 1rem;border-radius:999px;cursor:pointer}
+  .switch button[aria-pressed="true"]{background:var(--acento);color:var(--acento-txt)}
+
+  /* HERO */
+  .hero{padding:clamp(2rem,6vw,5rem) clamp(1.25rem,4vw,3rem) clamp(3rem,6vw,5rem);position:relative;overflow:hidden}
+  .hero h1{font-family:"Anybody";font-weight:900;font-size:clamp(4rem,16vw,14rem);line-height:.82;letter-spacing:-.02em;text-transform:uppercase}
+  .hero h1 span{display:block;font-stretch:var(--w,100%);transition:font-stretch 1.2s cubic-bezier(.7,0,.2,1)}
+  html[data-estacion="invierno"] .hero h1 .l1{--w:50%}
+  html[data-estacion="invierno"] .hero h1 .l2{--w:150%}
+  html[data-estacion="verano"] .hero h1 .l1{--w:150%}
+  html[data-estacion="verano"] .hero h1 .l2{--w:50%}
+  .hero .row{display:grid;grid-template-columns:1.2fr 1fr;gap:2rem;margin-top:2.5rem;align-items:end}
+  .hero .lead{font-size:clamp(1.2rem,2vw,1.5rem);line-height:1.4;max-width:34ch;font-weight:500}
+  .estado{background:var(--acento);color:var(--acento-txt);border-radius:1.5rem;padding:1.5rem 1.75rem;transition:background .6s}
+  .estado .anch{font-weight:900;font-stretch:125%;font-size:clamp(1.8rem,3.5vw,2.6rem);line-height:1}
+  .estado p{margin-top:.5rem;opacity:.9}
+  .estado a{display:inline-block;margin-top:1rem;background:var(--acento-txt);color:var(--acento);font-weight:700;text-decoration:none;padding:.6rem 1.1rem;border-radius:999px}
+  .copos{position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .6s}
+  html[data-estacion="invierno"] .copos{opacity:1}
+  .sol{position:absolute;right:-10vw;top:-10vw;width:45vw;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,var(--arena),transparent 68%);pointer-events:none;opacity:0;transition:opacity .6s}
+  html[data-estacion="verano"] .sol{opacity:.85}
+
+  section{padding:clamp(4rem,9vw,7rem) clamp(1.25rem,4vw,3rem)}
+  .wrap{max-width:1180px;margin:0 auto}
+  h2{font-family:"Anybody";font-weight:900;font-stretch:130%;font-size:clamp(2.2rem,5vw,3.8rem);line-height:1;margin-bottom:2rem}
+
+  .que{background:var(--fondo-2);transition:background .6s}
+  .que .grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,6vw,5rem)}
+  .que p{max-width:58ch;margin-bottom:1.1rem}
+  .que .lista{list-style:none;display:grid;gap:1rem}
+  .que .lista li{display:grid;grid-template-columns:7rem 1fr;gap:1rem;border-top:2px solid currentColor;padding-top:.8rem}
+  .que .lista b{font-family:"Anybody";font-weight:800;font-stretch:120%}
+
+  .historia .grid{display:grid;grid-template-columns:1.3fr 1fr;gap:clamp(2rem,6vw,5rem);align-items:start}
+  .historia p{margin-bottom:1.1rem;max-width:62ch}
+  .historia aside{border-left:4px solid var(--acento);padding-left:1.5rem;font-family:"Anybody";font-weight:700;font-stretch:90%;font-size:clamp(1.4rem,2.5vw,1.9rem);line-height:1.2}
+
+  /* EDICIONES: dos carriles */
+  .ediciones{background:var(--texto);color:var(--fondo);transition:background .6s,color .6s}
+  .carriles-head{display:grid;grid-template-columns:1fr 5rem 1fr;text-align:center;font-family:"Anybody";font-weight:800;font-size:1.2rem;margin-bottom:2rem}
+  .carriles-head span:first-child{text-align:right;font-stretch:60%} .carriles-head span:last-child{text-align:left;font-stretch:140%}
+  .linea{list-style:none;position:relative}
+  .linea::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:2px;background:currentColor;opacity:.35;transform:translateX(-50%)}
+  .ed{display:grid;grid-template-columns:1fr 5rem 1fr;align-items:center;margin-bottom:1.5rem}
+  .ed .ano{grid-column:2;justify-self:center;background:var(--texto);border:2px solid currentColor;border-radius:999px;padding:.2rem .6rem;font-weight:700;font-size:.85rem;position:relative;z-index:1;transition:background .6s}
+  .ed .card{border-radius:1.25rem;padding:1.4rem 1.5rem;position:relative}
+  .ed.inv .card{grid-column:1;grid-row:1;background:var(--hielo);color:var(--marino);text-align:right}
+  .ed.sep .card{grid-column:3;grid-row:1;background:var(--arena);color:var(--tierra)}
+  .ed .card h3{font-family:"Anybody";font-weight:900;font-size:1.7rem;line-height:1}
+  .ed.inv .card h3{font-stretch:62%} .ed.sep .card h3{font-stretch:135%}
+  .ed .card .meta{font-weight:700;margin:.4rem 0 .6rem;font-size:.95rem}
+  .ed .card p{font-size:.95rem;line-height:1.45}
+  .ed.proxima .card{background:transparent;color:var(--fondo);border:2px dashed currentColor}
+  html[data-estacion="invierno"] .ed.sep .card{opacity:.55}
+  html[data-estacion="verano"] .ed.inv .card{opacity:.55}
+  .ed .card{transition:opacity .6s}
+
+  .info .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
+  .info .item{background:var(--fondo-2);border-radius:1rem;padding:1.4rem;transition:background .6s}
+  .info .item:nth-child(1){grid-column:span 2}
+  .info h3{font-family:"Anybody";font-weight:800;font-stretch:115%;font-size:1.25rem;margin-bottom:.3rem}
+
+  footer{padding:3rem clamp(1.25rem,4vw,3rem) calc(3rem + env(safe-area-inset-bottom,0px));display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem;border-top:2px solid currentColor}
+  footer .big{width:100%;font-family:"Anybody";font-weight:900;font-size:clamp(3rem,13vw,10rem);line-height:.85;text-transform:uppercase;font-stretch:150%}
+  footer nav{display:flex;gap:1.5rem}
+
+  @media (max-width:860px){
+    .top nav{display:none}
+    .hero .row,.que .grid,.historia .grid{grid-template-columns:1fr}
+    .carriles-head{display:none}
+    .linea::before{left:1.5rem}
+    .ed{grid-template-columns:3rem 1fr}
+    .ed .ano{grid-column:1;grid-row:1;align-self:start;font-size:.7rem;padding:.2rem .35rem}
+    .ed.inv .card,.ed.sep .card{grid-column:2;text-align:left}
+    .info .grid{grid-template-columns:1fr}.info .item:nth-child(1){grid-column:auto}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}.copos{display:none}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <a class="logo" href="#">olibass</a>
+  <nav aria-label="Principal"><a href="#festival">El festival</a><a href="#historia">Historia</a><a href="#ediciones">Ediciones</a><a href="#info">Información</a></nav>
+  <div class="switch" role="group" aria-label="Estación">
+    <button data-e="invierno" aria-pressed="true">Invierno</button>
+    <button data-e="verano" aria-pressed="false">Septiembre</button>
+  </div>
+</header>
+
+<main>
+  <section class="hero" aria-labelledby="h1">
+    <canvas class="copos" id="copos" aria-hidden="true"></canvas>
+    <div class="sol" aria-hidden="true"></div>
+    <h1 id="h1"><span class="l1">Oli</span><span class="l2">bass</span></h1>
+    <div class="row">
+      <p class="lead">Un festival de breakbeat, dos estaciones. Olibass se celebra en Jaén cada invierno y cada septiembre: doce horas de ritmos rotos, del frío al calor.</p>
+      <div class="estado" id="estado"></div>
+    </div>
+  </section>
+
+  <section class="que" id="festival">
+    <div class="wrap grid">
+      <div>
+        <h2>Qué es Olibass</h2>
+        <p>Olibass Music Festival es la gran cita del breakbeat en la provincia de Jaén. Junta a las figuras internacionales que definieron el género con la escena andaluza que lo mantuvo vivo, y con los productores que lo están llevando a otro sitio.</p>
+        <p>Cada edición mezcla dos sonidos: el breaks retro de las noches de finales de los noventa y el breaks actual, con bassline, big beat, electro y drum &amp; bass. Público de siempre y público nuevo en la misma pista.</p>
+      </div>
+      <ul class="lista">
+        <li><b>Invierno</b><span>Entre enero y febrero, a cubierto: pabellón, carpa o recinto ferial.</span></li>
+        <li><b>Septiembre</b><span>Para cerrar el verano. Desde 2026, al aire libre.</span></li>
+        <li><b>Duración</b><span>Unas doce horas, de la tarde hasta el amanecer.</span></li>
+        <li><b>Escenarios</b><span>Dos o tres, repartidos entre breaks retro, breaks actual y drum &amp; bass.</span></li>
+        <li><b>Público</b><span>Más de 2.000 personas por edición.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="historia" id="historia">
+    <div class="wrap">
+      <h2>De dónde viene</h2>
+      <div class="grid">
+        <div>
+          <p>Andalucía vivió su época dorada del breakbeat a finales de los noventa y comienzos de los dos mil. Fue algo más que una moda: una escena con sus DJs, sus salas y un público fiel que nunca terminó de irse.</p>
+          <p>Olibass nació en septiembre de 2023 en IFEJA, el recinto ferial de Jaén, con breaks y drum &amp; bass en el mismo cartel. Tras el éxito, añadió una cita de invierno en febrero de 2024 y desde entonces el calendario del festival tiene dos estaciones.</p>
+          <p>En septiembre de 2024 montó tres escenarios simultáneos. En febrero de 2025 llegó la Snow Edition. En 2026 se trasladó a Torredonjimeno: primero bajo una carpa en la víspera del 28F y después con su primer Open Air, que un reventón térmico obligó a mover del 15 de agosto al 19 de septiembre.</p>
+        </div>
+        <aside>El nombre es una declaración de origen: oliva + bass. Breakbeat hecho en la tierra del olivo.</aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="ediciones" id="ediciones">
+    <div class="wrap">
+      <h2>Siete ediciones, dos carriles</h2>
+      <div class="carriles-head" aria-hidden="true"><span>Invierno</span><span></span><span>Septiembre</span></div>
+      <ol class="linea">
+        <li class="ed sep"><span class="ano">2023</span><div class="card"><h3>Primera edición</h3><div class="meta">9 de septiembre, IFEJA, Jaén</div><p>Breaks y drum &amp; bass con Friction, Delta Heavy, The Caracal Project y Breakbeat Connection.</p></div></li>
+        <li class="ed inv"><span class="ano">2024</span><div class="card"><h3>Primer invierno</h3><div class="meta">24 de febrero, IFEJA, Jaén</div><p>Krafty Kuts, Future Flex, Plump DJs, ED 209 y Ragga Twins. Más de 30 artistas, dos escenarios.</p></div></li>
+        <li class="ed sep"><span class="ano">2024</span><div class="card"><h3>Tres escenarios</h3><div class="meta">7 de septiembre, IFEJA, Jaén</div><p>Breaks actual, breaks retro y drum &amp; bass. Fran Break, Godino, Muriel y Voltage por la escena jiennense.</p></div></li>
+        <li class="ed inv"><span class="ano">2025</span><div class="card"><h3>Snow Edition</h3><div class="meta">1 de febrero, pabellón de IFEJA</div><p>Krafty Kuts, Atomic Hooligan, Cut &amp; Run y Future Funk Squad. Retro, bassline, big beat y UK garage.</p></div></li>
+        <li class="ed sep"><span class="ano">2025</span><div class="card"><h3>Lady Waks</h3><div class="meta">6 de septiembre, pabellón de IFEJA</div><p>Con Backdraft, CTRL-Z, Alex Sunsha, Tryple D, Rasco y Godino. De 17:00 a 06:00.</p></div></li>
+        <li class="ed inv"><span class="ano">2026</span><div class="card"><h3>Víspera del 28F</h3><div class="meta">27 de febrero, La Carpa, Torredonjimeno</div><p>Estreno en Torredonjimeno, de 20:00 a 06:00.</p></div></li>
+        <li class="ed sep"><span class="ano">2026</span><div class="card"><h3>Open Air</h3><div class="meta">19 de septiembre, Polígono Industrial, Torredonjimeno</div><p>El primer Olibass al aire libre, de 19:00 a 07:00. Aplazado desde el 15 de agosto.</p></div></li>
+        <li class="ed inv proxima"><span class="ano">2027</span><div class="card"><h3>Próximo invierno</h3><div class="meta">Fecha por anunciar</div><p>La octava edición ya está en marcha.</p></div></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="info" id="info">
+    <div class="wrap">
+      <h2>Información práctica</h2>
+      <div class="grid">
+        <div class="item"><h3>Entradas</h3><p>Nominativas, con los datos de tu DNI, en papel o en el móvil. Compra solo en la web oficial y en los puntos de venta autorizados; también con el Bono Cultural Joven.</p></div>
+        <div class="item"><h3>Edad</h3><p>Desde 16 años. De 16 a 18, con autorización firmada.</p></div>
+        <div class="item"><h3>Cashless</h3><p>Pulsera recargable con tarjeta o efectivo. El saldo sobrante se devuelve.</p></div>
+        <div class="item"><h3>Llegar</h3><p>Parking en la entrada y autobuses desde localidades cercanas.</p></div>
+        <div class="item"><h3>Reentrada</h3><p>Compra la pulsera de reentrada dentro del recinto.</p></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="big">Olibass</div>
+  <span>Torredonjimeno, Jaén. olibassmusicfestival@gmail.com</span>
+  <nav aria-label="Redes"><a href="https://www.instagram.com/olibassmusicfestival/">Instagram</a><a href="#">Facebook</a><a href="#">TikTok</a></nav>
+</footer>
+
+<script>
+const textos={
+  invierno:{t:'Invierno 2027',p:'La octava edición está en camino. Fecha, recinto y cartel se anuncian pronto.',a:'Avisarme en Instagram'},
+  verano:{t:'Septiembre 2026',p:'El Open Air se celebró el 19 de septiembre en Torredonjimeno. Gracias por esperar con nosotros.',a:'Ver la última edición'}
+};
+const estado=document.getElementById('estado');
+function cambiar(e){
+  document.documentElement.dataset.estacion=e;
+  document.querySelectorAll('.switch button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.e===e));
+  const x=textos[e];
+  estado.innerHTML=`<div class="anch">${x.t}</div><p>${x.p}</p><a href="${e==='invierno'?'https://www.instagram.com/olibassmusicfestival/':'#ediciones'}">${x.a}</a>`;
+}
+document.querySelectorAll('.switch button').forEach(b=>b.addEventListener('click',()=>cambiar(b.dataset.e)));
+cambiar('invierno');
+
+/* Nieve ligera solo en invierno */
+(function(){
+  const c=document.getElementById('copos'),ctx=c.getContext('2d');
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  let w,h,f=[];
+  const size=()=>{w=c.width=c.offsetWidth;h=c.height=c.offsetHeight;f=Array.from({length:Math.round(w/12)},()=>({x:Math.random()*w,y:Math.random()*h,r:Math.random()*2.2+.6,v:Math.random()*.6+.3}))};
+  c.style.width='100%';c.style.height='100%';size();addEventListener('resize',size);
+  (function loop(){
+    ctx.clearRect(0,0,w,h);ctx.fillStyle='rgba(47,111,224,.35)';
+    f.forEach(p=>{p.y+=p.v;p.x+=Math.sin(p.y/40)*.3;if(p.y>h){p.y=-5;p.x=Math.random()*w}ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,6.3);ctx.fill()});
+    requestAnimationFrame(loop);
+  })();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Olibass — Propuesta Flyer · ESCALA</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Propuesta Flyer para Olibass Music Festival. Demo by ESCALA Marketing.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  /* PROPUESTA 02 — FLYER
+     Idea: la estética de los flyers de fotocopiadora que se repartían en la puerta de las salas de breakbeat andaluzas a finales de los 90.
+     Papel fluorescente, tinta que no casa (desregistro CMYK), trama de puntos y cinta adhesiva. */
+  :root{
+    --amarillo:#F3EE16;  /* papel fluorescente */
+    --magenta:#EE1D7A;
+    --cian:#00A3E0;
+    --tinta:#141414;
+    --fotocopia:#E9E9E4;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:"Courier Prime","Courier New",monospace;background:var(--tinta);color:var(--tinta);font-size:1.0625rem;line-height:1.55}
+  a{color:inherit}
+  :focus-visible{outline:4px dashed var(--magenta);outline-offset:4px}
+  .halftone{background-image:radial-gradient(rgba(20,20,20,.22) 1.2px,transparent 1.4px);background-size:7px 7px}
+
+  /* Titular desregistrado: tres capas de tinta que no terminan de coincidir */
+  .misreg{position:relative;font-family:"Archivo Black",Impact,sans-serif;text-transform:uppercase;line-height:.85;letter-spacing:-.02em;color:var(--tinta)}
+  .misreg::before,.misreg::after{content:attr(data-t);position:absolute;inset:0;mix-blend-mode:multiply;pointer-events:none}
+  .misreg::before{color:var(--cian);transform:translate(-.045em,.03em)}
+  .misreg::after{color:var(--magenta);transform:translate(.04em,-.02em)}
+
+  /* BARRA */
+  .barra{position:sticky;top:0;z-index:10;background:var(--tinta);color:var(--amarillo);display:flex;justify-content:space-between;align-items:center;padding:calc(.7rem + env(safe-area-inset-top,0px)) 1.25rem .7rem;font-weight:700}
+  .barra nav{display:flex;gap:1.25rem}
+  .barra a{text-decoration:none}
+  .barra a:hover{background:var(--amarillo);color:var(--tinta)}
+  .marquee{overflow:hidden;white-space:nowrap;background:var(--magenta);color:#fff;font-family:"Archivo Black",sans-serif;font-size:1.1rem;padding:.4rem 0;border-block:3px solid var(--tinta)}
+  .marquee span{display:inline-block;animation:run 28s linear infinite;padding-left:100%}
+  @keyframes run{to{transform:translateX(-100%)}}
+
+  /* HERO: el flyer principal */
+  .hero{background:var(--amarillo);padding:clamp(1.5rem,4vw,3rem);position:relative;overflow:hidden}
+  .hero .grid{display:grid;grid-template-columns:1.4fr 1fr;gap:2rem;align-items:end;max-width:1300px;margin:0 auto}
+  .hero h1{font-size:clamp(4.5rem,17vw,15rem)}
+  .hero .sub{font-family:"Archivo Black",sans-serif;font-size:clamp(1.3rem,3vw,2.2rem);line-height:1;margin-top:1rem;text-transform:uppercase}
+  .sello{justify-self:end;width:min(320px,80vw);aspect-ratio:1;border-radius:50%;background:var(--magenta);color:#fff;display:grid;place-content:center;text-align:center;transform:rotate(-12deg);border:4px solid var(--tinta);box-shadow:8px 8px 0 var(--tinta);padding:1.5rem}
+  .sello b{font-family:"Archivo Black",sans-serif;font-size:clamp(2rem,4vw,3rem);line-height:.9;display:block}
+  .sello small{font-size:.95rem;display:block;margin-top:.5rem}
+  .hero .pie{max-width:1300px;margin:2.5rem auto 0;display:flex;flex-wrap:wrap;gap:1rem 2.5rem;border-top:4px solid var(--tinta);padding-top:1rem;font-weight:700;text-transform:uppercase}
+  .tijera{position:absolute;right:1rem;bottom:.3rem;font-size:.8rem}
+
+  /* QUÉ ES: fotocopia de hoja informativa */
+  .hoja{background:var(--fotocopia);padding:clamp(3rem,8vw,6rem) clamp(1.25rem,4vw,3rem)}
+  .hoja .inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1.3fr;gap:clamp(2rem,6vw,5rem)}
+  .hoja h2{font-size:clamp(2.6rem,6vw,4.8rem)}
+  .hoja p{margin-bottom:1.2rem;max-width:62ch}
+  .hoja p:first-of-type::first-letter{font-family:"Archivo Black";font-size:3.4em;float:left;line-height:.8;margin:.08em .1em 0 0;color:var(--magenta)}
+  .fichas{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.5rem}
+  .fichas span{border:2px solid var(--tinta);padding:.25rem .7rem;font-weight:700;background:#fff}
+  .fichas span:nth-child(3n+1){background:var(--amarillo)}
+
+  /* HISTORIA: recorte de fanzine */
+  .fanzine{background:var(--tinta);color:var(--fotocopia);padding:clamp(3rem,8vw,6rem) clamp(1.25rem,4vw,3rem);position:relative}
+  .fanzine .inner{max-width:1100px;margin:0 auto}
+  .fanzine h2{font-size:clamp(2.6rem,7vw,5.5rem);color:var(--amarillo)}
+  .fanzine h2::before{color:var(--cian)} .fanzine h2::after{color:var(--magenta);mix-blend-mode:screen}
+  .fanzine h2::before{mix-blend-mode:screen}
+  .columnas{columns:2 320px;column-gap:3rem;margin-top:2.5rem}
+  .columnas p{margin-bottom:1.1rem;break-inside:avoid}
+  .recorte{display:inline-block;background:var(--amarillo);color:var(--tinta);padding:1.25rem 1.5rem;transform:rotate(-2deg);font-family:"Archivo Black";font-size:clamp(1.3rem,2.6vw,1.9rem);line-height:1.1;text-transform:uppercase;margin:1rem 0 2rem;box-shadow:6px 6px 0 var(--magenta);max-width:28ch}
+
+  /* EDICIONES: flyers pegados en el tablón */
+  .tablon{background:#7A5B3A;background-image:radial-gradient(rgba(0,0,0,.18) 2px,transparent 2.5px),radial-gradient(rgba(255,255,255,.06) 2px,transparent 2.5px);background-size:22px 22px,17px 17px;padding:clamp(3rem,8vw,6rem) clamp(1.25rem,4vw,3rem)}
+  .tablon .cabecera{max-width:1200px;margin:0 auto 3rem;background:#fff;display:inline-block;padding:.8rem 1.4rem;transform:rotate(1deg);box-shadow:4px 4px 0 var(--tinta)}
+  .tablon .cabecera h2{font-size:clamp(2.2rem,5vw,3.8rem)}
+  .tablon .cabecera p{max-width:50ch}
+  .flyers{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:2.5rem 2rem}
+  .flyer{position:relative;padding:1.5rem 1.25rem 1.25rem;box-shadow:3px 5px 0 rgba(0,0,0,.45);transition:transform .2s}
+  .flyer:nth-child(odd){transform:rotate(-2.2deg)} .flyer:nth-child(even){transform:rotate(1.8deg)} .flyer:nth-child(3n){transform:rotate(-.6deg)}
+  .flyer:hover,.flyer:focus-within{transform:rotate(0) scale(1.03);z-index:2}
+  .flyer::before{content:"";position:absolute;top:-12px;left:50%;width:90px;height:24px;margin-left:-45px;background:rgba(255,255,240,.6);transform:rotate(-4deg);box-shadow:0 1px 2px rgba(0,0,0,.2)}
+  .flyer .n{font-size:.85rem;font-weight:700}
+  .flyer h3{font-family:"Archivo Black";text-transform:uppercase;font-size:2rem;line-height:.9;margin:.3rem 0 .6rem}
+  .flyer .lugar{font-weight:700;border-block:2px solid currentColor;padding:.3rem 0;margin-bottom:.7rem;font-size:.95rem}
+  .flyer p{font-size:.93rem;line-height:1.4}
+  .f-a{background:var(--amarillo)} .f-m{background:var(--magenta);color:#fff} .f-c{background:var(--cian);color:var(--tinta)} .f-b{background:#fff} .f-n{background:var(--tinta);color:var(--amarillo)}
+  .flyer.proximo{border:4px dashed var(--amarillo);background:transparent;color:var(--amarillo);box-shadow:none}
+  .flyer.proximo::before{display:none}
+  .flyer.proximo a{display:inline-block;margin-top:.8rem;background:var(--amarillo);color:var(--tinta);padding:.4rem .8rem;font-weight:700;text-decoration:none}
+
+  /* INFO */
+  .reglas{background:var(--amarillo);padding:clamp(3rem,8vw,5rem) clamp(1.25rem,4vw,3rem)}
+  .reglas .inner{max-width:1100px;margin:0 auto}
+  .reglas h2{font-size:clamp(2.2rem,5vw,3.6rem);margin-bottom:2rem}
+  .reglas ul{list-style:none;display:grid;grid-template-columns:repeat(2,1fr);gap:0 3rem}
+  .reglas li{border-top:3px solid var(--tinta);padding:.8rem 0 1.2rem}
+  .reglas li b{font-family:"Archivo Black";text-transform:uppercase;display:block;font-size:1.1rem}
+
+  footer{background:var(--tinta);color:var(--fotocopia);padding:3rem 1.25rem calc(3rem + env(safe-area-inset-bottom,0px));text-align:center}
+  footer .misreg{color:var(--fotocopia);font-size:clamp(3rem,12vw,8rem)}
+  footer .misreg::before,footer .misreg::after{mix-blend-mode:screen}
+  footer p{margin-top:1rem}
+  footer nav{display:flex;justify-content:center;gap:1.5rem;margin-top:1rem;flex-wrap:wrap}
+
+  @media (max-width:820px){
+    .hero .grid,.hoja .inner{grid-template-columns:1fr}
+    .sello{justify-self:start}
+    .reglas ul{grid-template-columns:1fr}
+    .barra nav{display:none}
+  }
+  @media (prefers-reduced-motion:reduce){.marquee span{animation:none;padding-left:1rem}.flyer{transition:none}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<div class="barra">
+  <span>OLIBASS.FEST</span>
+  <nav aria-label="Principal"><a href="#que-es">Qué es</a><a href="#historia">Historia</a><a href="#ediciones">Ediciones</a><a href="#info">Info</a></nav>
+</div>
+
+<div class="marquee" aria-hidden="true"><span>Breakbeat retro y actual ✂ 12 horas non stop ✂ Jaén ✂ Torredonjimeno ✂ Invierno y septiembre ✂ Más de 2.000 ravers ✂ Nos vemos en la pista ✂ Breakbeat retro y actual ✂ 12 horas non stop</span></div>
+
+<header class="hero halftone">
+  <div class="grid">
+    <div>
+      <h1 class="misreg" data-t="Olibass">Olibass</h1>
+      <p class="sub">Music Festival. Ritmos rotos en Jaén.</p>
+    </div>
+    <div class="sello" role="img" aria-label="Próxima edición: invierno 2027, fecha por anunciar">
+      <b>Invierno<br>2027</b>
+      <small>Fecha y cartel por anunciar</small>
+    </div>
+  </div>
+  <div class="pie">
+    <span>Breakbeat</span><span>Retro + actual</span><span>Dos escenarios o más</span><span>De la tarde al amanecer</span>
+  </div>
+  <span class="tijera" aria-hidden="true">✂ recortar por aquí</span>
+</header>
+
+<section class="hoja halftone" id="que-es">
+  <div class="inner">
+    <h2 class="misreg" data-t="¿Qué es esto?">¿Qué es esto?</h2>
+    <div>
+      <p>Olibass es un festival de breakbeat hecho en Jaén por y para gente que lleva el género en el cuerpo. Doce horas seguidas, de la tarde al amanecer, con los nombres internacionales que definieron el sonido y la escena andaluza que nunca dejó de pincharlo.</p>
+      <p>En un escenario suena el breaks de siempre, el que se bailaba en las salas a finales de los noventa. En el otro, lo que está pasando ahora: bassline, big beat, electro alternativo y cruces con el drum &amp; bass. Dos generaciones, una misma pista.</p>
+      <p>Se celebra dos veces al año, en invierno y en septiembre, y en cada edición reúne a más de dos mil personas.</p>
+      <div class="fichas"><span>Breakbeat retro</span><span>Breaks actual</span><span>Bassline</span><span>Big beat</span><span>Drum &amp; bass</span><span>UK garage</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="fanzine" id="historia">
+  <div class="inner">
+    <h2 class="misreg" data-t="De dónde venimos">De dónde venimos</h2>
+    <div class="recorte">El breakbeat vivió en Andalucía su época dorada. Olibass lo trajo de vuelta a casa.</div>
+    <div class="columnas">
+      <p>Hubo un tiempo, entre finales de los noventa y los primeros dos mil, en que el breakbeat era el sonido de Andalucía. Flyers como este pasaban de mano en mano, las salas se llenaban y la gente cruzaba la región para bailar ritmos rotos.</p>
+      <p>Esa afición no desapareció; se quedó esperando. En septiembre de 2023, Olibass abrió en IFEJA, el recinto ferial de Jaén, con un cartel que juntaba breaks y drum &amp; bass: Friction, Delta Heavy, The Caracal Project y leyendas de la escena nacional.</p>
+      <p>Funcionó tanto que el festival empezó a hacerse dos veces al año. Llegaron Krafty Kuts, Plump DJs, Ragga Twins, Lady Waks. Llegó un tercer escenario, llegó la Snow Edition en pleno invierno.</p>
+      <p>En 2026 el festival se trasladó a Torredonjimeno y probó por primera vez el aire libre. Un reventón térmico se llevó por delante parte del recinto en agosto, así que la cita se movió al 19 de septiembre. Se aplazó, no se suspendió. Así funciona esto.</p>
+      <p>¿Y el nombre? Oliva más bass. Estamos en la tierra del olivo.</p>
+    </div>
+  </div>
+</section>
+
+<section class="tablon" id="ediciones">
+  <div class="cabecera">
+    <h2 class="misreg" data-t="Todas las ediciones">Todas las ediciones</h2>
+    <p>Siete flyers en el tablón. Pasa el ratón por encima para despegarlos.</p>
+  </div>
+  <div class="flyers">
+    <article class="flyer f-a" tabindex="0">
+      <span class="n">Edición 1</span>
+      <h3>09.09.2023</h3>
+      <div class="lugar">IFEJA, Jaén</div>
+      <p>La primera. Breaks y drum &amp; bass con Friction, Delta Heavy, The Caracal Project y Breakbeat Connection. Sets especiales Spanish Kings y Retro Legends.</p>
+    </article>
+    <article class="flyer f-c" tabindex="0">
+      <span class="n">Edición 2</span>
+      <h3>24.02.2024</h3>
+      <div class="lugar">IFEJA, Jaén</div>
+      <p>Primera cita de invierno. Krafty Kuts, Future Flex, Plump DJs, ED 209, Ragga Twins. Más de 30 artistas y 12 horas sin parar.</p>
+    </article>
+    <article class="flyer f-m" tabindex="0">
+      <span class="n">Edición 3</span>
+      <h3>07.09.2024</h3>
+      <div class="lugar">IFEJA, Jaén</div>
+      <p>Tres escenarios a la vez: breaks actual, breaks retro y drum &amp; bass. Fran Break, Godino, Muriel, Voltage. MCs Speaker Reality, Cellux MC y Lizard MC.</p>
+    </article>
+    <article class="flyer f-b" tabindex="0">
+      <span class="n">Edición 4</span>
+      <h3>Snow Edition 01.02.2025</h3>
+      <div class="lugar">Pabellón semicubierto de IFEJA</div>
+      <p>Krafty Kuts, Atomic Hooligan, Cut &amp; Run, Future Funk Squad. Retro, bassline, big beat y UK garage.</p>
+    </article>
+    <article class="flyer f-n" tabindex="0">
+      <span class="n">Edición 5</span>
+      <h3>06.09.2025</h3>
+      <div class="lugar">Pabellón semicubierto de IFEJA</div>
+      <p>Lady Waks de cabeza de cartel, con Backdraft, CTRL-Z, Alex Sunsha, Tryple D, Rasco y Godino. De 17:00 a 06:00.</p>
+    </article>
+    <article class="flyer f-a" tabindex="0">
+      <span class="n">Edición 6</span>
+      <h3>27.02.2026</h3>
+      <div class="lugar">La Carpa, Torredonjimeno</div>
+      <p>Víspera del Día de Andalucía y estreno en Torredonjimeno. De 20:00 a 06:00.</p>
+    </article>
+    <article class="flyer f-m" tabindex="0">
+      <span class="n">Edición 7</span>
+      <h3>Open Air 19.09.2026</h3>
+      <div class="lugar">Polígono Industrial, Torredonjimeno</div>
+      <p>El primer Olibass al aire libre, de 19:00 a 07:00. Aplazado desde el 15 de agosto por un reventón térmico.</p>
+    </article>
+    <article class="flyer proximo">
+      <span class="n">Edición 8</span>
+      <h3>Invierno 2027</h3>
+      <div class="lugar">Fecha por anunciar</div>
+      <p>Este hueco del tablón está reservado.</p>
+      <a href="https://www.instagram.com/olibassmusicfestival/">Avísame por Instagram</a>
+    </article>
+  </div>
+</section>
+
+<section class="reglas halftone" id="info">
+  <div class="inner">
+    <h2 class="misreg" data-t="Lo que tienes que saber">Lo que tienes que saber</h2>
+    <ul>
+      <li><b>+16</b>Entre 16 y 18 años, con autorización firmada. Menores de 16, no.</li>
+      <li><b>Entradas nominativas</b>Con los datos de tu DNI. En papel o en el móvil. Solo en puntos oficiales.</li>
+      <li><b>Bono Cultural Joven</b>Puedes usarlo para comprar tu entrada.</li>
+      <li><b>Cashless</b>Recarga la pulsera con tarjeta o efectivo. Lo que sobre, se devuelve.</li>
+      <li><b>Parking y buses</b>Parking en la entrada y autobuses desde pueblos cercanos.</li>
+      <li><b>Sin comida ni bebida de fuera</b>Salvo causa médica justificada.</li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  <div class="misreg" data-t="Olibass">Olibass</div>
+  <p>Torredonjimeno, Jaén. olibassmusicfestival@gmail.com</p>
+  <nav aria-label="Redes"><a href="https://www.instagram.com/olibassmusicfestival/">Instagram</a><a href="#">Facebook</a><a href="#">TikTok</a><a href="#">Aviso legal</a></nav>
+</footer>
+
+</body>
+</html>
