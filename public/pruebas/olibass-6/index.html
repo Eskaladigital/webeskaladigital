@@ -363,7 +363,7 @@
   /* ---------- Mover el festival por el olivar ---------- */
   const hero=document.querySelector('.hero'), hint=document.getElementById('hint');
   const lim={x0:40,x1:1160,y0:horizon+22,y1:depth+horizon-12};
-  const pos={x:600,y:yDe(.42)}, obj={x:pos.x,y:pos.y};
+  const centro={x:600,y:yDe(.42)}, pos={...centro}, obj={...centro};
   let filaActual=-1, anim=null;
 
   function escalaFest(y){const t=Math.pow(Math.max(0,(y-horizon)/depth),1/1.7);return escalaDe(t)*1.5}
@@ -387,6 +387,7 @@
     if(e.target.closest('.nav, .hero-copy a, .next'))return;
     const m=svg.getScreenCTM();if(!m)return;
     const inv=m.inverse(), p=new DOMPoint(e.clientX,e.clientY).matrixTransform(inv);
+    if(p.y<horizon)return alCentro();
     obj.y=Math.min(lim.y1,Math.max(lim.y0,p.y));
     const caja=hero.getBoundingClientRect(), media=60*escalaFest(obj.y);
     const izq=Math.max(lim.x0,new DOMPoint(caja.left,0).matrixTransform(inv).x+media);
@@ -395,7 +396,9 @@
     hint.classList.add('fuera');
     if(!anim)anim=requestAnimationFrame(paso);
   }
+  function alCentro(){obj.x=centro.x;obj.y=centro.y;if(!anim)anim=requestAnimationFrame(paso)}
   hero.addEventListener('pointermove',e=>{if(e.pointerType==='mouse')apuntar(e)});
+  hero.addEventListener('pointerleave',e=>{if(e.pointerType==='mouse')alCentro()});
   hero.addEventListener('pointerdown',apuntar);
   colocar();
 })();
