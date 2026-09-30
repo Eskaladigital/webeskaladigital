@@ -109,6 +109,34 @@
   .pantalla .meta{font-family:"Chakra Petch";font-weight:600;margin:.3rem 0 .6rem}
   .pantalla p{max-width:70ch}
 
+  /* EDICIONES: tracklist */
+  .ed-head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:.5rem 2rem;margin-bottom:1.5rem}
+  .ed-head h2{margin:0}
+  .ed-head a{font-weight:600;text-decoration:underline;text-underline-offset:3px}
+  .tracklist{list-style:none;border-top:2px solid var(--panel)}
+  .track{display:grid;grid-template-columns:3.2rem 7rem 1fr auto;gap:1.25rem;align-items:start;padding:1.4rem 0;border-bottom:1px solid #B7BBC2}
+  .t-id{font-family:"Chakra Petch";font-weight:700;font-size:.85rem;display:grid;place-items:center;width:2.6rem;height:2.6rem;border-radius:.6rem;background:var(--c,#E6E8EB);box-shadow:0 3px 0 rgba(0,0,0,.2)}
+  .t-fecha{font-family:"Chakra Petch";font-weight:700;font-size:1.3rem;line-height:1.1}
+  .t-fecha small{display:block;font-size:.8rem;font-weight:600;opacity:.6}
+  .t-body h3{font-size:1.3rem;line-height:1.15}
+  .t-lugar{font-size:.9rem;opacity:.65;margin-bottom:.4rem}
+  .t-body p{max-width:62ch}
+  .cartel{list-style:none;display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.8rem}
+  .cartel li{font-size:.82rem;font-weight:600;background:#fff;border-radius:999px;padding:.2rem .7rem}
+  .cartel li:first-child{background:var(--panel);color:#fff}
+  .sesiones{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:.9rem}
+  .sesiones a{display:flex;flex-direction:column;background:var(--panel);color:#E8EAEE;text-decoration:none;border-radius:.7rem;padding:.6rem .9rem;min-width:190px}
+  .sesiones a:hover{background:#34383F}
+  .sesiones b{font-family:"Chakra Petch";font-size:.95rem}
+  .sesiones small{font-size:.78rem;color:#A6ABB5}
+  .t-link{font-family:"Chakra Petch";font-weight:600;font-size:.9rem;text-decoration:none;white-space:nowrap;padding-top:.2rem}
+  .t-link:hover{text-decoration:underline;text-underline-offset:3px}
+  .track.proxima .t-id{background:transparent;border:2px dashed #8E939B;box-shadow:none}
+  .archivo{margin-top:2rem;display:flex;justify-content:space-between;align-items:center;gap:1rem;background:var(--panel);color:#E8EAEE;text-decoration:none;border-radius:1rem;padding:1.2rem 1.5rem;font-size:1.4rem}
+  .archivo b{display:block;font-family:"Chakra Petch";font-size:1.15rem}
+  .archivo small{font-size:.85rem;color:#A6ABB5}
+  .archivo:hover{background:#34383F}
+
   .info .grid2{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
   .info .grid2 div{background:#E6E8EB;border-radius:1rem;padding:1.3rem}
   .info h3{font-size:1.1rem}
@@ -122,6 +150,10 @@
     .maq-top,.manual .cols{grid-template-columns:1fr}
     .lcd{min-width:0}
     .historia .cols{grid-template-columns:1fr}
+    .track{grid-template-columns:2.6rem 1fr auto;gap:.4rem 1rem}
+    .t-fecha{grid-column:2}
+    .t-body{grid-column:1/-1}
+    .t-link{grid-column:3;grid-row:1}
     .info .grid2{grid-template-columns:1fr}
     .grid,.contador{grid-template-columns:3.2rem repeat(16,1fr);gap:3px}
     .grid .nombre{font-size:.65rem}
@@ -154,7 +186,7 @@
   <div class="grid" id="seq"></div>
   <div class="contador" id="cont" aria-hidden="true"></div>
 
-  <details class="bancos" id="ediciones">
+  <details class="bancos" id="banco">
     <summary>
       <span class="bancos-tit">Banco de patrones</span>
       <span class="bancos-sub">7 ediciones · carga su break en el secuenciador</span>
@@ -199,10 +231,87 @@
       <h2>Historia en tres compases</h2>
       <div class="cols">
         <div style="--c:var(--pad-v)"><h3>La escena</h3><p>Entre finales de los noventa y los primeros dos mil, Andalucía vivió su época dorada del breakbeat. Toda una generación bailó ritmos rotos cada fin de semana, y esa afición nunca desapareció del todo.</p></div>
-        <div style="--c:var(--pad-a)"><h3>El nacimiento</h3><p>En septiembre de 2023 Olibass abrió en IFEJA, el recinto ferial de Jaén, con breaks y drum &amp; bass. El éxito llevó a una segunda cita anual en invierno, a tres escenarios simultáneos y, en 2025, a la Snow Edition.</p></div>
-        <div style="--c:var(--pad-n)"><h3>El cambio de casa</h3><p>En 2026 el festival se trasladó a Torredonjimeno. Tras una edición bajo carpa en febrero, llegó el primer Open Air, aplazado del 15 de agosto al 19 de septiembre por un reventón térmico que dañó el recinto.</p></div>
+        <div style="--c:var(--pad-a)"><h3>El nacimiento</h3><p>En septiembre de 2023 Olibass abrió en IFEJA, el recinto ferial de Jaén, con breaks y drum &amp; bass. El éxito llevó a una segunda cita anual en invierno y a tres escenarios simultáneos.</p></div>
+        <div style="--c:var(--pad-n)"><h3>El cambio de casa</h3><p>En 2026 el festival se trasladó a Torredonjimeno. Tras la Snow Edition bajo carpa en febrero, llegó el primer Open Air, aplazado del 15 de agosto al 19 de septiembre por un reventón térmico que dañó el recinto.</p></div>
       </div>
       <p class="nombre">¿Por qué Olibass? Porque es breakbeat hecho entre olivos: oliva + bass.</p>
+    </div>
+  </section>
+
+  <section class="ediciones" id="ediciones">
+    <div class="wrap">
+      <div class="ed-head">
+        <h2>Ediciones</h2>
+        <p>Siete citas desde 2023, alternando invierno y septiembre. <a href="#banco">Carga su break en el secuenciador ↑</a></p>
+      </div>
+      <ol class="tracklist">
+        <li class="track proxima">
+          <span class="t-id">A8</span>
+          <div class="t-fecha">2027<small>Invierno</small></div>
+          <div class="t-body"><h3>Próxima edición</h3><p class="t-lugar">Fecha y cartel por anunciar</p><p>Síguenos en Instagram para enterarte primero del cartel y de la salida de entradas.</p></div>
+          <a class="t-link" href="https://www.instagram.com/olibassmusicfestival/" target="_blank" rel="noopener">Instagram ↗</a>
+        </li>
+        <li class="track" style="--c:#FF8E5E">
+          <span class="t-id">A7</span>
+          <div class="t-fecha">19 sep<small>2026</small></div>
+          <div class="t-body">
+            <h3>Open Air</h3>
+            <p class="t-lugar">Polígono Industrial, C/ Chile, Torredonjimeno</p>
+            <p>El primer Olibass al aire libre, de 19:00 a 07:00. Aplazado desde el 15 de agosto tras un reventón térmico que dañó el recinto.</p>
+            <ul class="cartel"><li>Afghan Headspin</li><li>Aggresivnes</li><li>Anuschka</li><li>Bad Legs</li><li>Bowser</li><li>Cut &amp; Run</li><li>Destroyers</li><li>FM-3</li><li>Godino</li><li>Miau</li><li>Paket</li><li>Perfect Kombo</li><li>Shade K</li></ul>
+            <div class="sesiones">
+              <a href="https://youtu.be/vAoeDFcAntI" target="_blank" rel="noopener"><b>▶ Afghan Headspin</b><small>YouTube · 60 min</small></a>
+              <a href="https://soundcloud.com/nevaglockpink/neva-vs-tilla-pink" target="_blank" rel="noopener"><b>▶ Neva vs Tilla Pink</b><small>SoundCloud · 62 min</small></a>
+            </div>
+          </div>
+          <a class="t-link" href="https://www.optimalbreaks.com/es/events/olibass-music-festival-open-air" target="_blank" rel="noopener">En Optimal Breaks ↗</a>
+        </li>
+        <li class="track" style="--c:#B5E08B">
+          <span class="t-id">A6</span>
+          <div class="t-fecha">27 feb<small>2026</small></div>
+          <div class="t-body">
+            <h3>Snow Edition · víspera del 28F</h3>
+            <p class="t-lugar">La Carpa, Torredonjimeno</p>
+            <p>Primera edición en Torredonjimeno, la noche antes del Día de Andalucía. De 20:00 a 06:00.</p>
+            <ul class="cartel"><li>Freq Nasty</li><li>Anuschka</li><li>The Brainkiller</li><li>Drew</li><li>Godino</li><li>Karpin</li><li>MBreaks</li><li>Rasco</li><li>Wizard</li></ul>
+          </div>
+          <a class="t-link" href="https://www.optimalbreaks.com/es/events/olibass-music-festival-snow-edition-2026" target="_blank" rel="noopener">En Optimal Breaks ↗</a>
+        </li>
+        <li class="track" style="--c:var(--pad-n)">
+          <span class="t-id">A5</span>
+          <div class="t-fecha">6 sep<small>2025</small></div>
+          <div class="t-body">
+            <h3>Open Air 2025</h3>
+            <p class="t-lugar">IFEJA, Ferias Jaén</p>
+            <p>Lady Waks como cabeza de cartel. De 17:00 a 06:00.</p>
+            <ul class="cartel"><li>Lady Waks</li><li>Backdraft</li><li>CTRL-Z</li><li>Destroyers</li><li>Godino</li><li>Hankook</li><li>MBreaks</li><li>Miau</li><li>Rasco</li><li>Sekret Chadow</li><li>Sellrude</li><li>Yo Speed</li></ul>
+          </div>
+          <a class="t-link" href="https://www.optimalbreaks.com/es/events/olibass-music-festival-open-air-2025" target="_blank" rel="noopener">En Optimal Breaks ↗</a>
+        </li>
+        <li class="track" style="--c:#CFE6F3">
+          <span class="t-id">A4</span>
+          <div class="t-fecha">1 feb<small>2025</small></div>
+          <div class="t-body"><h3>Edición de invierno</h3><p class="t-lugar">Pabellón semicubierto de IFEJA</p><p>Krafty Kuts, Atomic Hooligan, Cut &amp; Run y Future Funk Squad. Retro, bassline, big beat, electro alternativo y UK garage.</p></div>
+        </li>
+        <li class="track" style="--c:var(--pad-a)">
+          <span class="t-id">A3</span>
+          <div class="t-fecha">7 sep<small>2024</small></div>
+          <div class="t-body"><h3>Tres escenarios</h3><p class="t-lugar">IFEJA, Jaén</p><p>Breaks actual, breaks retro y drum &amp; bass a la vez. Fran Break, Godino, Muriel y Voltage; MCs Speaker Reality, Cellux MC y Lizard MC.</p></div>
+        </li>
+        <li class="track" style="--c:#8FC3E8">
+          <span class="t-id">A2</span>
+          <div class="t-fecha">24 feb<small>2024</small></div>
+          <div class="t-body"><h3>Primera edición de invierno</h3><p class="t-lugar">IFEJA, Jaén</p><p>Krafty Kuts, Future Flex, Plump DJs, ED 209 y Ragga Twins. Más de 30 artistas, dos escenarios, 12 horas.</p></div>
+        </li>
+        <li class="track" style="--c:var(--pad-v)">
+          <span class="t-id">A1</span>
+          <div class="t-fecha">9 sep<small>2023</small></div>
+          <div class="t-body"><h3>Primera edición</h3><p class="t-lugar">IFEJA, Jaén</p><p>Friction, Delta Heavy, The Caracal Project y Breakbeat Connection, con los sets Spanish Kings y Retro Legends.</p></div>
+        </li>
+      </ol>
+      <a class="archivo" href="https://www.optimalbreaks.com/es/festivals/olibass-music-festival" target="_blank" rel="noopener">
+        <span><b>Archivo completo en Optimal Breaks</b><small>54 artistas, carteles por edición y sesiones grabadas</small></span><span aria-hidden="true">↗</span>
+      </a>
     </div>
   </section>
 
@@ -241,11 +350,11 @@ const ediciones=[
    p:[[X,_,_,_, _,X,_,_, _,_,X,_, _,_,X,_],[_,_,_,_, X,_,_,X, _,_,_,_, X,_,_,_],[X,_,X,_, X,_,X,X, X,_,X,_, X,_,X,_],[X,_,_,_, _,X,_,_, _,_,X,_, _,_,X,_]]},
   {id:'A3',t:'Tres escenarios',f:'7 sep 2024',l:'IFEJA, Jaén',c:'var(--pad-a)',txt:'Breaks actual, breaks retro y drum & bass a la vez. Fran Break, Godino, Muriel y Voltage; MCs Speaker Reality, Cellux MC y Lizard MC.',
    p:[[X,_,_,_, _,_,X,_, X,_,_,_, _,_,X,_],[_,_,_,_, X,_,_,_, _,X,_,_, X,_,_,_],[X,X,X,_, X,X,X,_, X,X,X,_, X,X,X,_],[X,_,_,_, _,_,X,_, X,_,_,_, _,_,X,_]]},
-  {id:'A4',t:'Snow Edition',f:'1 feb 2025',l:'Pabellón semicubierto de IFEJA',c:'#CFE6F3',txt:'Krafty Kuts, Atomic Hooligan, Cut & Run y Future Funk Squad. Retro, bassline, big beat, electro alternativo y UK garage.',
+  {id:'A4',t:'Invierno 2025',f:'1 feb 2025',l:'Pabellón semicubierto de IFEJA',c:'#CFE6F3',txt:'Krafty Kuts, Atomic Hooligan, Cut & Run y Future Funk Squad. Retro, bassline, big beat, electro alternativo y UK garage.',
    p:[[X,_,_,_, _,_,_,X, _,_,X,_, _,_,_,_],[_,_,_,_, X,_,_,_, _,_,_,_, X,_,_,X],[X,_,_,X, X,_,_,X, X,_,_,X, X,_,_,X],[X,_,_,_, _,_,_,X, _,_,X,_, _,_,_,_]]},
   {id:'A5',t:'Lady Waks',f:'6 sep 2025',l:'Pabellón semicubierto de IFEJA',c:'var(--pad-n)',txt:'Lady Waks como cabeza de cartel, con Backdraft, CTRL-Z, Alex Sunsha, Tryple D, Rasco y Godino. De 17:00 a 06:00.',
    p:[[X,_,_,X, _,_,X,_, _,_,X,_, _,_,_,X],[_,_,_,_, X,_,_,_, _,_,_,X, X,_,_,_],[X,_,X,_, X,_,X,_, X,_,X,_, X,_,X,_],[X,_,_,X, _,_,X,_, _,_,X,_, _,_,_,X]]},
-  {id:'A6',t:'Víspera del 28F',f:'27 feb 2026',l:'La Carpa, Torredonjimeno',c:'#B5E08B',txt:'Primera edición en Torredonjimeno, la noche antes del Día de Andalucía. De 20:00 a 06:00.',
+  {id:'A6',t:'Snow Edition',f:'27 feb 2026',l:'La Carpa, Torredonjimeno',c:'#B5E08B',txt:'Primera edición en Torredonjimeno, la noche antes del Día de Andalucía. De 20:00 a 06:00.',
    p:[[X,_,_,_, _,_,_,_, _,_,X,_, _,_,_,X],[_,_,_,_, X,_,_,_, _,_,X,_, X,_,_,_],[_,X,_,X, _,X,_,X, _,X,_,X, _,X,_,X],[X,_,_,_, _,_,X,_, _,X,_,_, _,_,X,_]]},
   {id:'A7',t:'Open Air',f:'19 sep 2026',l:'Polígono Industrial, C/ Chile, Torredonjimeno',c:'#FF8E5E',txt:'El primer Olibass al aire libre, con catorce artistas de 19:00 a 07:00. Aplazado desde el 15 de agosto tras un reventón térmico que dañó el recinto.',
    p:[[X,_,_,_, _,_,X,X, _,_,X,_, _,_,X,_],[_,_,_,_, X,_,_,_, _,_,_,_, X,_,_,_],[X,_,X,X, X,_,X,X, X,_,X,X, X,_,X,X],[X,_,_,_, _,_,X,_, _,_,X,_, _,_,X,_]]}
@@ -318,10 +427,10 @@ ediciones.forEach(e=>{
   });
   pads.appendChild(b);
 });
-const banco=document.getElementById('ediciones');
-function abrirBanco(){if(location.hash==='#ediciones')banco.open=true}
+const banco=document.getElementById('banco');
+function abrirBanco(){if(location.hash==='#banco')banco.open=true}
 addEventListener('hashchange',abrirBanco);abrirBanco();
-document.querySelectorAll('a[href="#ediciones"]').forEach(a=>a.addEventListener('click',()=>{banco.open=true}));
+document.querySelectorAll('a[href="#banco"]').forEach(a=>a.addEventListener('click',()=>{banco.open=true}));
 const v=document.createElement('div');v.className='pad vacio';v.innerHTML='<span class="id">A8</span><span><b>Invierno 2027</b><small>Patrón vacío. Muy pronto.</small></span>';pads.appendChild(v);
 </script>
 </body>
