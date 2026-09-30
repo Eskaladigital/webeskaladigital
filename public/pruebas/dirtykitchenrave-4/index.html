@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Dirty Kitchen Rave — Propuesta Tempo Map · ESKALA</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Propuesta Tempo Map para Dirty Kitchen Rave. Demo by ESKALA Marketing.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;700;900&family=Martian+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* 04 — TEMPO MAP
+   DKR's defining trait is range: ten genres from 115 to 175 BPM. The home is an interactive tempo map.
+   Drag the needle across the BPM axis: the genres at that tempo light up and a metronome ticks at that speed. */
+:root{--papel:#F3F4F6;--tinta:#14161B;--gris:#6B707A;--linea:#D9DCE1;--aguja:#FF3D2E}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:"Schibsted Grotesk",system-ui,sans-serif;background:var(--papel);color:var(--tinta);line-height:1.55;font-size:1.0625rem}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--aguja);outline-offset:3px}
+.m{font-family:"Martian Mono",monospace;font-size:.78rem}
+
+.nav{display:flex;justify-content:space-between;align-items:center;padding:calc(1rem + env(safe-area-inset-top,0px)) clamp(1rem,3vw,2.5rem) 1rem;border-bottom:1px solid var(--linea)}
+.nav b{font-weight:900;letter-spacing:-.02em;font-size:1.15rem}
+.nav nav{display:flex;gap:1.6rem;font-weight:500}
+.nav a{text-decoration:none}
+.nav a:hover{text-decoration:underline;text-underline-offset:4px}
+
+.hero{padding:clamp(2rem,5vw,4rem) clamp(1rem,3vw,2.5rem) 0}
+.hero h1{font-weight:900;font-size:clamp(3rem,10vw,9rem);line-height:.85;letter-spacing:-.05em}
+.hero .row{display:grid;grid-template-columns:1fr auto;gap:2rem;align-items:end;margin-top:1.5rem}
+.hero p{max-width:46ch;font-size:1.2rem;color:#2B2F37}
+.readout{text-align:right}
+.readout .bpm{font-weight:900;font-size:clamp(3.5rem,9vw,7rem);line-height:.85;letter-spacing:-.04em;font-variant-numeric:tabular-nums;color:var(--aguja)}
+.readout .g{font-weight:500;min-height:1.6em}
+
+.map{margin:2.5rem clamp(1rem,3vw,2.5rem) 0;background:#fff;border:1px solid var(--linea);border-radius:14px;padding:1.5rem clamp(1rem,2.5vw,2rem) 1rem;position:relative;user-select:none;touch-action:none}
+.controls{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem;align-items:center;margin-bottom:1.2rem}
+.controls button{border:1px solid var(--tinta);background:var(--tinta);color:#fff;font:inherit;font-weight:700;border-radius:999px;padding:.55rem 1.1rem;cursor:pointer}
+.controls button[aria-pressed="true"]{background:var(--aguja);border-color:var(--aguja)}
+.plot{position:relative;margin-left:8.5rem}
+.lane{position:relative;height:38px;border-top:1px solid var(--linea)}
+.lane:last-of-type{border-bottom:1px solid var(--linea)}
+.lane .name{position:absolute;right:calc(100% + 1rem);top:50%;transform:translateY(-50%);white-space:nowrap;font-weight:700;font-size:.95rem;transition:color .2s}
+.lane .bar{position:absolute;top:8px;bottom:8px;border-radius:999px;background:var(--c);opacity:.28;transition:opacity .2s,transform .2s}
+.lane.on .bar{opacity:1;transform:scaleY(1.15)}
+.lane.on .name{color:var(--c)}
+.axis{position:relative;height:28px}
+.axis span{position:absolute;transform:translateX(-50%);top:6px;color:var(--gris)}
+.needle{position:absolute;top:-6px;bottom:22px;width:0;border-left:2px solid var(--aguja);cursor:ew-resize}
+.needle::before{content:"";position:absolute;top:-8px;left:-9px;width:16px;height:16px;border-radius:50%;background:var(--aguja);box-shadow:0 0 0 4px rgba(255,61,46,.2)}
+.needle:focus-visible::before{box-shadow:0 0 0 4px var(--tinta)}
+.hint{color:var(--gris);font-size:.9rem;margin-top:.6rem}
+
+section{padding:clamp(4rem,8vw,6.5rem) clamp(1rem,3vw,2.5rem)}
+.wrap{max-width:1200px;margin:0 auto}
+h2{font-weight:900;font-size:clamp(2.2rem,5vw,3.8rem);letter-spacing:-.04em;line-height:.95;margin-bottom:2rem}
+
+.about .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem}
+.about .lead{grid-column:span 2;font-size:clamp(1.4rem,2.5vw,2rem);line-height:1.25;font-weight:500;letter-spacing:-.02em}
+.about p{max-width:52ch;color:#2B2F37}
+.fig{border-top:2px solid var(--tinta);padding-top:.8rem}
+.fig b{display:block;font-weight:900;font-size:3rem;letter-spacing:-.04em;line-height:1}
+
+.velo{display:grid;grid-template-columns:1fr 1.3fr;gap:3rem;align-items:center}
+.velo svg{width:100%;height:auto;background:#fff;border:1px solid var(--linea);border-radius:14px}
+.velo p{max-width:48ch;color:#2B2F37;margin-bottom:1rem}
+
+.tabla{width:100%;border-collapse:collapse}
+.tabla th{text-align:left;font-family:"Martian Mono";font-weight:600;font-size:.72rem;color:var(--gris);padding:.6rem .8rem .6rem 0;border-bottom:2px solid var(--tinta)}
+.tabla td{padding:1rem .8rem 1rem 0;border-bottom:1px solid var(--linea);vertical-align:middle}
+.tabla td.t{font-weight:700;font-size:1.1rem}
+.tabla .chip{display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--c);margin-right:.5rem}
+.tabla tr:hover td{background:#fff}
+.scrollx{overflow-x:auto}
+
+.artists{columns:4 180px;column-gap:2rem}
+.artists li{list-style:none;padding:.45rem 0;border-bottom:1px solid var(--linea);font-weight:500;break-inside:avoid}
+.artists li:first-child{font-weight:900}
+
+.links{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--linea);border:1px solid var(--linea);border-radius:14px;overflow:hidden}
+.links a{background:#fff;padding:1.4rem;text-decoration:none;min-height:140px;display:flex;flex-direction:column;justify-content:space-between}
+.links a:hover{background:var(--tinta);color:#fff}
+.links b{font-weight:900;font-size:1.3rem}
+
+.demo{background:var(--tinta);color:#fff;border-radius:22px;margin:0 clamp(1rem,3vw,2.5rem) clamp(1rem,3vw,2.5rem);display:grid;grid-template-columns:1.3fr 1fr;gap:2rem;align-items:end}
+.demo h2{margin:0;font-size:clamp(2.6rem,7vw,6rem)}
+.demo p{color:#C5C8CF;margin-bottom:1.5rem}
+.demo a{display:inline-block;background:var(--aguja);color:#fff;text-decoration:none;font-weight:700;padding:.9rem 1.5rem;border-radius:999px}
+
+footer{padding:1.5rem clamp(1rem,3vw,2.5rem) calc(1.5rem + env(safe-area-inset-bottom,0px));display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem;color:var(--gris);font-size:.9rem}
+footer nav{display:flex;flex-wrap:wrap;gap:1.2rem}
+
+@media (max-width:860px){
+  .nav nav{display:none}
+  .hero .row,.velo,.demo{grid-template-columns:1fr}
+  .readout{text-align:left}
+  .plot{margin-left:5.8rem}
+  .lane .name{font-size:.8rem}
+  .about .grid{grid-template-columns:1fr}.about .lead{grid-column:auto}
+  .links{grid-template-columns:1fr 1fr}
+}
+@media (prefers-reduced-motion:reduce){.lane .bar{transition:none}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <b>DIRTY KITCHEN RAVE</b>
+  <nav aria-label="Main"><a href="#label">Label</a><a href="#releases">Releases</a><a href="#artists">Artists</a><a href="#listen">Listen</a><a href="#demo">Demos</a></nav>
+</header>
+
+<section class="hero" style="padding-bottom:0">
+  <h1>Every tempo<br>of bass.</h1>
+  <div class="row">
+    <p>DIRTY KITCHEN RAVE is a London label releasing ten styles of bass music, from 115 BPM disco to 175 BPM jungle. Drag the needle to find yours.</p>
+    <div class="readout" aria-live="polite">
+      <div class="bpm" id="bpmOut">134</div>
+      <div class="g" id="gOut">Breaks, UK Bass, UK Garage, Rave</div>
+    </div>
+  </div>
+</section>
+
+<div class="map" id="map">
+  <div class="controls">
+    <span class="m">BPM AXIS 110 → 180</span>
+    <button id="metro" aria-pressed="false">Play metronome</button>
+  </div>
+  <div class="plot" id="plot">
+    <div id="lanes"></div>
+    <div class="axis m" id="axis"></div>
+    <div class="needle" id="needle" tabindex="0" role="slider" aria-label="Tempo" aria-valuemin="110" aria-valuemax="180" aria-valuenow="134"></div>
+  </div>
+  <p class="hint">Drag the red needle, or focus it and use the arrow keys.</p>
+</div>
+
+<section class="about" id="label">
+  <div class="wrap">
+    <h2>The label</h2>
+    <div class="grid">
+      <p class="lead">A multi-genre bass label for bassheads, ravers and late-night misfits, built to break genre rules rather than follow them.</p>
+      <div class="fig"><b>230+</b>catalogue numbers</div>
+      <p>DKR is run from London by label manager Afghan Headspin. The roster brings together UK producers with a large international crew, many from the Spanish breaks scene.</p>
+      <p>Releases range from 134 BPM breaks to half-time UK garage, liquid drum &amp; bass, jungle compilations and rave anthems, with remix packages and the long-running Universal Breaks and WE ARE DKR series.</p>
+      <p>The label also runs a podcast, live streams on Twitch, a Discord community, its own merch line and vinyl pressings.</p>
+    </div>
+  </div>
+</section>
+
+<section id="velocity" style="padding-top:0">
+  <div class="wrap velo">
+    <div>
+      <h2>Catalogue velocity</h2>
+      <p>DKR063 came out in July 2024. DKR0237 landed in January 2026. That's more than 170 catalogue numbers in eighteen months.</p>
+      <p class="m" style="color:var(--gris)">Plotted from three published catalogue numbers.</p>
+    </div>
+    <svg viewBox="0 0 600 340" role="img" aria-label="Catalogue number over time: DKR063 in July 2024, DKR093 in November 2024, DKR0237 in January 2026">
+      <g font-family="Martian Mono" font-size="11" fill="#6B707A">
+        <line x1="60" y1="290" x2="570" y2="290" stroke="#D9DCE1"/><line x1="60" y1="30" x2="60" y2="290" stroke="#D9DCE1"/>
+        <text x="60" y="312">Jul 24</text><text x="160" y="312">Nov 24</text><text x="490" y="312">Jan 26</text>
+        <text x="20" y="294">0</text><text x="14" y="180">120</text><text x="14" y="66">240</text>
+        <line x1="60" y1="176" x2="570" y2="176" stroke="#EEF0F2"/><line x1="60" y1="62" x2="570" y2="62" stroke="#EEF0F2"/>
+      </g>
+      <polyline points="80,230 176,202 512,65" fill="none" stroke="#14161B" stroke-width="3"/>
+      <g fill="#FF3D2E"><circle cx="80" cy="230" r="7"/><circle cx="176" cy="202" r="7"/><circle cx="512" cy="65" r="9"/></g>
+      <g font-family="Schibsted Grotesk" font-weight="700" font-size="14" fill="#14161B">
+        <text x="92" y="250">DKR063</text><text x="200" y="224">DKR093</text><text x="430" y="50">DKR0237</text>
+      </g>
+    </svg>
+  </div>
+</section>
+
+<section id="releases" style="padding-top:0">
+  <div class="wrap">
+    <h2>Recent releases</h2>
+    <div class="scrollx">
+      <table class="tabla" id="tabla">
+        <thead><tr><th>DATE</th><th>TITLE</th><th>ARTIST</th><th>GENRE</th><th>CAT / BPM</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="artists" style="padding-top:0">
+  <div class="wrap">
+    <h2>Artists</h2>
+    <ul class="artists">
+      <li>Afghan Headspin (label manager)</li><li>Gruv42</li><li>DJ Brownie</li><li>Kid Ellipsis</li><li>PERCYBASS</li><li>The Push</li><li>HOLLO (UK)</li><li>Phrenetic</li><li>Danny Phr3ntic</li><li>J-Break</li><li>Prato</li><li>GODINO</li><li>AndrewFx</li><li>Squat Party</li><li>Evil Crew</li><li>Skin Teeth</li><li>Periko</li><li>BLOW (SP)</li><li>Anuschka</li><li>Shodan</li><li>Fiasco &amp; Nicely</li><li>Jormek</li><li>Obsidian Wave</li><li>Brothers Bud</li>
+    </ul>
+  </div>
+</section>
+
+<section id="listen" style="padding-top:0">
+  <div class="wrap">
+    <h2>Listen and join</h2>
+    <div class="links">
+      <a href="https://www.beatport.com/label/dirty-kitchen-rave/112835"><b>Beatport</b><span class="m">Full catalogue</span></a>
+      <a href="https://dirtykitchenrave.bandcamp.com/"><b>Bandcamp</b><span class="m">Buy direct</span></a>
+      <a href="https://www.junodownload.com/labels/Dirty+Kitchen+Rave/"><b>Juno</b><span class="m">MP3, WAV, FLAC</span></a>
+      <a href="#"><b>Spotify</b><span class="m">570+ track playlist</span></a>
+      <a href="https://podcasts.apple.com/us/podcast/the-dirty-kitchen-rave-podcast/id1895541519"><b>Podcast</b><span class="m">Apple Podcasts</span></a>
+      <a href="https://discord.gg/vXFj3tQkme"><b>Discord</b><span class="m">Free to join</span></a>
+      <a href="#"><b>Twitch</b><span class="m">Live streams</span></a>
+      <a href="https://afghan-headspin-shop.fourthwall.com/en-gbp/collections/all"><b>Merch</b><span class="m">Official shop</span></a>
+    </div>
+  </div>
+</section>
+
+<section class="demo" id="demo">
+  <h2>Your track, our tempo.</h2>
+  <div>
+    <p>Whatever the BPM, if it's bass it belongs here. Demos are received through LabelRadar and every one gets a listen.</p>
+    <a href="https://www.labelradar.com/labels/dirtykitchenrave/portal">Submit on LabelRadar</a>
+  </div>
+</section>
+
+<footer>
+  <span>DIRTY KITCHEN RAVE, London UK</span>
+  <nav aria-label="Social"><a href="#">Instagram</a><a href="#">TikTok</a><a href="#">YouTube</a><a href="https://www.facebook.com/dirtykitchenrave/">Facebook</a><a href="#">SoundCloud</a></nav>
+</footer>
+
+<script>
+const G=[
+  {n:'Disco',a:115,b:125,c:'#D39B00'},
+  {n:'Breakbeat',a:125,b:138,c:'#E0441F'},
+  {n:'Rave',a:128,b:140,c:'#FF3EA5'},
+  {n:'Breaks',a:130,b:140,c:'#FF5A36'},
+  {n:'UK Bass',a:130,b:140,c:'#7B61FF'},
+  {n:'UK Garage',a:130,b:135,c:'#00A676'},
+  {n:'Bassline',a:135,b:140,c:'#E8A200'},
+  {n:'Dubstep',a:139,b:141,c:'#4F5D6C'},
+  {n:'Jungle',a:160,b:175,c:'#1FA2FF'},
+  {n:'Drum & Bass',a:170,b:175,c:'#0B6BCB'}
+];
+const MIN=110,MAX=180,pct=v=>(v-MIN)/(MAX-MIN)*100;
+const lanes=document.getElementById('lanes'),axis=document.getElementById('axis');
+G.forEach(g=>{const l=document.createElement('div');l.className='lane';l.style.setProperty('--c',g.c);l.innerHTML=`<span class="name">${g.n}</span><span class="bar" style="left:${pct(g.a)}%;width:${Math.max(pct(g.b)-pct(g.a),1.2)}%"></span>`;lanes.appendChild(l);g.el=l});
+for(let v=MIN;v<=MAX;v+=10){const s=document.createElement('span');s.style.left=pct(v)+'%';s.textContent=v;axis.appendChild(s)}
+const needle=document.getElementById('needle'),plot=document.getElementById('plot');
+let bpm=134;
+function set(v){
+  bpm=Math.round(Math.min(MAX,Math.max(MIN,v)));
+  needle.style.left=pct(bpm)+'%';needle.setAttribute('aria-valuenow',bpm);
+  document.getElementById('bpmOut').textContent=bpm;
+  const hits=G.filter(g=>bpm>=g.a&&bpm<=g.b);
+  G.forEach(g=>g.el.classList.toggle('on',hits.includes(g)));
+  document.getElementById('gOut').textContent=hits.length?hits.map(g=>g.n).join(', '):'Between styles. Keep dragging.';
+}
+set(134);
+let drag=false;
+const fromX=x=>{const r=plot.getBoundingClientRect();return MIN+(x-r.left)/r.width*(MAX-MIN)};
+plot.addEventListener('pointerdown',e=>{drag=true;plot.setPointerCapture(e.pointerId);set(fromX(e.clientX))});
+plot.addEventListener('pointermove',e=>{if(drag)set(fromX(e.clientX))});
+plot.addEventListener('pointerup',()=>drag=false);
+needle.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key==='ArrowUp'){set(bpm+1);e.preventDefault()}if(e.key==='ArrowLeft'||e.key==='ArrowDown'){set(bpm-1);e.preventDefault()}});
+
+let ctx,on=false,nextT=0,beat=0,timer;
+const btn=document.getElementById('metro');
+btn.onclick=()=>{
+  if(!ctx)ctx=new (window.AudioContext||window.webkitAudioContext)();
+  on=!on;btn.setAttribute('aria-pressed',on);btn.textContent=on?'Stop metronome':'Play metronome';
+  if(on){ctx.resume();nextT=ctx.currentTime+.05;beat=0;timer=setInterval(()=>{
+    while(nextT<ctx.currentTime+.1){
+      const o=ctx.createOscillator(),g=ctx.createGain();
+      o.frequency.value=beat%4===0?1600:1000;g.gain.setValueAtTime(.25,nextT);g.gain.exponentialRampToValueAtTime(.001,nextT+.05);
+      o.connect(g).connect(ctx.destination);o.start(nextT);o.stop(nextT+.06);
+      nextT+=60/bpm;beat++;
+    }},25)}else clearInterval(timer);
+};
+
+const col=n=>(G.find(g=>g.n===n)||{c:'#999'}).c;
+const R=[
+  ['Jun 2026','Ritual Pleasure','The Push','Breaks','139 BPM'],
+  ['Jan 2026','Romero','Afghan Headspin','Breaks','DKR0237'],
+  ['Latest','Check It / Delusion','HOLLO (UK)','UK Bass',''],
+  ['Latest','Blackout the Venue / Cold Caller','Kid Ellipsis','UK Bass',''],
+  ['Latest','Switch / Buck Rogers','Phrenetic','Breaks',''],
+  ['Jun 2025','Rave / Jungle / D&B Vol. 2','Various Artists','Jungle',''],
+  ['Jun 2025','Housey McHouse Face','Shodan & K2T','Drum & Bass',''],
+  ['Nov 2024','We Are Breakbeat','Afghan Headspin, Anuschka','Breakbeat','DKR093'],
+  ['Jul 2024','In the Jungle [Remixes]','Afghan Headspin, Gruv42','UK Garage','DKR063'],
+  ['Nov 2023','Justice','Afghan Headspin, Playbass, Evil Crew','Breaks','134 BPM']
+];
+const tb=document.querySelector('#tabla tbody');
+R.forEach(r=>{const tr=document.createElement('tr');tr.innerHTML=`<td class="m">${r[0]}</td><td class="t">${r[1]}</td><td>${r[2]}</td><td><span class="chip" style="--c:${col(r[3])}"></span>${r[3]}</td><td class="m">${r[4]}</td>`;tb.appendChild(tr)});
+</script>
+</body>
+</html>

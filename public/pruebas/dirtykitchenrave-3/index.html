@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Dirty Kitchen Rave — Propuesta DKR/OS · ESKALA</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Propuesta DKR/OS (terminal interactivo) para Dirty Kitchen Rave. Demo by ESKALA Marketing.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+/* 03 — DKR/OS
+   A label that lives online (Discord, Twitch, podcast, streaming) gets a website that behaves like an operating system.
+   Visitors type commands or tap them. Boots like a machine, feels like a late-night chat server.
+   Base violet #603CBA comes from the label's own Bandcamp tile colour. */
+:root{--fondo:#1C1030;--panel:#261642;--linea:#3B2566;--violeta:#603CBA;--lila:#B9A4F0;--texto:#ECE6F8;--ambar:#FFB547;--ok:#8BE3B4;--error:#FF6B8A}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:"JetBrains Mono",ui-monospace,monospace;background:var(--fondo);color:var(--texto);font-size:15px;line-height:1.55;overflow:hidden}
+a{color:var(--ambar)}
+:focus-visible{outline:2px solid var(--ambar);outline-offset:2px}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(0,0,0,.14) 0 1px,transparent 1px 3px);mix-blend-mode:multiply;z-index:50}
+
+.os{height:100%;display:grid;grid-template-rows:auto 1fr auto;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+.bar{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:.5rem 1rem;background:var(--violeta);color:#fff;font-weight:700;font-size:13px}
+.bar .left{display:flex;gap:1.2rem;align-items:center}
+.bar .logo{background:#fff;color:var(--violeta);padding:0 .45rem;font-weight:800}
+.bar .live{display:flex;align-items:center;gap:.4rem}
+.bar .live i{width:8px;height:8px;border-radius:50%;background:var(--error);animation:blink 1.2s steps(2) infinite}
+@keyframes blink{50%{opacity:0}}
+
+.desk{display:grid;grid-template-columns:1fr 340px;gap:1rem;padding:1rem;min-height:0}
+.win{background:var(--panel);border:1px solid var(--linea);border-radius:10px;display:flex;flex-direction:column;min-height:0;box-shadow:0 20px 40px rgba(0,0,0,.35)}
+.win header{display:flex;align-items:center;gap:.5rem;padding:.55rem .8rem;border-bottom:1px solid var(--linea);font-size:12px;color:var(--lila)}
+.win header i{width:11px;height:11px;border-radius:50%;background:var(--linea)}
+.win header i:first-child{background:var(--error)} .win header i:nth-child(2){background:var(--ambar)} .win header i:nth-child(3){background:var(--ok)}
+.win header span{margin-left:.5rem}
+
+.term{flex:1;overflow-y:auto;padding:1rem 1.1rem;scroll-behavior:smooth}
+.term .line{white-space:pre-wrap;word-break:break-word}
+.term .p{color:var(--ok)}
+.term .dim{color:var(--lila);opacity:.8}
+.term .h{color:var(--ambar);font-weight:800}
+.term .err{color:var(--error)}
+.term .big{font-weight:800;font-size:clamp(9px,1.35vw,15px);line-height:1.05;color:#fff;white-space:pre;overflow-x:auto}
+.term table{border-collapse:collapse;margin:.4rem 0;width:100%;max-width:760px}
+.term td{padding:.15rem 1.2rem .15rem 0;vertical-align:top}
+.term td:first-child{color:var(--lila);white-space:nowrap}
+.inputrow{display:flex;gap:.6rem;padding:.7rem 1.1rem;border-top:1px solid var(--linea);align-items:center}
+.inputrow label{color:var(--ok);white-space:nowrap}
+.inputrow input{flex:1;background:transparent;border:0;color:var(--texto);font:inherit;outline:none;caret-color:var(--ambar)}
+.chips{display:flex;flex-wrap:wrap;gap:.4rem;padding:0 1.1rem .8rem}
+.chips button{background:transparent;border:1px solid var(--linea);color:var(--lila);font:inherit;font-size:12px;padding:.2rem .6rem;border-radius:4px;cursor:pointer}
+.chips button:hover{border-color:var(--ambar);color:var(--ambar)}
+
+.side{display:grid;grid-template-rows:auto auto 1fr;gap:1rem;min-height:0}
+.now{padding:1rem}
+.now .art{aspect-ratio:1;border-radius:6px;background:conic-gradient(from 0deg,var(--violeta),#FF4FA3,var(--ambar),var(--violeta));position:relative;overflow:hidden}
+.now .art::after{content:"DKR";position:absolute;inset:0;display:grid;place-items:center;font-weight:800;font-size:3.2rem;color:#fff;mix-blend-mode:overlay}
+.now h3{margin-top:.8rem;font-size:14px}
+.now p{color:var(--lila);font-size:12px}
+.eq{display:flex;gap:3px;align-items:flex-end;height:36px;margin-top:.6rem}
+.eq i{flex:1;background:var(--ambar);animation:eq 1s ease-in-out infinite alternate}
+@keyframes eq{from{height:15%}to{height:100%}}
+.members{padding:.8rem 1rem;overflow-y:auto;font-size:12.5px}
+.members h4{color:var(--lila);font-size:11px;margin:.6rem 0 .3rem;font-weight:700}
+.members div{display:flex;align-items:center;gap:.5rem;padding:.15rem 0}
+.members div i{width:8px;height:8px;border-radius:50%;background:var(--ok)}
+.members div.idle i{background:var(--ambar)}
+.stats{padding:.8rem 1rem;display:grid;grid-template-columns:1fr 1fr;gap:.6rem;font-size:12px}
+.stats b{display:block;font-size:22px;color:#fff}
+.stats span{color:var(--lila)}
+
+.ticker{background:var(--panel);border-top:1px solid var(--linea);overflow:hidden;white-space:nowrap;font-size:12px;padding:.45rem 0;color:var(--lila)}
+.ticker span{display:inline-block;padding-left:100%;animation:tick 40s linear infinite}
+@keyframes tick{to{transform:translateX(-100%)}}
+
+@media (max-width:900px){
+  body{overflow:auto}
+  .os{height:auto;min-height:100%}
+  .desk{grid-template-columns:1fr}
+  .term{height:65vh}
+  .side{grid-template-rows:auto}
+  .members{max-height:260px}
+}
+@media (prefers-reduced-motion:reduce){.eq i,.ticker span,.bar .live i{animation:none}.ticker span{padding-left:1rem}}
+</style>
+</head>
+<body>
+<div class="os">
+  <div class="bar">
+    <div class="left"><span class="logo">DKR/OS</span><span>Dirty Kitchen Rave</span></div>
+    <div class="left"><span class="live"><i></i>Kitchen open</span><span id="clock">--:--</span></div>
+  </div>
+
+  <div class="desk">
+    <div class="win" role="region" aria-label="Terminal">
+      <header><i></i><i></i><i></i><span>guest@dirtykitchenrave: ~</span></header>
+      <div class="term" id="term" aria-live="polite"></div>
+      <div class="chips" id="chips" aria-label="Quick commands"></div>
+      <form class="inputrow" id="form" autocomplete="off">
+        <label for="cmd">guest@dkr:~$</label>
+        <input id="cmd" type="text" spellcheck="false" placeholder="type help and press enter" aria-label="Command">
+      </form>
+    </div>
+
+    <aside class="side">
+      <div class="win now">
+        <div class="art" aria-hidden="true"></div>
+        <h3>Latest: Ritual Pleasure</h3>
+        <p>The Push, Breaks / UK Bass, 139 BPM</p>
+        <div class="eq" aria-hidden="true" id="eq"></div>
+      </div>
+      <div class="win stats">
+        <div><b>230+</b><span>catalogue no.</span></div>
+        <div><b>10</b><span>genres</span></div>
+        <div><b>570+</b><span>tracks in playlist</span></div>
+        <div><b>LDN</b><span>home base</span></div>
+      </div>
+      <div class="win members" aria-label="Artists online">
+        <h4>LABEL MANAGER</h4>
+        <div><i></i>Afghan Headspin</div>
+        <h4>IN THE KITCHEN</h4>
+        <div><i></i>Gruv42</div><div><i></i>DJ Brownie</div><div><i></i>Kid Ellipsis</div><div class="idle"><i></i>PERCYBASS</div><div><i></i>The Push</div><div><i></i>HOLLO (UK)</div><div class="idle"><i></i>Phrenetic</div><div><i></i>J-Break</div><div><i></i>Prato</div><div><i></i>GODINO</div><div class="idle"><i></i>AndrewFx</div><div><i></i>Squat Party</div><div><i></i>Evil Crew</div><div class="idle"><i></i>Skin Teeth</div><div><i></i>Periko</div><div><i></i>BLOW (SP)</div><div><i></i>Anuschka</div><div class="idle"><i></i>Shodan</div>
+      </div>
+    </aside>
+  </div>
+
+  <div class="ticker" aria-hidden="true"><span>NEW: The Push, Ritual Pleasure ▸ Afghan Headspin, Romero [DKR0237] ▸ Kid Ellipsis, Blackout the Venue / Cold Caller ▸ HOLLO (UK), Check It / Delusion ▸ Phrenetic, Switch / Buck Rogers ▸ Demos open on LabelRadar ▸ Join the Discord ▸ Podcast out now</span></div>
+</div>
+
+<script>
+const term=document.getElementById('term'),input=document.getElementById('cmd');
+const logo=` ____  _  ______
+|  _ \\| |/ /  _ \\
+| | | | ' /| |_) |
+| |_| | . \\|  _ <
+|____/|_|\\_\\_| \\_\\   DIRTY KITCHEN RAVE`;
+const R=[
+  ['2026-06','The Push','Ritual Pleasure','Breaks / UK Bass, 139 BPM'],
+  ['2026-01','Afghan Headspin','Romero','Breaks, DKR0237'],
+  ['----','HOLLO (UK)','Check It / Delusion','Bass'],
+  ['----','Kid Ellipsis','Blackout the Venue / Cold Caller','UK Bass'],
+  ['----','Phrenetic','Switch / Buck Rogers','Breaks'],
+  ['2025-06','Various Artists','Rave / Jungle / D&B Vol. 2','Jungle, DnB'],
+  ['2025-06','Shodan & K2T','Housey McHouse Face','Liquid DnB'],
+  ['2024-11','Afghan Headspin, Anuschka','We Are Breakbeat','Breakbeat, DKR093'],
+  ['2024-07','Afghan Headspin, Gruv42','In the Jungle [Remixes]','UKG / Bassline, DKR063'],
+  ['2023-11','Afghan Headspin, Playbass, Evil Crew','Justice','Breaks, 134 BPM']
+];
+const esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;');
+const table=rows=>'<table>'+rows.map(r=>'<tr>'+r.map(c=>`<td>${c}</td>`).join('')+'</tr>').join('')+'</table>';
+const cmds={
+  help:{d:'list commands',run:()=>table(Object.entries(cmds).map(([k,v])=>[k,v.d]))},
+  about:{d:'what DKR is',run:()=>`<span class="h">DIRTY KITCHEN RAVE</span>
+A multi-genre bass label from London, UK.
+Made for bassheads, ravers and late-night misfits. DKR pushes past genre lines on purpose:
+breaks next to garage next to jungle, as long as it hits a dancefloor.
+
+Label manager: Afghan Headspin. Catalogue past DKR0237.
+Beyond the releases: podcast, Twitch streams, Discord, merch and vinyl.`},
+  genres:{d:'what we release',run:()=>table([['breaks','130–140'],['breakbeat','125–138'],['uk bass','130–140'],['ukg','130–135'],['bassline','135–140'],['rave','128–140'],['jungle','160–175'],['dnb','170–175'],['dubstep','140'],['disco','115–125']].map(r=>[r[0],r[1]+' bpm']))},
+  releases:{d:'latest releases',run:()=>table(R.map(r=>[r[0],`<b>${esc(r[2])}</b>`,esc(r[1]),`<span class="dim">${esc(r[3])}</span>`]))+`<span class="dim">Full catalogue: </span><a href="https://www.beatport.com/label/dirty-kitchen-rave/112835" target="_blank" rel="noopener">beatport</a> · <a href="https://dirtykitchenrave.bandcamp.com/" target="_blank" rel="noopener">bandcamp</a> · <a href="https://www.junodownload.com/labels/Dirty+Kitchen+Rave/" target="_blank" rel="noopener">juno</a>`},
+  artists:{d:'who cooks here',run:()=>`<span class="h">Afghan Headspin</span> <span class="dim">(label manager)</span>
+Gruv42, DJ Brownie, Kid Ellipsis, PERCYBASS, The Push, HOLLO (UK), Phrenetic,
+Danny Phr3ntic, J-Break, Prato, GODINO, AndrewFx, Squat Party, Evil Crew,
+Skin Teeth, Periko, BLOW (SP), Anuschka, Shodan, Fiasco &amp; Nicely, Jormek...`},
+  listen:{d:'where to hear us',run:()=>table([['beatport','<a href="https://www.beatport.com/label/dirty-kitchen-rave/112835" target="_blank" rel="noopener">open</a>'],['bandcamp','<a href="https://dirtykitchenrave.bandcamp.com/" target="_blank" rel="noopener">open</a>'],['juno','<a href="https://www.junodownload.com/labels/Dirty+Kitchen+Rave/" target="_blank" rel="noopener">open</a>'],['spotify','label playlist, 570+ tracks'],['soundcloud','dirty kitchen rave'],['podcast','<a href="https://podcasts.apple.com/us/podcast/the-dirty-kitchen-rave-podcast/id1895541519" target="_blank" rel="noopener">apple podcasts</a>'],['twitch','live streams']])},
+  discord:{d:'join the community',run:()=>`Opening the DKR Discord server. Free to join.
+<a href="https://discord.gg/vXFj3tQkme" target="_blank" rel="noopener">discord.gg/vXFj3tQkme</a>`},
+  merch:{d:'wear it',run:()=>table([['official','<a href="https://afghan-headspin-shop.fourthwall.com/en-gbp/collections/all" target="_blank" rel="noopener">fourthwall shop</a>'],['eu (spain)','<a href="https://deejayskin.com/?s=dirty+kitchen+rave&post_type=product&et_search=true" target="_blank" rel="noopener">deejayskin</a>'],['us / uk','amazon, DKR logo tee'],['vinyl','<a href="https://elasticstage.com/dirtykitchenrave/releases/tales-from-the-cowshed-singleep" target="_blank" rel="noopener">tales from the cowshed</a>']])},
+  demo:{d:'send your music',run:()=>`<span class="h">Demos are open.</span>
+Submit through LabelRadar. Every track gets a listen.
+<a href="https://www.labelradar.com/labels/dirtykitchenrave/portal" target="_blank" rel="noopener">labelradar.com/labels/dirtykitchenrave</a>`},
+  clear:{d:'clean the screen',run:()=>{term.innerHTML='';return null}}
+};
+function print(html,cls='line'){const d=document.createElement('div');d.className=cls;d.innerHTML=html;term.appendChild(d);term.scrollTop=term.scrollHeight}
+function exec(raw){
+  const c=raw.trim().toLowerCase().replace(/^\//,'');if(!c)return;
+  print(`<span class="p">guest@dkr:~$</span> ${esc(raw)}`);
+  if(cmds[c]){const out=cmds[c].run();if(out)print(out)}
+  else print(`<span class="err">command not found: ${esc(c)}</span>. Type <b>help</b>.`);
+}
+document.getElementById('form').addEventListener('submit',e=>{e.preventDefault();exec(input.value);input.value=''});
+const chips=document.getElementById('chips');
+['about','releases','artists','genres','listen','discord','merch','demo','help'].forEach(k=>{const b=document.createElement('button');b.type='button';b.textContent='/'+k;b.onclick=()=>{exec(k);input.focus()};chips.appendChild(b)});
+
+const boot=['[ ok ] mounting /kitchen','[ ok ] heating subwoofers','[ ok ] loading 10 genres','[ ok ] connecting discord, twitch, podcast','[ ok ] 230+ releases indexed'];
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+let i=0;
+(function next(){
+  if(i<boot.length){print(`<span class="dim">${boot[i++]}</span>`);setTimeout(next,reduce?0:220)}
+  else{print(logo,'big');print('\nWelcome to the kitchen. A multi-genre bass label from London.\nType <b>help</b>, or tap a command below.\n');exec('releases')}
+})();
+
+const eq=document.getElementById('eq');for(let k=0;k<22;k++){const b=document.createElement('i');b.style.animationDuration=(.35+Math.random()*.7)+'s';eq.appendChild(b)}
+const clock=()=>document.getElementById('clock').textContent=new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit',timeZone:'Europe/London'})+' LDN';clock();setInterval(clock,30000);
+</script>
+</body>
+</html>
