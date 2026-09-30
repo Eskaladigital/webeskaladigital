@@ -48,6 +48,7 @@
 
   /* FESTIVAL dentro del olivar */
   .hero{cursor:crosshair;touch-action:pan-y}
+  .hero svg.grove{height:100%}
   .hero .nav,.hero .hero-copy{cursor:auto}
   #fest *{transform-box:fill-box}
   .baile{transform-origin:50% 100%;animation:bote .444s ease-in-out infinite alternate}
@@ -144,7 +145,7 @@
   </nav>
 
   <div class="sun" aria-hidden="true"></div>
-  <svg class="grove" id="grove" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMax slice" aria-hidden="true"></svg>
+  <svg class="grove" id="grove" viewBox="0 -169 1200 769" preserveAspectRatio="xMidYMax slice" aria-hidden="true"></svg>
   <div class="pista-hint" id="hint" aria-hidden="true">Mueve el cursor por el olivar: el festival va contigo</div>
 
   <div class="hero-copy">
@@ -312,7 +313,7 @@
   /* ---------- El festival (coordenadas locales: 0,0 = suelo en el centro del escenario) ---------- */
   const fest=el('g',{id:'fest'});
   [-38,-14,14,38].forEach((x,i)=>{
-    const h=el('polygon',{class:'haz',points:`${x-2.5},-66 ${x+2.5},-66 ${x+22},-250 ${x-22},-250`,fill:i%2?'url(#gHaz2)':'url(#gHaz)'},fest);
+    const h=el('polygon',{class:'haz',points:`${x-2.5},-66 ${x+2.5},-66 ${x+55},-560 ${x-55},-560`,fill:i%2?'url(#gHaz2)':'url(#gHaz)'},fest);
     h.style.animationDelay=(-i*.65)+'s';h.style.animationDirection=i%2?'alternate-reverse':'alternate';
   });
   el('ellipse',{class:'pista',cx:0,cy:12,rx:95,ry:22,fill:'url(#gPista)'},fest);
