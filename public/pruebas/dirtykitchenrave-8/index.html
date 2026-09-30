@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Dirty Kitchen Rave — Full Bleed proposal · ESKALA</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Full Bleed proposal for Dirty Kitchen Rave. Demo by ESKALA Marketing.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anybody:wdth,wght@50..150,500;50..150,900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* 08 — FULL BLEED
+   One idea: one screen, one colour, one message. Like a stack of rave posters.
+   The page snaps screen by screen; every release gets its own full-bleed colour and its title fills the width edge to edge.
+   One typeface (Anybody, variable width) stretched to fit each line exactly. Nothing else on screen. */
+:root{--negro:#0D0D0D;--blanco:#FFFFFF}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-snap-type:y mandatory;scroll-behavior:smooth}
+body{font-family:"Inter",system-ui,sans-serif;color:var(--negro);background:var(--negro);font-size:1rem;line-height:1.5}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:3px solid currentColor;outline-offset:4px}
+
+.top{position:fixed;top:0;left:0;right:0;z-index:20;display:flex;justify-content:space-between;align-items:center;padding:calc(1rem + env(safe-area-inset-top,0px)) clamp(1rem,3vw,2.5rem) 1rem;color:var(--ink,#fff);transition:color .4s;pointer-events:none}
+.top>*{pointer-events:auto}
+.top b{font-family:"Anybody";font-weight:900;font-stretch:150%;font-size:1.2rem}
+.top nav{display:flex;gap:1.4rem;font-weight:500;font-size:.9rem}
+.top nav a:hover{text-decoration:underline;text-underline-offset:4px}
+
+.dots{position:fixed;right:clamp(.8rem,2vw,1.6rem);top:50%;transform:translateY(-50%);z-index:20;display:flex;flex-direction:column;gap:.55rem;color:var(--ink,#fff);transition:color .4s}
+.dots a{width:9px;height:9px;border-radius:50%;border:2px solid currentColor;display:block}
+.dots a.on{background:currentColor}
+
+.s{height:100vh;height:100svh;scroll-snap-align:start;background:var(--bg);color:var(--ink);display:flex;flex-direction:column;justify-content:space-between;padding:calc(4.5rem + env(safe-area-inset-top,0px)) clamp(1rem,3vw,2.5rem) calc(1.5rem + env(safe-area-inset-bottom,0px));position:relative;overflow:hidden}
+.fit{font-family:"Anybody",sans-serif;font-weight:900;text-transform:uppercase;line-height:.82;white-space:nowrap;display:table;letter-spacing:-.01em}
+.meta{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:1rem 2rem;font-weight:500}
+.meta .l{display:flex;flex-wrap:wrap;gap:.3rem 2rem}
+.meta dt{font-size:.8rem;opacity:.65}
+.meta dd{font-weight:600;font-size:1.05rem}
+.btn{display:inline-block;border:2px solid currentColor;border-radius:999px;padding:.8rem 1.4rem;font-weight:600}
+.btn:hover{background:var(--ink);color:var(--bg)}
+.kicker{font-weight:600;font-size:.95rem}
+.num{font-family:"Anybody";font-weight:900;font-stretch:50%;font-size:1rem}
+.body{max-width:46ch;font-size:clamp(1.05rem,1.4vw,1.25rem);font-weight:500}
+.cols{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem 2rem}
+.cols p{font-size:.98rem}
+.list{display:grid;grid-template-columns:repeat(3,1fr);gap:0 2rem;border-top:2px solid currentColor}
+.list a{display:flex;justify-content:space-between;padding:.8rem 0;border-bottom:1px solid currentColor;font-weight:600}
+.list a:hover{padding-left:.4rem}
+.names{font-family:"Anybody";font-weight:900;text-transform:uppercase;font-stretch:60%;font-size:clamp(1.8rem,4.6vw,4.2rem);line-height:.95}
+.names span{opacity:.45;transition:opacity .2s,font-stretch .3s}
+.names span:hover{opacity:1;font-stretch:130%}
+.names .lm{opacity:1}
+.hint{font-size:.85rem;opacity:.7}
+
+@media (max-width:860px){
+  .top nav{display:none}
+  .cols,.list{grid-template-columns:1fr}
+  .cols p:nth-child(n+2){display:none}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.names span{transition:none}}
+</style>
+</head>
+<body>
+
+<header class="top" id="top">
+  <b>DKR</b>
+  <nav aria-label="Main"><a href="#r1">Releases</a><a href="#label">Label</a><a href="#artists">Artists</a><a href="#shop">Shop</a><a href="#demo">Demos</a></nav>
+</header>
+<nav class="dots" id="dots" aria-label="Screens"></nav>
+
+<main id="main">
+  <section class="s" id="home" style="--bg:#0D0D0D;--ink:#FFFFFF" aria-labelledby="h1" data-name="Home">
+    <span class="kicker">Multi-genre bass label, London</span>
+    <h1 id="h1"><span class="fit">Dirty</span><span class="fit">Kitchen</span><span class="fit">Rave</span></h1>
+    <div class="meta"><p class="body">Breaks, UK bass, garage, bassline, jungle and drum &amp; bass, one screen at a time.</p><span class="hint">Scroll ↓</span></div>
+  </section>
+
+  <section class="s" id="r1" style="--bg:#2B2BFF;--ink:#FFFFFF" data-name="Romero">
+    <span class="kicker">Latest drop, DKR0237</span>
+    <h2><span class="fit">Romero</span></h2>
+    <div class="meta"><dl class="l"><div><dt>Artist</dt><dd>Afghan Headspin</dd></div><div><dt>Genre</dt><dd>Breaks</dd></div><div><dt>Out</dt><dd>08.01.2026</dd></div></dl><a class="btn" href="https://www.beatport.com/release/romero/5726569">Listen on Beatport</a></div>
+  </section>
+
+  <section class="s" id="r2" style="--bg:#FF5B14;--ink:#0D0D0D" data-name="Ritual Pleasure">
+    <span class="kicker">New</span>
+    <h2><span class="fit">Ritual</span><span class="fit">Pleasure</span></h2>
+    <div class="meta"><dl class="l"><div><dt>Artist</dt><dd>The Push</dd></div><div><dt>Genre</dt><dd>Breaks / UK Bass</dd></div><div><dt>Tempo</dt><dd>139 BPM</dd></div></dl><a class="btn" href="https://www.beatport.com/label/dirty-kitchen-rave/112835">Listen</a></div>
+  </section>
+
+  <section class="s" id="r3" style="--bg:#FFB3DA;--ink:#0D0D0D" data-name="Blackout the Venue">
+    <span class="kicker">Latest</span>
+    <h2><span class="fit">Blackout</span><span class="fit">the Venue</span></h2>
+    <div class="meta"><dl class="l"><div><dt>Artist</dt><dd>Kid Ellipsis</dd></div><div><dt>Also on the release</dt><dd>Cold Caller</dd></div></dl><a class="btn" href="https://www.beatport.com/label/dirty-kitchen-rave/112835">Listen</a></div>
+  </section>
+
+  <section class="s" id="r4" style="--bg:#A6F0D2;--ink:#0D0D0D" data-name="Rave Jungle D&B">
+    <span class="kicker">Compilation, June 2025</span>
+    <h2><span class="fit">Rave</span><span class="fit">Jungle D&amp;B</span></h2>
+    <div class="meta"><dl class="l"><div><dt>Artists</dt><dd>Various</dd></div><div><dt>Genre</dt><dd>Jungle / Drum &amp; Bass</dd></div><div><dt>Volume</dt><dd>2</dd></div></dl><a class="btn" href="https://www.beatport.com/label/dirty-kitchen-rave/112835">Listen</a></div>
+  </section>
+
+  <section class="s" id="r5" style="--bg:#FFFFFF;--ink:#0D0D0D" data-name="We Are Breakbeat">
+    <span class="kicker">DKR093, November 2024</span>
+    <h2><span class="fit">We Are</span><span class="fit">Breakbeat</span></h2>
+    <div class="meta"><dl class="l"><div><dt>Artists</dt><dd>Afghan Headspin, Anuschka</dd></div><div><dt>Genre</dt><dd>Breakbeat</dd></div></dl><a class="btn" href="https://www.beatport.com/release/we-are-breakbeat/4772278">Listen</a></div>
+  </section>
+
+  <section class="s" id="label" style="--bg:#0D0D0D;--ink:#FFFFFF" data-name="Label">
+    <span class="kicker">The label</span>
+    <h2><span class="fit">For bassheads</span><span class="fit">and misfits</span></h2>
+    <div class="cols">
+      <p>DIRTY KITCHEN RAVE is a multi-genre bass label based in London. It releases whatever hits hardest on a dancefloor, across ten genres from disco to jungle.</p>
+      <p>Label manager Afghan Headspin runs a roster of UK and international producers, many from the Spanish breaks scene. More than 230 catalogue numbers so far.</p>
+      <p>Around the releases: a podcast, Twitch streams, a Discord community, merch and vinyl.</p>
+    </div>
+  </section>
+
+  <section class="s" id="artists" style="--bg:#FFE14A;--ink:#0D0D0D" data-name="Artists">
+    <span class="kicker">Artists</span>
+    <p class="names"><span class="lm">Afghan Headspin</span> <span>Gruv42</span> <span>DJ Brownie</span> <span>Kid Ellipsis</span> <span>PERCYBASS</span> <span>The Push</span> <span>HOLLO (UK)</span> <span>Phrenetic</span> <span>Danny Phr3ntic</span> <span>J-Break</span> <span>Prato</span> <span>GODINO</span> <span>AndrewFx</span> <span>Squat Party</span> <span>Evil Crew</span> <span>Skin Teeth</span> <span>Periko</span> <span>BLOW (SP)</span> <span>Anuschka</span> <span>Shodan</span></p>
+    <span class="hint">Label manager: Afghan Headspin</span>
+  </section>
+
+  <section class="s" id="shop" style="--bg:#2B2BFF;--ink:#FFFFFF" data-name="Shop">
+    <span class="kicker">Shop and listen</span>
+    <h2><span class="fit">Wear it</span></h2>
+    <div class="list">
+      <a href="https://afghan-headspin-shop.fourthwall.com/en-gbp/collections/all"><span>Official merch</span><span>Shop</span></a>
+      <a href="https://elasticstage.com/dirtykitchenrave/releases/tales-from-the-cowshed-singleep"><span>Vinyl: Tales From The Cowshed</span><span>Order</span></a>
+      <a href="https://deejayskin.com/?s=dirty+kitchen+rave&post_type=product&et_search=true"><span>EU store, Spain</span><span>Shop</span></a>
+      <a href="https://www.beatport.com/label/dirty-kitchen-rave/112835"><span>Beatport</span><span>Catalogue</span></a>
+      <a href="https://dirtykitchenrave.bandcamp.com/"><span>Bandcamp</span><span>Buy</span></a>
+      <a href="https://podcasts.apple.com/us/podcast/the-dirty-kitchen-rave-podcast/id1895541519"><span>Podcast</span><span>Listen</span></a>
+      <a href="https://discord.gg/vXFj3tQkme"><span>Discord</span><span>Join</span></a>
+      <a href="#"><span>Twitch</span><span>Watch</span></a>
+      <a href="#"><span>Spotify, 570+ tracks</span><span>Play</span></a>
+    </div>
+  </section>
+
+  <section class="s" id="demo" style="--bg:#FF5B14;--ink:#0D0D0D" data-name="Demos">
+    <span class="kicker">Demos are open</span>
+    <h2><a href="https://www.labelradar.com/labels/dirtykitchenrave/portal"><span class="fit">Send us</span><span class="fit">your track</span></a></h2>
+    <div class="meta"><p class="body">Every submission through LabelRadar gets a listen.</p><span class="hint">Dirty Kitchen Rave, London UK. Instagram, TikTok, YouTube, Facebook.</span></div>
+  </section>
+</main>
+
+<script>
+/* Fit each line exactly to the width by adjusting font size (and a touch of width axis for short words) */
+function fitAll(){
+  document.querySelectorAll('.fit').forEach(el=>{
+    const box=el.closest('.s').clientWidth-parseFloat(getComputedStyle(el.closest('.s')).paddingLeft)*2;
+    const len=el.textContent.length;
+    const w=len<=6?150:len<=9?110:75;
+    el.style.fontStretch=w+'%';
+    el.style.fontSize='100px';
+    const natural=el.scrollWidth;
+    let size=100*box/natural;
+    const maxH=(innerHeight*.62)/el.parentElement.querySelectorAll('.fit').length;
+    size=Math.min(size,maxH/.82);
+    el.style.fontSize=size+'px';
+  });
+}
+document.fonts.ready.then(fitAll);addEventListener('resize',fitAll);fitAll();
+
+/* Header colour + progress dots follow the current screen */
+const secs=[...document.querySelectorAll('.s')],dots=document.getElementById('dots'),hdr=document.getElementById('top');
+secs.forEach(s=>{const a=document.createElement('a');a.href='#'+s.id;a.setAttribute('aria-label',s.dataset.name);dots.appendChild(a)});
+const io=new IntersectionObserver(es=>es.forEach(e=>{
+  if(e.isIntersecting){
+    const ink=getComputedStyle(e.target).getPropertyValue('--ink');
+    hdr.style.setProperty('--ink',ink);dots.style.setProperty('--ink',ink);
+    dots.querySelectorAll('a').forEach((a,i)=>a.classList.toggle('on',secs[i]===e.target));
+  }
+}),{threshold:.55});
+secs.forEach(s=>io.observe(s));
+addEventListener('keydown',e=>{
+  if(!['ArrowDown','ArrowUp','PageDown','PageUp'].includes(e.key))return;
+  const i=secs.findIndex(s=>Math.abs(s.getBoundingClientRect().top)<innerHeight/2);
+  const n=secs[Math.max(0,Math.min(secs.length-1,i+(e.key==='ArrowDown'||e.key==='PageDown'?1:-1)))];
+  n.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});e.preventDefault();
+});
+</script>
+</body>
+</html>

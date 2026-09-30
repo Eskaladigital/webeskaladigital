@@ -20,7 +20,6 @@ a{color:inherit;text-decoration:none}
 h1,h2,h3{font-family:'Space Grotesk',sans-serif;font-weight:700;line-height:1.05}
 .ambient{position:fixed;inset:0;z-index:0;pointer-events:none;
   background:radial-gradient(55vw 55vw at 82% -8%,rgba(255,91,20,.14),transparent 60%),radial-gradient(50vw 50vw at 0% 105%,rgba(96,60,186,.22),transparent 60%)}
-
 .ribbon{position:fixed;top:0;left:0;right:0;z-index:40;display:flex;align-items:center;justify-content:center;gap:.7rem;
   padding:.44rem 1rem;font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;
   background:linear-gradient(90deg,var(--violet),var(--hot));color:#fff;font-weight:600}
@@ -38,17 +37,14 @@ h1,h2,h3{font-family:'Space Grotesk',sans-serif;font-weight:700;line-height:1.05
 .round{display:flex;align-items:baseline;gap:1rem;margin:0 0 1.4rem;flex-wrap:wrap}
 .round h2{font-size:1.5rem}
 .round p{color:var(--text);font-size:.95rem}
-.round + .grid{margin-bottom:4rem}
+.block{margin-bottom:4rem}
 
 .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem}
-.grid.two{grid-template-columns:repeat(2,1fr)}
-.grid.two .thumb{height:280px}
 .demo{position:relative;display:flex;flex-direction:column;background:var(--panel);border:1px solid var(--line);border-radius:22px;overflow:hidden;
   transition:transform .35s,border-color .35s,box-shadow .35s}
 .demo:hover{transform:translateY(-8px);border-color:rgba(255,91,20,.45);box-shadow:0 30px 70px rgba(0,0,0,.45)}
 .demo.new{border-color:rgba(255,91,20,.5);box-shadow:0 20px 50px rgba(255,91,20,.16)}
-.demo.dim{opacity:.55}
-.demo.dim:hover{opacity:1}
+.demo.dim{opacity:.5}.demo.dim:hover{opacity:1}
 .demo .thumb{height:190px;position:relative;overflow:hidden;background:#110c19}
 .demo .thumb iframe{position:absolute;top:0;left:0;width:1280px;height:960px;border:0;transform-origin:0 0;pointer-events:none;background:#15101f}
 .demo .thumb::after{content:'';position:absolute;inset:0;z-index:1;box-shadow:inset 0 -26px 30px -22px rgba(8,4,14,.55)}
@@ -61,16 +57,20 @@ h1,h2,h3{font-family:'Space Grotesk',sans-serif;font-weight:700;line-height:1.05
 .demo .body{padding:1.5rem 1.6rem 1.7rem;flex:1;display:flex;flex-direction:column}
 .demo h3{font-size:1.2rem;margin-bottom:.5rem}
 .demo p{color:var(--text);line-height:1.6;font-size:.9rem;flex:1;margin-bottom:1.2rem}
-.demo .mix{font-size:.78rem;color:var(--violet-lite);margin:-.6rem 0 1.1rem}
 .demo .open{display:inline-flex;align-items:center;gap:.5rem;font-family:'Space Grotesk';font-weight:600;font-size:.74rem;letter-spacing:.08em;
   text-transform:uppercase;color:var(--hot-lite);transition:gap .25s}
 .demo:hover .open{gap:.85rem}
 .demo .link-abs{position:absolute;inset:0;z-index:2}
 
-.footer{text-align:center;margin-top:4rem;color:var(--text);font-size:.85rem}
+/* featured base */
+.base{display:grid;grid-template-columns:1.3fr 1fr}
+.base .thumb{height:auto;min-height:320px}
+.base .body{justify-content:center;padding:2rem 2.2rem}
+.base h3{font-size:1.8rem}
 
-@media (max-width:980px){.grid{grid-template-columns:repeat(2,1fr)}}
-@media (max-width:640px){.grid,.grid.two{grid-template-columns:1fr}.grid.two .thumb{height:190px}.wrap{padding-top:6.5rem}}
+.footer{text-align:center;margin-top:4rem;color:var(--text);font-size:.85rem}
+@media (max-width:980px){.grid{grid-template-columns:repeat(2,1fr)}.base{grid-template-columns:1fr}.base .thumb{min-height:220px}}
+@media (max-width:640px){.grid{grid-template-columns:1fr}.wrap{padding-top:6.5rem}}
 </style>
 </head>
 <body>
@@ -80,61 +80,64 @@ h1,h2,h3{font-family:'Space Grotesk',sans-serif;font-weight:700;line-height:1.05
 <div class="wrap">
   <header class="head">
     <div class="brand"><span class="mk">DKR</span>Dirty Kitchen Rave</div>
-    <span class="kick">Round 2 · 7 homepage directions</span>
+    <span class="kick">Round 2</span>
     <h1>A website as <em>sharp</em> as the label</h1>
-    <p>From your favourites (Tickets, Grease and Drop) we cooked two new proposals that mix the best of each: the literal kitchen concept, the real-time grease shader and the streetwear attitude. The five from round one are below.</p>
+    <p>You picked Drop as the cleanest and the best. We took its attitude — one idea, type as image, the label treated as a brand — and built three new styles in that same family, each with its own personality.</p>
   </header>
 
-  <div class="round"><h2>Round 2</h2><p>New, built from your three favourites</p></div>
-  <div class="grid two">
+  <div class="round"><h2>The reference</h2><p>Your pick</p></div>
+  <article class="demo base block">
+    <a class="link-abs" href="/pruebas/dirtykitchenrave-5" target="_blank" rel="noopener" aria-label="Open proposal 5"></a>
+    <span class="star fav">★ Your pick</span>
+    <div class="thumb"><iframe src="/pruebas/dirtykitchenrave-5" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true" title="Preview of proposal 5"></iframe><span class="lbl">05</span></div>
+    <div class="body"><h3>Drop</h3><p>The label as a streetwear brand: releases as drops, a firm grid, a single variable typeface, concrete, black and orange.</p><span class="open">Open demo →</span></div>
+  </article>
+
+  <div class="round"><h2>Round 2</h2><p>Three new styles in the Drop line</p></div>
+  <div class="grid block">
     <article class="demo new">
       <a class="link-abs" href="/pruebas/dirtykitchenrave-6" target="_blank" rel="noopener" aria-label="Open proposal 6"></a>
       <span class="star">New</span>
-      <div class="thumb"><iframe src="/pruebas/dirtykitchenrave-6" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true" title="Preview of proposal 6"></iframe><span class="lbl">06</span><span class="tag">WebGL + Streetwear</span></div>
-      <div class="body"><h3>Night Service</h3><p class="mix">Tickets + Grease + Drop</p><p>The kitchen on a full service night. The hero is a WebGL griddle, brushed steel with pools of iridescent oil, and the cursor is the burner: it heats the surface wherever it passes. On top, the ticket rail with the releases, the special of the night with a spinning record, and type that stretches with the scroll.</p><span class="open">Open demo →</span></div>
+      <div class="thumb"><iframe src="/pruebas/dirtykitchenrave-6" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true" title="Preview of proposal 6"></iframe><span class="lbl">06</span><span class="tag">Editorial</span></div>
+      <div class="body"><h3>Index</h3><p>The label as a fashion-house archive. White, black and a single blue. The homepage is the release index: hover a row and its cover follows the cursor. Everything else stays quiet.</p><span class="open">Open demo →</span></div>
     </article>
 
     <article class="demo new">
       <a class="link-abs" href="/pruebas/dirtykitchenrave-7" target="_blank" rel="noopener" aria-label="Open proposal 7"></a>
       <span class="star">New</span>
-      <div class="thumb"><iframe src="/pruebas/dirtykitchenrave-7" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true" title="Preview of proposal 7"></iframe><span class="lbl">07</span><span class="tag">WebGL + Signage</span></div>
-      <div class="body"><h3>Staff Only</h3><p class="mix">Tickets + Grease + Drop</p><p>The back of the kitchen, in full light. Iridescent grease in WebGL runs inside the letters of the logo. The whole visual system comes from real kitchen signage: hazard signs, food-rotation labels for each release, staff badges for the artists and a Staff wanted for the demos.</p><span class="open">Open demo →</span></div>
+      <div class="thumb"><iframe src="/pruebas/dirtykitchenrave-7" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true" title="Preview of proposal 7"></iframe><span class="lbl">07</span><span class="tag">Sneaker drop</span></div>
+      <div class="body"><h3>Release Info</h3><p>Each release is presented like a trainer drop: a product sheet with a 3D sleeve you drag to spin, a style code, a colourway (the genre), a date and a format picker.</p><span class="open">Open demo →</span></div>
+    </article>
+
+    <article class="demo new">
+      <a class="link-abs" href="/pruebas/dirtykitchenrave-8" target="_blank" rel="noopener" aria-label="Open proposal 8"></a>
+      <span class="star">New</span>
+      <div class="thumb"><iframe src="/pruebas/dirtykitchenrave-8" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true" title="Preview of proposal 8"></iframe><span class="lbl">08</span><span class="tag">Poster</span></div>
+      <div class="body"><h3>Full Bleed</h3><p>One screen, one colour, one message, like a stack of rave posters. The site moves screen by screen and each release title runs edge to edge.</p><span class="open">Open demo →</span></div>
     </article>
   </div>
 
-  <div class="round"><h2>Round 1</h2><p>The five original directions</p></div>
+  <div class="round"><h2>Round 1</h2><p>The first directions</p></div>
   <div class="grid">
     <article class="demo">
       <a class="link-abs" href="/pruebas/dirtykitchenrave-1" target="_blank" rel="noopener" aria-label="Open proposal 1"></a>
-      <span class="star fav">★ Favourite</span>
       <div class="thumb"><iframe src="/pruebas/dirtykitchenrave-1" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true" title="Preview of proposal 1"></iframe><span class="lbl">01</span><span class="tag">Concept</span></div>
-      <div class="body"><h3>Tickets</h3><p>The label as a kitchen mid-rave: steel, tile and a heat lamp. Releases hung up like order tickets, and a genre menu priced in BPM.</p><span class="open">Open demo →</span></div>
+      <div class="body"><h3>Tickets</h3><p>The label as a kitchen mid-rave: releases as order tickets and a genre menu priced in BPM.</p><span class="open">Open demo →</span></div>
     </article>
-
     <article class="demo">
       <a class="link-abs" href="/pruebas/dirtykitchenrave-2" target="_blank" rel="noopener" aria-label="Open proposal 2"></a>
-      <span class="star fav">★ Favourite</span>
       <div class="thumb"><iframe src="/pruebas/dirtykitchenrave-2" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true" title="Preview of proposal 2"></iframe><span class="lbl">02</span><span class="tag">WebGL</span></div>
-      <div class="body"><h3>Grease</h3><p>A real-time shader paints an iridescent film of oil that reacts to the cursor and pulses at 134 BPM. Type and glass panels floating on top.</p><span class="open">Open demo →</span></div>
+      <div class="body"><h3>Grease</h3><p>A real-time film of iridescent oil that reacts to the cursor.</p><span class="open">Open demo →</span></div>
     </article>
-
-    <article class="demo">
-      <a class="link-abs" href="/pruebas/dirtykitchenrave-5" target="_blank" rel="noopener" aria-label="Open proposal 5"></a>
-      <span class="star fav">★ Favourite</span>
-      <div class="thumb"><iframe src="/pruebas/dirtykitchenrave-5" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true" title="Preview of proposal 5"></iframe><span class="lbl">05</span><span class="tag">Streetwear</span></div>
-      <div class="body"><h3>Drop</h3><p>The label as a streetwear brand: releases as drops, a record spinning in 3D, merch built in, and a headline that stretches with scroll speed.</p><span class="open">Open demo →</span></div>
-    </article>
-
     <article class="demo dim">
       <a class="link-abs" href="/pruebas/dirtykitchenrave-3" target="_blank" rel="noopener" aria-label="Open proposal 3"></a>
       <div class="thumb"><iframe src="/pruebas/dirtykitchenrave-3" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true" title="Preview of proposal 3"></iframe><span class="lbl">03</span><span class="tag">Interactive</span></div>
-      <div class="body"><h3>DKR/OS</h3><p>The website as an operating system: a terminal where you type or click commands.</p><span class="open">Open demo →</span></div>
+      <div class="body"><h3>DKR/OS</h3><p>The website as a command terminal.</p><span class="open">Open demo →</span></div>
     </article>
-
     <article class="demo dim">
       <a class="link-abs" href="/pruebas/dirtykitchenrave-4" target="_blank" rel="noopener" aria-label="Open proposal 4"></a>
       <div class="thumb"><iframe src="/pruebas/dirtykitchenrave-4" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true" title="Preview of proposal 4"></iframe><span class="lbl">04</span><span class="tag">Data</span></div>
-      <div class="body"><h3>Tempo Map</h3><p>An interactive tempo map with a metronome. Clean and data-led.</p><span class="open">Open demo →</span></div>
+      <div class="body"><h3>Tempo Map</h3><p>An interactive tempo map with a metronome.</p><span class="open">Open demo →</span></div>
     </article>
   </div>
 
