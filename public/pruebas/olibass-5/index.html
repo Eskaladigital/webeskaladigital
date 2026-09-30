@@ -86,18 +86,21 @@
   .historia p{color:#C3C7CF;font-size:.99rem}
   .historia .nombre{margin-top:3rem;font-family:"Chakra Petch";font-size:clamp(1.4rem,3vw,2.2rem);font-weight:600;line-height:1.2;max-width:40ch}
 
-  /* EDICIONES: bancos de patrones */
-  .bancos .intro{max-width:60ch;margin-bottom:2rem}
-  .pads{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
-  .pad{border:0;border-radius:1rem;padding:1.2rem;text-align:left;font:inherit;cursor:pointer;background:#E6E8EB;color:var(--panel);min-height:150px;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 5px 0 #A9ADB4;transition:transform .08s,box-shadow .08s}
+  /* EDICIONES: bancos de patrones, dentro de la máquina */
+  .bancos{margin-top:2rem;padding-top:1.75rem;border-top:1px solid rgba(255,255,255,.1);scroll-margin-top:1rem}
+  .bancos-head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:.5rem 2rem;margin-bottom:1.25rem}
+  .bancos h2{font-size:clamp(1.4rem,2.6vw,2rem);margin:0}
+  .bancos .intro{max-width:60ch;color:#A6ABB5;font-size:.95rem}
+  .pads{display:grid;grid-template-columns:repeat(8,1fr);gap:.75rem}
+  .pad{border:0;border-radius:1rem;padding:1rem;text-align:left;font:inherit;cursor:pointer;background:#E6E8EB;color:var(--panel);min-height:112px;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 5px 0 #A9ADB4;transition:transform .08s,box-shadow .08s}
   .pad:active{transform:translateY(4px);box-shadow:0 1px 0 #A9ADB4}
   .pad .id{font-family:"Chakra Petch";font-weight:700;font-size:.9rem;opacity:.7}
-  .pad b{font-family:"Chakra Petch";font-size:1.35rem;line-height:1.1;display:block}
-  .pad small{font-size:.9rem}
+  .pad b{font-family:"Chakra Petch";font-size:1.05rem;line-height:1.1;display:block}
+  .pad small{font-size:.8rem}
   .pad[aria-pressed="true"]{background:var(--c);box-shadow:0 5px 0 rgba(0,0,0,.35)}
   .pad.vacio{background:transparent;border:2px dashed #8E939B;box-shadow:none;cursor:default}
-  .pantalla{margin-top:1.5rem;background:var(--lcd);color:var(--lcd-t);border-radius:1rem;padding:1.5rem 1.75rem;box-shadow:inset 0 0 0 4px var(--panel)}
-  .pantalla h3{font-size:1.6rem;line-height:1.1}
+  .pantalla{margin-top:1.25rem;background:var(--lcd);color:var(--lcd-t);border-radius:.75rem;padding:1.1rem 1.4rem;box-shadow:inset 0 0 0 3px #1a1c20,inset 0 6px 14px rgba(0,0,0,.25)}
+  .pantalla h3{font-size:1.35rem;line-height:1.1}
   .pantalla .meta{font-family:"Chakra Petch";font-weight:600;margin:.3rem 0 .6rem}
   .pantalla p{max-width:70ch}
 
@@ -108,17 +111,18 @@
   footer{background:var(--panel);color:#C3C7CF;padding:2.5rem clamp(1.25rem,4vw,3rem) calc(2.5rem + env(safe-area-inset-bottom,0px));display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem;font-size:.9rem}
   footer nav{display:flex;gap:1.5rem}
 
+  @media (max-width:1180px){.pads{grid-template-columns:repeat(4,1fr)}}
   @media (max-width:900px){
     .top nav{display:none}
     .maq-top,.manual .cols{grid-template-columns:1fr}
     .lcd{min-width:0}
     .historia .cols{grid-template-columns:1fr}
-    .pads{grid-template-columns:1fr 1fr}
     .info .grid2{grid-template-columns:1fr}
     .grid,.contador{grid-template-columns:3.2rem repeat(16,1fr);gap:3px}
     .grid .nombre{font-size:.65rem}
     .paso{border-radius:3px}
   }
+  @media (max-width:600px){.pads{grid-template-columns:1fr 1fr;gap:.5rem}.pad{min-height:88px;padding:.8rem}}
   @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.pad{transition:none}}
 </style>
 </head>
@@ -144,6 +148,19 @@
   </div>
   <div class="grid" id="seq"></div>
   <div class="contador" id="cont" aria-hidden="true"></div>
+
+  <div class="bancos" id="ediciones">
+    <div class="bancos-head">
+      <h2>Banco de patrones</h2>
+      <p class="intro">Cada edición es un patrón. Púlsalo y mira cómo cambia el secuenciador; si está sonando, cambia también el break.</p>
+    </div>
+    <div class="pads" id="pads"></div>
+    <div class="pantalla" aria-live="polite">
+      <h3 id="pTit">Selecciona un patrón</h3>
+      <div class="meta" id="pMeta">A1 a A7</div>
+      <p id="pTxt">Siete ediciones desde septiembre de 2023.</p>
+    </div>
+  </div>
 </div>
 
 <main>
@@ -179,19 +196,6 @@
         <div style="--c:var(--pad-n)"><h3>El cambio de casa</h3><p>En 2026 el festival se trasladó a Torredonjimeno. Tras una edición bajo carpa en febrero, llegó el primer Open Air, aplazado del 15 de agosto al 19 de septiembre por un reventón térmico que dañó el recinto.</p></div>
       </div>
       <p class="nombre">¿Por qué Olibass? Porque es breakbeat hecho entre olivos: oliva + bass.</p>
-    </div>
-  </section>
-
-  <section class="bancos" id="ediciones">
-    <div class="wrap">
-      <h2>Banco de patrones</h2>
-      <p class="intro">Cada edición del festival está guardada en un pad. Púlsalo para cargar sus datos en pantalla; si la máquina está sonando, cambia también el patrón.</p>
-      <div class="pads" id="pads"></div>
-      <div class="pantalla" aria-live="polite">
-        <h3 id="pTit">Selecciona un patrón</h3>
-        <div class="meta" id="pMeta">A1 a A7</div>
-        <p id="pTxt">Siete ediciones desde septiembre de 2023.</p>
-      </div>
     </div>
   </section>
 
