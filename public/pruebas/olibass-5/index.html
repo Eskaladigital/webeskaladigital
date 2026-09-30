@@ -87,10 +87,15 @@
   .historia .nombre{margin-top:3rem;font-family:"Chakra Petch";font-size:clamp(1.4rem,3vw,2.2rem);font-weight:600;line-height:1.2;max-width:40ch}
 
   /* EDICIONES: bancos de patrones, dentro de la máquina */
-  .bancos{margin-top:2rem;padding-top:1.75rem;border-top:1px solid rgba(255,255,255,.1);scroll-margin-top:1rem}
-  .bancos-head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:.5rem 2rem;margin-bottom:1.25rem}
-  .bancos h2{font-size:clamp(1.4rem,2.6vw,2rem);margin:0}
-  .bancos .intro{max-width:60ch;color:#A6ABB5;font-size:.95rem}
+  .bancos{margin-top:1.75rem;border-top:1px solid rgba(255,255,255,.1);scroll-margin-top:1rem}
+  .bancos summary{list-style:none;cursor:pointer;display:flex;align-items:center;flex-wrap:wrap;gap:.35rem 1rem;padding:1.1rem 0 .2rem;user-select:none}
+  .bancos summary::-webkit-details-marker{display:none}
+  .bancos-tit{font-family:"Chakra Petch";font-weight:700;font-size:clamp(1.15rem,2vw,1.45rem)}
+  .bancos-sub{color:#A6ABB5;font-size:.9rem}
+  .bancos-caret{margin-left:auto;width:2.2rem;height:2.2rem;border-radius:50%;display:grid;place-items:center;background:#3A3E46;color:#fff;transition:transform .2s,background .2s}
+  .bancos summary:hover .bancos-caret{background:var(--pad-n);color:var(--panel)}
+  .bancos[open] .bancos-caret{transform:rotate(180deg)}
+  .bancos .intro{max-width:60ch;color:#A6ABB5;font-size:.95rem;margin:.6rem 0 1.25rem}
   .pads{display:grid;grid-template-columns:repeat(8,1fr);gap:.75rem}
   .pad{border:0;border-radius:1rem;padding:1rem;text-align:left;font:inherit;cursor:pointer;background:#E6E8EB;color:var(--panel);min-height:112px;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 5px 0 #A9ADB4;transition:transform .08s,box-shadow .08s}
   .pad:active{transform:translateY(4px);box-shadow:0 1px 0 #A9ADB4}
@@ -149,18 +154,20 @@
   <div class="grid" id="seq"></div>
   <div class="contador" id="cont" aria-hidden="true"></div>
 
-  <div class="bancos" id="ediciones">
-    <div class="bancos-head">
-      <h2>Banco de patrones</h2>
-      <p class="intro">Cada edición es un patrón. Púlsalo y mira cómo cambia el secuenciador; si está sonando, cambia también el break.</p>
-    </div>
+  <details class="bancos" id="ediciones">
+    <summary>
+      <span class="bancos-tit">Banco de patrones</span>
+      <span class="bancos-sub">7 ediciones · carga su break en el secuenciador</span>
+      <span class="bancos-caret" aria-hidden="true">▾</span>
+    </summary>
+    <p class="intro">Cada edición es un patrón. Púlsalo y mira cómo cambia el secuenciador; si está sonando, cambia también el break.</p>
     <div class="pads" id="pads"></div>
     <div class="pantalla" aria-live="polite">
       <h3 id="pTit">Selecciona un patrón</h3>
       <div class="meta" id="pMeta">A1 a A7</div>
       <p id="pTxt">Siete ediciones desde septiembre de 2023.</p>
     </div>
-  </div>
+  </details>
 </div>
 
 <main>
@@ -311,6 +318,10 @@ ediciones.forEach(e=>{
   });
   pads.appendChild(b);
 });
+const banco=document.getElementById('ediciones');
+function abrirBanco(){if(location.hash==='#ediciones')banco.open=true}
+addEventListener('hashchange',abrirBanco);abrirBanco();
+document.querySelectorAll('a[href="#ediciones"]').forEach(a=>a.addEventListener('click',()=>{banco.open=true}));
 const v=document.createElement('div');v.className='pad vacio';v.innerHTML='<span class="id">A8</span><span><b>Invierno 2027</b><small>Patrón vacío. Muy pronto.</small></span>';pads.appendChild(v);
 </script>
 </body>
