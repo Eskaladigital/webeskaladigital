@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Dirty Kitchen Rave — Staff Only proposal · ESKALA</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Staff Only proposal for Dirty Kitchen Rave (round 2). Demo by ESKALA Marketing.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400;62..125,600;62..125,800;62..125,900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* 07 — STAFF ONLY
+   Round 2, built from the three favourites:
+   · from Comandas: the real kitchen, tiled walls, and its own vernacular. Here it's the back-of-house
+     paperwork: health & safety signs, food rotation "day dot" labels, staff name badges, a "staff wanted" notice.
+   · from Grease: the live WebGL oil film, now poured inside the giant letters of the logo.
+   · from Drop: streetwear energy, variable type from condensed to wide, a hazard-tape marquee driven by scroll speed. */
+:root{--azulejo:#F3F5F6;--junta:#DDE2E5;--tinta:#111214;--peligro:#FFD100;--calor:#FF5B14;--prohibido:#E3001B;--obligacion:#005BBB;--salida:#00A04A;--gris:#5E636B}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:"Archivo",system-ui,sans-serif;background:var(--azulejo);color:var(--tinta);line-height:1.5;font-size:1.0625rem;overflow-x:hidden}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--calor);outline-offset:3px}
+.mono{font-family:"Space Mono",monospace}
+.tiles{background-color:var(--azulejo);background-image:linear-gradient(var(--junta) 2px,transparent 2px),linear-gradient(90deg,var(--junta) 2px,transparent 2px);background-size:72px 72px}
+
+.nav{position:sticky;top:0;z-index:30;display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:calc(.7rem + env(safe-area-inset-top,0px)) clamp(1rem,3vw,2.5rem) .7rem;background:var(--tinta);color:#fff}
+.nav .logo{font-weight:900;font-stretch:125%;font-size:1.25rem;text-decoration:none;display:flex;align-items:center;gap:.6rem}
+.nav .logo i{display:inline-block;width:22px;height:22px;background:var(--peligro);clip-path:polygon(50% 0,100% 100%,0 100%)}
+.nav nav{display:flex;gap:1.3rem;font-weight:600;font-size:.92rem}
+.nav nav a{text-decoration:none}
+.nav nav a:hover{color:var(--peligro)}
+.nav .door{font-family:"Space Mono";font-size:.75rem;font-weight:700;background:var(--prohibido);padding:.3rem .6rem;text-decoration:none}
+
+/* HERO: grease poured into the letters */
+.hero{position:relative;overflow:hidden;border-bottom:3px solid var(--tinta)}
+#grasa{position:absolute;inset:0;width:100%;height:100%;display:block}
+.knock{position:relative;z-index:1;background:#fff;mix-blend-mode:screen;padding:clamp(2rem,5vw,3.5rem) clamp(1rem,3vw,2.5rem) clamp(1.5rem,3vw,2.5rem)}
+.knock h1{color:#000;font-weight:900;text-transform:uppercase;line-height:.8;letter-spacing:-.02em;font-size:clamp(4rem,15vw,15rem)}
+.knock h1 span{display:block;font-stretch:var(--w,100%)}
+.knock h1 .a{--w:62%}.knock h1 .b{--w:125%}.knock h1 .c{--w:62%;text-align:right}
+.hero-bar{position:relative;z-index:2;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:1rem;padding:1rem clamp(1rem,3vw,2.5rem);background:var(--tinta);color:#fff}
+.hero-bar p{max-width:52ch;font-weight:500}
+.btn{display:inline-block;background:var(--peligro);color:var(--tinta);font-weight:900;font-stretch:125%;text-transform:uppercase;padding:.9rem 1.25rem;text-decoration:none;border:2px solid var(--tinta)}
+.btn:hover{background:var(--calor)}
+.btn.dark{background:var(--tinta);color:var(--peligro);border-color:var(--tinta)}
+.btn.dark:hover{background:var(--calor);color:var(--tinta)}
+
+/* Safety signs floating over the hero */
+.sign{position:absolute;z-index:3;width:clamp(110px,12vw,170px);filter:drop-shadow(0 6px 10px rgba(0,0,0,.25));transition:transform .3s}
+.sign:hover{transform:rotate(0) scale(1.06)!important}
+.s1{right:4%;top:8%;transform:rotate(8deg)}
+.s2{right:20%;top:44%;transform:rotate(-6deg)}
+.s3{left:46%;top:6%;transform:rotate(-10deg)}
+
+/* HAZARD MARQUEE */
+.hazard{overflow:hidden;background:repeating-linear-gradient(-45deg,var(--peligro) 0 28px,var(--tinta) 28px 56px);padding:.55rem 0;border-bottom:3px solid var(--tinta)}
+.hazard .track{display:flex;width:max-content;will-change:transform}
+.hazard span{background:var(--peligro);font-weight:900;text-transform:uppercase;font-size:clamp(1.6rem,4vw,3rem);line-height:1;padding:.2rem 1.4rem;margin-right:1.2rem;white-space:nowrap;font-stretch:var(--w,100%)}
+
+section{padding:clamp(4rem,8vw,7rem) clamp(1rem,3vw,2.5rem)}
+.wrap{max-width:1280px;margin:0 auto}
+h2{font-weight:900;text-transform:uppercase;font-stretch:125%;font-size:clamp(2.2rem,6vw,5rem);line-height:.9;letter-spacing:-.03em;margin-bottom:2rem}
+.label{display:inline-block;font-family:"Space Mono";font-weight:700;font-size:.78rem;background:var(--tinta);color:#fff;padding:.25rem .55rem;margin-bottom:1rem}
+
+/* HOUSE RULES (about) */
+.rules .grid{display:grid;grid-template-columns:1fr 1.1fr;gap:clamp(2rem,5vw,4rem);align-items:start}
+.board{background:#fff;border:3px solid var(--tinta);box-shadow:10px 10px 0 var(--tinta)}
+.board header{background:var(--obligacion);color:#fff;padding:1rem 1.4rem;font-weight:900;font-stretch:125%;text-transform:uppercase;font-size:1.3rem;display:flex;justify-content:space-between;align-items:center}
+.board ol{list-style:none;counter-reset:r}
+.board li{counter-increment:r;display:grid;grid-template-columns:3rem 1fr;gap:1rem;padding:1rem 1.4rem;border-top:2px solid var(--tinta);font-weight:600}
+.board li::before{content:counter(r);font-weight:900;font-stretch:62%;font-size:2.4rem;line-height:.9;color:var(--obligacion)}
+.board li small{display:block;font-weight:400;color:var(--gris)}
+.rules p{max-width:54ch;margin-bottom:1rem}
+.rules .lede{font-weight:800;font-stretch:62%;text-transform:uppercase;font-size:clamp(2.6rem,6vw,5rem);line-height:.88;margin-bottom:1.5rem}
+
+/* DAY-DOT LABELS (releases) */
+.prep{background:var(--tinta);color:#fff}
+.prep .intro{max-width:56ch;color:#C9CDD2;margin:-1rem 0 2.5rem}
+.labels{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:1.6rem}
+.dot{position:relative;background:#fff;color:var(--tinta);text-decoration:none;border-radius:6px;overflow:hidden;box-shadow:0 8px 18px rgba(0,0,0,.35);transform:rotate(var(--r,0deg));transition:transform .25s}
+.dot:hover{transform:rotate(0) translateY(-6px) scale(1.02)}
+.dot .day{background:var(--c);padding:.55rem .9rem;display:flex;justify-content:space-between;align-items:center;font-weight:900;font-stretch:125%;text-transform:uppercase;font-size:.95rem}
+.dot .day em{font-style:normal;font-family:"Space Mono";font-size:.72rem}
+.dot .body{padding:.9rem;font-family:"Space Mono";font-size:.78rem;line-height:1.55}
+.dot .row{display:flex;gap:.5rem;border-bottom:1px solid #ddd;padding:.22rem 0}
+.dot .row span:first-child{width:5.5rem;flex:0 0 auto;color:var(--gris)}
+.dot .item{font-family:"Archivo";font-weight:900;font-stretch:62%;text-transform:uppercase;font-size:2.1rem;line-height:.88;margin:.2rem 0 .6rem}
+.dot::after{content:"";position:absolute;right:0;bottom:0;width:28px;height:28px;background:linear-gradient(135deg,transparent 50%,#d7d9dc 50%);transition:width .25s,height .25s}
+.dot:hover::after{width:44px;height:44px}
+.prep .more{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:2.5rem}
+
+/* STAFF BADGES */
+.badges{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:1rem}
+.badge{background:#fff;border:2px solid var(--tinta);border-radius:10px;overflow:hidden;transition:transform .2s}
+.badge:hover{transform:rotate(-2deg)}
+.badge header{background:var(--tinta);color:var(--peligro);font-family:"Space Mono";font-size:.68rem;font-weight:700;padding:.35rem .7rem;display:flex;justify-content:space-between}
+.badge div{padding:.9rem .7rem 1rem;font-weight:900;font-stretch:62%;text-transform:uppercase;font-size:1.7rem;line-height:.9}
+.badge.chef{grid-column:span 2;border-width:3px}
+.badge.chef header{background:var(--calor);color:var(--tinta)}
+.badge.chef div{font-stretch:125%;font-size:clamp(1.8rem,3.4vw,2.8rem)}
+
+/* UNIFORM */
+.uniform{background:var(--peligro)}
+.ugrid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem}
+.u{background:#fff;border:3px solid var(--tinta);text-decoration:none;display:flex;flex-direction:column}
+.u .img{aspect-ratio:1;display:grid;place-items:center;border-bottom:3px solid var(--tinta);background:var(--azulejo)}
+.u:hover .img{background:var(--calor)}
+.u .img svg{width:60%}
+.u .txt{padding:1rem 1.2rem 1.3rem}
+.u h3{font-weight:900;font-stretch:125%;text-transform:uppercase;font-size:1.15rem}
+.u p{font-size:.95rem}
+
+/* CHANNELS */
+.chan{display:grid;grid-template-columns:repeat(6,1fr);gap:1rem}
+.chan a{display:flex;flex-direction:column;align-items:center;gap:.6rem;text-decoration:none;text-align:center;font-weight:900;font-stretch:125%;text-transform:uppercase;font-size:.9rem}
+.chan a i{width:84px;height:84px;border-radius:50%;background:var(--obligacion);display:grid;place-items:center;color:#fff;font-style:normal;font-size:1.8rem;border:4px solid #fff;box-shadow:0 0 0 3px var(--obligacion);transition:background .2s,box-shadow .2s}
+.chan a:hover i{background:var(--calor);box-shadow:0 0 0 3px var(--calor)}
+.chan small{font-family:"Space Mono";font-weight:400;font-stretch:100%;text-transform:none;font-size:.72rem;color:var(--gris)}
+
+/* STAFF WANTED */
+.wanted{display:grid;place-items:center}
+.notice{background:#fff;width:min(640px,100%);padding:clamp(2rem,5vw,3.5rem);text-align:center;box-shadow:0 18px 40px rgba(0,0,0,.18);transform:rotate(-1.5deg);position:relative}
+.notice::before,.notice::after{content:"";position:absolute;top:-14px;width:110px;height:30px;background:rgba(255,209,0,.75)}
+.notice::before{left:12%;transform:rotate(-6deg)}.notice::after{right:12%;transform:rotate(5deg)}
+.notice h2{font-stretch:62%;font-size:clamp(3.6rem,10vw,7rem);margin-bottom:.6rem}
+.notice .sub{font-weight:900;font-stretch:125%;text-transform:uppercase;font-size:1.1rem;margin-bottom:1rem;color:var(--prohibido)}
+.notice p{max-width:40ch;margin:0 auto 1.8rem}
+
+footer{background:var(--tinta);color:#C9CDD2;padding:1.6rem clamp(1rem,3vw,2.5rem) calc(1.6rem + env(safe-area-inset-bottom,0px));display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem;font-family:"Space Mono";font-size:.8rem}
+footer nav{display:flex;flex-wrap:wrap;gap:1.2rem}
+footer a{text-decoration:none}
+footer a:hover{color:var(--peligro)}
+footer .exit{background:var(--salida);color:#fff;padding:.25rem .6rem;font-weight:700}
+
+@media (max-width:960px){
+  .nav nav{display:none}
+  .rules .grid{grid-template-columns:1fr}
+  .ugrid{grid-template-columns:1fr}
+  .chan{grid-template-columns:repeat(3,1fr)}
+  .badge.chef{grid-column:auto}
+  .s2,.s3{display:none}
+  .s1{top:auto;bottom:6.5rem;right:3%}
+}
+@media (prefers-reduced-motion:reduce){.dot,.badge,.sign{transition:none}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <a class="logo" href="#"><i aria-hidden="true"></i>DKR</a>
+  <nav aria-label="Main"><a href="#rules">House rules</a><a href="#prep">Drops</a><a href="#staff">Staff</a><a href="#uniform">Uniform</a><a href="#channels">Listen</a></nav>
+  <a class="door" href="#wanted">Staff wanted</a>
+</header>
+
+<section class="hero" aria-labelledby="h1" style="padding:0">
+  <canvas id="grasa" aria-hidden="true"></canvas>
+  <div class="knock tiles" style="background-color:#fff">
+    <h1 id="h1"><span class="a">Dirty</span><span class="b">Kitchen</span><span class="c">Rave</span></h1>
+  </div>
+
+  <svg class="sign s1" viewBox="0 0 120 108" role="img" aria-label="Warning sign: hot bass">
+    <path d="M60 4 L116 102 L4 102Z" fill="#FFD100" stroke="#111214" stroke-width="7" stroke-linejoin="round"/>
+    <text x="60" y="62" text-anchor="middle" font-family="Archivo" font-weight="900" font-size="34" fill="#111214">!</text>
+    <text x="60" y="88" text-anchor="middle" font-family="Archivo" font-weight="900" font-size="12" fill="#111214">HOT BASS</text>
+  </svg>
+  <svg class="sign s2" viewBox="0 0 120 120" role="img" aria-label="Prohibition sign: no genre rules">
+    <circle cx="60" cy="60" r="54" fill="#fff" stroke="#E3001B" stroke-width="11"/>
+    <text x="60" y="56" text-anchor="middle" font-family="Archivo" font-weight="900" font-size="15" fill="#111214">GENRE</text>
+    <text x="60" y="73" text-anchor="middle" font-family="Archivo" font-weight="900" font-size="15" fill="#111214">RULES</text>
+    <line x1="22" y1="22" x2="98" y2="98" stroke="#E3001B" stroke-width="11"/>
+  </svg>
+  <svg class="sign s3" viewBox="0 0 120 120" role="img" aria-label="Mandatory sign: dance">
+    <circle cx="60" cy="60" r="56" fill="#005BBB"/>
+    <circle cx="60" cy="34" r="9" fill="#fff"/>
+    <path d="M60 45 L60 72 M60 52 L40 42 M60 52 L82 62 M60 72 L44 94 M60 72 L78 92" stroke="#fff" stroke-width="7" stroke-linecap="round" fill="none"/>
+    <text x="60" y="112" text-anchor="middle" font-family="Archivo" font-weight="900" font-size="10" fill="#fff">DANCE</text>
+  </svg>
+
+  <div class="hero-bar">
+    <p>Multi-genre bass label, London. Breaks, UK bass, garage, bassline, jungle and drum &amp; bass. Kitchen staff only beyond this point.</p>
+    <div style="display:flex;gap:.6rem;flex-wrap:wrap">
+      <a class="btn" href="https://www.beatport.com/label/dirty-kitchen-rave/112835">Listen now</a>
+      <a class="btn" style="background:#fff" href="#prep">Today's drops</a>
+    </div>
+  </div>
+</section>
+
+<div class="hazard" aria-hidden="true"><div class="track" id="track">
+  <span>Caution: hot bass</span><span>Breaks</span><span>UK Bass</span><span>UKG</span><span>Bassline</span><span>Jungle</span><span>DnB</span><span>Rave</span><span>Dubstep</span><span>Disco</span>
+  <span>Caution: hot bass</span><span>Breaks</span><span>UK Bass</span><span>UKG</span><span>Bassline</span><span>Jungle</span><span>DnB</span><span>Rave</span><span>Dubstep</span><span>Disco</span>
+</div></div>
+
+<section class="rules tiles" id="rules">
+  <div class="wrap grid">
+    <div>
+      <span class="label">About the label</span>
+      <p class="lede">A full-throttle kitchen for bassheads and late-night misfits.</p>
+      <p>DIRTY KITCHEN RAVE is a multi-genre bass label based in London. It releases whatever hits hardest on a dancefloor, from 134 BPM breaks to half-time garage and full-speed jungle, and refuses to pick just one lane.</p>
+      <p>Label manager Afghan Headspin runs a crew of UK and international producers, many from the Spanish breaks scene. More than 230 catalogue numbers in, the kitchen also runs a podcast, Twitch streams, a Discord, merch and vinyl.</p>
+    </div>
+    <div class="board">
+      <header>House rules <span class="mono" style="font-size:.75rem">Posted by management</span></header>
+      <ol>
+        <li><span>Bass comes first.<small>If it doesn't move a dancefloor, it doesn't leave the kitchen.</small></span></li>
+        <li><span>No genre is off the menu.<small>Breaks, UK bass, UKG, bassline, rave, jungle, DnB, breakbeat, dubstep and disco.</small></span></li>
+        <li><span>Every demo gets tasted.<small>Submissions through LabelRadar go straight to the pass.</small></span></li>
+        <li><span>The door stays open.<small>Podcast, Twitch streams and a free Discord for the whole crew.</small></span></li>
+        <li><span>Wear the uniform.<small>Official merch, EU store and vinyl.</small></span></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section class="prep" id="prep">
+  <div class="wrap">
+    <span class="label" style="background:var(--peligro);color:var(--tinta)">Food rotation</span>
+    <h2>Today's prep</h2>
+    <p class="intro">Every release labelled like it's going in the walk-in fridge. Colour tells you the genre.</p>
+    <div class="labels" id="labels"></div>
+    <div class="more">
+      <a class="btn" href="https://www.beatport.com/label/dirty-kitchen-rave/112835">Full catalogue</a>
+      <a class="btn" style="background:#fff" href="https://dirtykitchenrave.bandcamp.com/">Bandcamp</a>
+      <a class="btn" style="background:#fff" href="https://www.junodownload.com/labels/Dirty+Kitchen+Rave/">Juno</a>
+    </div>
+  </div>
+</section>
+
+<section id="staff" class="tiles">
+  <div class="wrap">
+    <span class="label">Staff</span>
+    <h2>The brigade</h2>
+    <div class="badges" id="badges"></div>
+  </div>
+</section>
+
+<section class="uniform" id="uniform">
+  <div class="wrap">
+    <span class="label">Mandatory</span>
+    <h2>Uniform must be worn</h2>
+    <div class="ugrid">
+      <a class="u" href="https://afghan-headspin-shop.fourthwall.com/en-gbp/collections/all">
+        <div class="img"><svg viewBox="0 0 200 200" aria-hidden="true"><path d="M60 20 L85 30 Q100 42 115 30 L140 20 L185 50 L165 85 L145 75 L145 185 L55 185 L55 75 L35 85 L15 50Z" fill="#111214"/><path d="M100 95 L118 128 L82 128Z" fill="#FFD100"/><text x="100" y="160" text-anchor="middle" font-family="Archivo" font-weight="900" font-size="20" fill="#FFD100">DKR</text></svg></div>
+        <div class="txt"><h3>Official merch</h3><p>Tees and gear from the DKR shop.</p></div>
+      </a>
+      <a class="u" href="https://elasticstage.com/dirtykitchenrave/releases/tales-from-the-cowshed-singleep">
+        <div class="img"><svg viewBox="0 0 200 200" aria-hidden="true"><rect x="20" y="20" width="130" height="160" fill="#111214"/><circle cx="130" cy="100" r="62" fill="#2a2b30"/><circle cx="130" cy="100" r="18" fill="#FFD100"/><circle cx="130" cy="100" r="3" fill="#fff"/></svg></div>
+        <div class="txt"><h3>Vinyl</h3><p>Afghan Headspin, Tales From The Cowshed, on wax.</p></div>
+      </a>
+      <a class="u" href="https://deejayskin.com/?s=dirty+kitchen+rave&post_type=product&et_search=true">
+        <div class="img"><svg viewBox="0 0 200 200" aria-hidden="true"><path d="M60 40 h80 l10 20 v120 h-100 v-120z" fill="#111214"/><rect x="72" y="90" width="56" height="34" fill="#FFD100"/><text x="100" y="113" text-anchor="middle" font-family="Archivo" font-weight="900" font-size="18" fill="#111214">DKR</text></svg></div>
+        <div class="txt"><h3>EU store</h3><p>DKR merch for Europe via Deejayskin, from Spain. Also on Amazon US and UK.</p></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section id="channels">
+  <div class="wrap">
+    <span class="label">Front of house</span>
+    <h2>Listen, watch, join</h2>
+    <div class="chan">
+      <a href="https://www.beatport.com/label/dirty-kitchen-rave/112835"><i aria-hidden="true">▶</i>Beatport<small>Full catalogue</small></a>
+      <a href="https://dirtykitchenrave.bandcamp.com/"><i aria-hidden="true">◆</i>Bandcamp<small>Buy direct</small></a>
+      <a href="https://podcasts.apple.com/us/podcast/the-dirty-kitchen-rave-podcast/id1895541519"><i aria-hidden="true">◉</i>Podcast<small>Apple Podcasts</small></a>
+      <a href="#"><i aria-hidden="true">●</i>Twitch<small>Live streams</small></a>
+      <a href="#"><i aria-hidden="true">≋</i>Spotify<small>570+ tracks</small></a>
+      <a href="https://discord.gg/vXFj3tQkme"><i aria-hidden="true">✚</i>Discord<small>Free to join</small></a>
+    </div>
+  </div>
+</section>
+
+<section class="wanted tiles" id="wanted">
+  <div class="notice">
+    <p class="sub">Now hiring</p>
+    <h2>Staff wanted</h2>
+    <p>Producers of breaks, UK bass, garage, jungle and everything heavy. No experience in our kitchen required. Apply with your demo through LabelRadar.</p>
+    <a class="btn dark" href="https://www.labelradar.com/labels/dirtykitchenrave/portal">Apply with a demo</a>
+  </div>
+</section>
+
+<footer>
+  <span>DIRTY KITCHEN RAVE, London UK</span>
+  <nav aria-label="Social"><a href="#">Instagram</a><a href="#">TikTok</a><a href="#">YouTube</a><a href="https://www.facebook.com/dirtykitchenrave/">Facebook</a><a href="#">SoundCloud</a></nav>
+  <a class="exit" href="#">↑ Exit to dancefloor</a>
+</footer>
+
+<script>
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---------- WebGL grease, visible only through the black letters (mix-blend-mode: screen) ---------- */
+(function(){
+  const c=document.getElementById('grasa'),gl=c.getContext('webgl');
+  if(!gl){c.style.background='linear-gradient(120deg,#3a2a66,#1f7a78,#b8862a,#b0306a)';return}
+  const vs='attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}';
+  const fs=`precision highp float;uniform vec2 r;uniform float t;uniform vec2 m;
+  float h(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
+  float n(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);return mix(mix(h(i),h(i+vec2(1,0)),f.x),mix(h(i+vec2(0,1)),h(i+vec2(1,1)),f.x),f.y);}
+  float fbm(vec2 p){float v=0.,a=.5;for(int i=0;i<5;i++){v+=a*n(p);p*=2.02;a*=.5;}return v;}
+  void main(){
+    vec2 uv=(gl_FragCoord.xy-.5*r)/r.y;
+    vec2 mo=(m-.5*r)/r.y;float d=length(uv-mo);
+    uv+=.2*normalize(uv-mo+1e-4)*exp(-d*3.5)*sin(t*1.4-d*9.);
+    vec2 q=vec2(fbm(uv*1.5+t*.06),fbm(uv*1.5-t*.05+3.));
+    float f=fbm(uv*2.1+q*2.5+t*.03);
+    vec3 film=.5+.5*cos(6.2831*(f*3.1+t*.04+vec3(0.,.33,.67)));
+    vec3 base=vec3(.08,.08,.1);
+    vec3 col=mix(base,film,smoothstep(.3,.7,f)*.95);
+    gl_FragColor=vec4(col,1.);
+  }`;
+  const sh=(ty,s)=>{const o=gl.createShader(ty);gl.shaderSource(o,s);gl.compileShader(o);return o};
+  const pr=gl.createProgram();gl.attachShader(pr,sh(gl.VERTEX_SHADER,vs));gl.attachShader(pr,sh(gl.FRAGMENT_SHADER,fs));gl.linkProgram(pr);gl.useProgram(pr);
+  gl.bindBuffer(gl.ARRAY_BUFFER,gl.createBuffer());gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,1,1]),gl.STATIC_DRAW);
+  const lp=gl.getAttribLocation(pr,'p');gl.enableVertexAttribArray(lp);gl.vertexAttribPointer(lp,2,gl.FLOAT,false,0,0);
+  const ur=gl.getUniformLocation(pr,'r'),ut=gl.getUniformLocation(pr,'t'),um=gl.getUniformLocation(pr,'m');
+  const dpr=Math.min(devicePixelRatio,1.5);
+  const size=()=>{c.width=c.offsetWidth*dpr;c.height=c.offsetHeight*dpr;gl.viewport(0,0,c.width,c.height)};size();addEventListener('resize',size);
+  let tx=c.offsetWidth/2,ty=c.offsetHeight/2,mx=tx,my=ty;
+  c.parentElement.addEventListener('pointermove',e=>{const b=c.getBoundingClientRect();tx=e.clientX-b.left;ty=e.clientY-b.top});
+  let visible=true;new IntersectionObserver(e=>visible=e[0].isIntersecting).observe(c);
+  const t0=performance.now();
+  (function loop(now){
+    requestAnimationFrame(loop);if(!visible)return;
+    const t=(now-t0)/1000*(reduce?.15:1);
+    mx+=(tx-mx)*.06;my+=(ty-my)*.06;
+    gl.uniform2f(ur,c.width,c.height);gl.uniform1f(ut,t);gl.uniform2f(um,mx*dpr,(c.offsetHeight-my)*dpr);
+    gl.drawArrays(gl.TRIANGLE_STRIP,0,4);
+  })(t0);
+})();
+
+/* ---------- Day-dot labels ---------- */
+const DAY={Breaks:'#FF5B14','UK Bass':'#8E7CFF',Bass:'#8E7CFF',Breakbeat:'#FFD100','Jungle / DnB':'#00A04A','Liquid DnB':'#2FB8FF','UKG / Bassline':'#FF6FB5'};
+const R=[
+  {t:'Ritual Pleasure',a:'The Push',d:'Jun 2026',g:'Breaks',bpm:139,hot:true},
+  {t:'Romero',a:'Afghan Headspin',d:'08 Jan 2026',g:'Breaks',cat:'DKR0237'},
+  {t:'Check It / Delusion',a:'HOLLO (UK)',g:'Bass'},
+  {t:'Blackout the Venue / Cold Caller',a:'Kid Ellipsis',g:'UK Bass'},
+  {t:'Switch / Buck Rogers',a:'Phrenetic',g:'Breaks'},
+  {t:'Rave / Jungle / D&B Vol. 2',a:'Various Artists',d:'Jun 2025',g:'Jungle / DnB'},
+  {t:'Housey McHouse Face',a:'Shodan & K2T',d:'Jun 2025',g:'Liquid DnB'},
+  {t:'We Are Breakbeat',a:'Afghan Headspin, Anuschka',d:'07 Nov 2024',g:'Breakbeat',cat:'DKR093'},
+  {t:'In the Jungle [Remixes]',a:'Afghan Headspin, Gruv42',d:'04 Jul 2024',g:'UKG / Bassline',cat:'DKR063'},
+  {t:'Justice',a:'Afghan Headspin, Playbass, Evil Crew',d:'30 Nov 2023',g:'Breaks',bpm:134}
+];
+const L=document.getElementById('labels');
+R.forEach((r,i)=>{
+  const a=document.createElement('a');a.className='dot';a.href='https://www.beatport.com/label/dirty-kitchen-rave/112835';
+  a.style.setProperty('--c',DAY[r.g]||'#FFD100');a.style.setProperty('--r',((i%3)-1)*1.4+'deg');
+  a.innerHTML=`<div class="day">${r.g}<em>${r.hot?'FRESH':(r.cat||'DKR')}</em></div><div class="body"><div class="item">${r.t}</div>
+  <div class="row"><span>Prepared by</span><span>${r.a}</span></div>
+  <div class="row"><span>Date</span><span>${r.d||'In stores'}</span></div>
+  <div class="row"><span>Temp</span><span>${r.bpm?r.bpm+' BPM':'Hot'}</span></div>
+  <div class="row" style="border:0"><span>Use by</span><span>Never expires</span></div></div>`;
+  L.appendChild(a);
+});
+
+/* ---------- Staff badges ---------- */
+const S=['Gruv42','DJ Brownie','Kid Ellipsis','PERCYBASS','The Push','HOLLO (UK)','Phrenetic','Danny Phr3ntic','J-Break','Prato','GODINO','AndrewFx','Squat Party','Evil Crew','Skin Teeth','Periko','BLOW (SP)','Anuschka','Shodan','Fiasco & Nicely'];
+const B=document.getElementById('badges');
+B.innerHTML=`<article class="badge chef"><header><span>HEAD CHEF</span><span>LABEL MANAGER</span></header><div>Afghan Headspin</div></article>`+
+  S.map((s,i)=>`<article class="badge"><header><span>BRIGADE</span><span>#${String(i+2).padStart(3,'0')}</span></header><div>${s.replace('&','&amp;')}</div></article>`).join('');
+
+/* ---------- Hazard marquee driven by scroll speed ---------- */
+(function(){
+  if(reduce)return;
+  const tr=document.getElementById('track'),spans=tr.querySelectorAll('span');
+  let x=0,last=scrollY,v=0;
+  (function loop(){
+    const dy=scrollY-last;last=scrollY;v+=(dy-v)*.12;
+    x-=1.2+Math.abs(v)*.6;const half=tr.scrollWidth/2;if(-x>half)x+=half;
+    tr.style.transform=`translateX(${x}px)`;
+    const w=Math.min(125,Math.max(62,100+v*2.4));spans.forEach(s=>s.style.setProperty('--w',w+'%'));
+    requestAnimationFrame(loop);
+  })();
+})();
+</script>
+</body>
+</html>
