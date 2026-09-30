@@ -76,7 +76,7 @@ Next.js **16.3.3**, React 19, Supabase, Vercel ESKALADIGITAL, Redsys, Stripe, SM
   meta_title: 'Tricholand 2026 | Tienda B2B 7 idiomas | ESKALA',
   meta_description:
     'Tienda mayorista B2B de Trichocereus en 7 idiomas. Lotes, Redsys y Stripe, blog técnico y landings por país. Next.js. Hecha por ESKALA.',
-  project_date: '2026-08-26',
+  project_date: '2026-04-30',
   published_at: new Date().toISOString(),
 };
 
@@ -152,7 +152,7 @@ Next.js **16.3.3**, React 19, Supabase, TinyMCE, Vercel ESKALADIGITAL. Sin middl
   meta_title: 'GVC Abogados 2026 | Web bufete Murcia | ESKALA',
   meta_description:
     'Web del bufete en Murcia: 6 áreas, ES/EN, SEO de plaza y lead en BD. Next.js 16. Hecha por ESKALA.',
-  project_date: '2026-08-28',
+  project_date: '2026-05-30',
   published_at: new Date().toISOString(),
 };
 
