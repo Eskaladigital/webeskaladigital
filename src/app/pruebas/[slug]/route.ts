@@ -64,12 +64,14 @@ async function findVersions(family: string): Promise<number[]> {
 
 function buildSwitcher(family: string, current: number, versions: number[]): string {
   const label = FAMILY_LABELS[family] ?? family.charAt(0).toUpperCase() + family.slice(1)
+  const en = family === 'dirtykitchenrave'
+  const versionWord = en ? 'Version' : 'Versión'
   const items = versions
     .map(
       (n) =>
         `<a class="esk-vsw__item${n === current ? ' active' : ''}" href="/pruebas/${family}-${n}"${
           n === current ? ' aria-current="true"' : ''
-        }><span>Versión ${n}</span><span class="esk-vsw__num">v${n}</span></a>`
+        }><span>${versionWord} ${n}</span><span class="esk-vsw__num">v${n}</span></a>`
     )
     .join('')
 
@@ -102,13 +104,13 @@ function buildSwitcher(family: string, current: number, versions: number[]): str
 @media print{.esk-vsw{display:none!important}}
 </style>
 <div class="esk-vsw" id="eskVsw">
-  <div class="esk-vsw__panel" role="menu" aria-label="Versiones de ${label}">
-    <div class="esk-vsw__head">${label} · versiones</div>
+  <div class="esk-vsw__panel" role="menu" aria-label="${en ? 'Versions of' : 'Versiones de'} ${label}">
+    <div class="esk-vsw__head">${label} · ${en ? 'versions' : 'versiones'}</div>
     <div class="esk-vsw__list">${items}</div>
-    <div class="esk-vsw__foot">Comparativa de propuestas · <a href="https://www.eskaladigital.com/servicios" target="_blank" rel="noopener">ESCALA</a></div>
+    <div class="esk-vsw__foot">${en ? 'Proposal comparison' : 'Comparativa de propuestas'} · <a href="https://www.eskaladigital.com/servicios" target="_blank" rel="noopener">ESKALA</a></div>
   </div>
   <button class="esk-vsw__toggle" type="button" aria-haspopup="menu" aria-expanded="false">
-    <span class="esk-vsw__dot"></span>Versión ${current} · cambiar<span class="esk-vsw__caret">▾</span>
+    <span class="esk-vsw__dot"></span>${versionWord} ${current} · ${en ? 'switch' : 'cambiar'}<span class="esk-vsw__caret">▾</span>
   </button>
 </div>
 <script>
