@@ -13,6 +13,7 @@ const FAMILY_LABELS: Record<string, string> = {
   thenauticstore: 'The Nautic Store',
   serveco: 'SERVECO',
   dirtykitchenrave: 'Dirty Kitchen Rave',
+  djbrownie: 'DJ Brownie',
 }
 
 const PRUEBAS_HEADERS = {
@@ -64,7 +65,7 @@ async function findVersions(family: string): Promise<number[]> {
 
 function buildSwitcher(family: string, current: number, versions: number[]): string {
   const label = FAMILY_LABELS[family] ?? family.charAt(0).toUpperCase() + family.slice(1)
-  const en = family === 'dirtykitchenrave'
+  const en = family === 'dirtykitchenrave' || family === 'djbrownie'
   const versionWord = en ? 'Version' : 'Versión'
   const items = versions
     .map(

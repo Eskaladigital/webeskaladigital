@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DJ Brownie — Website design proposals · ESKALA</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Website design proposals for DJ Brownie. Demo by ESKALA Marketing.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#160e0a;--panel:#21150f;--white:#f4ebe1;--text:rgba(244,235,225,.72);
+  --cocoa:#A86A3D;--caramel:#E08A2E;--caramel-lite:#F5B95A;--line:rgba(244,235,225,.12)}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;font-weight:300;overflow-x:hidden}
+::selection{background:var(--caramel);color:#160e0a}
+a{color:inherit;text-decoration:none}
+h1,h2,h3{font-family:'Space Grotesk',sans-serif;font-weight:700;line-height:1.05}
+.ambient{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(55vw 55vw at 82% -8%,rgba(224,138,46,.16),transparent 60%),radial-gradient(50vw 50vw at 0% 105%,rgba(168,106,61,.18),transparent 60%)}
+
+.ribbon{position:fixed;top:0;left:0;right:0;z-index:40;display:flex;align-items:center;justify-content:center;gap:.7rem;
+  padding:.44rem 1rem;font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;
+  background:linear-gradient(90deg,var(--cocoa),var(--caramel));color:#160e0a;font-weight:600}
+.ribbon a{font-weight:700;text-decoration:underline;text-underline-offset:2px}
+
+.wrap{position:relative;z-index:1;max-width:1240px;margin:0 auto;padding:8rem 5vw 4rem}
+.head{text-align:center;max-width:760px;margin:0 auto 3.5rem}
+.brand{display:inline-flex;align-items:center;gap:.6rem;font-family:'Space Grotesk';font-weight:700;font-size:1.2rem;margin-bottom:1.6rem}
+.brand .mk{width:36px;height:36px;border-radius:11px;background:linear-gradient(135deg,var(--cocoa),var(--caramel));display:grid;place-items:center;font-size:1.05rem}
+.head .kick{font-size:.7rem;letter-spacing:.3em;text-transform:uppercase;color:var(--caramel);display:block;margin-bottom:1rem}
+.head h1{font-size:clamp(2.2rem,5vw,3.6rem);letter-spacing:-.02em;margin-bottom:1rem}
+.head h1 em{font-style:italic;background:linear-gradient(90deg,var(--cocoa),var(--caramel-lite));-webkit-background-clip:text;background-clip:text;color:transparent}
+.head p{color:var(--text);line-height:1.8;font-size:1.08rem}
+
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem}
+.demo{position:relative;display:flex;flex-direction:column;background:var(--panel);border:1px solid var(--line);border-radius:22px;overflow:hidden;
+  transition:transform .35s,border-color .35s,box-shadow .35s}
+.demo:hover{transform:translateY(-8px);border-color:rgba(224,138,46,.45);box-shadow:0 30px 70px rgba(0,0,0,.45)}
+.demo .thumb{height:190px;position:relative;overflow:hidden;background:#110a07}
+.demo .thumb iframe{position:absolute;top:0;left:0;width:1280px;height:960px;border:0;transform-origin:0 0;pointer-events:none;background:#160e0a}
+.demo .thumb::after{content:'';position:absolute;inset:0;z-index:1;box-shadow:inset 0 -26px 30px -22px rgba(8,4,2,.55)}
+.demo .thumb .lbl{position:absolute;top:.9rem;left:.9rem;z-index:2;font-family:'Space Grotesk';font-weight:700;font-size:.7rem;letter-spacing:.1em;color:var(--white);
+  background:rgba(22,14,10,.72);backdrop-filter:blur(6px);border:1px solid var(--line);padding:.25rem .7rem;border-radius:99px}
+.demo .thumb .tag{position:absolute;bottom:.9rem;right:.9rem;z-index:2;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--white);
+  padding:.22rem .6rem;border-radius:99px;background:rgba(22,14,10,.72);backdrop-filter:blur(6px);border:1px solid var(--line)}
+.demo .body{padding:1.5rem 1.6rem 1.7rem;flex:1;display:flex;flex-direction:column}
+.demo h3{font-size:1.2rem;margin-bottom:.5rem}
+.demo p{color:var(--text);line-height:1.6;font-size:.9rem;flex:1;margin-bottom:1.2rem}
+.demo .open{display:inline-flex;align-items:center;gap:.5rem;font-family:'Space Grotesk';font-weight:600;font-size:.74rem;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--caramel-lite);transition:gap .25s}
+.demo:hover .open{gap:.85rem}
+.demo .link-abs{position:absolute;inset:0;z-index:2}
+
+.footer{text-align:center;margin-top:4rem;color:var(--text);font-size:.85rem}
+.footer p+p{margin-top:.4rem}
+
+@media (max-width:980px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:640px){.grid{grid-template-columns:1fr}.wrap{padding-top:6.5rem}}
+</style>
+</head>
+<body>
+<div class="ambient" aria-hidden="true"></div>
+<div class="ribbon">Design proposals · Demo by <a href="https://www.eskaladigital.com/servicios" target="_blank" rel="noopener">ESKALA Marketing</a></div>
+
+<div class="wrap">
+  <header class="head">
+    <div class="brand"><span class="mk">🍫</span>DJ Brownie</div>
+    <span class="kick">5 homepage proposals</span>
+    <h1>Thirty years of breaks, <em>baked in layers</em></h1>
+    <p>Five visual directions for DJ Brownie's new website. They all tell the same story (who he is, his career, his releases and how to book him) with a different personality. Four of them actually make sound. Open each one, have a play and tell us which feels most like you.</p>
+  </header>
+
+  <div class="grid">
+    <article class="demo">
+      <a class="link-abs" href="/pruebas/djbrownie-1" target="_blank" rel="noopener" aria-label="Open proposal 1"></a>
+      <div class="thumb"><iframe src="/pruebas/djbrownie-1" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true" title="Preview of proposal 1"></iframe><span class="lbl">01</span><span class="tag">With sound</span></div>
+      <div class="body"><h3>Sequencer</h3><p>The homepage is a drum machine that really plays, at 135 bpm in E♭ minor, the key of "Effect". Five pads, five kinds of breakbeat: funk, old school, nu-skool, a chopped edit and dark UK bass.</p><span class="open">Open demo →</span></div>
+    </article>
+
+    <article class="demo">
+      <a class="link-abs" href="/pruebas/djbrownie-2" target="_blank" rel="noopener" aria-label="Open proposal 2"></a>
+      <div class="thumb"><iframe src="/pruebas/djbrownie-2" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true" title="Preview of proposal 2"></iframe><span class="lbl">02</span><span class="tag">Scratch it</span></div>
+      <div class="body"><h3>After-hours turntable</h3><p>Sodium streetlight over black, straight out of an LA after-hours. A working deck: grab the record and scratch, forwards and backwards. Releases and aliases are sleeves that flip over.</p><span class="open">Open demo →</span></div>
+    </article>
+
+    <article class="demo">
+      <a class="link-abs" href="/pruebas/djbrownie-3" target="_blank" rel="noopener" aria-label="Open proposal 3"></a>
+      <div class="thumb"><iframe src="/pruebas/djbrownie-3" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true" title="Preview of proposal 3"></iframe><span class="lbl">03</span><span class="tag">Interactive</span></div>
+      <div class="body"><h3>Brownie FM</h3><p>A 70s hi-fi receiver in a walnut case. Switch it on, turn the dial and find seven stations hidden in the static, each one a chapter with its own break. Booking is a radio schedule.</p><span class="open">Open demo →</span></div>
+    </article>
+
+    <article class="demo">
+      <a class="link-abs" href="/pruebas/djbrownie-4" target="_blank" rel="noopener" aria-label="Open proposal 4"></a>
+      <div class="thumb"><iframe src="/pruebas/djbrownie-4" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true" title="Preview of proposal 4"></iframe><span class="lbl">04</span><span class="tag">Playable</span></div>
+      <div class="body"><h3>Arcade · Break Hero</h3><p>He scores video games, so his site is an arcade cabinet. A playable rhythm game where you drum the break, his aliases as selectable players, his career as a world map and a "Continue?" to book.</p><span class="open">Open demo →</span></div>
+    </article>
+
+    <article class="demo">
+      <a class="link-abs" href="/pruebas/djbrownie-5" target="_blank" rel="noopener" aria-label="Open proposal 5"></a>
+      <div class="thumb"><iframe src="/pruebas/djbrownie-5" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true" title="Preview of proposal 5"></iframe><span class="lbl">05</span><span class="tag">Editorial</span></div>
+      <div class="body"><h3>Layers</h3><p>A 3D brownie that follows your cursor. Every layer is a stage of his career, from the after-hours base to the "Effect" glaze. Click one and it slides out like a drawer. The bio is a recipe.</p><span class="open">Open demo →</span></div>
+    </article>
+  </div>
+
+  <div class="footer">
+    <p>All proposals are visual demos · <span style="color:var(--caramel)">DJ Brownie · Breaks &amp; Bass</span></p>
+    <p style="margin-top:1rem">Design by <a href="https://www.eskaladigital.com/servicios" target="_blank" rel="noopener">ESKALA Marketing</a></p>
+  </div>
+</div>
+<script>
+// Scale each preview: the iframe renders the demo at 1280px (desktop view)
+// and shrinks to the card's real width, like a live screenshot.
+function fitPreviews(){
+  document.querySelectorAll('.thumb iframe').forEach(function(f){
+    var w = f.parentElement.clientWidth;
+    if (w > 0) f.style.transform = 'scale(' + (w / 1280) + ')';
+  });
+}
+addEventListener('resize', fitPreviews);
+addEventListener('load', fitPreviews);
+fitPreviews();
+</script>
+</body>
+</html>

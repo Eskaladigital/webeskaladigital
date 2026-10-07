@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>DJ Brownie — Turntable proposal · ESKALA</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Turntable proposal for DJ Brownie. Demo by ESKALA Marketing.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* PROPOSAL 02 — AFTER-HOURS / TURNTABLE
+     Idea: Brownie was born in the LA after-hours, playing vinyl at five in the morning.
+     The hero is a working deck: the record spins at 33⅓ and you can grab it and scratch. The audio is a
+     synthesised breaks loop that speeds up, slows down and plays backwards as you move the record.
+     Sodium streetlight over black. The discography is a crate of sleeves that flip over. */
+  :root{
+    --noche:#0C0908;
+    --negro2:#16100D;
+    --sodio:#FF7A1A;
+    --sodio2:#FFB15C;
+    --crema:#F3E6D3;
+    --choco:#3A2418;
+    --gris:#8E7F72;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:Inter,system-ui,sans-serif;background:var(--noche);color:var(--crema);line-height:1.6;overflow-x:hidden}
+  body::after{content:"";position:fixed;inset:-50%;pointer-events:none;z-index:50;opacity:.07;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");animation:grano 1s steps(4) infinite}
+  @keyframes grano{0%{transform:translate(0,0)}25%{transform:translate(-3%,2%)}50%{transform:translate(2%,-3%)}75%{transform:translate(-2%,-2%)}}
+  a{color:inherit}
+  :focus-visible{outline:2px solid var(--sodio);outline-offset:3px}
+
+  .top{position:absolute;top:0;left:0;right:0;z-index:5;display:flex;justify-content:space-between;align-items:center;padding:calc(1.2rem + env(safe-area-inset-top,0px)) clamp(1.25rem,4vw,3rem)}
+  .brand{font-family:Anton;font-size:1.4rem;letter-spacing:.04em;text-decoration:none}
+  .top nav{display:flex;gap:1.8rem;font-family:"Space Mono";font-size:.85rem;text-transform:uppercase}
+  .top nav a{text-decoration:none;opacity:.75}
+  .top nav a:hover{opacity:1;color:var(--sodio)}
+
+  .hero{min-height:100svh;display:grid;grid-template-columns:1fr minmax(320px,560px);align-items:center;gap:clamp(2rem,5vw,5rem);padding:7rem clamp(1.25rem,4vw,3rem) 4rem;position:relative;
+    background:radial-gradient(ellipse 60% 70% at 78% 40%,rgba(255,122,26,.22),transparent 70%),radial-gradient(ellipse 40% 50% at 10% 100%,rgba(255,122,26,.08),transparent 70%)}
+  .kicker{font-family:"Space Mono";font-size:.85rem;color:var(--sodio);text-transform:uppercase;letter-spacing:.15em;margin-bottom:1rem}
+  .hero h1{font-family:Anton;font-weight:400;font-size:clamp(4.5rem,13vw,12rem);line-height:.82;letter-spacing:-.01em;text-transform:uppercase}
+  .hero h1 span{display:block;color:transparent;-webkit-text-stroke:2px var(--crema)}
+  .hero p.lead{max-width:40ch;margin-top:1.6rem;font-size:1.1rem;color:#D8C9B6}
+  .hint{margin-top:1.4rem;display:flex;align-items:center;gap:.7rem;font-family:"Space Mono";font-size:.85rem;color:var(--sodio2)}
+  .hint i{width:28px;height:28px;border:1.5px solid var(--sodio2);border-radius:50%;display:grid;place-items:center;font-style:normal;animation:gira 3s linear infinite}
+  @keyframes gira{to{transform:rotate(360deg)}}
+
+  .deck{position:relative;aspect-ratio:1/0.86;width:100%;border-radius:1.6rem;background:linear-gradient(145deg,#2A1B13,#140D09);box-shadow:0 40px 80px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.08),inset 0 0 0 1px rgba(255,255,255,.04);padding:6%}
+  .platter{position:absolute;left:5%;top:7%;width:72%;aspect-ratio:1;border-radius:50%;background:repeating-conic-gradient(#3b3b3b 0 2deg,#222 2deg 4deg);box-shadow:0 10px 30px rgba(0,0,0,.6)}
+  .platter::before{content:"";position:absolute;inset:-1px;border-radius:50%;background:repeating-conic-gradient(var(--sodio) 0 1.2deg,transparent 1.2deg 6deg);mask:radial-gradient(circle,transparent 69%,#000 69.5%,#000 71%,transparent 71.5%);-webkit-mask:radial-gradient(circle,transparent 69%,#000 69.5%,#000 71%,transparent 71.5%);opacity:.5}
+  .vinilo{position:absolute;inset:4%;border-radius:50%;cursor:grab;touch-action:none;
+    background:
+      conic-gradient(from 20deg,rgba(255,255,255,.0) 0deg,rgba(255,255,255,.12) 30deg,rgba(255,255,255,0) 70deg,rgba(255,255,255,0) 200deg,rgba(255,177,92,.12) 230deg,rgba(255,255,255,0) 260deg),
+      repeating-radial-gradient(circle,#0b0b0b 0 1px,#161616 1px 2.4px),
+      #0e0e0e;
+    box-shadow:inset 0 0 0 2px #000}
+  .vinilo:active{cursor:grabbing}
+  .vinilo .surco{position:absolute;inset:30%;border-radius:50%;box-shadow:0 0 0 3px #0a0a0a,0 0 0 9px #141414,0 0 0 10px #0a0a0a}
+  .etiqueta{position:absolute;inset:33%;border-radius:50%;background:radial-gradient(circle,#160d08 0 4%,var(--sodio) 4.5% 60%,#E25E05 60% 100%);display:grid;place-items:center;text-align:center;color:#1a0d05}
+  .etiqueta b{font-family:Anton;font-size:clamp(.8rem,2.2vw,1.35rem);line-height:.95;display:block;margin-top:-18%}
+  .etiqueta small{font-family:"Space Mono";font-size:clamp(.45rem,1.1vw,.62rem);display:block;margin-top:.3rem;font-weight:700}
+  .etiqueta .marca{position:absolute;top:8%;left:50%;width:6px;height:16%;background:#1a0d05;transform:translateX(-50%);border-radius:3px}
+  .brazo{position:absolute;right:7%;top:6%;width:22%;height:72%;pointer-events:none}
+  .brazo svg{width:100%;height:100%;overflow:visible;transform-origin:70% 12%;transition:transform .8s cubic-bezier(.4,1.4,.5,1)}
+  .deck.on .brazo svg{transform:rotate(16deg)}
+  .panel-ctrl{position:absolute;right:6%;bottom:7%;display:flex;flex-direction:column;align-items:flex-end;gap:.6rem}
+  .start{border:0;background:#0b0705;color:var(--crema);font-family:"Space Mono";font-weight:700;font-size:.8rem;padding:.7rem 1rem;border-radius:.4rem;cursor:pointer;box-shadow:inset 0 0 0 1px rgba(255,255,255,.1),0 3px 0 #000;display:flex;gap:.5rem;align-items:center}
+  .start i{width:8px;height:8px;border-radius:50%;background:#4a2a1a}
+  .deck.on .start i{background:var(--sodio);box-shadow:0 0 10px var(--sodio)}
+  .start:active{transform:translateY(2px);box-shadow:inset 0 0 0 1px rgba(255,255,255,.1),0 1px 0 #000}
+  .pitch{display:flex;align-items:center;gap:.5rem;font-family:"Space Mono";font-size:.7rem;color:var(--gris)}
+  .pitch input{accent-color:var(--sodio);width:110px}
+  .lectura{position:absolute;left:6%;bottom:6%;font-family:"Space Mono";font-size:.72rem;color:var(--gris);line-height:1.4}
+  .lectura b{color:var(--sodio2);font-weight:700}
+
+  .ticker{background:var(--sodio);color:#1a0d05;overflow:hidden;white-space:nowrap;font-family:Anton;font-size:clamp(1.4rem,3vw,2.2rem);padding:.6rem 0;text-transform:uppercase;transform:rotate(-1.2deg);margin:-1rem -2rem 0;position:relative;z-index:2}
+  .ticker div{display:inline-block;animation:tick 30s linear infinite}
+  .ticker span{margin:0 1.4rem}
+  @keyframes tick{to{transform:translateX(-50%)}}
+
+  section{padding:clamp(5rem,10vw,8rem) clamp(1.25rem,4vw,3rem)}
+  .wrap{max-width:1240px;margin:0 auto}
+  h2{font-family:Anton;font-weight:400;font-size:clamp(3rem,8vw,6.5rem);line-height:.9;text-transform:uppercase;margin-bottom:2.5rem}
+  h2 em{font-style:normal;color:var(--sodio)}
+
+  .bio .cols{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,6vw,6rem);align-items:start}
+  .bio p{color:#D8C9B6;margin-bottom:1.2rem;max-width:56ch;font-size:1.05rem}
+  .cita{font-family:Anton;font-size:clamp(2rem,4.2vw,3.4rem);line-height:1;text-transform:uppercase;border-left:6px solid var(--sodio);padding-left:1.4rem}
+  .cita small{display:block;font-family:"Space Mono";font-size:.85rem;text-transform:none;color:var(--gris);margin-top:1rem;line-height:1.5}
+  .datos{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:#2A1B13;margin-top:3rem;border:1px solid #2A1B13}
+  .datos div{background:var(--noche);padding:1.4rem}
+  .datos b{display:block;font-family:Anton;font-size:2.6rem;line-height:1;color:var(--sodio);font-weight:400}
+  .datos span{font-family:"Space Mono";font-size:.8rem;color:var(--gris)}
+
+  .crate{background:var(--negro2)}
+  .crate .intro{color:var(--gris);font-family:"Space Mono";font-size:.9rem;margin:-1.5rem 0 2.5rem}
+  .discos{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(1rem,2.5vw,2rem)}
+  .funda{aspect-ratio:1;perspective:1200px;cursor:pointer;border:0;background:none;font:inherit;color:inherit;text-align:left;padding:0}
+  .funda .in{position:relative;width:100%;height:100%;transition:transform .7s cubic-bezier(.3,1.2,.4,1);transform-style:preserve-3d}
+  .funda[aria-pressed="true"] .in{transform:rotateY(180deg)}
+  .cara,.dorso{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:4px;overflow:hidden;box-shadow:0 20px 40px rgba(0,0,0,.5)}
+  .cara{background:var(--bg);display:flex;flex-direction:column;justify-content:space-between;padding:1.3rem}
+  .cara .t{font-family:Anton;font-size:clamp(1.8rem,3.4vw,2.8rem);line-height:.9;text-transform:uppercase;color:var(--fg,#1a0d05);position:relative;z-index:1}
+  .cara .s{font-family:"Space Mono";font-size:.75rem;color:var(--fg,#1a0d05);position:relative;z-index:1;display:flex;justify-content:space-between}
+  .cara .arte{position:absolute;inset:0}
+  .dorso{transform:rotateY(180deg);background:#F3E6D3;color:#1a0d05;padding:1.4rem;display:flex;flex-direction:column;gap:.6rem}
+  .dorso h3{font-family:Anton;font-weight:400;font-size:1.8rem;line-height:1;text-transform:uppercase}
+  .dorso .m{font-family:"Space Mono";font-size:.75rem;opacity:.7}
+  .dorso p{font-size:.95rem}
+  .dorso a{margin-top:auto;font-family:"Space Mono";font-weight:700;font-size:.85rem}
+
+  .caras .lados{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,5vw,4rem)}
+  .lado h3{font-family:"Space Mono";font-size:.9rem;color:var(--sodio);letter-spacing:.2em;border-bottom:1px solid #3A2418;padding-bottom:.8rem;margin-bottom:.4rem}
+  .lado ol{list-style:none}
+  .lado li{display:grid;grid-template-columns:3rem 1fr auto;gap:1rem;padding:1.1rem 0;border-bottom:1px solid #2A1B13;align-items:baseline}
+  .lado li .n{font-family:"Space Mono";color:var(--gris);font-size:.85rem}
+  .lado li b{font-family:Anton;font-weight:400;font-size:1.6rem;text-transform:uppercase;line-height:1}
+  .lado li p{grid-column:2/-1;color:#BCAD9B;font-size:.95rem;margin-top:.3rem}
+  .lado li .y{font-family:"Space Mono";font-size:.85rem;color:var(--sodio2)}
+
+  .booking{text-align:center;background:radial-gradient(ellipse 60% 80% at 50% 100%,rgba(255,122,26,.25),transparent 70%)}
+  .booking h2{font-size:clamp(4rem,14vw,12rem);margin-bottom:1.5rem}
+  .booking p{color:#D8C9B6;max-width:52ch;margin:0 auto 2.5rem}
+  .btn{display:inline-flex;gap:.8rem;align-items:center;background:var(--sodio);color:#1a0d05;text-decoration:none;font-family:Anton;font-size:1.6rem;text-transform:uppercase;padding:1rem 2.2rem;border-radius:999px;transition:transform .2s}
+  .btn:hover{transform:scale(1.04) rotate(-1deg)}
+  .servicios{display:flex;flex-wrap:wrap;justify-content:center;gap:.6rem;margin-top:2.5rem}
+  .servicios span{font-family:"Space Mono";font-size:.8rem;border:1px solid #3A2418;border-radius:999px;padding:.4rem .9rem;color:#D8C9B6}
+
+  footer{border-top:1px solid #2A1B13;padding:2rem clamp(1.25rem,4vw,3rem) calc(2rem + env(safe-area-inset-bottom,0px));display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem;font-family:"Space Mono";font-size:.8rem;color:var(--gris)}
+  footer nav{display:flex;gap:1.5rem}
+
+  @media (max-width:960px){
+    .top nav{display:none}
+    .hero{grid-template-columns:1fr;padding-top:6rem}
+    .bio .cols,.caras .lados{grid-template-columns:1fr}
+    .discos{grid-template-columns:1fr 1fr}
+  }
+  @media (max-width:560px){.discos{grid-template-columns:1fr}.datos{grid-template-columns:1fr}.pitch input{width:80px}}
+  @media (prefers-reduced-motion:reduce){.ticker div,.hint i,body::after{animation:none}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <a class="brand" href="#">DJ BROWNIE</a>
+  <nav aria-label="Main"><a href="#bio">Bio</a><a href="#records">Records</a><a href="#sides">Career</a><a href="#booking">Booking</a></nav>
+</header>
+
+<main>
+  <section class="hero" aria-labelledby="h1">
+    <div>
+      <p class="kicker">Breaks &amp; Bass · LA underground roots · 30+ years</p>
+      <h1 id="h1">DJ<span>Brownie</span></h1>
+      <p class="lead">Born in the darkest after-hours of Los Angeles. Three decades on he's still doing the same thing: breaking the beat until the floor can't stop.</p>
+      <p class="hint"><i aria-hidden="true">↻</i>Hit start, then grab the record and scratch</p>
+    </div>
+
+    <div class="deck" id="deck" role="group" aria-label="Interactive turntable">
+      <div class="platter">
+        <div class="vinilo" id="vinilo" aria-label="Record. Drag it in a circle to scratch" role="slider" aria-valuetext="33 rpm" tabindex="0">
+          <div class="surco"></div>
+          <div class="etiqueta"><span class="marca"></span><div><b>BROWNIE</b><small>EFFECT · 135 · E♭m</small></div></div>
+        </div>
+      </div>
+      <div class="brazo" aria-hidden="true">
+        <svg viewBox="0 0 100 300">
+          <circle cx="70" cy="36" r="22" fill="#2b2b2b" stroke="#444" stroke-width="2"/>
+          <circle cx="70" cy="36" r="9" fill="#888"/>
+          <rect x="62" y="0" width="16" height="14" rx="3" fill="#3a3a3a"/>
+          <path d="M70 40 L70 210 Q70 240 48 262" stroke="#C9C2B8" stroke-width="6" fill="none" stroke-linecap="round"/>
+          <rect x="30" y="252" width="28" height="40" rx="4" transform="rotate(35 44 272)" fill="#111" stroke="#FF7A1A" stroke-width="1.5"/>
+        </svg>
+      </div>
+      <div class="lectura"><b id="rpm">0.0</b> rpm<br><span id="estado">Motor off</span></div>
+      <div class="panel-ctrl">
+        <label class="pitch">PITCH <input type="range" id="pitch" min="-8" max="8" step=".1" value="0"><output id="pitchOut">0.0%</output></label>
+        <button class="start" id="start" aria-pressed="false"><i aria-hidden="true"></i>START / STOP</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="ticker" aria-hidden="true"><div>
+    <span>Breaks</span><span>✺</span><span>Bass</span><span>✺</span><span>Los Angeles</span><span>✺</span><span>After-hours</span><span>✺</span><span>Rampant Records</span><span>✺</span><span>Kaleidoscope Music</span><span>✺</span><span>135 bpm</span><span>✺</span>
+    <span>Breaks</span><span>✺</span><span>Bass</span><span>✺</span><span>Los Angeles</span><span>✺</span><span>After-hours</span><span>✺</span><span>Rampant Records</span><span>✺</span><span>Kaleidoscope Music</span><span>✺</span><span>135 bpm</span><span>✺</span>
+  </div></div>
+
+  <section class="bio" id="bio">
+    <div class="wrap">
+      <h2>Five in<br>the <em>morning</em></h2>
+      <div class="cols">
+        <div>
+          <p>DJ Brownie is Chris Brown, DJ and producer. He started spinning over thirty years ago in the original dark and dirty underground and after-hours venues of Los Angeles, the ones that opened when everything else had shut.</p>
+          <p>That start led to years of bookings across the United States, Mexico and Canada. In the early nineties he went into the studio with his long-time friend Paul Grogan, owner of Rampant Records, and began releasing under several names: Gorilla Pimp, Immigrant, Faithealer, Mr Funkster, Brownie and DJ Brownie.</p>
+          <p>Today he drops dancefloor bombs on top breaks and bass labels, and scores TV, film, video games and commercials.</p>
+        </div>
+        <p class="cita">Reading a floor at five in the morning isn't something you learn anywhere else.<small>The Brownie school: the Los Angeles after-hours.</small></p>
+      </div>
+      <div class="datos">
+        <div><b>30+</b><span>years in the booth</span></div>
+        <div><b>6</b><span>production aliases</span></div>
+        <div><b>3</b><span>touring countries: USA, Mexico, Canada</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="crate" id="records">
+    <div class="wrap">
+      <h2>Dig the<br><em>crate</em></h2>
+      <p class="intro">Click a sleeve to flip it over.</p>
+      <div class="discos" id="discosGrid"></div>
+    </div>
+  </section>
+
+  <section class="caras" id="sides">
+    <div class="wrap">
+      <h2>Side A,<br><em>side B</em></h2>
+      <div class="lados">
+        <div class="lado">
+          <h3>SIDE A · THE SCHOOL</h3>
+          <ol>
+            <li><span class="n">A1</span><b>After-hours LA</b><span class="y">80s–90s</span><p>The LA underground and after-hours clubs. Where he learnt the craft.</p></li>
+            <li><span class="n">A2</span><b>Rampant Records</b><span class="y">90s</span><p>First productions with Paul Grogan.</p></li>
+            <li><span class="n">A3</span><b>Like This</b><span class="y">1999</span><p>Released on Rampant Records.</p></li>
+          </ol>
+        </div>
+        <div class="lado">
+          <h3>SIDE B · THE PRESENT</h3>
+          <ol>
+            <li><span class="n">B1</span><b>On the road</b><span class="y">Touring</span><p>Years of bookings across the United States, Mexico and Canada.</p></li>
+            <li><span class="n">B2</span><b>Sync</b><span class="y">Now</span><p>Music for TV, film, video games and commercials.</p></li>
+            <li><span class="n">B3</span><b>Effect</b><span class="y">2025</span><p>With SluG (FL) on Kaleidoscope Music. 135 bpm, E♭ minor.</p></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="booking" id="booking">
+    <div class="wrap">
+      <h2>Book the<br><em>after</em></h2>
+      <p>Clubs, festivals, after-hours and showcases. Plus remixes, collaborations and music for the screen.</p>
+      <a class="btn" href="#">Request a date <span aria-hidden="true">→</span></a>
+      <div class="servicios"><span>Club sets</span><span>Festivals</span><span>After-hours</span><span>Remixes</span><span>Sync · TV · film · games</span><span>Press kit</span></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <span>DJ Brownie · Breaks &amp; Bass</span>
+  <nav aria-label="Social"><a href="https://www.mixcloud.com/chris-brown75/">Mixcloud</a><a href="https://www.beatport.com/track/effect/21777658">Beatport</a><a href="#">Instagram</a><a href="#">Contact</a></nav>
+</footer>
+
+<script>
+const discos=[
+  {t:'Effect',s:['2025','Kaleidoscope'],bg:'#FF7A1A',arte:'radial-gradient(circle at 70% 30%,#1a0d05 0 18%,transparent 18.5%),repeating-radial-gradient(circle at 70% 30%,transparent 0 22px,rgba(26,13,5,.35) 22px 24px)',
+   h:'Effect (Original Mix)',m:'DJ Brownie & SluG (FL) · Kaleidoscope Music · 24.10.2025',p:'Breaks / Breakbeat / UK Bass. 135 bpm in E♭ minor, 4:26 of dark breaks.',a:'https://www.beatport.com/track/effect/21777658',al:'Listen on Beatport ↗'},
+  {t:'Like This',s:['1999','Rampant'],bg:'#F3E6D3',fg:'#1a0d05',arte:'repeating-linear-gradient(-45deg,transparent 0 18px,rgba(58,36,24,.18) 18px 36px)',
+   h:'Like This',m:'DJ Brownie · Rampant Records · 1999',p:'From the Rampant era, Paul Grogan\'s label, where Brownie learnt to produce.'},
+  {t:'Gorilla Pimp',s:['Alias','90s →'],bg:'#3A2418',fg:'#FFB15C',arte:'radial-gradient(circle at 30% 70%,#FF7A1A 0 25%,transparent 25.5%),radial-gradient(circle at 75% 25%,#5a3828 0 15%,transparent 15.5%)',
+   h:'Gorilla Pimp',m:'Production alias',p:'One of the names Brownie has released records under since the nineties.'},
+  {t:'Immigrant',s:['Alias','90s →'],bg:'#1E2B2A',fg:'#F3E6D3',arte:'linear-gradient(90deg,transparent 0 48%,#FF7A1A 48% 52%,transparent 52%),linear-gradient(0deg,transparent 0 48%,#FF7A1A 48% 52%,transparent 52%)',
+   h:'Immigrant',m:'Production alias',p:'Another of his studio names.'},
+  {t:'Faithealer',s:['Alias','90s →'],bg:'#E6D3B3',fg:'#3A2418',arte:'conic-gradient(from 0deg at 50% 60%,#FF7A1A 0 30deg,transparent 30deg 60deg,#FF7A1A 60deg 90deg,transparent 90deg 120deg,#FF7A1A 120deg 150deg,transparent 150deg 180deg,#FF7A1A 180deg 210deg,transparent 210deg 240deg,#FF7A1A 240deg 270deg,transparent 270deg 300deg,#FF7A1A 300deg 330deg,transparent 330deg)',
+   h:'Faithealer',m:'Production alias',p:'One of Chris Brown\'s studio faces.'},
+  {t:'Mr Funkster',s:['Alias','90s →'],bg:'#FFB15C',fg:'#1a0d05',arte:'radial-gradient(circle,#1a0d05 0 2px,transparent 2.5px) 0 0/22px 22px',
+   h:'Mr Funkster',m:'Production alias',p:'The funkiest side of the Brownie house.'}
+];
+const grid=document.getElementById('discosGrid');
+discos.forEach(d=>{
+  const b=document.createElement('button');b.className='funda';b.setAttribute('aria-pressed','false');b.setAttribute('aria-label',`${d.h}. Flip the sleeve`);
+  b.innerHTML=`<div class="in">
+    <div class="cara" style="--bg:${d.bg};--fg:${d.fg||'#1a0d05'}"><div class="arte" style="background:${d.arte}"></div><span class="s"><span>${d.s[0]}</span><span>${d.s[1]}</span></span><span class="t">${d.t}</span></div>
+    <div class="dorso"><span class="m">${d.m}</span><h3>${d.h}</h3><p>${d.p}</p>${d.a?`<a href="${d.a}" target="_blank" rel="noopener">${d.al}</a>`:'<span class="m" style="margin-top:auto">DJ Brownie · Breaks &amp; Bass</span>'}</div>
+  </div>`;
+  b.addEventListener('click',e=>{if(e.target.closest('a'))return;b.setAttribute('aria-pressed',b.getAttribute('aria-pressed')!=='true')});
+  grid.appendChild(b);
+});
+
+/* ---------- TURNTABLE + AUDIO ---------- */
+const BPM=135,BAR=60/BPM*4,LOOP=BAR*2;
+let ctx,bufF,bufR,srcF,srcR,gF,gR,master,listo=false;
+function sesionAltavoz(a){try{if(navigator.audioSession)navigator.audioSession.type=a?'playback':'auto'}catch(e){}}
+
+async function renderLoop(){
+  const sr=44100,off=new OfflineAudioContext(1,Math.ceil(sr*LOOP),sr);
+  const nb=off.createBuffer(1,sr*.5,sr),nd=nb.getChannelData(0);for(let i=0;i<nd.length;i++)nd[i]=Math.random()*2-1;
+  const st=60/BPM/4;
+  const K=[1,0,0,0, 0,0,1,1, 0,0,1,0, 0,0,1,0, 1,0,0,0, 0,0,1,0, 0,1,1,0, 0,0,0,0];
+  const S=[0,0,0,0, 1,0,0,0, 0,0,0,0, 1,0,0,0, 0,0,0,0, 1,0,0,1, 0,0,0,0, 1,0,1,0];
+  const H=[1,0,1,1, 1,0,1,1, 1,0,1,1, 1,0,1,1, 1,0,1,1, 1,0,1,1, 1,0,1,1, 1,1,1,1];
+  const B=[38.89,0,0,38.89, 0,0,46.25,0, 0,0,38.89,0, 0,0,34.65,0, 38.89,0,0,38.89, 0,0,46.25,0, 0,0,51.91,0, 0,46.25,0,0];
+  const out=off.createDynamicsCompressor();out.connect(off.destination);
+  for(let i=0;i<32;i++){
+    const t=i*st;
+    if(K[i]){const o=off.createOscillator(),g=off.createGain();o.frequency.setValueAtTime(155,t);o.frequency.exponentialRampToValueAtTime(42,t+.12);g.gain.setValueAtTime(1,t);g.gain.exponentialRampToValueAtTime(.001,t+.35);o.connect(g).connect(out);o.start(t);o.stop(t+.36)}
+    if(S[i]){const s=off.createBufferSource();s.buffer=nb;const f=off.createBiquadFilter();f.type='bandpass';f.frequency.value=1800;f.Q.value=.6;const g=off.createGain();g.gain.setValueAtTime(.7,t);g.gain.exponentialRampToValueAtTime(.001,t+.2);s.connect(f).connect(g).connect(out);s.start(t);s.stop(t+.22);
+      const o=off.createOscillator(),og=off.createGain();o.frequency.value=185;og.gain.setValueAtTime(.35,t);og.gain.exponentialRampToValueAtTime(.001,t+.1);o.connect(og).connect(out);o.start(t);o.stop(t+.11)}
+    if(H[i]){const s=off.createBufferSource();s.buffer=nb;const f=off.createBiquadFilter();f.type='highpass';f.frequency.value=7500;const g=off.createGain();g.gain.setValueAtTime(i%2?.12:.2,t);g.gain.exponentialRampToValueAtTime(.001,t+.045);s.connect(f).connect(g).connect(out);s.start(t);s.stop(t+.05)}
+    if(B[i]){const o=off.createOscillator(),o2=off.createOscillator(),f=off.createBiquadFilter(),g=off.createGain();o.type='sawtooth';o2.type='square';o.frequency.value=B[i];o2.frequency.value=B[i]*1.005;f.type='lowpass';f.Q.value=10;f.frequency.setValueAtTime(1400,t);f.frequency.exponentialRampToValueAtTime(90,t+.22);g.gain.setValueAtTime(.32,t);g.gain.exponentialRampToValueAtTime(.001,t+.3);o.connect(f);o2.connect(f);f.connect(g).connect(out);o.start(t);o2.start(t);o.stop(t+.31);o2.stop(t+.31)}
+  }
+  [0,BAR].forEach(t=>{[311.13,369.99,466.16].forEach(fq=>{const o=off.createOscillator(),g=off.createGain();o.type='triangle';o.frequency.value=fq;g.gain.setValueAtTime(.07,t);g.gain.exponentialRampToValueAtTime(.001,t+.5);o.connect(g).connect(out);o.start(t);o.stop(t+.5)})});
+  return off.startRendering();
+}
+async function initAudio(){
+  ctx=new (window.AudioContext||window.webkitAudioContext)();
+  bufF=await renderLoop();
+  bufR=ctx.createBuffer(1,bufF.length,bufF.sampleRate);
+  const a=bufF.getChannelData(0),r=bufR.getChannelData(0);for(let i=0;i<a.length;i++)r[i]=a[a.length-1-i];
+  master=ctx.createGain();master.gain.value=.9;master.connect(ctx.destination);
+  gF=ctx.createGain();gR=ctx.createGain();gF.gain.value=0;gR.gain.value=0;gF.connect(master);gR.connect(master);
+  srcF=ctx.createBufferSource();srcF.buffer=bufF;srcF.loop=true;srcF.playbackRate.value=0.0001;srcF.connect(gF);srcF.start();
+  srcR=ctx.createBufferSource();srcR.buffer=bufR;srcR.loop=true;srcR.playbackRate.value=0.0001;srcR.connect(gR);srcR.start();
+  listo=true;
+}
+
+const deck=document.getElementById('deck'),vin=document.getElementById('vinilo'),rpmEl=document.getElementById('rpm'),estado=document.getElementById('estado');
+const pitch=document.getElementById('pitch'),pitchOut=document.getElementById('pitchOut'),startBtn=document.getElementById('start');
+const NOMINAL=33.333*6;
+let motor=false,ang=0,omega=0,arrastrando=false,lastA=0,lastT=0,dragOmega=0;
+pitch.addEventListener('input',()=>pitchOut.textContent=(+pitch.value).toFixed(1)+'%');
+
+async function asegurarAudio(){if(!ctx)await initAudio();if(ctx.state!=='running')await ctx.resume()}
+startBtn.addEventListener('click',async()=>{
+  await asegurarAudio();
+  motor=!motor;sesionAltavoz(motor);
+  deck.classList.toggle('on',motor);startBtn.setAttribute('aria-pressed',motor);
+});
+
+function anguloPuntero(e){const r=vin.getBoundingClientRect();return Math.atan2(e.clientY-(r.top+r.height/2),e.clientX-(r.left+r.width/2))*180/Math.PI}
+vin.addEventListener('pointerdown',async e=>{
+  await asegurarAudio();
+  arrastrando=true;vin.setPointerCapture(e.pointerId);lastA=anguloPuntero(e);lastT=performance.now();dragOmega=0;
+});
+vin.addEventListener('pointermove',e=>{
+  if(!arrastrando)return;
+  const a=anguloPuntero(e),t=performance.now();
+  let d=a-lastA;if(d>180)d-=360;if(d<-180)d+=360;
+  const dt=Math.max(1,t-lastT)/1000;
+  dragOmega=dragOmega*.4+(d/dt)*.6;
+  ang+=d;lastA=a;lastT=t;
+});
+['pointerup','pointercancel'].forEach(ev=>vin.addEventListener(ev,()=>{arrastrando=false}));
+vin.addEventListener('keydown',async e=>{if(e.key==='ArrowRight'||e.key==='ArrowLeft'){await asegurarAudio();omega+=(e.key==='ArrowRight'?1:-1)*400;e.preventDefault()}});
+
+let prev=performance.now();
+function loop(now){
+  const dt=Math.min(.05,(now-prev)/1000);prev=now;
+  const objetivo=motor?NOMINAL*(1+pitch.value/100):0;
+  if(arrastrando){
+    omega=dragOmega;
+    if(performance.now()-lastT>60)dragOmega*=.7;
+  }else{
+    omega+=(objetivo-omega)*Math.min(1,dt*(motor?6:2.2));
+    ang+=omega*dt;
+  }
+  vin.style.transform=`rotate(${ang}deg)`;
+  const rate=omega/NOMINAL;
+  rpmEl.textContent=(omega/6).toFixed(1);
+  estado.textContent=arrastrando?(rate<0?'Scratch ← back':'Scratch →'):(motor?'Spinning':'Motor off');
+  if(listo){
+    const t=ctx.currentTime,abs=Math.min(4,Math.abs(rate));
+    srcF.playbackRate.setTargetAtTime(Math.max(.0001,abs),t,.015);
+    srcR.playbackRate.setTargetAtTime(Math.max(.0001,abs),t,.015);
+    const vol=abs<.03?0:Math.min(1,abs*1.5);
+    gF.gain.setTargetAtTime(rate>=0?vol:0,t,.01);
+    gR.gain.setTargetAtTime(rate<0?vol:0,t,.01);
+  }
+  requestAnimationFrame(loop);
+}
+requestAnimationFrame(loop);
+</script>
+</body>
+</html>

@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>DJ Brownie — FM Receiver proposal · ESKALA</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="FM Receiver proposal for DJ Brownie. Demo by ESKALA Marketing.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Overpass+Mono:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* PROPOSAL 03 — FM RECEIVER
+     Idea: three decades of breaks fit on the dial. The homepage is a 70s hi-fi receiver in a walnut case
+     (the colour of a brownie): switch on, turn the wheel and stations appear through the static. Each station
+     is a chapter of his career with its own synthesised break. Off the dial, the site is a radio listings guide. */
+  :root{
+    --papel:#F1E8D8;
+    --nogal:#4A2C1B;
+    --nogal2:#2E1A0F;
+    --alu:#D8D4CC;
+    --ambar:#FFB000;
+    --rojo:#D7261E;
+    --tinta:#20140C;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:Inter,system-ui,sans-serif;background:var(--papel);color:var(--tinta);line-height:1.6}
+  a{color:inherit}
+  :focus-visible{outline:2px solid var(--rojo);outline-offset:3px}
+  h1,h2,h3{font-family:"DM Serif Display",serif;font-weight:400}
+
+  .top{display:flex;justify-content:space-between;align-items:center;padding:calc(1.2rem + env(safe-area-inset-top,0px)) clamp(1.25rem,4vw,3rem)}
+  .brand{font-family:"DM Serif Display";font-size:1.5rem;text-decoration:none}
+  .brand em{color:var(--rojo)}
+  .top nav{display:flex;gap:1.6rem;font-family:"Overpass Mono";font-size:.85rem;text-transform:uppercase}
+  .top nav a{text-decoration:none}
+  .top nav a:hover{color:var(--rojo)}
+
+  .intro{text-align:center;padding:1rem clamp(1.25rem,4vw,3rem) 2.5rem}
+  .intro h1{font-size:clamp(3.2rem,10vw,8.5rem);line-height:.9;letter-spacing:-.02em}
+  .intro h1 em{color:var(--rojo)}
+  .intro p{font-family:"Overpass Mono";font-size:.95rem;margin-top:1rem;color:#6B5848}
+
+  .receptor{max-width:1180px;margin:0 auto clamp(4rem,8vw,6rem);padding:0 clamp(.75rem,3vw,2rem)}
+  .caja{background:linear-gradient(180deg,#5B3722,var(--nogal) 30%,var(--nogal2));border-radius:1.2rem;padding:clamp(.9rem,2vw,1.4rem);box-shadow:0 30px 60px rgba(46,26,15,.35),inset 0 2px 0 rgba(255,255,255,.12);position:relative}
+  .caja::before{content:"";position:absolute;inset:0;border-radius:inherit;background:repeating-linear-gradient(95deg,transparent 0 9px,rgba(0,0,0,.08) 9px 11px,transparent 11px 23px,rgba(255,255,255,.03) 23px 24px);pointer-events:none}
+  .frontal{position:relative;background:linear-gradient(180deg,#E9E6E0,var(--alu) 40%,#C4BFB6);border-radius:.6rem;padding:clamp(1rem,2.4vw,1.8rem);display:grid;grid-template-columns:auto 1fr auto;gap:clamp(1rem,2.5vw,2rem);align-items:center;box-shadow:inset 0 1px 0 #fff,inset 0 -2px 0 rgba(0,0,0,.15)}
+  .frontal::after{content:"";position:absolute;inset:0;border-radius:inherit;background:repeating-linear-gradient(90deg,rgba(255,255,255,.0) 0 1px,rgba(0,0,0,.025) 1px 2px);pointer-events:none}
+  .izq{display:flex;flex-direction:column;gap:.9rem}
+  .marca{font-family:"Overpass Mono";font-weight:700;font-size:.72rem;letter-spacing:.25em;color:#5a5249;text-transform:uppercase}
+  .marca b{display:block;font-family:"DM Serif Display";font-weight:400;font-size:1.6rem;letter-spacing:0;color:var(--tinta);text-transform:none;line-height:1}
+
+  .vu{width:150px;aspect-ratio:1.5;background:radial-gradient(ellipse at 50% 120%,#FFE7A8,#F6D27A 60%,#E7B95A);border-radius:.4rem;position:relative;overflow:hidden;box-shadow:inset 0 0 0 3px #222,inset 0 4px 10px rgba(0,0,0,.35)}
+  .frontal.off .vu{filter:brightness(.45) saturate(.3)}
+  .vu svg{position:absolute;inset:0;width:100%;height:100%}
+  .vu .aguja{transform-origin:75px 92px;transition:transform .12s}
+  .vu small{position:absolute;bottom:6px;left:0;right:0;text-align:center;font-family:"Overpass Mono";font-size:.55rem;font-weight:700;color:#3a2a10}
+
+  .dial{position:relative;height:120px;background:linear-gradient(180deg,#0b0907,#15110d);border-radius:.4rem;box-shadow:inset 0 0 0 3px #222,inset 0 6px 16px rgba(0,0,0,.6);overflow:hidden}
+  .frontal.on .dial{box-shadow:inset 0 0 0 3px #222,inset 0 6px 16px rgba(0,0,0,.6),inset 0 0 60px rgba(255,176,0,.18)}
+  .escala{position:absolute;inset:0}
+  .escala .tick{position:absolute;bottom:38px;width:1px;background:#6b5a3a}
+  .escala .num{position:absolute;bottom:14px;transform:translateX(-50%);font-family:"Overpass Mono";font-size:.72rem;color:#7a6440}
+  .escala .est{position:absolute;top:12px;transform:translateX(-50%);font-family:"Overpass Mono";font-size:.6rem;font-weight:700;color:#7a6440;white-space:nowrap;letter-spacing:.05em}
+  .frontal.on .escala .num,.frontal.on .escala .est{color:var(--ambar);text-shadow:0 0 6px rgba(255,176,0,.6)}
+  .frontal.on .escala .tick{background:#c78a00}
+  .escala .est.activa{color:#fff!important;text-shadow:0 0 8px #fff,0 0 14px var(--ambar)!important}
+  .aguja-dial{position:absolute;top:6px;bottom:6px;width:3px;background:var(--rojo);box-shadow:0 0 8px var(--rojo);transform:translateX(-50%);border-radius:2px;pointer-events:none}
+  .dial input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:ew-resize}
+  .fmlabel{position:absolute;left:10px;top:50%;transform:translateY(-50%);font-family:"Overpass Mono";font-size:.65rem;color:#5a4a30;font-weight:700}
+
+  .mandos{display:flex;flex-direction:column;align-items:center;gap:.8rem}
+  .rueda{width:110px;height:110px;border-radius:50%;background:conic-gradient(from 0deg,#eee,#9a958c,#f4f2ee,#8d877e,#eee,#a39d94,#f4f2ee,#8d877e,#eee);box-shadow:0 6px 14px rgba(0,0,0,.35),inset 0 0 0 6px rgba(0,0,0,.08);position:relative;cursor:grab;touch-action:none}
+  .rueda::after{content:"";position:absolute;inset:18%;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fafafa,#bdb7ae);box-shadow:inset 0 -2px 4px rgba(0,0,0,.2)}
+  .rueda i{position:absolute;top:8%;left:50%;width:6px;height:18%;background:var(--tinta);border-radius:3px;transform:translateX(-50%);z-index:1}
+  .rueda-wrap small{display:block;text-align:center;font-family:"Overpass Mono";font-size:.65rem;font-weight:700;letter-spacing:.2em;color:#5a5249;margin-top:.4rem}
+  .power{display:flex;align-items:center;gap:.6rem;border:0;background:#2a2622;color:#eee;font-family:"Overpass Mono";font-weight:700;font-size:.75rem;letter-spacing:.15em;padding:.6rem 1rem;border-radius:.35rem;cursor:pointer;box-shadow:0 3px 0 #000}
+  .power:active{transform:translateY(2px);box-shadow:0 1px 0 #000}
+  .power i{width:9px;height:9px;border-radius:50%;background:#5a1a16}
+  .frontal.on .power i{background:#ff3b30;box-shadow:0 0 10px #ff3b30}
+  .stereo{font-family:"Overpass Mono";font-size:.62rem;font-weight:700;letter-spacing:.15em;color:#8a8278}
+  .stereo.lock{color:var(--rojo)}
+
+  .emisora{margin-top:clamp(.9rem,2vw,1.2rem);background:#120d09;color:#E9DCC6;border-radius:.6rem;padding:clamp(1.1rem,2.4vw,1.6rem) clamp(1.2rem,2.6vw,2rem);display:grid;grid-template-columns:auto 1fr;gap:1.6rem;align-items:center;min-height:130px}
+  .emisora .fq{font-family:"Overpass Mono";font-weight:700;font-size:clamp(2.2rem,5vw,3.4rem);color:var(--ambar);line-height:1;text-shadow:0 0 14px rgba(255,176,0,.45)}
+  .emisora .fq small{display:block;font-size:.3em;color:#9a8a70;letter-spacing:.2em;margin-top:.4rem}
+  .emisora h3{font-size:clamp(1.5rem,3vw,2.2rem);line-height:1.05;color:#fff}
+  .emisora p{color:#BBAA90;max-width:68ch;margin-top:.3rem}
+  .emisora .estatica{font-family:"Overpass Mono";color:#7d6d55;letter-spacing:.3em}
+
+  section{padding:clamp(4rem,9vw,7rem) clamp(1.25rem,4vw,3rem)}
+  .wrap{max-width:1180px;margin:0 auto}
+  h2{font-size:clamp(2.6rem,6vw,4.8rem);line-height:.95;margin-bottom:2rem}
+  h2 em{color:var(--rojo)}
+  .etiqueta{font-family:"Overpass Mono";font-size:.8rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--rojo);margin-bottom:1rem}
+
+  .guia{background:var(--nogal2);color:var(--papel)}
+  .guia .etiqueta{color:var(--ambar)}
+  .tabla{border-top:2px solid var(--ambar)}
+  .fila{display:grid;grid-template-columns:7rem 1fr 1.4fr auto;gap:1.5rem;padding:1.3rem 0;border-bottom:1px solid rgba(241,232,216,.15);align-items:baseline;cursor:pointer;background:none;border-left:0;border-right:0;border-top:0;width:100%;text-align:left;color:inherit;font:inherit}
+  .fila:hover{background:rgba(255,176,0,.06)}
+  .fila .f{font-family:"Overpass Mono";font-weight:700;font-size:1.4rem;color:var(--ambar)}
+  .fila h3{font-size:1.7rem;line-height:1}
+  .fila p{color:#C9B9A3;font-size:.95rem}
+  .fila .ir{font-family:"Overpass Mono";font-size:.8rem;color:var(--ambar);white-space:nowrap}
+
+  .bio .cols{display:grid;grid-template-columns:1fr 1fr 1fr;gap:clamp(1.5rem,4vw,3rem)}
+  .bio p{font-size:1.02rem}
+  .bio p:first-child::first-letter{font-family:"DM Serif Display";font-size:4.4rem;float:left;line-height:.8;margin:.35rem .6rem 0 0;color:var(--rojo)}
+  .bio .destacado{grid-column:1/-1;font-family:"DM Serif Display";font-style:italic;font-size:clamp(1.8rem,3.6vw,2.8rem);line-height:1.15;border-top:1px solid #CDBFA8;border-bottom:1px solid #CDBFA8;padding:2rem 0;margin-top:1rem}
+
+  .prog{background:#E7DCC7}
+  .parrilla{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
+  .franja{background:var(--papel);border-radius:.6rem;padding:1.4rem;border-top:6px solid var(--c)}
+  .franja .h{font-family:"Overpass Mono";font-weight:700;font-size:1.6rem}
+  .franja h3{font-size:1.5rem;margin:.4rem 0}
+  .franja p{font-size:.95rem;color:#5a4838}
+  .cta{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:1.5rem;margin-top:2.5rem;background:var(--tinta);color:var(--papel);border-radius:.8rem;padding:1.6rem 2rem}
+  .cta b{font-family:"DM Serif Display";font-weight:400;font-size:clamp(1.6rem,3vw,2.4rem);line-height:1}
+  .cta a{background:var(--ambar);color:var(--tinta);text-decoration:none;font-family:"Overpass Mono";font-weight:700;padding:.9rem 1.5rem;border-radius:.4rem}
+
+  footer{background:var(--tinta);color:#B8A88F;padding:2rem clamp(1.25rem,4vw,3rem) calc(2rem + env(safe-area-inset-bottom,0px));display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem;font-family:"Overpass Mono";font-size:.8rem}
+  footer nav{display:flex;gap:1.5rem}
+
+  @media (max-width:980px){
+    .top nav{display:none}
+    .frontal{grid-template-columns:1fr auto}
+    .frontal .izq{grid-column:1/-1;flex-direction:row;justify-content:space-between;align-items:center}
+    .dial{grid-column:1/2}
+    .bio .cols{grid-template-columns:1fr}
+    .parrilla{grid-template-columns:1fr 1fr}
+    .fila{grid-template-columns:5.5rem 1fr;gap:.3rem 1rem}
+    .fila p{grid-column:2}
+    .fila .ir{display:none}
+  }
+  @media (max-width:600px){
+    .frontal{grid-template-columns:1fr}
+    .mandos{flex-direction:row;justify-content:space-between;width:100%}
+    .vu{width:120px}
+    .emisora{grid-template-columns:1fr;gap:.6rem}
+    .parrilla{grid-template-columns:1fr}
+    .escala .est{display:none}
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <a class="brand" href="#">DJ <em>Brownie</em></a>
+  <nav aria-label="Main"><a href="#guide">Stations</a><a href="#bio">Bio</a><a href="#booking">Booking</a></nav>
+</header>
+
+<div class="intro">
+  <h1>Brownie <em>FM</em></h1>
+  <p>Switch on, turn the dial and find the stations hidden in the static.</p>
+</div>
+
+<div class="receptor" role="region" aria-label="Interactive radio receiver">
+  <div class="caja">
+    <div class="frontal off" id="frontal">
+      <div class="izq">
+        <div class="marca">Model BRN-1990<b>Brownie Hi-Fi</b></div>
+        <div class="vu" aria-hidden="true">
+          <svg viewBox="0 0 150 100">
+            <path d="M20 70 A60 60 0 0 1 130 70" fill="none" stroke="#3a2a10" stroke-width="1.5"/>
+            <path d="M105 46 A60 60 0 0 1 130 70" fill="none" stroke="#C0261E" stroke-width="4"/>
+            <g font-family="Overpass Mono" font-size="7" fill="#3a2a10" font-weight="700"><text x="16" y="62">0</text><text x="45" y="34">3</text><text x="73" y="26">5</text><text x="100" y="34">7</text><text x="127" y="62">9</text></g>
+            <line class="aguja" id="vuAguja" x1="75" y1="92" x2="75" y2="22" stroke="#111" stroke-width="1.6" style="transform:rotate(-50deg)"/>
+            <circle cx="75" cy="92" r="6" fill="#222"/>
+          </svg>
+          <small>SIGNAL</small>
+        </div>
+      </div>
+
+      <div class="dial" id="dial">
+        <span class="fmlabel">FM</span>
+        <div class="escala" id="escala"></div>
+        <div class="aguja-dial" id="agujaDial"></div>
+        <input type="range" id="sint" min="87.5" max="108" step="0.05" value="89.0" aria-label="FM tuning in megahertz">
+      </div>
+
+      <div class="mandos">
+        <div class="rueda-wrap"><div class="rueda" id="rueda" aria-hidden="true"><i></i></div><small>TUNING</small></div>
+        <span class="stereo" id="stereo">● STEREO</span>
+        <button class="power" id="power" aria-pressed="false"><i aria-hidden="true"></i>POWER</button>
+      </div>
+    </div>
+
+    <div class="emisora" aria-live="polite">
+      <div class="fq" id="fq">89.0<small>MHz</small></div>
+      <div id="info"><span class="estatica">PRESS POWER TO SWITCH ON</span></div>
+    </div>
+  </div>
+</div>
+
+<main>
+  <section class="guia" id="guide">
+    <div class="wrap">
+      <p class="etiqueta">Station guide</p>
+      <h2>Seven frequencies,<br><em>three decades</em></h2>
+      <div class="tabla" id="tabla"></div>
+    </div>
+  </section>
+
+  <section class="bio" id="bio">
+    <div class="wrap">
+      <p class="etiqueta">On air since the nineties</p>
+      <h2>Who's behind<br>the <em>dial</em></h2>
+      <div class="cols">
+        <p>DJ Brownie is Chris Brown, DJ and producer. He's been spinning for over thirty years: he started in the original dark and dirty underground and after-hours venues of Los Angeles, which led to years of bookings across the United States, Mexico and Canada.</p>
+        <p>In the early nineties he started producing with his long-time friend Paul Grogan, owner of Rampant Records. He released under many names: Gorilla Pimp, Immigrant, Faithealer, Mr Funkster, Brownie and DJ Brownie. In 1999 "Like This" came out on Rampant.</p>
+        <p>Today he releases on breaks and bass labels and writes for television, film, video games and advertising. His latest record, "Effect", came out with SluG (FL) on Kaleidoscope Music in October 2025.</p>
+        <p class="destacado">Three decades changing frequency without ever losing the signal: the broken beat.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="prog" id="booking">
+    <div class="wrap">
+      <p class="etiqueta">Schedule · Booking</p>
+      <h2>Put him in<br>your <em>schedule</em></h2>
+      <div class="parrilla">
+        <div class="franja" style="--c:#FFB000"><span class="h">23:00</span><h3>Warm-up</h3><p>Groove, funk and breaks to get the room going.</p></div>
+        <div class="franja" style="--c:#D7261E"><span class="h">01:30</span><h3>Peak time</h3><p>Breaks and bass at full power.</p></div>
+        <div class="franja" style="--c:#4A2C1B"><span class="h">05:00</span><h3>After-hours</h3><p>His natural habitat for thirty years.</p></div>
+        <div class="franja" style="--c:#6E8B74"><span class="h">24/7</span><h3>Studio</h3><p>Remixes, collaborations and sync for TV, film, games and ads.</p></div>
+      </div>
+      <div class="cta"><b>Want Brownie in your booth?</b><a href="#">Check availability →</a></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <span>DJ Brownie · Breaks &amp; Bass</span>
+  <nav aria-label="Social"><a href="https://www.mixcloud.com/chris-brown75/">Mixcloud</a><a href="https://www.beatport.com/track/effect/21777658">Beatport</a><a href="#">Instagram</a><a href="#">Contact</a></nav>
+</footer>
+
+<script>
+const X=1,_=0;
+const emisoras=[
+  {f:89.3,n:'AFTER-HOURS',t:'After-hours LA',d:'Late 80s and the 90s. The LA underground clubs that opened when everything else shut. Where it all began.',bpm:128,
+   p:[[X,_,_,_, _,_,X,_, _,_,X,_, _,_,_,_],[_,_,_,_, X,_,_,_, _,_,_,_, X,_,_,_],[X,_,X,_, X,_,X,_, X,_,X,_, X,_,X,_]],b:[38.89,0,0,0, 0,0,38.89,0, 0,0,46.25,0, 0,0,0,0]},
+  {f:92.1,n:'RAMPANT',t:'Rampant Records',d:'Early 90s. First productions alongside his long-time friend Paul Grogan, the label\'s owner.',bpm:132,
+   p:[[X,_,_,_, _,X,_,_, _,_,X,_, _,_,X,_],[_,_,_,_, X,_,_,X, _,_,_,_, X,_,_,_],[X,_,X,_, X,_,X,X, X,_,X,_, X,_,X,_]],b:[41.2,0,0,41.2, 0,0,0,0, 49,0,0,0, 0,0,36.7,0]},
+  {f:95.7,n:'LIKE THIS',t:'"Like This" · 1999',d:'Released on Rampant Records. Old-school breaks.',bpm:134,
+   p:[[X,_,_,_, _,_,X,_, X,_,_,_, _,_,X,_],[_,_,_,_, X,_,_,_, _,X,_,_, X,_,_,_],[X,X,X,_, X,X,X,_, X,X,X,_, X,X,X,_]],b:[43.65,0,0,0, 0,0,43.65,0, 43.65,0,0,0, 0,0,51.91,0]},
+  {f:98.9,n:'ALIASES',t:'The aliases',d:'Gorilla Pimp, Immigrant, Faithealer, Mr Funkster, Brownie and DJ Brownie. Many names, one signal.',bpm:130,
+   p:[[X,_,_,X, _,_,X,_, _,_,X,_, _,_,_,X],[_,_,_,_, X,_,_,_, _,_,_,X, X,_,_,_],[X,_,X,_, X,_,X,_, X,_,X,_, X,_,X,_]],b:[36.7,0,0,36.7, 0,0,43.65,0, 0,0,36.7,0, 0,0,0,49]},
+  {f:101.5,n:'ON TOUR',t:'On the road',d:'Years of bookings across the United States, Mexico and Canada.',bpm:136,
+   p:[[X,_,_,_, _,_,_,X, _,_,X,_, _,_,_,_],[_,_,_,_, X,_,_,_, _,_,_,_, X,_,_,X],[X,_,_,X, X,_,_,X, X,_,_,X, X,_,_,X]],b:[46.25,0,0,0, 0,0,0,46.25, 0,0,41.2,0, 0,0,0,0]},
+  {f:104.3,n:'SYNC',t:'TV · Film · Games',d:'Music for television, film, video games and advertising. Breaks can tell stories too.',bpm:124,
+   p:[[X,_,_,_, _,_,_,_, _,_,X,_, _,_,_,X],[_,_,_,_, X,_,_,_, _,_,X,_, X,_,_,_],[_,X,_,X, _,X,_,X, _,X,_,X, _,X,_,X]],b:[38.89,0,0,0, 0,0,0,0, 51.91,0,0,0, 0,0,46.25,0]},
+  {f:107.1,n:'EFFECT',t:'"Effect" · 2025',d:'With SluG (FL) on Kaleidoscope Music, 24 October 2025. 135 bpm, E♭ minor.',bpm:135,link:'https://www.beatport.com/track/effect/21777658',
+   p:[[X,_,_,_, _,_,X,X, _,_,X,_, _,_,X,_],[_,_,_,_, X,_,_,_, _,_,_,_, X,_,_,_],[X,_,X,X, X,_,X,X, X,_,X,X, X,_,X,X]],b:[38.89,0,0,0, 0,0,38.89,0, 0,0,38.89,0, 0,0,46.25,0]}
+];
+const MIN=87.5,MAX=108;
+const pct=f=>(f-MIN)/(MAX-MIN)*100;
+
+const escala=document.getElementById('escala');
+for(let f=88;f<=108;f+=.5){
+  const t=document.createElement('span');t.className='tick';t.style.left=pct(f)+'%';t.style.height=(f%2===0?22:f%1===0?14:8)+'px';escala.appendChild(t);
+  if(f%2===0){const n=document.createElement('span');n.className='num';n.style.left=pct(f)+'%';n.textContent=f;escala.appendChild(n)}
+}
+const etiquetas=emisoras.map(e=>{const s=document.createElement('span');s.className='est';s.style.left=pct(e.f)+'%';s.textContent=e.n;escala.appendChild(s);return s});
+
+const tabla=document.getElementById('tabla');
+emisoras.forEach(e=>{
+  const b=document.createElement('button');b.className='fila';
+  b.innerHTML=`<span class="f">${e.f.toFixed(1)}</span><h3>${e.t}</h3><p>${e.d}</p><span class="ir">Tune in ↑</span>`;
+  b.addEventListener('click',()=>{sint.value=e.f;actualizar();document.getElementById('dial').scrollIntoView({behavior:'smooth',block:'center'})});
+  tabla.appendChild(b);
+});
+
+let ctx,noiseBuf,ruido,gRuido,bpRuido,gMusica,lpMusica,sched,paso=0,next=0,actual=null,senal=0;
+function sesionAltavoz(a){try{if(navigator.audioSession)navigator.audioSession.type=a?'playback':'auto'}catch(e){}}
+function initAudio(){
+  ctx=new (window.AudioContext||window.webkitAudioContext)();
+  const len=ctx.sampleRate*2;noiseBuf=ctx.createBuffer(1,len,ctx.sampleRate);
+  const d=noiseBuf.getChannelData(0);for(let i=0;i<len;i++)d[i]=Math.random()*2-1;
+  ruido=ctx.createBufferSource();ruido.buffer=noiseBuf;ruido.loop=true;
+  bpRuido=ctx.createBiquadFilter();bpRuido.type='bandpass';bpRuido.frequency.value=2500;bpRuido.Q.value=.4;
+  gRuido=ctx.createGain();gRuido.gain.value=0;
+  ruido.connect(bpRuido).connect(gRuido).connect(ctx.destination);ruido.start();
+  lpMusica=ctx.createBiquadFilter();lpMusica.type='lowpass';lpMusica.frequency.value=800;
+  gMusica=ctx.createGain();gMusica.gain.value=0;
+  lpMusica.connect(gMusica).connect(ctx.destination);
+}
+function kick(t){const o=ctx.createOscillator(),g=ctx.createGain();o.frequency.setValueAtTime(150,t);o.frequency.exponentialRampToValueAtTime(42,t+.12);g.gain.setValueAtTime(.9,t);g.gain.exponentialRampToValueAtTime(.001,t+.35);o.connect(g).connect(lpMusica);o.start(t);o.stop(t+.36)}
+function snare(t){const s=ctx.createBufferSource();s.buffer=noiseBuf;const f=ctx.createBiquadFilter();f.type='highpass';f.frequency.value=1300;const g=ctx.createGain();g.gain.setValueAtTime(.5,t);g.gain.exponentialRampToValueAtTime(.001,t+.18);s.connect(f).connect(g).connect(lpMusica);s.start(t,Math.random());s.stop(t+.2);
+  const o=ctx.createOscillator(),og=ctx.createGain();o.frequency.value=190;og.gain.setValueAtTime(.3,t);og.gain.exponentialRampToValueAtTime(.001,t+.1);o.connect(og).connect(lpMusica);o.start(t);o.stop(t+.11)}
+function hat(t){const s=ctx.createBufferSource();s.buffer=noiseBuf;const f=ctx.createBiquadFilter();f.type='highpass';f.frequency.value=7000;const g=ctx.createGain();g.gain.setValueAtTime(.16,t);g.gain.exponentialRampToValueAtTime(.001,t+.05);s.connect(f).connect(g).connect(lpMusica);s.start(t,Math.random());s.stop(t+.06)}
+function bass(t,fq){const o=ctx.createOscillator(),f=ctx.createBiquadFilter(),g=ctx.createGain();o.type='sawtooth';o.frequency.value=fq;f.type='lowpass';f.Q.value=7;f.frequency.setValueAtTime(1000,t);f.frequency.exponentialRampToValueAtTime(110,t+.22);g.gain.setValueAtTime(.3,t);g.gain.exponentialRampToValueAtTime(.001,t+.28);o.connect(f).connect(g).connect(lpMusica);o.start(t);o.stop(t+.29)}
+const voces=[kick,snare,hat];
+function programar(){
+  const e=actual||emisoras[0];const dur=60/e.bpm/4;
+  while(next<ctx.currentTime+.1){
+    if(actual){e.p.forEach((row,r)=>{if(row[paso])voces[r](next)});if(e.b[paso])bass(next,e.b[paso])}
+    next+=dur;paso=(paso+1)%16;
+  }
+}
+
+const sint=document.getElementById('sint'),frontal=document.getElementById('frontal'),agujaDial=document.getElementById('agujaDial'),fq=document.getElementById('fq'),info=document.getElementById('info'),vu=document.getElementById('vuAguja'),stereo=document.getElementById('stereo'),rueda=document.getElementById('rueda'),power=document.getElementById('power');
+let encendida=false,mostrada=null;
+function actualizar(){
+  const f=+sint.value;
+  agujaDial.style.left=pct(f)+'%';
+  rueda.style.transform=`rotate(${(f-MIN)*36}deg)`;
+  fq.innerHTML=f.toFixed(1)+'<small>MHz</small>';
+  let cerca=null,dmin=99;emisoras.forEach(e=>{const d=Math.abs(e.f-f);if(d<dmin){dmin=d;cerca=e}});
+  senal=Math.max(0,1-dmin/.7);senal=senal*senal;
+  const bloqueo=dmin<.12;
+  actual=senal>0?cerca:null;
+  etiquetas.forEach((s,i)=>s.classList.toggle('activa',encendida&&emisoras[i]===cerca&&bloqueo));
+  stereo.classList.toggle('lock',encendida&&bloqueo);
+  vu.style.transform=`rotate(${encendida?-50+senal*95+(Math.random()*4-2):-50}deg)`;
+  if(!encendida){info.innerHTML='<span class="estatica">PRESS POWER TO SWITCH ON</span>';mostrada=null}
+  else if(senal>.25){
+    if(mostrada!==cerca){mostrada=cerca;info.innerHTML=`<h3>${cerca.t}</h3><p>${cerca.d}${cerca.link?` <a href="${cerca.link}" target="_blank" rel="noopener" style="color:var(--ambar)">Listen ↗</a>`:''}</p>`}
+  }else if(mostrada!==0){mostrada=0;info.innerHTML='<span class="estatica">· · · STATIC · · ·</span>'}
+  if(ctx&&encendida){
+    const t=ctx.currentTime;
+    gRuido.gain.setTargetAtTime(.22*(1-senal)+.01,t,.05);
+    bpRuido.frequency.setTargetAtTime(1500+Math.sin(f*7)*1200+1200,t,.05);
+    gMusica.gain.setTargetAtTime(senal*.95,t,.05);
+    lpMusica.frequency.setTargetAtTime(300+senal*senal*15000,t,.05);
+  }
+}
+sint.addEventListener('input',actualizar);
+
+let rDrag=false,rx=0,ry=0;
+rueda.addEventListener('pointerdown',e=>{rDrag=true;rx=e.clientX;ry=e.clientY;rueda.setPointerCapture(e.pointerId)});
+rueda.addEventListener('pointermove',e=>{if(!rDrag)return;const d=(e.clientX-rx)-(e.clientY-ry);rx=e.clientX;ry=e.clientY;sint.value=Math.min(MAX,Math.max(MIN,+sint.value+d*.04));actualizar()});
+['pointerup','pointercancel'].forEach(ev=>rueda.addEventListener(ev,()=>rDrag=false));
+rueda.addEventListener('wheel',e=>{e.preventDefault();sint.value=Math.min(MAX,Math.max(MIN,+sint.value+(e.deltaY>0?-.1:.1)));actualizar()},{passive:false});
+
+power.addEventListener('click',()=>{
+  encendida=!encendida;sesionAltavoz(encendida);
+  if(!ctx)initAudio();
+  power.setAttribute('aria-pressed',encendida);
+  frontal.classList.toggle('on',encendida);frontal.classList.toggle('off',!encendida);
+  if(encendida){ctx.resume();paso=0;next=ctx.currentTime+.05;sched=setInterval(programar,25)}
+  else{clearInterval(sched);gRuido.gain.setTargetAtTime(0,ctx.currentTime,.03);gMusica.gain.setTargetAtTime(0,ctx.currentTime,.03)}
+  actualizar();
+});
+setInterval(()=>{if(encendida)actualizar()},120);
+actualizar();
+</script>
+</body>
+</html>

@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>DJ Brownie — Sequencer proposal · ESKALA</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Sequencer proposal for DJ Brownie. Demo by ESKALA Marketing.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* PROPOSAL 01 — SEQUENCER "BRN-135"
+     Idea: breaks are built by chopping drum breaks. DJ Brownie's homepage is his drum machine:
+     the hero is a 16-step sequencer at 135 bpm in E♭ minor (the key of "Effect") that really plays,
+     Web Audio synthesis, no samples. Each chapter of his career is a breakbeat pattern saved in the
+     memory bank, each modelled on a classic break (Funky Drummer, Amen, Think, nu-skool, big beat...):
+     syncopated kicks, ghost snares, open hats, swing, a reese bass and room on the snare.
+     Palette: cream chassis, dark-chocolate front panel, caramel / raspberry / mint pads. A brownie with buttons. */
+  :root{
+    --chasis:#EADFD2;
+    --panel:#24170F;
+    --pad-n:#E08A2E;
+    --pad-a:#F2C14E;
+    --pad-v:#3FB59A;
+    --pad-r:#E2476A;
+    --led:#FF3B2F;
+    --lcd:#F5B95A;
+    --lcd-t:#3A1F06;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:"IBM Plex Sans",system-ui,sans-serif;background:var(--chasis);color:var(--panel);line-height:1.6;font-size:1.0625rem}
+  a{color:inherit}
+  :focus-visible{outline:3px solid var(--pad-n);outline-offset:3px}
+  h1,h2,h3,.hw{font-family:"Chakra Petch",sans-serif}
+
+  .top{display:flex;justify-content:space-between;align-items:center;padding:calc(1rem + env(safe-area-inset-top,0px)) clamp(1.25rem,4vw,3rem) 1rem}
+  .brand{font-family:"Chakra Petch";font-weight:700;font-size:1.25rem;text-decoration:none;display:flex;align-items:center;gap:.6rem}
+  .brand i{width:12px;height:12px;border-radius:50%;background:var(--led);box-shadow:0 0 10px var(--led)}
+  .top nav{display:flex;gap:1.5rem;font-weight:500}
+  .top nav a{text-decoration:none}
+  .top nav a:hover{text-decoration:underline;text-underline-offset:4px}
+
+  .maquina{margin:0 clamp(.75rem,3vw,2.5rem);background:var(--panel);color:#F1E7DC;border-radius:1.5rem;padding:clamp(1.25rem,3vw,2.5rem);box-shadow:inset 0 2px 0 rgba(255,255,255,.08),0 20px 40px rgba(36,23,15,.35);position:relative;overflow:hidden}
+  .maquina::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(255,255,255,.018) 0 2px,transparent 2px 6px);pointer-events:none}
+  .maq-top{display:grid;grid-template-columns:1fr auto;gap:2rem;align-items:start;margin-bottom:2rem;position:relative}
+  .modelo{font-family:"Chakra Petch";font-weight:600;font-size:.8rem;letter-spacing:.2em;color:#B79F8C;margin-bottom:.4rem}
+  .maquina h1{font-size:clamp(3rem,9vw,7.5rem);font-weight:700;line-height:.85;letter-spacing:-.02em}
+  .maquina h1 small{display:block;font-size:.2em;letter-spacing:0;font-weight:500;color:#B79F8C;margin-top:.8rem;line-height:1.3;max-width:34ch}
+  .lcd{background:var(--lcd);color:var(--lcd-t);border-radius:.5rem;padding:1rem 1.2rem;min-width:320px;font-family:"Chakra Petch";font-weight:600;box-shadow:inset 0 0 0 3px #120b07,inset 0 6px 14px rgba(0,0,0,.25),0 0 30px rgba(245,185,90,.15)}
+  .lcd .l1{font-size:1.5rem;line-height:1.1}
+  .lcd .l2{font-size:.95rem;opacity:.85}
+  .controles{display:flex;flex-wrap:wrap;gap:1rem 2rem;align-items:center;margin-bottom:1.5rem;position:relative}
+  .play{background:var(--pad-n);color:var(--panel);border:0;border-radius:.5rem;font-family:"Chakra Petch";font-weight:700;font-size:1.1rem;padding:.8rem 1.6rem;cursor:pointer;box-shadow:0 4px 0 #8f5214}
+  .play:active{transform:translateY(3px);box-shadow:0 1px 0 #8f5214}
+  .tempo{display:flex;align-items:center;gap:.8rem;color:#B79F8C}
+  .tempo input{accent-color:var(--pad-a);width:140px}
+  .tempo output{font-family:"Chakra Petch";font-weight:700;color:#fff;min-width:4.5ch}
+  .clave{font-family:"Chakra Petch";font-weight:600;background:#3A271B;border-radius:.4rem;padding:.35rem .7rem;color:var(--pad-a)}
+  .nota{color:#B79F8C;font-size:.9rem}
+
+  .grid{display:grid;grid-template-columns:5.5rem repeat(16,1fr);gap:6px;align-items:center;position:relative}
+  .grid .nombre{font-family:"Chakra Petch";font-weight:600;font-size:.85rem;color:#B79F8C;line-height:1.1}
+  .paso{aspect-ratio:1;border:0;border-radius:6px;background:#3A271B;cursor:pointer;position:relative}
+  .paso.tiempo{background:#4B3426}
+  .paso[aria-pressed="true"]{background:var(--c)}
+  .paso.ahora{box-shadow:0 0 0 2px #fff}
+  .paso.ahora[aria-pressed="true"]{filter:brightness(1.3)}
+  .paso.flash{filter:brightness(1.6)}
+  .contador{display:grid;grid-template-columns:5.5rem repeat(16,1fr);gap:6px;margin-top:8px;position:relative}
+  .contador span{height:6px;border-radius:3px;background:#3A271B}
+  .contador span.on{background:var(--led);box-shadow:0 0 8px var(--led)}
+
+  section{padding:clamp(4rem,9vw,7rem) clamp(1.25rem,4vw,3rem)}
+  .wrap{max-width:1180px;margin:0 auto}
+  h2{font-size:clamp(2.2rem,5vw,3.6rem);font-weight:700;line-height:1;margin-bottom:2rem}
+
+  .manual .cols{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(2rem,6vw,5rem);align-items:start}
+  .manual .kicker{font-family:"Chakra Petch";font-weight:600;font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;color:#8A6A52;margin-bottom:.7rem}
+  .manual p{max-width:58ch;margin-bottom:1.1rem}
+  .spec{position:relative;background:var(--panel);color:#F1E7DC;border-radius:1.25rem;padding:1.5rem 1.6rem 1.15rem;box-shadow:inset 0 2px 0 rgba(255,255,255,.08),0 18px 36px rgba(36,23,15,.28);overflow:hidden}
+  .spec::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(255,255,255,.02) 0 2px,transparent 2px 6px);pointer-events:none}
+  .spec h3{position:relative;font-size:.75rem;letter-spacing:.18em;text-transform:uppercase;color:#B79F8C;font-weight:600;margin-bottom:.15rem}
+  .spec .placa{position:relative;font-family:"Chakra Petch";font-weight:700;color:var(--pad-a);font-size:.95rem;margin-bottom:1rem}
+  .spec table{position:relative;width:100%;border-collapse:collapse}
+  .spec td{padding:.72rem 0;border-top:1px solid rgba(241,231,220,.12);vertical-align:baseline}
+  .spec tr:first-child td{border-top:0}
+  .spec td:first-child{color:#B79F8C;padding-right:1rem}
+  .spec td:last-child{text-align:right;font-family:"Chakra Petch";font-weight:600}
+  .spec .chips{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:.35rem}
+  .spec .chips i{font-style:normal;font-size:.78rem;background:#3A271B;border-radius:99px;padding:.12rem .55rem}
+  .spec .chips i:nth-child(1){color:var(--pad-a)}
+  .spec .chips i:nth-child(2){color:var(--pad-v)}
+  .spec .chips i:nth-child(3){color:var(--pad-r)}
+
+  .historia{background:var(--panel);color:#F1E7DC}
+  .historia .cols{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem}
+  .historia .cols div{border-top:4px solid var(--c);padding-top:1rem}
+  .historia h3{font-size:1.3rem;margin-bottom:.5rem}
+  .historia p{color:#D3C3B4;font-size:.99rem}
+  .historia .frase{margin-top:3rem;font-family:"Chakra Petch";font-size:clamp(1.4rem,3vw,2.2rem);font-weight:600;line-height:1.2;max-width:40ch}
+
+  .bancos{margin-top:1.75rem;border-top:1px solid rgba(255,255,255,.1);scroll-margin-top:1rem;position:relative}
+  .bancos summary{list-style:none;cursor:pointer;display:flex;align-items:center;flex-wrap:wrap;gap:.35rem 1rem;padding:1.1rem 0 .2rem;user-select:none}
+  .bancos summary::-webkit-details-marker{display:none}
+  .bancos-tit{font-family:"Chakra Petch";font-weight:700;font-size:clamp(1.15rem,2vw,1.45rem)}
+  .bancos-sub{color:#B79F8C;font-size:.9rem}
+  .bancos-caret{margin-left:auto;width:2.2rem;height:2.2rem;border-radius:50%;display:grid;place-items:center;background:#3A271B;color:#fff;transition:transform .2s,background .2s}
+  .bancos summary:hover .bancos-caret{background:var(--pad-n);color:var(--panel)}
+  .bancos[open] .bancos-caret{transform:rotate(180deg)}
+  .bancos .intro{max-width:60ch;color:#B79F8C;font-size:.95rem;margin:.6rem 0 1.25rem}
+  .pads{display:grid;grid-template-columns:repeat(8,1fr);gap:.75rem}
+  .pad{border:0;border-radius:1rem;padding:1rem;text-align:left;font:inherit;cursor:pointer;background:#EFE6DC;color:var(--panel);min-height:112px;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 5px 0 #B3A190;transition:transform .08s,box-shadow .08s}
+  .pad:active{transform:translateY(4px);box-shadow:0 1px 0 #B3A190}
+  .pad .id{font-family:"Chakra Petch";font-weight:700;font-size:.9rem;opacity:.7}
+  .pad b{font-family:"Chakra Petch";font-size:1.05rem;line-height:1.1;display:block}
+  .pad small{font-size:.8rem}
+  .pad em{font-style:normal;font-size:.72rem;font-weight:600;opacity:.65;display:block;margin-top:.15rem}
+  .pad[aria-pressed="true"]{background:var(--c);box-shadow:0 5px 0 rgba(0,0,0,.35)}
+  .pad.vacio{background:transparent;border:2px dashed #7D6655;box-shadow:none;cursor:default;color:#B79F8C}
+  .pantalla{margin-top:1.25rem;background:var(--lcd);color:var(--lcd-t);border-radius:.75rem;padding:1.1rem 1.4rem;box-shadow:inset 0 0 0 3px #120b07,inset 0 6px 14px rgba(0,0,0,.25)}
+  .pantalla h3{font-size:1.35rem;line-height:1.1}
+  .pantalla .meta{font-family:"Chakra Petch";font-weight:600;margin:.3rem 0 .6rem}
+  .pantalla p{max-width:70ch}
+
+  .ed-head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:.5rem 2rem;margin-bottom:1.5rem}
+  .ed-head h2{margin:0}
+  .ed-head a{font-weight:600;text-decoration:underline;text-underline-offset:3px}
+  .tracklist{list-style:none;border-top:2px solid var(--panel)}
+  .track{display:grid;grid-template-columns:3.2rem 7rem 1fr auto;gap:1.25rem;align-items:start;padding:1.4rem 0;border-bottom:1px solid #C9B8A6}
+  .t-id{font-family:"Chakra Petch";font-weight:700;font-size:.85rem;display:grid;place-items:center;width:2.6rem;height:2.6rem;border-radius:.6rem;background:var(--c,#EFE6DC);box-shadow:0 3px 0 rgba(0,0,0,.2)}
+  .t-fecha{font-family:"Chakra Petch";font-weight:700;font-size:1.3rem;line-height:1.1}
+  .t-fecha small{display:block;font-size:.8rem;font-weight:600;opacity:.6}
+  .t-body h3{font-size:1.3rem;line-height:1.15}
+  .t-lugar{font-size:.9rem;opacity:.65;margin-bottom:.4rem}
+  .t-body p{max-width:62ch}
+  .cartel{list-style:none;display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.8rem}
+  .cartel li{font-size:.82rem;font-weight:600;background:#fff;border-radius:999px;padding:.2rem .7rem}
+  .cartel li:first-child{background:var(--panel);color:#fff}
+  .t-link{font-family:"Chakra Petch";font-weight:600;font-size:.9rem;text-decoration:none;white-space:nowrap;padding-top:.2rem}
+  .t-link:hover{text-decoration:underline;text-underline-offset:3px}
+  .track.proxima .t-id{background:transparent;border:2px dashed #7D6655;box-shadow:none}
+  .archivo{margin-top:2rem;display:flex;justify-content:space-between;align-items:center;gap:1rem;background:var(--panel);color:#F1E7DC;text-decoration:none;border-radius:1rem;padding:1.2rem 1.5rem;font-size:1.4rem}
+  .archivo b{display:block;font-family:"Chakra Petch";font-size:1.15rem}
+  .archivo small{font-size:.85rem;color:#B79F8C}
+  .archivo:hover{background:#3A271B}
+
+  .info .grid2{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+  .info .grid2 div{background:#F4ECE3;border-radius:1rem;padding:1.3rem}
+  .info h3{font-size:1.1rem}
+  .cta{display:inline-flex;margin-top:2rem;background:var(--pad-n);color:var(--panel);text-decoration:none;font-family:"Chakra Petch";font-weight:700;font-size:1.2rem;padding:1rem 1.8rem;border-radius:.6rem;box-shadow:0 5px 0 #8f5214}
+  .cta:active{transform:translateY(4px);box-shadow:0 1px 0 #8f5214}
+
+  footer{background:var(--panel);color:#D3C3B4;padding:2.5rem clamp(1.25rem,4vw,3rem) calc(2.5rem + env(safe-area-inset-bottom,0px));display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem;font-size:.9rem}
+  footer nav{display:flex;gap:1.5rem}
+
+  @media (max-width:1180px){.pads{grid-template-columns:repeat(4,1fr)}}
+  @media (max-width:900px){
+    .top nav{display:none}
+    .maq-top,.manual .cols{grid-template-columns:1fr}
+    .lcd{min-width:0}
+    .historia .cols{grid-template-columns:1fr}
+    .track{grid-template-columns:2.6rem 1fr auto;gap:.4rem 1rem}
+    .t-fecha{grid-column:2}
+    .t-body{grid-column:1/-1}
+    .t-link{grid-column:3;grid-row:1}
+    .info .grid2{grid-template-columns:1fr}
+    .grid,.contador{grid-template-columns:3.4rem repeat(16,1fr);gap:3px}
+    .grid .nombre{font-size:.62rem}
+    .paso{border-radius:3px}
+  }
+  @media (max-width:600px){.pads{grid-template-columns:1fr 1fr;gap:.5rem}.pad{min-height:88px;padding:.8rem}.tempo input{width:100px}}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.pad{transition:none}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <a class="brand" href="#"><i aria-hidden="true"></i>DJ BROWNIE</a>
+  <nav aria-label="Main"><a href="#about">About</a><a href="#story">Story</a><a href="#releases">Releases</a><a href="#booking">Booking</a></nav>
+</header>
+
+<div class="maquina" role="region" aria-labelledby="h1">
+  <div class="maq-top">
+    <div>
+      <div class="modelo">BRN-135 · BREAKS &amp; BASS RHYTHM COMPOSER</div>
+      <h1 id="h1">DJ Brownie<small>Thirty-plus years of breaks out of the Los Angeles underground. Hit play, tap the steps and build your own break.</small></h1>
+    </div>
+    <div class="lcd" aria-live="polite">
+      <div class="l1" id="lcd1">B7 EFFECT</div>
+      <div class="l2" id="lcd2">Tear-out nu-skool · with SluG (FL)</div>
+    </div>
+  </div>
+  <div class="controles">
+    <button class="play" id="play" aria-pressed="false">▶ Play</button>
+    <label class="tempo">Tempo <input type="range" id="bpm" min="120" max="150" value="135"><output id="bpmOut">135 bpm</output></label>
+    <label class="tempo">Swing <input type="range" id="swing" min="50" max="66" value="52"><output id="swingOut">52%</output></label>
+    <span class="clave">E♭ minor</span>
+    <span class="nota">Sound is synthesised in your browser. Mind the volume.</span>
+  </div>
+  <div class="grid" id="seq"></div>
+  <div class="contador" id="cont" aria-hidden="true"></div>
+
+  <details class="bancos" id="bank">
+    <summary>
+      <span class="bancos-tit">Pattern bank</span>
+      <span class="bancos-sub">7 chapters · 7 classic breakbeats · load one into the sequencer</span>
+      <span class="bancos-caret" aria-hidden="true">▾</span>
+    </summary>
+    <p class="intro">Every chapter of his career is a different breakbeat. Hit one and watch the sequencer change; if it's playing, the break switches on the next bar.</p>
+    <div class="pads" id="pads"></div>
+    <div class="pantalla" aria-live="polite">
+      <h3 id="pTit">Pick a pattern</h3>
+      <div class="meta" id="pMeta">B1 to B7</div>
+      <p id="pTxt">Three decades in the booth, from the after-hours to the screen.</p>
+    </div>
+  </details>
+</div>
+
+<main>
+  <section class="manual" id="about">
+    <div class="wrap cols">
+      <div>
+        <p class="kicker">Operator's manual</p>
+        <h2>Who is DJ Brownie</h2>
+        <p>DJ Brownie is Chris Brown, DJ and producer. He started spinning over thirty years ago in the original dark and dirty underground and after-hours venues of Los Angeles, which led to years of bookings across the United States, Mexico and Canada.</p>
+        <p>In the early nineties he turned his hand to production with long-time friend Paul Grogan, owner of Rampant Records, releasing under a handful of aliases: Gorilla Pimp, Immigrant, Faithealer, Mr Funkster, Brownie and, of course, DJ Brownie.</p>
+        <p>Today he's dropping dancefloor bombs on top breaks and bass labels, while also producing for TV, film, video games and commercials.</p>
+      </div>
+      <aside class="spec">
+        <h3>Rear panel</h3>
+        <p class="placa">BRN-135 · specifications</p>
+        <table>
+          <tr><td>Name</td><td>Chris Brown</td></tr>
+          <tr><td>Roots</td><td>Los Angeles underground</td></tr>
+          <tr><td>Genre</td><td><span class="chips"><i>Breaks</i><i>Breakbeat</i><i>UK Bass</i></span></td></tr>
+          <tr><td>In the booth</td><td>30+ years</td></tr>
+          <tr><td>Producing</td><td>Since the early 90s</td></tr>
+          <tr><td>Territories</td><td>USA, Mexico, Canada</td></tr>
+          <tr><td>Latest release</td><td>Effect · 135 bpm · E♭m</td></tr>
+          <tr><td>Sync</td><td>TV, film, games, ads</td></tr>
+        </table>
+      </aside>
+    </div>
+  </section>
+
+  <section class="historia" id="story">
+    <div class="wrap">
+      <h2>The story in three bars</h2>
+      <div class="cols">
+        <div style="--c:var(--pad-v)"><h3>The after-hours</h3><p>Los Angeles, late eighties and early nineties. Warehouses, basements and clubs that opened when everything else shut. That's where Brownie learnt to read a floor at five in the morning.</p></div>
+        <div style="--c:var(--pad-a)"><h3>The studio</h3><p>With Paul Grogan and Rampant Records he went from playing records to making them. Several aliases, one obsession: the broken beat. In 1999 "Like This" came out on Rampant.</p></div>
+        <div style="--c:var(--pad-n)"><h3>The screen and the floor</h3><p>These days he splits his time between breaks and bass labels and music for TV, film, games and ads. In October 2025 he released "Effect" with SluG (FL).</p></div>
+      </div>
+      <p class="frase">Why Brownie? Because it's dense, dark and addictive. Like proper breaks.</p>
+    </div>
+  </section>
+
+  <section class="ediciones" id="releases">
+    <div class="wrap">
+      <div class="ed-head">
+        <h2>Selected releases</h2>
+        <p>From Rampant vinyl to today's Beatport. <a href="#bank">Load the break into the sequencer ↑</a></p>
+      </div>
+      <ol class="tracklist">
+        <li class="track proxima">
+          <span class="t-id">B8</span>
+          <div class="t-fecha">2026<small>Next</small></div>
+          <div class="t-body"><h3>New release</h3><p class="t-lugar">To be announced</p><p>Empty pattern. Follow him to be first to hear what drops next.</p></div>
+          <a class="t-link" href="https://www.mixcloud.com/chris-brown75/" target="_blank" rel="noopener">Mixcloud ↗</a>
+        </li>
+        <li class="track" style="--c:var(--pad-r)">
+          <span class="t-id">B7</span>
+          <div class="t-fecha">24 Oct<small>2025</small></div>
+          <div class="t-body">
+            <h3>Effect (Original Mix)</h3>
+            <p class="t-lugar">Kaleidoscope Music · Breaks / Breakbeat / UK Bass</p>
+            <p>A collaboration with SluG (FL). 135 bpm, E♭ minor, 4:26 of dark, direct breaks.</p>
+            <ul class="cartel"><li>DJ Brownie</li><li>SluG (FL)</li><li>135 BPM</li><li>Eb minor</li></ul>
+          </div>
+          <a class="t-link" href="https://www.beatport.com/track/effect/21777658" target="_blank" rel="noopener">On Beatport ↗</a>
+        </li>
+        <li class="track" style="--c:var(--pad-a)">
+          <span class="t-id">B3</span>
+          <div class="t-fecha">1999<small>Rampant</small></div>
+          <div class="t-body">
+            <h3>Like This</h3>
+            <p class="t-lugar">Rampant Records</p>
+            <p>From the Rampant era, Paul Grogan's label, where Brownie learnt his trade as a producer.</p>
+          </div>
+        </li>
+        <li class="track" style="--c:var(--pad-v)">
+          <span class="t-id">B5</span>
+          <div class="t-fecha">90s<small>Aliases</small></div>
+          <div class="t-body">
+            <h3>The aliases</h3>
+            <p class="t-lugar">Rampant Records and beyond</p>
+            <p>Productions released under several names over the years.</p>
+            <ul class="cartel"><li>DJ Brownie</li><li>Brownie</li><li>Gorilla Pimp</li><li>Immigrant</li><li>Faithealer</li><li>Mr Funkster</li></ul>
+          </div>
+        </li>
+      </ol>
+      <a class="archivo" href="https://www.mixcloud.com/chris-brown75/" target="_blank" rel="noopener">
+        <span><b>Mixes on Mixcloud</b><small>Hear Brownie in the booth</small></span><span aria-hidden="true">↗</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="info" id="booking">
+    <div class="wrap">
+      <h2>Booking</h2>
+      <div class="grid2">
+        <div><h3>Clubs &amp; festivals</h3><p>Breaks and bass sets for the floor, from warm-up to after-hours closing.</p></div>
+        <div><h3>Territories</h3><p>Years of dates across the USA, Mexico and Canada. UK and Europe: let's talk.</p></div>
+        <div><h3>Production</h3><p>Originals, remixes and collaborations for breaks and bass labels.</p></div>
+        <div><h3>Sync</h3><p>Music for television, film, video games and advertising.</p></div>
+        <div><h3>Rider</h3><p>Technical and hospitality rider on request.</p></div>
+        <div><h3>Press kit</h3><p>Bio, hi-res photos and logos, ready for the line-up poster.</p></div>
+      </div>
+      <a class="cta" href="#">Check availability →</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <span>DJ Brownie · Breaks &amp; Bass</span>
+  <nav aria-label="Social"><a href="https://www.mixcloud.com/chris-brown75/">Mixcloud</a><a href="https://www.beatport.com/track/effect/21777658">Beatport</a><a href="#">Instagram</a><a href="#">Contact</a></nav>
+</footer>
+
+<script>
+/* ============================================================
+   DATA — 6 tracks, each chapter is a real breakbeat
+   ============================================================ */
+const pistas=[
+  {n:'Kick',c:'var(--pad-n)'},
+  {n:'Snare',c:'var(--pad-a)'},
+  {n:'Ghost',c:'#C9A24A'},
+  {n:'Hats',c:'var(--pad-v)'},
+  {n:'Open hat',c:'#9FD3E8'},
+  {n:'Bass',c:'var(--pad-r)'}
+];
+/* Notes in E♭ minor (reese bass) */
+const Eb=38.89,F=43.65,Gb=46.25,Ab=51.91,Bb=58.27,Db=34.65;
+const H8=[0,2,4,6,8,10,12,14], H16=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
+/* Each pattern: k kick, s snare, g ghost snare, h closed hats, o open hats, b bass {step:note}, sw swing % */
+const capitulos=[
+  {id:'B1',t:'After-hours LA',f:'Late 80s · 90s',l:'Los Angeles',br:'Funky Drummer feel',c:'var(--pad-v)',
+   txt:'The original underground clubs and after-hours venues of Los Angeles. Where it all started, over thirty years ago. A loose, funky drummer break with plenty of shuffle.',
+   k:[0,3,6,10],s:[4,12],g:[7,9,14],h:[0,2,4,6,8,10,11,12,14,15],o:[],b:{0:Eb,3:Eb,6:Gb,10:Db},sw:58},
+  {id:'B2',t:'Rampant Records',f:'Early 90s',l:'With Paul Grogan',br:'Amen break feel',c:'#9FD3E8',
+   txt:'First steps in production alongside his long-time friend Paul Grogan, owner of Rampant Records. The break every producer chopped: the Amen.',
+   k:[0,2,10,11],s:[4,12],g:[7,9,15],h:H8,o:[],b:{0:Eb,2:Eb,10:Ab,11:Gb},sw:53},
+  {id:'B3',t:'Like This',f:'1999',l:'Rampant Records',br:'Think break feel',c:'var(--pad-a)',
+   txt:'"Like This", released on Rampant in 1999. Old-school breaks with 16th hats and a heavy swing.',
+   k:[0,7,10],s:[4,12],g:[6,14,15],h:H16,o:[],b:{0:Eb,7:Db,10:Eb},sw:60},
+  {id:'B4',t:'On the road',f:'Years of touring',l:'USA · Mexico · Canada',br:'Rolling nu-skool breaks',c:'#F2A0B4',
+   txt:'From the after-hours to the road: years of bookings across the United States, Mexico and Canada. A straight, rolling nu-skool groove with open hats on the off-beat.',
+   k:[0,7,10],s:[4,12],g:[15],h:[0,1,4,5,8,9,12,13],o:[2,6,10,14],b:{0:Eb,3:Eb,7:Gb,10:Eb,13:Db},sw:50},
+  {id:'B5',t:'The aliases',f:'90s → now',l:'Gorilla Pimp · Immigrant · Faithealer · Mr Funkster',br:'Big beat',c:'var(--pad-n)',
+   txt:'Gorilla Pimp, Immigrant, Faithealer, Mr Funkster, Brownie and DJ Brownie. Many names, one break. Big, dumb, heavy big beat with a snare roll into the next bar.',
+   k:[0,6,8,10],s:[4,12],g:[13,15],h:[0,2,4,6,8,10,12],o:[14],b:{0:Eb,6:Eb,8:Gb,10:Ab},sw:54},
+  {id:'B6',t:'Sync',f:'Now',l:'TV · Film · Games · Ads',br:'Florida funky breaks',c:'#B5E08B',
+   txt:'Music for television, film, video games and commercials. Breaks can tell stories too. A bouncy Florida-style funky break.',
+   k:[0,3,9,11],s:[4,12],g:[6,10,14],h:[0,1,2,3,4,5,6,8,9,10,11,12,13,14,15],o:[7],b:{0:Eb,3:Gb,9:Db,11:Eb},sw:57},
+  {id:'B7',t:'Effect',f:'24 Oct 2025',l:'Kaleidoscope Music · with SluG (FL)',br:'Tear-out nu-skool',c:'var(--pad-r)',
+   txt:'Effect (Original Mix), with SluG (FL). 135 bpm, E♭ minor. Dark, tight tear-out breaks with a double kick and a growling reese. The pattern that plays by default.',
+   k:[0,6,7,10,14],s:[4,12],g:[9,15],h:[0,2,3,4,6,8,10,11,12,14],o:[],b:{0:Eb,6:Eb,7:Eb,10:Gb,14:Db},sw:52}
+];
+function aPatron(e){
+  const row=a=>{const r=Array(16).fill(0);a.forEach(i=>r[i]=1);return r};
+  const b=Array(16).fill(0),notas=Array(16).fill(0);
+  Object.entries(e.b).forEach(([s,f])=>{b[s]=1;notas[s]=f});
+  return {p:[row(e.k),row(e.s),row(e.g),row(e.h),row(e.o),b],notas};
+}
+
+/* ============================================================
+   SEQUENCER UI
+   ============================================================ */
+const seq=document.getElementById('seq'),cont=document.getElementById('cont');
+let actual=aPatron(capitulos[6]),patron=actual.p,notasBajo=actual.notas,pendiente=null;
+const botones=[];
+pistas.forEach((p,r)=>{
+  const nm=document.createElement('span');nm.className='nombre';nm.textContent=p.n;seq.appendChild(nm);
+  botones[r]=[];
+  for(let s=0;s<16;s++){
+    const b=document.createElement('button');b.className='paso'+(s%4===0?' tiempo':'');b.style.setProperty('--c',p.c);
+    b.setAttribute('aria-label',`${p.n}, step ${s+1}`);
+    b.addEventListener('click',()=>{
+      patron[r][s]=patron[r][s]?0:1;
+      if(r===5&&patron[r][s]&&!notasBajo[s])notasBajo[s]=Eb;
+      pintar();
+    });
+    seq.appendChild(b);botones[r][s]=b;
+  }
+});
+cont.appendChild(document.createElement('span')).style.background='transparent';
+const leds=[];for(let s=0;s<16;s++){leds[s]=cont.appendChild(document.createElement('span'))}
+function pintar(){patron.forEach((row,r)=>row.forEach((v,s)=>botones[r][s].setAttribute('aria-pressed',!!v)))}
+pintar();
+
+/* ============================================================
+   AUDIO ENGINE — breakbeat synthesis
+   ============================================================ */
+let ctx=null,sonando=false,paso=0,next=0,timer=null,noise=null,master,rev,openHat=null;
+const bpmIn=document.getElementById('bpm'),bpmOut=document.getElementById('bpmOut');
+const swIn=document.getElementById('swing'),swOut=document.getElementById('swingOut');
+bpmIn.addEventListener('input',()=>bpmOut.textContent=bpmIn.value+' bpm');
+swIn.addEventListener('input',()=>swOut.textContent=swIn.value+'%');
+function ponerSwing(v){swIn.value=v;swOut.textContent=v+'%'}
+ponerSwing(capitulos[6].sw);
+
+function sesionAltavoz(activa){try{if(navigator.audioSession)navigator.audioSession.type=activa?'playback':'auto'}catch(e){}}
+function impulso(seg,decay){
+  const len=ctx.sampleRate*seg,b=ctx.createBuffer(2,len,ctx.sampleRate);
+  for(let c=0;c<2;c++){const d=b.getChannelData(c);for(let i=0;i<len;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/len,decay)}
+  return b;
+}
+function initAudio(){
+  ctx=new (window.AudioContext||window.webkitAudioContext)();
+  const len=ctx.sampleRate;noise=ctx.createBuffer(1,len,ctx.sampleRate);
+  const d=noise.getChannelData(0);for(let i=0;i<len;i++)d[i]=Math.random()*2-1;
+  /* master: soft saturation -> glue compressor -> out (the "sampled break" sound) */
+  const sat=ctx.createWaveShaper();const curva=new Float32Array(2048);
+  for(let i=0;i<2048;i++){const x=i/1024-1;curva[i]=Math.tanh(1.8*x)/Math.tanh(1.8)}
+  sat.curve=curva;sat.oversample='2x';
+  const comp=ctx.createDynamicsCompressor();comp.threshold.value=-16;comp.knee.value=6;comp.ratio.value=4;comp.attack.value=.004;comp.release.value=.12;
+  master=ctx.createGain();master.gain.value=.75;
+  master.connect(sat).connect(comp).connect(ctx.destination);
+  /* short drum room */
+  rev=ctx.createConvolver();rev.buffer=impulso(.55,3.2);
+  const rg=ctx.createGain();rg.gain.value=.5;rev.connect(rg).connect(master);
+}
+function salida(nodo,envio){nodo.connect(master);if(envio){const s=ctx.createGain();s.gain.value=envio;nodo.connect(s);s.connect(rev)}}
+function ruido(t,dur){const s=ctx.createBufferSource();s.buffer=noise;s.start(t,Math.random()*.4);s.stop(t+dur);return s}
+
+function kick(t,v=1){
+  const o=ctx.createOscillator(),g=ctx.createGain();
+  o.type='sine';o.frequency.setValueAtTime(170,t);o.frequency.exponentialRampToValueAtTime(52,t+.07);o.frequency.exponentialRampToValueAtTime(44,t+.3);
+  g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(1.1*v,t+.002);g.gain.exponentialRampToValueAtTime(.001,t+.34);
+  o.connect(g);salida(g,.04);o.start(t);o.stop(t+.36);
+  /* beater click */
+  const n=ruido(t,.02),f=ctx.createBiquadFilter(),cg=ctx.createGain();
+  f.type='highpass';f.frequency.value=2500;cg.gain.setValueAtTime(.35*v,t);cg.gain.exponentialRampToValueAtTime(.001,t+.015);
+  n.connect(f).connect(cg);salida(cg,0);
+}
+function snare(t,v=1){
+  /* noise: crack + rattle */
+  const n=ruido(t,.3),hp=ctx.createBiquadFilter(),pk=ctx.createBiquadFilter(),g=ctx.createGain();
+  hp.type='highpass';hp.frequency.value=900;pk.type='peaking';pk.frequency.value=2200;pk.Q.value=1;pk.gain.value=7;
+  g.gain.setValueAtTime(.6*v,t);g.gain.exponentialRampToValueAtTime(.001,t+.24);
+  n.connect(hp).connect(pk).connect(g);salida(g,.45*v);
+  /* body */
+  const o=ctx.createOscillator(),og=ctx.createGain();o.type='triangle';
+  o.frequency.setValueAtTime(230,t);o.frequency.exponentialRampToValueAtTime(175,t+.05);
+  og.gain.setValueAtTime(.55*v,t);og.gain.exponentialRampToValueAtTime(.001,t+.11);
+  o.connect(og);salida(og,.25*v);o.start(t);o.stop(t+.12);
+}
+function ghost(t){snare(t,.26+Math.random()*.06)}
+function hat(t,v=1){
+  if(openHat){openHat.gain.cancelScheduledValues(t);openHat.gain.setTargetAtTime(0,t,.008);openHat=null} /* choke */
+  const n=ruido(t,.06),hp=ctx.createBiquadFilter(),bp=ctx.createBiquadFilter(),g=ctx.createGain();
+  hp.type='highpass';hp.frequency.value=7000;bp.type='bandpass';bp.frequency.value=10500;bp.Q.value=.8;
+  g.gain.setValueAtTime(.26*v,t);g.gain.exponentialRampToValueAtTime(.001,t+.045);
+  n.connect(hp).connect(bp).connect(g);salida(g,.03);
+}
+function openHatHit(t,v=1){
+  const n=ruido(t,.35),hp=ctx.createBiquadFilter(),bp=ctx.createBiquadFilter(),g=ctx.createGain();
+  hp.type='highpass';hp.frequency.value=6500;bp.type='bandpass';bp.frequency.value=9500;bp.Q.value=.6;
+  g.gain.setValueAtTime(.22*v,t);g.gain.exponentialRampToValueAtTime(.001,t+.3);
+  n.connect(hp).connect(bp).connect(g);salida(g,.08);openHat=g;
+}
+function bass(t,f,dur){
+  /* reese: two detuned saws + sub sine through a moving low-pass */
+  const o1=ctx.createOscillator(),o2=ctx.createOscillator(),sub=ctx.createOscillator();
+  o1.type=o2.type='sawtooth';sub.type='sine';
+  o1.frequency.value=f*2;o2.frequency.value=f*2;o1.detune.value=-9;o2.detune.value=11;sub.frequency.value=f;
+  const lp=ctx.createBiquadFilter();lp.type='lowpass';lp.Q.value=5;
+  lp.frequency.setValueAtTime(180,t);lp.frequency.linearRampToValueAtTime(950,t+.03);lp.frequency.exponentialRampToValueAtTime(260,t+dur);
+  const g=ctx.createGain(),gs=ctx.createGain();
+  g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.16,t+.008);g.gain.setValueAtTime(.16,t+dur-.02);g.gain.linearRampToValueAtTime(0,t+dur);
+  gs.gain.setValueAtTime(0,t);gs.gain.linearRampToValueAtTime(.32,t+.008);gs.gain.setValueAtTime(.32,t+dur-.02);gs.gain.linearRampToValueAtTime(0,t+dur);
+  o1.connect(lp);o2.connect(lp);lp.connect(g);sub.connect(gs);salida(g,0);salida(gs,0);
+  [o1,o2,sub].forEach(o=>{o.start(t);o.stop(t+dur+.01)});
+}
+
+function programar(){
+  const dur=60/bpmIn.value/4;
+  const sw=(swIn.value-50)/50*dur; /* delay of the off-beat 16ths */
+  while(next<ctx.currentTime+.12){
+    if(paso===0&&pendiente){actual=pendiente;patron=actual.p;notasBajo=actual.notas;pendiente=null;pintar()}
+    const t=next+(paso%2?sw:0);
+    const humano=()=>(Math.random()-.5)*.004;
+    if(patron[0][paso])kick(t);
+    if(patron[1][paso])snare(t+humano());
+    if(patron[2][paso]&&!patron[1][paso])ghost(t+humano());
+    if(patron[4][paso])openHatHit(t);
+    else if(patron[3][paso])hat(t+humano(),(paso%4===0?1:paso%2===0?.75:.5)*(.9+Math.random()*.2));
+    if(patron[5][paso]){
+      let l=1;while(l<4&&!patron[5][(paso+l)%16])l++;
+      bass(t,notasBajo[paso]||Eb,l*dur-.01);
+    }
+    const s=paso;setTimeout(()=>marcar(s),Math.max(0,(t-ctx.currentTime)*1000));
+    next+=dur;paso=(paso+1)%16;
+  }
+}
+function marcar(s){leds.forEach((l,i)=>l.classList.toggle('on',i===s));botones.forEach(row=>row.forEach((b,i)=>b.classList.toggle('ahora',i===s)))}
+const play=document.getElementById('play');
+play.addEventListener('click',()=>{
+  sonando=!sonando;sesionAltavoz(sonando);
+  if(!ctx)initAudio();
+  play.setAttribute('aria-pressed',sonando);play.textContent=sonando?'■ Stop':'▶ Play';
+  if(sonando){ctx.resume();paso=0;next=ctx.currentTime+.06;timer=setInterval(programar,25)}
+  else{clearInterval(timer);marcar(-1)}
+});
+
+/* ============================================================
+   PATTERN PADS
+   ============================================================ */
+const pads=document.getElementById('pads');
+capitulos.forEach(e=>{
+  const b=document.createElement('button');b.className='pad';b.style.setProperty('--c',e.c);b.setAttribute('aria-pressed',e.id==='B7'?'true':'false');
+  b.innerHTML=`<span class="id">${e.id}</span><span><b>${e.t}</b><small>${e.f}</small><em>${e.br}</em></span>`;
+  b.addEventListener('click',()=>{
+    document.querySelectorAll('.pad').forEach(p=>p.setAttribute('aria-pressed','false'));b.setAttribute('aria-pressed','true');
+    document.getElementById('pTit').textContent=e.t;
+    document.getElementById('pMeta').textContent=`${e.id}  |  ${e.f}  |  ${e.br}  |  swing ${e.sw}%`;
+    document.getElementById('pTxt').textContent=e.txt;
+    document.getElementById('lcd1').textContent=`${e.id} ${e.t.toUpperCase()}`;
+    document.getElementById('lcd2').textContent=`${e.br} · ${e.l}`;
+    ponerSwing(e.sw);
+    const nuevo=aPatron(e);
+    if(sonando)pendiente=nuevo; /* switch on the next bar, like a real drum machine */
+    else{actual=nuevo;patron=nuevo.p;notasBajo=nuevo.notas;pintar()}
+  });
+  pads.appendChild(b);
+});
+const banco=document.getElementById('bank');
+function abrirBanco(){if(location.hash==='#bank')banco.open=true}
+addEventListener('hashchange',abrirBanco);abrirBanco();
+document.querySelectorAll('a[href="#bank"]').forEach(a=>a.addEventListener('click',()=>{banco.open=true}));
+const v=document.createElement('div');v.className='pad vacio';v.innerHTML='<span class="id">B8</span><span><b>Next release</b><small>Empty pattern. Coming soon.</small></span>';pads.appendChild(v);
+</script>
+</body>
+</html>

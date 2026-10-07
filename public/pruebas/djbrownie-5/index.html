@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>DJ Brownie — Layers proposal · ESKALA</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Layers proposal for DJ Brownie. Demo by ESKALA Marketing.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..900,0..100,0..1;1,9..144,300..900,0..100,0..1&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  /* PROPOSAL 05 — LAYERS
+     Idea: a good brownie is a cross-section of layers, and so is a thirty-year career.
+     The hero is a 3D brownie that follows the cursor; each layer is a stage (oldest at the bottom, the glaze
+     is the latest). Click a layer and it slides out of the block like a drawer with its story. Editorial
+     patisserie aesthetic, no neon: Brownie as an auteur brand. The recipe is the bio, the portions are booking. */
+  :root{
+    --nata:#F6EEE3;
+    --nata2:#EDE0CF;
+    --cacao:#24120A;
+    --leche:#7A4426;
+    --caramelo:#C7782F;
+    --frambuesa:#C2344D;
+    --sal:#FFFFFF;
+    --gris:#8C7564;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:"Space Grotesk",system-ui,sans-serif;background:var(--nata);color:var(--cacao);line-height:1.6;overflow-x:hidden}
+  a{color:inherit}
+  :focus-visible{outline:2px solid var(--frambuesa);outline-offset:3px}
+
+  .top{position:relative;z-index:5;display:flex;justify-content:space-between;align-items:center;padding:calc(1.2rem + env(safe-area-inset-top,0px)) clamp(1.25rem,4vw,3rem)}
+  .brand{font-family:Fraunces;font-weight:800;font-size:1.4rem;text-decoration:none;font-variation-settings:"SOFT" 100,"WONK" 1}
+  .top nav{display:flex;gap:1.8rem;font-size:.95rem;font-weight:500}
+  .top nav a{text-decoration:none}
+  .top nav a:hover{color:var(--frambuesa)}
+
+  .hero{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:2rem;min-height:calc(100svh - 80px);padding:1rem clamp(1.25rem,4vw,3rem) 3rem;position:relative}
+  .hero h1{font-family:Fraunces;font-weight:900;font-size:clamp(4.2rem,11vw,10.5rem);line-height:.82;letter-spacing:-.04em;font-variation-settings:"SOFT" 100,"WONK" 1,"opsz" 144}
+  .hero h1 em{display:block;font-style:italic;font-weight:300;color:var(--leche);letter-spacing:-.02em}
+  .hero .sub{font-size:1.15rem;max-width:38ch;margin-top:1.6rem;color:#4b3326}
+  .hero .pista{margin-top:1.4rem;font-size:.9rem;color:var(--gris);display:flex;gap:.6rem;align-items:center}
+  .hero .pista b{display:inline-grid;place-items:center;width:1.6rem;height:1.6rem;border-radius:50%;background:var(--cacao);color:var(--nata);font-size:.8rem}
+
+  .escena{height:min(70vh,560px);display:grid;place-items:center;perspective:1400px;position:relative;cursor:pointer}
+  .escena::after{content:"";position:absolute;bottom:12%;left:50%;width:360px;height:70px;transform:translateX(-50%);background:radial-gradient(ellipse,rgba(36,18,10,.35),transparent 70%);filter:blur(6px);z-index:-1}
+  .bloque{--W:300px;--D:300px;position:relative;width:var(--W);height:250px;transform-style:preserve-3d;transform:rotateX(-24deg) rotateY(-36deg);transition:transform .25s ease-out}
+  .capa{position:absolute;left:0;width:var(--W);height:var(--h);top:var(--y);transform-style:preserve-3d;transition:transform .6s cubic-bezier(.3,1.3,.4,1);cursor:pointer;outline:none}
+  .capa:focus-visible .f{outline:2px solid var(--frambuesa)}
+  .capa.fuera{transform:translateZ(150px)}
+  .capa .f,.capa .d,.capa .t{position:absolute;backface-visibility:hidden}
+  .capa .f{left:0;top:0;width:var(--W);height:var(--h);transform:translateZ(calc(var(--D)/2));background:var(--c);background-image:var(--tex)}
+  .capa .d{top:0;left:calc((var(--W) - var(--D))/2);width:var(--D);height:var(--h);transform:rotateY(90deg) translateZ(calc(var(--W)/2));background:var(--c);background-image:var(--tex);filter:brightness(.78)}
+  .capa .t{left:0;top:calc((var(--h) - var(--D))/2);width:var(--W);height:var(--D);transform:rotateX(90deg) translateZ(calc(var(--h)/2));background:var(--c);background-image:var(--tex);filter:brightness(1.12)}
+  .capa:hover .f,.capa:focus-visible .f{filter:brightness(1.15)}
+  .capa:hover .d{filter:brightness(.9)}
+  .capa .f span{position:absolute;left:12px;top:50%;transform:translateY(-50%);font-family:Fraunces;font-style:italic;font-size:.85rem;color:rgba(255,255,255,.85);opacity:0;transition:opacity .3s;white-space:nowrap}
+  .capa:hover .f span,.capa.fuera .f span{opacity:1}
+  .glaseado .t{background:radial-gradient(ellipse at 30% 35%,rgba(255,255,255,.25),transparent 30%),radial-gradient(ellipse at 70% 70%,rgba(255,255,255,.12),transparent 25%),repeating-linear-gradient(35deg,transparent 0 38px,rgba(0,0,0,.25) 38px 40px,transparent 40px 70px),repeating-linear-gradient(-55deg,transparent 0 52px,rgba(0,0,0,.2) 52px 54px,transparent 54px 90px),var(--c)!important;filter:none!important}
+  .sal{position:absolute;width:6px;height:6px;background:#fff;border-radius:1px;transform:rotate(30deg);box-shadow:0 0 2px rgba(0,0,0,.2)}
+
+  .ficha{position:absolute;right:clamp(0rem,2vw,2rem);bottom:6%;width:min(320px,90%);background:var(--sal);border-radius:1rem;padding:1.2rem 1.3rem;box-shadow:0 20px 40px rgba(36,18,10,.15);transform:translateY(10px);opacity:0;transition:.4s;pointer-events:none}
+  .ficha.on{opacity:1;transform:none;pointer-events:auto}
+  .ficha .cap{font-size:.75rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--frambuesa)}
+  .ficha h3{font-family:Fraunces;font-weight:700;font-size:1.6rem;line-height:1.05;margin:.3rem 0 .4rem}
+  .ficha p{font-size:.95rem;color:#4b3326}
+
+  .miga{position:fixed;width:var(--s);height:var(--s);background:var(--c);border-radius:2px;pointer-events:none;z-index:60;animation:cae .9s cubic-bezier(.3,.1,.7,1) forwards}
+  @keyframes cae{to{transform:translate(var(--dx),var(--dy)) rotate(var(--r));opacity:0}}
+
+  section{padding:clamp(5rem,10vw,8rem) clamp(1.25rem,4vw,3rem)}
+  .wrap{max-width:1200px;margin:0 auto}
+  .etq{font-size:.8rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--frambuesa);margin-bottom:1rem}
+  h2{font-family:Fraunces;font-weight:800;font-size:clamp(2.8rem,7vw,6rem);line-height:.9;letter-spacing:-.03em;margin-bottom:2.5rem;font-variation-settings:"SOFT" 100,"WONK" 1}
+  h2 em{font-weight:300;font-style:italic;color:var(--leche)}
+
+  .corte{background:var(--cacao);color:var(--nata)}
+  .corte h2 em{color:var(--caramelo)}
+  .estratos{border-radius:1.2rem;overflow:hidden}
+  .estrato{display:grid;grid-template-columns:8rem 1fr 2fr;gap:2rem;padding:1.6rem 2rem;background:var(--c);background-image:var(--tex);align-items:center;border:0;width:100%;text-align:left;color:var(--nata);font:inherit;cursor:pointer;transition:padding .3s}
+  .estrato:hover{padding-left:2.6rem}
+  .estrato .a{font-family:Fraunces;font-weight:700;font-size:1.6rem}
+  .estrato h3{font-family:Fraunces;font-weight:600;font-size:1.7rem;line-height:1.05}
+  .estrato p{color:rgba(246,238,227,.85)}
+
+  .receta .cols{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(2rem,6vw,6rem)}
+  .ingr{list-style:none;border-top:2px solid var(--cacao)}
+  .ingr li{display:flex;justify-content:space-between;gap:1rem;padding:.9rem 0;border-bottom:1px dashed #CDB9A2;font-size:1.05rem}
+  .ingr li b{font-family:Fraunces;font-weight:700;white-space:nowrap}
+  .pasos{list-style:none;counter-reset:p}
+  .pasos li{counter-increment:p;display:grid;grid-template-columns:3.4rem 1fr;gap:1rem;margin-bottom:1.6rem}
+  .pasos li::before{content:counter(p);font-family:Fraunces;font-weight:300;font-style:italic;font-size:2.8rem;line-height:1;color:var(--caramelo)}
+  .pasos h3{font-family:Fraunces;font-weight:700;font-size:1.35rem;line-height:1.1;margin-bottom:.25rem}
+  .pasos p{color:#4b3326}
+  .nota-chef{margin-top:2rem;background:var(--nata2);border-radius:1rem;padding:1.4rem 1.6rem;font-family:Fraunces;font-style:italic;font-size:1.3rem;line-height:1.35}
+
+  .porciones{background:var(--nata2)}
+  .bandeja{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;background:#B9A28A;padding:10px;border-radius:1.2rem;box-shadow:inset 0 4px 12px rgba(0,0,0,.15)}
+  .porcion{aspect-ratio:1.25;background-image:radial-gradient(circle at 20% 40%,rgba(0,0,0,.2) 0 3px,transparent 4px),radial-gradient(circle at 70% 70%,rgba(0,0,0,.18) 0 4px,transparent 5px),radial-gradient(circle at 50% 25%,rgba(255,255,255,.08) 0 6px,transparent 7px),linear-gradient(180deg,#2E160B 0 16%,var(--leche) 16% 100%);border-radius:.5rem;color:var(--nata);padding:1.4rem;display:flex;flex-direction:column;justify-content:flex-end;transition:transform .3s cubic-bezier(.3,1.4,.5,1),box-shadow .3s;box-shadow:0 2px 0 rgba(0,0,0,.2)}
+  .porcion:hover{transform:translateY(-10px) rotate(-1.5deg);box-shadow:0 24px 30px rgba(36,18,10,.3)}
+  .porcion h3{font-family:Fraunces;font-weight:700;font-size:1.6rem;line-height:1}
+  .porcion p{font-size:.92rem;opacity:.85;margin-top:.3rem}
+  .encargo{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:1.5rem;margin-top:3rem}
+  .encargo p{font-family:Fraunces;font-size:clamp(1.6rem,3vw,2.4rem);line-height:1.1;max-width:22ch}
+  .btn{background:var(--frambuesa);color:var(--sal);text-decoration:none;font-weight:700;padding:1.1rem 2rem;border-radius:999px;font-size:1.05rem;transition:transform .2s}
+  .btn:hover{transform:scale(1.05)}
+
+  .cinta{overflow:hidden;white-space:nowrap;background:var(--caramelo);color:var(--cacao);font-family:Fraunces;font-style:italic;font-weight:300;font-size:clamp(2rem,5vw,3.6rem);padding:.8rem 0}
+  .cinta div{display:inline-block;animation:corre 40s linear infinite}
+  .cinta b{font-style:normal;font-weight:800;margin:0 1rem}
+  @keyframes corre{to{transform:translateX(-50%)}}
+
+  footer{background:var(--cacao);color:#C7B39E;padding:2.2rem clamp(1.25rem,4vw,3rem) calc(2.2rem + env(safe-area-inset-bottom,0px));display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem;font-size:.9rem}
+  footer nav{display:flex;gap:1.5rem}
+
+  @media (max-width:960px){
+    .top nav{display:none}
+    .hero{grid-template-columns:1fr;min-height:auto}
+    .escena{height:440px}
+    .bloque{--W:220px;--D:220px;height:190px}
+    .receta .cols{grid-template-columns:1fr}
+    .estrato{grid-template-columns:5rem 1fr;gap:.3rem 1rem}
+    .estrato p{grid-column:2}
+    .bandeja{grid-template-columns:1fr 1fr}
+    .ficha{position:relative;right:auto;bottom:auto;margin:1rem auto 0;width:100%}
+  }
+  @media (max-width:520px){.bandeja{grid-template-columns:1fr}}
+  @media (prefers-reduced-motion:reduce){.cinta div{animation:none}.capa,.bloque{transition:none}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <a class="brand" href="#">DJ Brownie</a>
+  <nav aria-label="Main"><a href="#layers">Layers</a><a href="#recipe">Recipe</a><a href="#portions">Booking</a></nav>
+</header>
+
+<main>
+  <section class="hero" aria-labelledby="h1">
+    <div>
+      <h1 id="h1">DJ<em>Brownie</em></h1>
+      <p class="sub">Thirty years of breaks, baked in the Los Angeles underground. Dense, dark and layered. As it should be.</p>
+      <p class="pista"><b aria-hidden="true">↗</b>Move your cursor to turn it. Click a layer to pull it out.</p>
+    </div>
+    <div>
+      <div class="escena" id="escena">
+        <div class="bloque" id="bloque" role="group" aria-label="Layered brownie. Each layer is a stage of his career."></div>
+      </div>
+      <div class="ficha" id="ficha" aria-live="polite"><span class="cap" id="fCap"></span><h3 id="fTit"></h3><p id="fTxt"></p></div>
+    </div>
+  </section>
+
+  <div class="cinta" aria-hidden="true"><div>
+    Breaks <b>·</b> Bass <b>·</b> Los Angeles <b>·</b> After-hours <b>·</b> Rampant <b>·</b> Kaleidoscope <b>·</b> 135 bpm <b>·</b>
+    Breaks <b>·</b> Bass <b>·</b> Los Angeles <b>·</b> After-hours <b>·</b> Rampant <b>·</b> Kaleidoscope <b>·</b> 135 bpm <b>·</b>
+  </div></div>
+
+  <section class="corte" id="layers">
+    <div class="wrap">
+      <p class="etq">Cross-section</p>
+      <h2>Six layers,<br><em>three decades</em></h2>
+      <div class="estratos" id="estratos"></div>
+    </div>
+  </section>
+
+  <section class="receta" id="recipe">
+    <div class="wrap">
+      <p class="etq">The recipe · Bio</p>
+      <h2>How to make<br>a <em>Brownie</em></h2>
+      <div class="cols">
+        <div>
+          <ul class="ingr">
+            <li><span>Years in the booth</span><b>30+</b></li>
+            <li><span>Roots</span><b>LA underground</b></li>
+            <li><span>Production aliases</span><b>6</b></li>
+            <li><span>Touring countries</span><b>USA · MX · CA</b></li>
+            <li><span>Tempo of "Effect"</span><b>135 bpm</b></li>
+            <li><span>Key</span><b>E♭ minor</b></li>
+            <li><span>Funk</span><b>to taste (Mr Funkster)</b></li>
+          </ul>
+          <p class="nota-chef">"Brownie" is Chris Brown. The rest is craft: read the floor and never let it stop.</p>
+        </div>
+        <ol class="pasos">
+          <li><div><h3>Preheat in an after-hours</h3><p>Start spinning over thirty years ago in the original dark and dirty underground and after-hours venues of Los Angeles.</p></div></li>
+          <li><div><h3>Spread across the map</h3><p>Take the mix on the road for years across the United States, Mexico and Canada.</p></div></li>
+          <li><div><h3>Knead in the studio</h3><p>In the early 90s, start producing with long-time friend Paul Grogan, owner of Rampant Records.</p></div></li>
+          <li><div><h3>Sign with several names</h3><p>Gorilla Pimp, Immigrant, Faithealer, Mr Funkster, Brownie and DJ Brownie. In 1999, bake "Like This" on Rampant.</p></div></li>
+          <li><div><h3>Serve on screen</h3><p>Write for television, film, video games and advertising, without leaving the breaks and bass labels.</p></div></li>
+          <li><div><h3>Glaze with "Effect"</h3><p>October 2025, with SluG (FL) on Kaleidoscope Music. <a href="https://www.beatport.com/track/effect/21777658" target="_blank" rel="noopener">Listen on Beatport ↗</a></p></div></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="porciones" id="portions">
+    <div class="wrap">
+      <p class="etq">Portions · Booking</p>
+      <h2>Order your<br><em>slice</em></h2>
+      <div class="bandeja">
+        <div class="porcion"><h3>Club set</h3><p>Breaks and bass for the floor, from warm-up to close.</p></div>
+        <div class="porcion"><h3>Festival</h3><p>Big stage, after-hours energy.</p></div>
+        <div class="porcion"><h3>After-hours</h3><p>His natural habitat since the 90s.</p></div>
+        <div class="porcion"><h3>Remix</h3><p>Originals, remixes and collaborations.</p></div>
+        <div class="porcion"><h3>Sync</h3><p>TV, film, video games and advertising.</p></div>
+        <div class="porcion"><h3>Press kit</h3><p>Bio, photos and logos ready for the poster.</p></div>
+      </div>
+      <div class="encargo"><p>Freshly baked, to take away to your booth.</p><a class="btn" href="#">Place an order →</a></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <span>DJ Brownie · Breaks &amp; Bass</span>
+  <nav aria-label="Social"><a href="https://www.mixcloud.com/chris-brown75/">Mixcloud</a><a href="https://www.beatport.com/track/effect/21777658">Beatport</a><a href="#">Instagram</a><a href="#">Contact</a></nav>
+</footer>
+
+<script>
+/* Layers: top (latest) to bottom (earliest) */
+const migasTex='radial-gradient(circle at 18% 30%,rgba(0,0,0,.22) 0 2px,transparent 3px),radial-gradient(circle at 62% 64%,rgba(0,0,0,.2) 0 3px,transparent 4px),radial-gradient(circle at 84% 22%,rgba(255,255,255,.08) 0 3px,transparent 4px),radial-gradient(circle at 40% 80%,rgba(255,255,255,.06) 0 2px,transparent 3px)';
+const capas=[
+  {k:'glaseado',h:34,c:'#2A120A',a:'2025',t:'Effect',cap:'The glaze',d:'With SluG (FL) on Kaleidoscope Music, 24 October 2025. Breaks at 135 bpm in E♭ minor.'},
+  {h:40,c:'#C7782F',a:'Now',t:'Sync',cap:'Caramel layer',d:'Music for television, film, video games and commercials.'},
+  {h:44,c:'#7A4426',a:'Touring',t:'On the road',cap:'Milk chocolate layer',d:'Years of bookings across the United States, Mexico and Canada.'},
+  {h:36,c:'#C2344D',a:'1999',t:'Like This',cap:'Raspberry layer',d:'Released on Rampant Records. One of the records from his first era.'},
+  {h:42,c:'#9A6238',a:'90s',t:'Rampant Records',cap:'Hazelnut layer',d:'First productions with his long-time friend Paul Grogan. The aliases are born: Gorilla Pimp, Immigrant, Faithealer, Mr Funkster.'},
+  {h:54,c:'#3B1D10',a:'80s–90s',t:'After-hours LA',cap:'The base',d:'The original dark and dirty underground and after-hours venues of Los Angeles. Where it all started, over thirty years ago.'}
+];
+const bloque=document.getElementById('bloque'),ficha=document.getElementById('ficha');
+const esc=matchMedia('(max-width:960px)').matches?.76:1;
+let y=0;const nodos=[];
+capas.forEach((c,i)=>{
+  const h=Math.round(c.h*esc);
+  const b=document.createElement('div');b.className='capa'+(c.k?' '+c.k:'');
+  b.setAttribute('role','button');b.tabIndex=0;
+  b.addEventListener('keydown',ev=>{if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();abrir(i)}});
+  b.style.cssText=`--h:${h}px;--y:${y}px;--c:${c.c};--tex:${migasTex}`;
+  b.setAttribute('aria-label',`${c.cap}: ${c.t}, ${c.a}`);
+  b.innerHTML=`<div class="t"></div><div class="f"><span>${c.a} · ${c.t}</span></div><div class="d"></div>`;
+  if(c.k==='glaseado'){const t=b.querySelector('.t');for(let s=0;s<14;s++){const e=document.createElement('i');e.className='sal';e.style.left=(8+Math.random()*84)+'%';e.style.top=(8+Math.random()*84)+'%';e.style.transform=`rotate(${Math.random()*90}deg)`;t.appendChild(e)}}
+  b.addEventListener('click',ev=>{ev.stopPropagation();abrir(i,ev)});
+  bloque.appendChild(b);nodos.push(b);y+=h;
+});
+bloque.style.height=y+'px';
+let abierta=-1;
+function abrir(i,ev){
+  if(abierta===i){nodos[i].classList.remove('fuera');ficha.classList.remove('on');abierta=-1;return}
+  nodos.forEach((n,j)=>n.classList.toggle('fuera',j===i));abierta=i;
+  const c=capas[i];
+  document.getElementById('fCap').textContent=`${c.cap} · ${c.a}`;
+  document.getElementById('fTit').textContent=c.t;
+  document.getElementById('fTxt').textContent=c.d;
+  ficha.classList.add('on');
+  if(ev&&ev.clientX)migas(ev.clientX,ev.clientY,c.c);
+}
+const escena=document.getElementById('escena');
+addEventListener('pointermove',e=>{
+  if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;
+  const r=escena.getBoundingClientRect();
+  const nx=Math.max(-1,Math.min(1,(e.clientX-(r.left+r.width/2))/(r.width)));
+  const ny=Math.max(-1,Math.min(1,(e.clientY-(r.top+r.height/2))/(r.height)));
+  bloque.style.transform=`rotateX(${-24-ny*12}deg) rotateY(${-36+nx*22}deg)`;
+});
+escena.addEventListener('click',()=>{if(abierta>-1)abrir(abierta)});
+
+function migas(x,y,col){
+  for(let i=0;i<14;i++){
+    const m=document.createElement('i');m.className='miga';
+    const s=3+Math.random()*6;
+    m.style.cssText=`left:${x}px;top:${y}px;--s:${s}px;--c:${Math.random()>.3?col:'#2A120A'};--dx:${(Math.random()-.5)*160}px;--dy:${60+Math.random()*140}px;--r:${Math.random()*360}deg`;
+    document.body.appendChild(m);setTimeout(()=>m.remove(),950);
+  }
+}
+
+const est=document.getElementById('estratos');
+capas.forEach((c,i)=>{
+  const b=document.createElement('button');b.className='estrato';b.style.cssText=`--c:${c.c};--tex:${migasTex}`;
+  b.innerHTML=`<span class="a">${c.a}</span><h3>${c.t}</h3><p>${c.d}</p>`;
+  b.addEventListener('click',()=>{escena.scrollIntoView({behavior:'smooth',block:'center'});setTimeout(()=>{if(abierta!==i)abrir(i)},450)});
+  est.appendChild(b);
+});
+</script>
+</body>
+</html>

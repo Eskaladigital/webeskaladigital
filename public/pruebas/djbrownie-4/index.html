@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>DJ Brownie — Arcade proposal · ESKALA</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Arcade proposal for DJ Brownie. Demo by ESKALA Marketing.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+<style>
+  /* PROPOSAL 04 — ARCADE "BREAK HERO"
+     Idea: Brownie also writes music for video games, so his site is an arcade cabinet.
+     The hero is a playable rhythm game: notes fall to a 135 bpm break and YOU play the kick, snare
+     and hats (D F J keys or tap the lanes). Synthesised sound.
+     Below: player select (his aliases), world map (his career), end credits and a CONTINUE? for booking. */
+  :root{
+    --fondo:#0B0614;
+    --mag:#FF2E88;
+    --cian:#2EF2FF;
+    --amar:#FFE14D;
+    --choco:#7A4424;
+    --caramelo:#E08A2E;
+    --txt:#EDE6FF;
+    --gris:#7C6F99;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:VT323,monospace;font-size:1.45rem;line-height:1.35;background:var(--fondo);color:var(--txt);overflow-x:hidden;
+    background-image:radial-gradient(circle at 50% -10%,rgba(255,46,136,.25),transparent 50%),linear-gradient(rgba(46,242,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(46,242,255,.05) 1px,transparent 1px);background-size:auto,32px 32px,32px 32px}
+  body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:100;background:repeating-linear-gradient(0deg,rgba(0,0,0,.18) 0 1px,transparent 1px 3px);mix-blend-mode:multiply}
+  a{color:inherit}
+  :focus-visible{outline:3px solid var(--amar);outline-offset:3px}
+  @keyframes blink{50%{opacity:0}}
+
+  .top{display:flex;justify-content:space-between;align-items:center;padding:calc(1rem + env(safe-area-inset-top,0px)) clamp(1rem,4vw,3rem);font-family:"Press Start 2P";font-size:.7rem}
+  .top .brand{text-decoration:none;color:var(--amar);font-size:.85rem}
+  .top nav{display:flex;gap:1.5rem}
+  .top nav a{text-decoration:none;color:var(--cian)}
+  .top nav a:hover{color:var(--mag)}
+  .creditos-top{color:var(--gris)}
+
+  .cabina{max-width:1100px;margin:1rem auto 0;padding:0 clamp(.75rem,3vw,2rem)}
+  .marquesina{background:linear-gradient(180deg,#2a0f3a,#170824);border:4px solid var(--mag);border-bottom:0;border-radius:1rem 1rem 0 0;padding:1.2rem;text-align:center;box-shadow:0 0 30px rgba(255,46,136,.4),inset 0 0 30px rgba(255,46,136,.25)}
+  .marquesina h1{font-family:"Press Start 2P";font-size:clamp(1.6rem,6vw,3.6rem);line-height:1.1;color:var(--amar);text-shadow:4px 4px 0 var(--mag),8px 8px 0 #3a0f4a;letter-spacing:.02em}
+  .marquesina p{font-family:"Press Start 2P";font-size:clamp(.5rem,1.4vw,.75rem);color:var(--cian);margin-top:.8rem}
+  .bisel{background:#120a1e;border:4px solid var(--mag);border-top:0;border-radius:0 0 1rem 1rem;padding:clamp(.6rem,2vw,1.4rem);box-shadow:0 0 30px rgba(255,46,136,.3)}
+  .pantalla{position:relative;border-radius:1.2rem;overflow:hidden;background:#000;box-shadow:inset 0 0 60px rgba(46,242,255,.18),0 0 0 4px #000;aspect-ratio:16/10}
+  .pantalla canvas{display:block;width:100%;height:100%;touch-action:none}
+  .pantalla::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at center,transparent 60%,rgba(0,0,0,.55));border-radius:inherit}
+  .panel{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:1rem;margin-top:1rem;font-family:"Press Start 2P";font-size:.6rem;color:var(--gris)}
+  .botones{display:flex;gap:1rem}
+  .boton{width:58px;height:58px;border-radius:50%;border:0;font-family:"Press Start 2P";font-size:.7rem;color:#120a1e;cursor:pointer;box-shadow:0 6px 0 rgba(0,0,0,.5),inset 0 -6px 0 rgba(0,0,0,.25);background:var(--c)}
+  .boton:active,.boton.on{transform:translateY(4px);box-shadow:0 2px 0 rgba(0,0,0,.5),inset 0 -2px 0 rgba(0,0,0,.25)}
+  .start{background:var(--amar);border:0;font-family:"Press Start 2P";font-size:.75rem;padding:1rem 1.4rem;border-radius:.4rem;cursor:pointer;box-shadow:0 5px 0 #a8902a;color:#120a1e}
+  .start:active{transform:translateY(3px);box-shadow:0 2px 0 #a8902a}
+
+  section{padding:clamp(4rem,9vw,7rem) clamp(1rem,4vw,3rem)}
+  .wrap{max-width:1100px;margin:0 auto}
+  h2{font-family:"Press Start 2P";font-size:clamp(1.2rem,3.6vw,2.2rem);line-height:1.3;color:var(--cian);text-shadow:3px 3px 0 #0f4a55;margin-bottom:2rem;text-align:center}
+  h2 small{display:block;font-size:.4em;color:var(--gris);margin-top:1rem;text-shadow:none}
+
+  .jugadores{display:grid;grid-template-columns:repeat(6,1fr);gap:1rem}
+  .jug{background:#170c26;border:3px solid #3a2a55;border-radius:.4rem;padding:1rem .6rem .8rem;text-align:center;cursor:pointer;color:var(--txt);font:inherit;position:relative;transition:transform .1s}
+  .jug canvas{width:100%;image-rendering:pixelated;display:block;margin-bottom:.6rem;background:repeating-linear-gradient(0deg,#1d1030 0 4px,#170c26 4px 8px)}
+  .jug b{font-family:"Press Start 2P";font-size:.55rem;display:block;line-height:1.5;min-height:2.2em}
+  .jug:hover{transform:translateY(-4px)}
+  .jug[aria-pressed="true"]{border-color:var(--amar);box-shadow:0 0 0 3px var(--amar),0 0 24px rgba(255,225,77,.5)}
+  .jug[aria-pressed="true"]::before{content:"P1";position:absolute;top:-1.6rem;left:50%;transform:translateX(-50%);font-family:"Press Start 2P";font-size:.6rem;color:var(--amar);animation:blink 1s steps(2) infinite}
+  .dialogo{margin-top:2rem;background:#000;border:4px double var(--txt);border-radius:.4rem;padding:1.2rem 1.4rem;min-height:9rem;position:relative}
+  .dialogo .quien{font-family:"Press Start 2P";font-size:.7rem;color:var(--amar);margin-bottom:.6rem}
+  .dialogo .flecha{position:absolute;right:1rem;bottom:.6rem;color:var(--amar);animation:blink .8s steps(2) infinite}
+
+  .mapa{display:grid;grid-template-columns:repeat(7,1fr);gap:.4rem;position:relative;margin-top:1rem}
+  .mapa::before{content:"";position:absolute;top:38px;left:7%;right:7%;height:6px;background:repeating-linear-gradient(90deg,var(--caramelo) 0 12px,transparent 12px 20px)}
+  .nivel{text-align:center;position:relative}
+  .nivel .nodo{width:76px;height:76px;margin:0 auto .9rem;display:grid;place-items:center;font-family:"Press Start 2P";font-size:.7rem;color:#120a1e;background:var(--c);border-radius:.3rem;box-shadow:0 6px 0 rgba(0,0,0,.45),inset 0 -6px 0 rgba(0,0,0,.2);position:relative;z-index:1}
+  .nivel.jefe .nodo{background:var(--mag);color:#fff;animation:latido 1.2s ease-in-out infinite}
+  @keyframes latido{50%{transform:scale(1.08)}}
+  .nivel.bloqueado .nodo{background:#2a1d3d;color:var(--gris)}
+  .nivel b{font-family:"Press Start 2P";font-size:.55rem;display:block;color:var(--amar);line-height:1.5}
+  .nivel p{font-size:1.15rem;color:#C9BFE6;margin-top:.3rem}
+
+  .creditos .caja{height:420px;overflow:hidden;position:relative;border:3px solid #3a2a55;border-radius:.4rem;background:#000;mask:linear-gradient(transparent,#000 15%,#000 85%,transparent);-webkit-mask:linear-gradient(transparent,#000 15%,#000 85%,transparent)}
+  .creditos .rollo{position:absolute;left:0;right:0;text-align:center;padding:0 1.5rem;animation:sube 38s linear infinite}
+  .creditos .caja:hover .rollo{animation-play-state:paused}
+  @keyframes sube{from{transform:translateY(420px)}to{transform:translateY(-100%)}}
+  .rollo h3{font-family:"Press Start 2P";font-size:.75rem;color:var(--mag);margin:2.2rem 0 .7rem}
+  .rollo p{max-width:42ch;margin:0 auto .4rem;font-size:1.5rem}
+  .rollo .gr{font-family:"Press Start 2P";font-size:1rem;color:var(--amar);margin:2rem 0}
+
+  .continue{text-align:center}
+  .cuenta{font-family:"Press Start 2P";font-size:clamp(4rem,16vw,9rem);color:var(--mag);text-shadow:6px 6px 0 #4a0f2a;line-height:1;margin:1rem 0 2rem}
+  .continue p{max-width:46ch;margin:0 auto 2rem;color:#C9BFE6}
+  .opciones{display:flex;flex-wrap:wrap;justify-content:center;gap:1rem}
+  .opciones a{font-family:"Press Start 2P";font-size:.8rem;text-decoration:none;padding:1.1rem 1.5rem;border-radius:.3rem;box-shadow:0 5px 0 rgba(0,0,0,.5)}
+  .opciones .si{background:var(--amar);color:#120a1e}
+  .opciones .no{border:3px solid var(--cian);color:var(--cian)}
+  .opciones a:hover{transform:translateY(-2px)}
+
+  footer{border-top:3px solid #2a1d3d;padding:2rem clamp(1rem,4vw,3rem) calc(2rem + env(safe-area-inset-bottom,0px));display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem;font-family:"Press Start 2P";font-size:.55rem;color:var(--gris)}
+  footer nav{display:flex;flex-wrap:wrap;gap:1.2rem}
+  footer a{color:var(--cian)}
+
+  @media (max-width:900px){
+    .top nav{display:none}
+    .jugadores{grid-template-columns:repeat(3,1fr)}
+    .mapa{grid-template-columns:1fr;gap:1.2rem}
+    .mapa::before{top:0;bottom:0;left:38px;right:auto;width:6px;height:auto;background:repeating-linear-gradient(0deg,var(--caramelo) 0 12px,transparent 12px 20px)}
+    .nivel{display:grid;grid-template-columns:76px 1fr;gap:1rem;text-align:left;align-items:center}
+    .nivel .nodo{margin:0}
+    .pantalla{aspect-ratio:3/4}
+  }
+  @media (max-width:520px){.jugadores{grid-template-columns:1fr 1fr}.boton{width:50px;height:50px}}
+  @media (prefers-reduced-motion:reduce){.creditos .rollo{animation:none;position:static}.creditos .caja{height:auto}.nivel.jefe .nodo{animation:none}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <a class="brand" href="#">DJ BROWNIE</a>
+  <nav aria-label="Main"><a href="#players">PLAYERS</a><a href="#map">WORLD MAP</a><a href="#credits">CREDITS</a><a href="#continue">BOOKING</a></nav>
+  <span class="creditos-top">CREDIT 01</span>
+</header>
+
+<div class="cabina">
+  <div class="marquesina">
+    <h1>DJ BROWNIE</h1>
+    <p>BREAK HERO · BREAKS &amp; BASS · LA UNDERGROUND · EST. 90s</p>
+  </div>
+  <div class="bisel">
+    <div class="pantalla"><canvas id="juego" aria-label="Break Hero rhythm game. Use the D, F and J keys or tap the lanes."></canvas></div>
+    <div class="panel">
+      <span>D · F · J  OR TAP THE LANES</span>
+      <div class="botones">
+        <button class="boton" style="--c:var(--caramelo)" data-l="0" aria-label="Kick (D)">D</button>
+        <button class="boton" style="--c:var(--mag)" data-l="1" aria-label="Snare (F)">F</button>
+        <button class="boton" style="--c:var(--cian)" data-l="2" aria-label="Hats (J)">J</button>
+      </div>
+      <button class="start" id="start">▶ START</button>
+    </div>
+  </div>
+</div>
+
+<main>
+  <section id="players">
+    <div class="wrap">
+      <h2>SELECT PLAYER<small>ONE DJ · SIX NAMES</small></h2>
+      <div class="jugadores" id="jug"></div>
+      <div class="dialogo" aria-live="polite"><div class="quien" id="dQuien">DJ BROWNIE</div><div id="dTxt"></div><span class="flecha" aria-hidden="true">▼</span></div>
+    </div>
+  </section>
+
+  <section id="map">
+    <div class="wrap">
+      <h2>WORLD MAP<small>30+ YEARS · 7 WORLDS</small></h2>
+      <div class="mapa">
+        <div class="nivel" style="--c:var(--caramelo)"><div class="nodo">1-1</div><div><b>AFTER-HOURS LA</b><p>LA underground and after-hours clubs. Tutorial complete.</p></div></div>
+        <div class="nivel" style="--c:var(--amar)"><div class="nodo">2-1</div><div><b>RAMPANT</b><p>Early 90s. Into the studio with Paul Grogan.</p></div></div>
+        <div class="nivel" style="--c:#B5E08B"><div class="nodo">3-1</div><div><b>LIKE THIS</b><p>1999, on Rampant Records.</p></div></div>
+        <div class="nivel" style="--c:var(--cian)"><div class="nodo">4-1</div><div><b>ON TOUR</b><p>USA, Mexico and Canada unlocked.</p></div></div>
+        <div class="nivel" style="--c:#C59BFF"><div class="nodo">5-1</div><div><b>SYNC</b><p>TV, film, video games and ads.</p></div></div>
+        <div class="nivel jefe"><div class="nodo">BOSS</div><div><b>EFFECT</b><p>2025 with SluG (FL), Kaleidoscope. 135 bpm.</p></div></div>
+        <div class="nivel bloqueado"><div class="nodo">???</div><div><b>COMING SOON</b><p>Next level loading…</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="creditos" id="credits">
+    <div class="wrap">
+      <h2>CREDITS<small>HOVER TO PAUSE</small></h2>
+      <div class="caja"><div class="rollo">
+        <p class="gr">DJ BROWNIE</p>
+        <h3>STARRING</h3><p>Chris Brown, DJ and producer.</p>
+        <h3>ORIGIN STORY</h3><p>Over thirty years spinning, starting in the original dark and dirty underground and after-hours venues of LA.</p>
+        <h3>TOUR MODE</h3><p>Years of bookings across the United States, Mexico and Canada.</p>
+        <h3>PRODUCTION</h3><p>Since the early 90s, with long-time friend Paul Grogan, owner of Rampant Records.</p>
+        <h3>ALSO KNOWN AS</h3><p>Gorilla Pimp · Immigrant · Faithealer · Mr Funkster · Brownie</p>
+        <h3>NOW PLAYING</h3><p>Dancefloor bombs on top breaks and bass labels.</p>
+        <h3>SOUNDTRACK</h3><p>Music for television, film, video games and commercials.</p>
+        <h3>LATEST RELEASE</h3><p>"Effect" with SluG (FL). Kaleidoscope Music, 2025.</p>
+        <p class="gr">THANK YOU FOR PLAYING</p>
+      </div></div>
+    </div>
+  </section>
+
+  <section class="continue" id="continue">
+    <div class="wrap">
+      <h2>CONTINUE?</h2>
+      <div class="cuenta" id="cuenta" aria-hidden="true">9</div>
+      <p>Clubs, festivals, after-hours, remixes and music for your game, film or ad. Insert coin and let's talk.</p>
+      <div class="opciones"><a class="si" href="#">YES › BOOKING</a><a class="no" href="https://www.mixcloud.com/chris-brown75/" target="_blank" rel="noopener">HEAR THE MIXES</a></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <span>© DJ BROWNIE · BREAKS &amp; BASS</span>
+  <nav aria-label="Social"><a href="https://www.mixcloud.com/chris-brown75/">MIXCLOUD</a><a href="https://www.beatport.com/track/effect/21777658">BEATPORT</a><a href="#">INSTAGRAM</a><a href="#">CONTACT</a></nav>
+</footer>
+
+<script>
+/* ===== BREAK HERO — rhythm game ===== */
+const cv=document.getElementById('juego'),g=cv.getContext('2d');
+const COLS=['#E08A2E','#FF2E88','#2EF2FF'],NOMBRES=['KICK','SNARE','HAT'];
+let W,H,DPR;
+function medir(){DPR=Math.min(2,devicePixelRatio||1);const r=cv.getBoundingClientRect();W=r.width;H=r.height;cv.width=W*DPR;cv.height=H*DPR;g.setTransform(DPR,0,0,DPR,0,0)}
+addEventListener('resize',medir);medir();
+
+let ctx,noise,estado='titulo',notas=[],t0=0,score=0,combo=0,maxCombo=0,aciertos=0,feedback=[],pulsado=[0,0,0],best=0,bassSched=null,nextBass=0,bassIdx=0;
+try{best=+localStorage.getItem('brownieBest')||0}catch(e){}
+const BPM=135,ST=60/BPM/4,VIAJE=1.6,COMPASES=8;
+const X=1,_=0;
+const PAT=[
+  [X,_,_,_, _,_,X,X, _,_,X,_, _,_,_,_],
+  [_,_,_,_, X,_,_,_, _,_,_,_, X,_,_,_],
+  [_,_,X,_, _,_,X,_, _,_,X,_, _,_,X,_]
+];
+const PAT2=[
+  [X,_,_,X, _,_,X,_, _,_,X,_, _,_,_,X],
+  [_,_,_,_, X,_,_,X, _,_,_,_, X,_,X,_],
+  [X,_,X,_, X,_,X,_, X,_,X,_, X,_,X,_]
+];
+const BAJO=[38.89,0,0,0, 0,0,38.89,0, 0,0,46.25,0, 0,0,34.65,0];
+
+function sesionAltavoz(a){try{if(navigator.audioSession)navigator.audioSession.type=a?'playback':'auto'}catch(e){}}
+function initAudio(){ctx=new (window.AudioContext||window.webkitAudioContext)();const len=ctx.sampleRate*.5;noise=ctx.createBuffer(1,len,ctx.sampleRate);const d=noise.getChannelData(0);for(let i=0;i<len;i++)d[i]=Math.random()*2-1}
+function kick(t,v=1){const o=ctx.createOscillator(),gg=ctx.createGain();o.frequency.setValueAtTime(150,t);o.frequency.exponentialRampToValueAtTime(42,t+.12);gg.gain.setValueAtTime(.9*v,t);gg.gain.exponentialRampToValueAtTime(.001,t+.35);o.connect(gg).connect(ctx.destination);o.start(t);o.stop(t+.36)}
+function snare(t,v=1){const s=ctx.createBufferSource();s.buffer=noise;const f=ctx.createBiquadFilter();f.type='highpass';f.frequency.value=1200;const gg=ctx.createGain();gg.gain.setValueAtTime(.5*v,t);gg.gain.exponentialRampToValueAtTime(.001,t+.18);s.connect(f).connect(gg).connect(ctx.destination);s.start(t);s.stop(t+.2);const o=ctx.createOscillator(),og=ctx.createGain();o.frequency.value=190;og.gain.setValueAtTime(.3*v,t);og.gain.exponentialRampToValueAtTime(.001,t+.1);o.connect(og).connect(ctx.destination);o.start(t);o.stop(t+.11)}
+function hat(t,v=1){const s=ctx.createBufferSource();s.buffer=noise;const f=ctx.createBiquadFilter();f.type='highpass';f.frequency.value=7000;const gg=ctx.createGain();gg.gain.setValueAtTime(.2*v,t);gg.gain.exponentialRampToValueAtTime(.001,t+.05);s.connect(f).connect(gg).connect(ctx.destination);s.start(t);s.stop(t+.06)}
+function bass(t,fq){const o=ctx.createOscillator(),f=ctx.createBiquadFilter(),gg=ctx.createGain();o.type='square';o.frequency.value=fq*2;f.type='lowpass';f.Q.value=6;f.frequency.setValueAtTime(1200,t);f.frequency.exponentialRampToValueAtTime(150,t+.2);gg.gain.setValueAtTime(.16,t);gg.gain.exponentialRampToValueAtTime(.001,t+.25);o.connect(f).connect(gg).connect(ctx.destination);o.start(t);o.stop(t+.26)}
+function blip(t,fq,d=.08,tipo='square',v=.12){const o=ctx.createOscillator(),gg=ctx.createGain();o.type=tipo;o.frequency.setValueAtTime(fq,t);gg.gain.setValueAtTime(v,t);gg.gain.exponentialRampToValueAtTime(.001,t+d);o.connect(gg).connect(ctx.destination);o.start(t);o.stop(t+d)}
+const VOZ=[kick,snare,hat];
+
+function empezar(){
+  if(!ctx)initAudio();ctx.resume();sesionAltavoz(true);
+  notas=[];score=0;combo=0;maxCombo=0;aciertos=0;feedback=[];
+  t0=ctx.currentTime+2.2;
+  for(let c=0;c<COMPASES;c++){const P=c>=4?PAT2:PAT;for(let s=0;s<16;s++)for(let l=0;l<3;l++)if(P[l][s])notas.push({l,t:t0+(c*16+s)*ST,hit:false,miss:false})}
+  [0,1,2].forEach(i=>blip(ctx.currentTime+.2+i*.6,i<2?440:880,.12));
+  nextBass=t0;bassIdx=0;clearInterval(bassSched);
+  bassSched=setInterval(()=>{while(nextBass<ctx.currentTime+.1&&bassIdx<COMPASES*16){const f=BAJO[bassIdx%16];if(f)bass(nextBass,f);nextBass+=ST;bassIdx++}},25);
+  estado='juego';
+}
+function tocar(l){
+  if(estado!=='juego'){if(estado==='titulo'||estado==='fin')empezar();return}
+  const now=ctx.currentTime;pulsado[l]=performance.now();
+  let mejor=null,dm=1;
+  for(const n of notas){if(n.l!==l||n.hit||n.miss)continue;const d=Math.abs(n.t-now);if(d<dm){dm=d;mejor=n}}
+  if(mejor&&dm<.13){
+    mejor.hit=true;aciertos++;combo++;maxCombo=Math.max(maxCombo,combo);
+    const perf=dm<.05;score+=(perf?300:100)*(1+Math.floor(combo/10));
+    VOZ[l](now);feedback.push({l,txt:perf?'PERFECT':'GOOD',t:performance.now(),c:perf?'#FFE14D':'#EDE6FF'});
+  }else{VOZ[l](now,.4)}
+}
+addEventListener('keydown',e=>{
+  const k=e.key.toLowerCase();const m={d:0,f:1,j:2}[k];
+  if(m!==undefined&&!e.repeat){tocar(m);document.querySelector(`.boton[data-l="${m}"]`).classList.add('on')}
+  if((k===' '||k==='enter')&&document.activeElement===document.body&&estado!=='juego'){e.preventDefault();empezar()}
+});
+addEventListener('keyup',e=>{const m={d:0,f:1,j:2}[e.key.toLowerCase()];if(m!==undefined)document.querySelector(`.boton[data-l="${m}"]`).classList.remove('on')});
+document.querySelectorAll('.boton').forEach(b=>b.addEventListener('pointerdown',e=>{e.preventDefault();tocar(+b.dataset.l)}));
+cv.addEventListener('pointerdown',e=>{const r=cv.getBoundingClientRect();const x=e.clientX-r.left;const carril=geo();const l=Math.floor((x-carril.x0)/carril.w);if(l>=0&&l<3)tocar(l);else if(estado!=='juego')empezar()});
+document.getElementById('start').addEventListener('click',empezar);
+
+function geo(){const w=Math.min(W*.6,420)/3;return{w,x0:(W-w*3)/2,hit:H*.84}}
+function pixelTexto(txt,x,y,size,color,align='center'){g.font=`${size}px "Press Start 2P"`;g.textAlign=align;g.textBaseline='middle';g.fillStyle='#000';g.fillText(txt,x+3,y+3);g.fillStyle=color;g.fillText(txt,x,y)}
+
+let scroll=0;
+function fondo(){
+  g.fillStyle='#07030d';g.fillRect(0,0,W,H);
+  const hz=H*.32;
+  const sol=g.createLinearGradient(0,hz-120,0,hz);sol.addColorStop(0,'#FFE14D');sol.addColorStop(1,'#FF2E88');
+  g.fillStyle=sol;g.beginPath();g.arc(W/2,hz,Math.min(W,H)*.16,Math.PI,0);g.fill();
+  g.fillStyle='#07030d';for(let i=0;i<6;i++){g.fillRect(W/2-Math.min(W,H)*.17,hz-8-i*12,Math.min(W,H)*.34,3+i*.6)}
+  g.strokeStyle='rgba(255,46,136,.5)';g.lineWidth=1;
+  for(let i=-12;i<=12;i++){g.beginPath();g.moveTo(W/2+i*20,hz);g.lineTo(W/2+i*W*.14,H);g.stroke()}
+  for(let i=0;i<14;i++){const p=((i+scroll)%14)/14;const y=hz+(H-hz)*p*p;g.globalAlpha=p;g.beginPath();g.moveTo(0,y);g.lineTo(W,y);g.stroke()}
+  g.globalAlpha=1;
+}
+function dibujar(){
+  scroll=(scroll+.04)%14;fondo();
+  const {w,x0,hit}=geo();
+  if(estado==='titulo'){
+    pixelTexto('BREAK HERO',W/2,H*.5,Math.max(16,W*.045),'#FFE14D');
+    pixelTexto("PLAY BROWNIE'S BREAK",W/2,H*.6,Math.max(8,W*.016),'#2EF2FF');
+    if(Math.floor(performance.now()/500)%2)pixelTexto('PRESS START',W/2,H*.75,Math.max(10,W*.022),'#FF2E88');
+    pixelTexto('HI-SCORE '+String(best).padStart(6,'0'),W/2,H*.88,Math.max(8,W*.014),'#EDE6FF');
+  }
+  if(estado==='juego'||estado==='fin'){
+    const now=ctx.currentTime;
+    for(let l=0;l<3;l++){
+      const x=x0+l*w;
+      g.fillStyle='rgba(10,5,20,.72)';g.fillRect(x+2,0,w-4,H);
+      const p=Math.max(0,1-(performance.now()-pulsado[l])/180);
+      g.fillStyle=COLS[l];g.globalAlpha=.15+p*.6;g.fillRect(x+2,hit-14,w-4,28);g.globalAlpha=1;
+      g.strokeStyle=COLS[l];g.lineWidth=3;g.strokeRect(x+6,hit-12,w-12,24);
+      pixelTexto(NOMBRES[l],x+w/2,hit+34,Math.max(7,w*.07),COLS[l]);
+    }
+    for(const n of notas){
+      if(n.hit)continue;
+      const dt=n.t-now;if(dt>VIAJE||dt<-.3)continue;
+      if(!n.miss&&dt<-.13){n.miss=true;combo=0;feedback.push({l:n.l,txt:'MISS',t:performance.now(),c:'#7C6F99'});blip(now,110,.08,'sawtooth',.05)}
+      const y=hit-(dt/VIAJE)*hit;const x=x0+n.l*w;
+      g.globalAlpha=n.miss?.3:1;
+      g.fillStyle=COLS[n.l];g.fillRect(x+10,y-9,w-20,18);
+      g.fillStyle='rgba(255,255,255,.55)';g.fillRect(x+10,y-9,w-20,4);
+      g.fillStyle='rgba(0,0,0,.35)';g.fillRect(x+10,y+5,w-20,4);
+      g.globalAlpha=1;
+    }
+    feedback=feedback.filter(f=>performance.now()-f.t<500);
+    feedback.forEach(f=>{const a=(performance.now()-f.t)/500;g.globalAlpha=1-a;pixelTexto(f.txt,x0+f.l*w+w/2,hit-50-a*30,Math.max(8,w*.08),f.c);g.globalAlpha=1});
+    pixelTexto('SCORE '+String(score).padStart(6,'0'),16,24,Math.max(8,W*.016),'#EDE6FF','left');
+    pixelTexto('COMBO x'+combo,W-16,24,Math.max(8,W*.016),combo>9?'#FFE14D':'#2EF2FF','right');
+    if(now<t0){const c=Math.ceil((t0-now)/.6);pixelTexto(c>3?'READY':String(Math.min(3,c)),W/2,H*.45,Math.max(20,W*.06),'#FFE14D')}
+    if(estado==='juego'&&notas.length&&now>notas[notas.length-1].t+.6){
+      estado='fin';clearInterval(bassSched);
+      if(score>best){best=score;try{localStorage.setItem('brownieBest',best)}catch(e){}}
+      [523,659,784,1046].forEach((f,i)=>blip(ctx.currentTime+i*.12,f,.15));
+    }
+    if(estado==='fin'){
+      g.fillStyle='rgba(7,3,13,.82)';g.fillRect(0,0,W,H);
+      const pct=aciertos/notas.length;const rango=pct>.95?'S':pct>.85?'A':pct>.65?'B':'C';
+      pixelTexto('STAGE CLEAR',W/2,H*.28,Math.max(16,W*.04),'#FFE14D');
+      pixelTexto('RANK '+rango,W/2,H*.42,Math.max(22,W*.065),'#FF2E88');
+      pixelTexto(`SCORE ${score}   MAX COMBO ${maxCombo}`,W/2,H*.56,Math.max(8,W*.016),'#EDE6FF');
+      pixelTexto(`HITS ${aciertos}/${notas.length}`,W/2,H*.64,Math.max(8,W*.016),'#2EF2FF');
+      if(Math.floor(performance.now()/500)%2)pixelTexto('PRESS START TO RETRY',W/2,H*.8,Math.max(9,W*.018),'#FFE14D');
+    }
+  }
+  requestAnimationFrame(dibujar);
+}
+document.fonts.ready.then(()=>requestAnimationFrame(dibujar));
+
+/* ===== SELECT PLAYER — pixel avatars generated from the name ===== */
+const jugadores=[
+  {n:'DJ BROWNIE',c:['#E08A2E','#7A4424'],t:'The final boss. Chris Brown, over 30 years spinning breaks, born in the LA underground. Now on breaks and bass labels, and on the soundtrack of TV, film and video games.'},
+  {n:'BROWNIE',c:['#FFE14D','#7A4424'],t:'The short version. Same producer, same break: dense, dark and addictive.'},
+  {n:'GORILLA PIMP',c:['#FF2E88','#3a0f4a'],t:'One of his studio aliases. Brute force in the low end.'},
+  {n:'IMMIGRANT',c:['#2EF2FF','#0f4a55'],t:'Another name from the production era that kicked off in the 90s with Paul Grogan and Rampant Records.'},
+  {n:'FAITHEALER',c:['#C59BFF','#3a2a55'],t:'Production alias. Special ability: healing empty dancefloors.'},
+  {n:'MR FUNKSTER',c:['#B5E08B','#2f4a1d'],t:'Production alias. The funkiest side of the Brownie house.'}
+];
+function avatar(c,nombre,cols){
+  let h=0;for(const ch of nombre)h=(h*31+ch.charCodeAt(0))>>>0;
+  const rnd=()=>{h^=h<<13;h>>>=0;h^=h>>17;h^=h<<5;h>>>=0;return h/4294967296};
+  const N=10,s=8;c.width=c.height=N*s;const x=c.getContext('2d');
+  for(let yy=0;yy<N;yy++)for(let xx=0;xx<N/2;xx++){
+    const borde=yy<1||yy>N-2;const v=rnd();
+    let col=null;if(!borde&&v>.45)col=v>.82?'#EDE6FF':cols[v>.62?0:1];
+    if(col){x.fillStyle=col;x.fillRect(xx*s,yy*s,s,s);x.fillRect((N-1-xx)*s,yy*s,s,s)}
+  }
+  /* DJ shades for everyone */
+  x.fillStyle='#0B0614';x.fillRect(2*s,4*s,2*s,s);x.fillRect(6*s,4*s,2*s,s);x.fillRect(4*s,4*s,2*s,s/2);
+}
+const jugEl=document.getElementById('jug'),dQuien=document.getElementById('dQuien'),dTxt=document.getElementById('dTxt');
+let escribiendo=null;
+function decir(quien,txt){
+  dQuien.textContent=quien;clearInterval(escribiendo);let i=0;dTxt.textContent='';
+  escribiendo=setInterval(()=>{dTxt.textContent=txt.slice(0,++i);if(i>=txt.length)clearInterval(escribiendo)},22);
+}
+jugadores.forEach((j,i)=>{
+  const b=document.createElement('button');b.className='jug';b.setAttribute('aria-pressed',i===0?'true':'false');
+  const c=document.createElement('canvas');avatar(c,j.n,j.c);
+  b.appendChild(c);const nb=document.createElement('b');nb.textContent=j.n;b.appendChild(nb);
+  b.addEventListener('click',()=>{
+    document.querySelectorAll('.jug').forEach(x=>x.setAttribute('aria-pressed','false'));b.setAttribute('aria-pressed','true');
+    decir(j.n,j.t);if(ctx)blip(ctx.currentTime,660+i*80,.08);
+  });
+  jugEl.appendChild(b);
+});
+decir(jugadores[0].n,jugadores[0].t);
+
+/* ===== CONTINUE? countdown ===== */
+const cuenta=document.getElementById('cuenta');let n=9;
+setInterval(()=>{n=n<=0?9:n-1;cuenta.textContent=n},1000);
+</script>
+</body>
+</html>
