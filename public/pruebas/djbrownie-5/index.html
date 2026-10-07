@@ -49,7 +49,9 @@
   .bloque{--W:300px;--D:300px;position:relative;width:var(--W);height:250px;transform-style:preserve-3d;transform:rotateX(-24deg) rotateY(-36deg);transition:transform .25s ease-out}
   .capa{position:absolute;left:0;width:var(--W);height:var(--h);top:var(--y);transform-style:preserve-3d;transition:transform .6s cubic-bezier(.3,1.3,.4,1);cursor:pointer;outline:none}
   .capa:focus-visible .f{outline:2px solid var(--frambuesa)}
-  .capa.fuera{transform:translateZ(150px)}
+  /* Two ways out: even layers slide out through the front face (Z), odd layers through the right side (X) */
+  .capa.fuera{transform:translateZ(calc(var(--D)*.5))}
+  .capa.fuera.otro{transform:translateX(calc(var(--W)*.55))}
   .capa .f,.capa .d,.capa .t{position:absolute;backface-visibility:hidden}
   .capa .f{left:0;top:0;width:var(--W);height:var(--h);transform:translateZ(calc(var(--D)/2));background:var(--c);background-image:var(--tex)}
   .capa .d{top:0;left:calc((var(--W) - var(--D))/2);width:var(--D);height:var(--h);transform:rotateY(90deg) translateZ(calc(var(--W)/2));background:var(--c);background-image:var(--tex);filter:brightness(.78)}
@@ -232,7 +234,7 @@ const esc=matchMedia('(max-width:960px)').matches?.76:1;
 let y=0;const nodos=[];
 capas.forEach((c,i)=>{
   const h=Math.round(c.h*esc);
-  const b=document.createElement('div');b.className='capa'+(c.k?' '+c.k:'');
+  const b=document.createElement('div');b.className='capa'+(i%2?' otro':'')+(c.k?' '+c.k:'');
   b.setAttribute('role','button');b.tabIndex=0;
   b.addEventListener('keydown',ev=>{if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();abrir(i)}});
   b.style.cssText=`--h:${h}px;--y:${y}px;--c:${c.c};--tex:${migasTex}`;
