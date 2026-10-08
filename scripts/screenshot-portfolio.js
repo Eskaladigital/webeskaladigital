@@ -47,6 +47,16 @@ const PORTFOLIO_WEBS = [
   { url: 'https://www.retiru.com/es', folder: 'retiru-marketplace-retiros-wellness', name: 'Retiru' },
   { url: 'https://www.optimalbreaks.com/es', folder: 'optimalbreaks-archivo-breakbeat', name: 'Optimal Breaks' },
   { url: 'https://www.neotermica.com', folder: 'neotermica-climatizacion-murcia', name: 'Neotérmica' },
+  {
+    url: 'https://www.dirtykitchenrave.com/es',
+    folder: 'dirty-kitchen-rave-sello-bass',
+    name: 'Dirty Kitchen Rave',
+    extra: [
+      { url: 'https://www.dirtykitchenrave.com/es/releases', file: 'lanzamientos.jpg' },
+      { url: 'https://www.dirtykitchenrave.com/es/artists', file: 'artistas.jpg' },
+      { url: 'https://www.dirtykitchenrave.com/es/shop', file: 'tienda.jpg' },
+    ],
+  },
 ];
 
 // Filtro opcional por CLI: node scripts/screenshot-portfolio.js <texto>
