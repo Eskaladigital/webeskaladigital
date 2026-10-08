@@ -383,6 +383,13 @@ pintar();
 let ctx=null,sonando=false,paso=0,next=0,timer=null,noise=null;
 const bpmIn=document.getElementById('bpm'),bpmOut=document.getElementById('bpmOut');
 bpmIn.addEventListener('input',()=>bpmOut.textContent=bpmIn.value+' bpm');
+/* iOS trata el Web Audio como "ambient": con el interruptor de silencio el altavoz
+   no suena y los cascos Bluetooth sí. "playback" lo deja como música, por el altavoz. */
+function sesionAltavoz(activa){
+  try{
+    if(navigator.audioSession) navigator.audioSession.type=activa?'playback':'auto';
+  }catch(e){}
+}
 function initAudio(){
   ctx=new (window.AudioContext||window.webkitAudioContext)();
   const len=ctx.sampleRate*.5;noise=ctx.createBuffer(1,len,ctx.sampleRate);
@@ -405,8 +412,10 @@ function programar(){
 function marcar(s){leds.forEach((l,i)=>l.classList.toggle('on',i===s));botones.forEach(row=>row.forEach((b,i)=>b.classList.toggle('ahora',i===s)))}
 const play=document.getElementById('play');
 play.addEventListener('click',()=>{
+  sonando=!sonando;
+  sesionAltavoz(sonando);
   if(!ctx)initAudio();
-  sonando=!sonando;play.setAttribute('aria-pressed',sonando);play.textContent=sonando?'■ Stop':'▶ Play';
+  play.setAttribute('aria-pressed',sonando);play.textContent=sonando?'■ Stop':'▶ Play';
   if(sonando){ctx.resume();paso=0;next=ctx.currentTime+.05;timer=setInterval(programar,25)}
   else{clearInterval(timer);marcar(-1)}
 });

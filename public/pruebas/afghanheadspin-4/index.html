@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Afghan Headspin — Headspin proposal · ESKALA</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Headspin proposal for Afghan Headspin. Demo by ESKALA Marketing.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  /* PROPOSAL 04 — HEADSPIN
+     Idea: a headspin is the breaking power move, and breakbeat is the music b-boys spin to. The hero is an
+     upside-down b-boy inside a ring of letters. Flick it and both spin together with real inertia; the faster
+     it spins, the more the break opens up (low-pass filter + volume). Full speed triggers a hoover, when it stops:
+     FREEZE. The career is laid out as a battle bracket, the booking is a call-out. */
+  :root{
+    --carton:#C9A574;
+    --carton2:#B48D5A;
+    --hueso:#F4F1EA;
+    --negro:#0E0E0E;
+    --azul:#2340FF;
+    --rojo:#FF3B30;
+    --v:0;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:Manrope,system-ui,sans-serif;background:var(--hueso);color:var(--negro);line-height:1.6;overflow-x:hidden}
+  a{color:inherit}
+  :focus-visible{outline:3px solid var(--azul);outline-offset:3px}
+
+  .top{position:absolute;top:0;left:0;right:0;z-index:5;display:flex;justify-content:space-between;align-items:center;padding:calc(1.1rem + env(safe-area-inset-top,0px)) clamp(1rem,4vw,3rem)}
+  .brand{font-family:Syne;font-weight:800;font-size:1.1rem;text-decoration:none}
+  .top nav{display:flex;gap:1.6rem;font-weight:700;font-size:.9rem}
+  .top nav a{text-decoration:none}
+  .top nav a:hover{color:var(--azul)}
+
+  /* HERO */
+  .hero{position:relative;min-height:100svh;overflow:hidden;display:grid;grid-template-rows:1fr auto;
+    background:
+      radial-gradient(ellipse 70% 50% at 50% 100%,rgba(35,64,255,calc(var(--v)*.35)),transparent 70%),
+      var(--hueso)}
+  .escena{position:relative;min-height:62vh;cursor:grab;touch-action:pan-y;user-select:none;-webkit-user-select:none;overflow:hidden}
+  .escena:active{cursor:grabbing}
+  /* 3D world: a ring of loose letters (no backgrounds) seen slightly from above, like a headspin */
+  .mundo{position:absolute;inset:0;perspective:1300px;perspective-origin:50% 20%;z-index:1;pointer-events:none}
+  .eje{position:absolute;left:50%;top:var(--cy,45%);width:0;height:0;transform-style:preserve-3d;transform:rotateX(-17deg)}
+  .anillo{position:absolute;left:0;top:0;width:0;height:0;transform-style:preserve-3d}
+  #anillo1{transform:rotateY(var(--a,0deg))}
+  #anillo2{transform:translateY(var(--y2,-150px)) rotateY(var(--a2,0deg))}
+  .letra{position:absolute;left:0;top:0;display:grid;place-items:center;font-family:Syne;font-weight:800;line-height:1;color:var(--negro);backface-visibility:hidden;-webkit-backface-visibility:hidden;filter:blur(calc(var(--v)*1.3px))}
+  .letra.azul{color:var(--azul)}
+  .letra.dentro{color:rgba(14,14,14,.12)}
+  .letra.dentro.azul{color:rgba(35,64,255,.16)}
+  #anillo2 .letra{font-family:Manrope;font-weight:800;color:var(--azul)}
+  #anillo2 .letra.dentro{color:rgba(35,64,255,.14)}
+  /* the b-boy: a canvas plane standing at the centre of the ring (z=0), so 3D sorting puts
+     the front letters in front of him and the back letters behind him */
+  .figura{position:absolute;pointer-events:none}
+
+  .hud{display:grid;grid-template-columns:1fr auto 1fr;align-items:end;gap:1rem;padding:0 clamp(1rem,4vw,3rem) clamp(1.2rem,3vw,2rem);position:relative;z-index:2}
+  .hud .izq{max-width:38ch}
+  .hud h1{font-family:Syne;font-weight:800;font-size:clamp(1rem,1.6vw,1.2rem);letter-spacing:.02em}
+  .hud p{font-size:.92rem;color:#4a4a48}
+  .rpm{text-align:center}
+  .rpm b{display:block;font-family:Syne;font-weight:800;font-size:clamp(2.6rem,5vw,4rem);line-height:.9;color:var(--azul);font-variant-numeric:tabular-nums}
+  .rpm small{font-weight:700;letter-spacing:.2em;font-size:.72rem}
+  .barra{width:200px;height:6px;background:#ddd;margin:.6rem auto 0;position:relative;overflow:hidden}
+  .barra i{position:absolute;inset:0 auto 0 0;width:calc(var(--v)*100%);background:linear-gradient(90deg,var(--azul),var(--rojo))}
+  .der{justify-self:end;text-align:right}
+  .boton{font-family:Syne;font-weight:800;font-size:.95rem;background:var(--negro);color:var(--hueso);border:0;padding:.9rem 1.3rem;cursor:pointer;border-radius:999px}
+  .boton:hover{background:var(--azul)}
+  .grito{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%) scale(.8) rotate(-6deg);font-family:Syne;font-weight:800;font-size:clamp(3rem,10vw,8rem);color:var(--rojo);opacity:0;pointer-events:none;transition:opacity .2s,transform .3s;z-index:3;white-space:nowrap;text-shadow:6px 6px 0 var(--negro)}
+  .grito.on{opacity:1;transform:translate(-50%,-50%) scale(1) rotate(-6deg)}
+  .pista{position:absolute;bottom:1rem;left:50%;transform:translateX(-50%);font-weight:700;font-size:.85rem;letter-spacing:.15em;text-transform:uppercase;color:#777;pointer-events:none;transition:opacity .4s}
+
+  section{padding:clamp(5rem,10vw,8rem) clamp(1rem,4vw,3rem)}
+  .wrap{max-width:1240px;margin:0 auto}
+  h2{font-family:Syne;font-weight:800;font-size:clamp(2.6rem,7vw,5.6rem);line-height:.9;letter-spacing:-.03em;margin-bottom:2.4rem}
+  h2 em{font-style:normal;color:var(--azul)}
+  .etq{font-weight:700;font-size:.8rem;letter-spacing:.2em;text-transform:uppercase;color:var(--azul);margin-bottom:1rem}
+
+  /* HEADS */
+  .cabezas{background:var(--negro);color:var(--hueso)}
+  .cabezas .cols{display:grid;grid-template-columns:1fr auto 1fr;gap:2rem;align-items:center}
+  .cabeza{text-align:center}
+  .cabeza .circulo{width:min(260px,60vw);aspect-ratio:1;border-radius:50%;margin:0 auto 1.2rem;display:grid;place-items:center;font-family:Syne;font-weight:800;font-size:clamp(5rem,12vw,9rem);background:var(--c);color:var(--negro);animation:gira 9s linear infinite}
+  .cabeza:nth-child(3) .circulo{animation-direction:reverse}
+  .cabeza.antes .circulo{opacity:.55}
+  @keyframes gira{to{transform:rotate(360deg)}}
+  .cabeza b{font-family:Syne;font-weight:800;font-size:1.8rem}
+  .cabeza small{display:block;color:#999;font-size:.9rem}
+  .vs{font-family:Syne;font-weight:800;font-size:clamp(2rem,5vw,3.6rem);color:var(--rojo)}
+  .cabezas .texto{max-width:66ch;margin:3rem auto 0;text-align:center;color:#C8C5BE;font-size:1.05rem}
+  .cabezas .alias{text-align:center;margin-top:1.4rem;font-size:.85rem;color:#888}
+  .cabezas .alias b{color:var(--hueso)}
+
+  /* BATTLE BRACKET */
+  .bracket{display:grid;grid-template-columns:repeat(5,1fr);gap:0;align-items:center;position:relative}
+  .ronda{display:flex;flex-direction:column;gap:1rem;padding:0 1.2rem;position:relative}
+  .ronda + .ronda::before{content:"";position:absolute;left:0;top:50%;width:1.2rem;height:3px;background:var(--negro)}
+  .ronda h3{font-weight:700;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:#888;margin-bottom:.2rem}
+  .carta{background:#fff;border:3px solid var(--negro);padding:1rem;position:relative;box-shadow:5px 5px 0 var(--negro);transition:transform .15s,box-shadow .15s}
+  .carta:hover{transform:translate(-3px,-3px);box-shadow:8px 8px 0 var(--azul)}
+  .carta::after{content:"";position:absolute;right:calc(-1.2rem - 3px);top:50%;width:1.2rem;height:3px;background:var(--negro)}
+  .ronda:last-child .carta::after{display:none}
+  .carta b{font-family:Syne;font-weight:800;font-size:1.15rem;display:block;line-height:1.1}
+  .carta small{color:#666;font-size:.82rem}
+  .carta.gana{background:var(--azul);color:#fff}
+  .carta.gana small{color:#dfe3ff}
+  .labels-grupo{display:grid;gap:.5rem}
+  .labels-grupo .carta{padding:.6rem .8rem}
+  .labels-grupo .carta b{font-size:.95rem}
+
+  /* SIGNATURE MOVE */
+  .firma{background:var(--carton);background-image:repeating-linear-gradient(90deg,rgba(0,0,0,.05) 0 2px,transparent 2px 9px)}
+  .firma .cols{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,5vw,4rem);align-items:center}
+  .firma .grande{font-family:Syne;font-weight:800;font-size:clamp(4.5rem,13vw,11rem);line-height:.82;letter-spacing:-.04em}
+  .firma p{font-size:1.08rem;max-width:42ch;margin-bottom:1.5rem}
+  .links{display:flex;flex-wrap:wrap;gap:.6rem}
+  .links a{font-family:Syne;font-weight:700;text-decoration:none;background:var(--negro);color:var(--hueso);padding:.8rem 1.2rem;border-radius:999px}
+  .links a:hover{background:var(--azul)}
+  .moves{list-style:none;display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:1.5rem}
+  .moves li{font-family:Syne;font-weight:700;font-size:.85rem;background:rgba(14,14,14,.08);padding:.3rem .7rem;border-radius:999px}
+
+  /* JUDGES */
+  .jueces{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
+  .juez{border:3px solid var(--negro);padding:1.4rem;background:#fff}
+  .juez .n{font-family:Syne;font-weight:800;font-size:3rem;line-height:1;color:var(--azul)}
+  .juez b{font-family:Syne;font-weight:800;font-size:1.25rem;display:block;margin:.4rem 0}
+  .juez p{font-size:.93rem;color:#444}
+
+  /* CALL OUT */
+  .callout{background:var(--azul);color:#fff;text-align:center}
+  .callout h2{font-size:clamp(3.4rem,11vw,9rem);color:#fff}
+  .callout h2 em{color:var(--negro)}
+  .callout p{max-width:48ch;margin:0 auto 2rem;font-size:1.1rem;color:#e3e6ff}
+  .callout a{display:inline-block;font-family:Syne;font-weight:800;font-size:1.2rem;text-decoration:none;background:var(--hueso);color:var(--negro);padding:1.1rem 2.2rem;border-radius:999px}
+  .callout a:hover{background:var(--negro);color:#fff}
+  .fechas{display:flex;flex-wrap:wrap;justify-content:center;gap:.8rem;margin-top:2.5rem}
+  .fechas span{border:2px solid rgba(255,255,255,.5);border-radius:999px;padding:.45rem 1rem;font-weight:700;font-size:.85rem}
+
+  footer{background:var(--negro);color:#999;padding:2rem clamp(1rem,4vw,3rem) calc(2rem + env(safe-area-inset-bottom,0px));display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem;font-size:.85rem}
+  footer nav{display:flex;flex-wrap:wrap;gap:1.2rem}
+  footer a:hover{color:#fff}
+
+  @media (max-width:980px){
+    .top nav{display:none}
+    .hud{grid-template-columns:1fr;text-align:center;justify-items:center}
+    .der{justify-self:center;text-align:center}
+    .cabezas .cols,.firma .cols{grid-template-columns:1fr}
+    .bracket{grid-template-columns:1fr;gap:1.5rem}
+    .ronda{padding:0}
+    .ronda + .ronda::before{left:50%;top:-1.5rem;width:3px;height:1.5rem}
+    .carta::after{display:none}
+    .jueces{grid-template-columns:1fr 1fr}
+  }
+  @media (max-width:520px){.jueces{grid-template-columns:1fr}}
+  @media (prefers-reduced-motion:reduce){.cabeza .circulo{animation:none}.letra{filter:none}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <a class="brand" href="#">AFGHAN HEADSPIN</a>
+  <nav aria-label="Main"><a href="#heads">The heads</a><a href="#bracket">The battle</a><a href="#move">Signature move</a><a href="#callout">Booking</a></nav>
+</header>
+
+<main>
+  <section class="hero" aria-labelledby="h1">
+    <div class="escena" id="escena" role="slider" tabindex="0" aria-label="Spinning name. Drag sideways or use the arrow keys to spin it." aria-valuetext="0 rpm">
+      <div class="mundo" aria-hidden="true"><div class="eje" id="eje"><canvas class="figura" id="figura"></canvas><div class="anillo" id="anillo1"></div><div class="anillo" id="anillo2"></div></div></div>
+      <span class="pista" id="pista">← Flick it to spin →</span>
+      <span class="grito" id="grito" aria-hidden="true">FREEZE!</span>
+    </div>
+    <div class="hud">
+      <div class="izq">
+        <h1 id="h1">Afghan Headspin · aka Jason Bull</h1>
+        <p>Breakbeat, UK bass and rave, label manager and A&amp;R of Dirty Kitchen Rave. Spin it faster to open up the break.</p>
+      </div>
+      <div class="rpm" aria-live="off"><b id="rpm">0</b><small>RPM</small><div class="barra"><i></i></div></div>
+      <div class="der"><button class="boton" id="sonido" aria-pressed="false">♫ Sound on</button></div>
+    </div>
+  </section>
+
+  <section class="cabezas" id="heads">
+    <div class="wrap">
+      <p class="etq" style="text-align:center">Started with two heads · spins on one</p>
+      <div class="cols">
+        <div class="cabeza antes" style="--c:var(--hueso)"><div class="circulo">W</div><b>Wrisk</b><small>Colin Worth · co-founder, 2006</small></div>
+        <div class="vs">→</div>
+        <div class="cabeza" style="--c:var(--azul)"><div class="circulo" style="color:#fff">M</div><b>Mackie</b><small>Jason Bull · Afghan Headspin today</small></div>
+      </div>
+      <p class="texto">Afghan Headspin started in 2006 as a project of Mackie (Jason Bull) and Wrisk (Colin Worth). Both came from Resonant Evil, the early-2000s British drum &amp; bass trio completed by Audio (Gareth Greenall). Going Down came out on Skint on 9 May 2011, featuring MC Coppa. No One Dies, an eighteen-track album, came out on Soundsystem Bassrock on 25 November 2022. Discogs still lists both founders as members.</p>
+      <p class="alias"><b>Also:</b> Jason Bull is a member of Pixel Fist, with Gareth Greenall, Lorne and MC Stapleton.</p>
+    </div>
+  </section>
+
+  <section id="bracket">
+    <div class="wrap">
+      <p class="etq">The battle so far</p>
+      <h2>Round by<br><em>round</em></h2>
+      <div class="bracket">
+        <div class="ronda"><h3>Round 1 · Early 2000s</h3><div class="carta"><b>Resonant Evil</b><small>UK drum &amp; bass trio: Mackie, Wrisk &amp; Audio</small></div></div>
+        <div class="ronda"><h3>Round 2 · 2006</h3><div class="carta gana"><b>Afghan Headspin</b><small>Mackie &amp; Wrisk · True (Ape Music, 2007) · The Calling</small></div></div>
+        <div class="ronda"><h3>Round 3 · The labels</h3>
+          <div class="labels-grupo">
+            <div class="carta"><b>Skint</b><small>Going Down · 2011</small></div><div class="carta"><b>Ape Music</b><small>True · 2007</small></div><div class="carta"><b>Kaleidoscope</b><small>2025</small></div><div class="carta"><b>Broke</b><small>The Calling · 2006</small></div><div class="carta"><b>Rocstar</b><small>Total Recall · 2010</small></div>
+          </div>
+        </div>
+        <div class="ronda"><h3>Round 4 · 2022</h3><div class="carta"><b>No One Dies</b><small>Eighteen tracks · Soundsystem Bassrock · 25 Nov</small></div></div>
+        <div class="ronda"><h3>Final · 2023–2026</h3><div class="carta gana"><b>Dirty Kitchen Rave</b><small>Label manager &amp; A&amp;R · KILLA, PHAT BASS, ROMERO, Roller Coaster Hands In The Air</small></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="firma" id="move">
+    <div class="wrap cols">
+      <div class="grande" aria-hidden="true">PHAT<br>BASS</div>
+      <div>
+        <p class="etq" style="color:var(--negro)">Signature move</p>
+        <h2 style="font-size:clamp(2rem,4vw,3rem)">The essential track</h2>
+        <p>Every b-boy has a signature move. PHAT BASS came out on Dirty Kitchen Rave in February 2026, the same month as the album KILLA. The rest of the move list:</p>
+        <ul class="moves"><li>KILLA</li><li>Roller Coaster Hands In The Air</li><li>ROMERO</li><li>JUMP</li><li>ACIDICA</li><li>WE ARE BREAKBEAT</li><li>JUSTICE</li><li>No One Dies</li><li>Going Down</li><li>True</li><li>The Calling</li></ul>
+        <div class="links">
+          <a href="https://www.beatport.com/artist/afghan-headspin/30700" target="_blank" rel="noopener">Beatport ↗</a>
+          <a href="https://afghanheadspin.bandcamp.com/" target="_blank" rel="noopener">Bandcamp ↗</a>
+          <a href="https://soundcloud.com/afghan-headspin" target="_blank" rel="noopener">SoundCloud ↗</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="style">
+    <div class="wrap">
+      <p class="etq">Judges' notes</p>
+      <h2>What he's<br><em>scored on</em></h2>
+      <div class="jueces">
+        <div class="juez"><span class="n">01</span><b>Breakbeat</b><p>The core of the recent records: WE ARE BREAKBEAT, JUSTICE, ROMERO, KILLA.</p></div>
+        <div class="juez"><span class="n">02</span><b>UK bass</b><p>Weight first. PHAT BASS says it in the title.</p></div>
+        <div class="juez"><span class="n">03</span><b>Rave</b><p>BITCH HOOVA!, ACIDICA, Roller Coaster Hands In The Air.</p></div>
+        <div class="juez"><span class="n">04</span><b>The roots</b><p>Drum &amp; bass and hardcore, from Resonant Evil onwards.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="callout" id="callout">
+    <div class="wrap">
+      <h2>Call him<br><em>out</em></h2>
+      <p>Got a floor that needs breaking? Clubs, festivals, warehouses and soundsystem nights.</p>
+      <a href="#">Booking enquiries →</a>
+      <div class="fechas"><span>02.04.26 · Pure Bassline, Seville</span><span>19.09.26 · Olibass Open Air, Torredonjimeno</span></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <span>Afghan Headspin · aka Jason Bull · UK</span>
+  <nav aria-label="Social"><a href="https://www.beatport.com/artist/afghan-headspin/30700">Beatport</a><a href="https://afghanheadspin.bandcamp.com/">Bandcamp</a><a href="https://soundcloud.com/afghan-headspin">SoundCloud</a><a href="https://www.facebook.com/afghanheadspinmusic/">Facebook</a></nav>
+</footer>
+
+<script>
+/* ============ BUILD THE RINGS ============ */
+const anillo1=document.getElementById('anillo1'),anillo2=document.getElementById('anillo2'),eje=document.getElementById('eje'),root=document.documentElement;
+/* Each letter is placed on a circle facing outwards. A second, dimmer copy faces inwards,
+   so the letters at the back of the ring are seen "through" the ring instead of overlapping. */
+function anillo(cont,texto,R,escalaFuente,azulDe,azulA){
+  cont.innerHTML='';
+  const N=texto.length,paso=360/N,arco=2*Math.PI*R/N,fs=arco*escalaFuente;
+  [...texto].forEach((ch,i)=>{
+    if(ch===' ')return;
+    ['','dentro'].forEach(tipo=>{
+      const d=document.createElement('span');
+      d.className='letra'+(tipo?' dentro':'')+(i>=azulDe&&i<azulA?' azul':'');
+      d.textContent=ch;
+      d.style.cssText=`width:${arco}px;height:${fs}px;margin-left:${-arco/2}px;margin-top:${-fs/2}px;font-size:${fs}px;transform:rotateY(${i*paso}deg) translateZ(${R}px)${tipo?' rotateY(180deg)':''}`;
+      cont.appendChild(d);
+    });
+  });
+  return fs;
+}
+/* ============ THE B-BOY (upside down, head on the floor) ============ */
+const fig=document.getElementById('figura'),fx=fig.getContext('2d');
+let F=null;
+function construir(){
+  const esc=document.getElementById('escena'),EW=esc.clientWidth,EH=Math.max(esc.clientHeight,innerHeight*.62);
+  const R=Math.max(120,Math.min(330,EW*.28,EH*.36));
+  anillo(anillo1,'AFGHAN · HEADSPIN · ',R,.95,9,17);               /* big ring around the head, HEADSPIN in blue */
+  anillo(anillo2,'BREAKBEAT · UK BASS · RAVE · KILLA · ',R*.62,1.25,0,0); /* small ring around the legs */
+  const rh=R*.3;
+  const cw=Math.round(R*2.3),chH=Math.round(R*2.15),headY=Math.round(chH-rh*1.55),dpr=Math.min(2,devicePixelRatio||1);
+  fig.width=cw*dpr;fig.height=chH*dpr;fig.style.width=cw+'px';fig.style.height=chH+'px';
+  fig.style.left=(-cw/2)+'px';fig.style.top=(-headY)+'px';
+  fig.style.transformOrigin=`${cw/2}px ${headY}px`;fig.style.transform='rotateX(17deg)'; /* cancel the ring tilt: faces the camera */
+  F={cw,chH,headY,rh,R,dpr};
+  const cy=Math.min(EH*.68,EH-rh*1.9);
+  eje.style.setProperty('--cy',cy+'px');
+  anillo2.style.setProperty('--y2',(-(rh*1.1+R*.95))+'px');
+}
+construir();addEventListener('resize',construir);document.fonts.ready.then(construir);
+
+const TILT=Math.sin(17*Math.PI/180);
+function mezclar(a,b,t){return`rgb(${a.map((v,i)=>Math.round(v+(b[i]-v)*t))})`}
+function dibujarFigura(th,v){
+  if(!F)return;const {cw,chH,headY,rh,R,dpr}=F,g=fx;
+  g.setTransform(dpr,0,0,dpr,0,0);g.clearRect(0,0,cw,chH);
+  g.save();g.translate(cw/2,headY);
+  g.fillStyle=`rgba(0,0,0,${.22+v*.18})`;g.beginPath();g.ellipse(0,rh*1.08,rh*(1.5+v*.9),rh*.26,0,0,Math.PI*2);g.fill();
+  const P=(phi,d,y)=>{const s=Math.sin(th+phi),c=Math.cos(th+phi);return{x:s*d,y:y+c*d*TILT,z:c}};
+  const tw=rh*1.45,hombro=-rh*1.15,cadera=hombro-R*.52;
+  const miembros=[];
+  [Math.PI/2+.35,-Math.PI/2+.35].forEach(phi=>{const a=P(phi,tw*.45,hombro),b=P(phi,R*.62,-rh*.35),m=P(phi,R*.42,hombro-rh*.15);miembros.push({tipo:'brazo',pts:[a,m,b],z:(a.z+b.z)/2,w:rh*.32})});
+  [.35,Math.PI+.35].forEach(phi=>{const a=P(phi,tw*.25,cadera+rh*.2),k=P(phi,R*.42,cadera-R*.32),b=P(phi,R*.66,cadera-R*.72);miembros.push({tipo:'pierna',pts:[a,k,b],z:(a.z+b.z)/2,w:rh*.42})});
+  const pintarMiembro=m=>{
+    const luz=(m.z+1)/2;g.strokeStyle=mezclar([12,12,14],[58,58,64],luz);g.lineWidth=m.w;g.lineCap='round';g.lineJoin='round';
+    g.beginPath();g.moveTo(m.pts[0].x,m.pts[0].y);g.lineTo(m.pts[1].x,m.pts[1].y);g.lineTo(m.pts[2].x,m.pts[2].y);g.stroke();
+    const e=m.pts[2];
+    if(m.tipo==='pierna'){g.fillStyle=mezclar([170,170,170],[255,255,255],luz);g.beginPath();g.ellipse(e.x,e.y,m.w*.75,m.w*.55,0,0,Math.PI*2);g.fill();g.fillStyle='#2340FF';g.fillRect(e.x-m.w*.6,e.y+m.w*.05,m.w*1.2,m.w*.18)}
+    else{g.fillStyle=mezclar([60,42,32],[150,112,88],luz);g.beginPath();g.arc(e.x,e.y,m.w*.62,0,Math.PI*2);g.fill()}
+  };
+  miembros.filter(m=>m.z<0).sort((a,b)=>a.z-b.z).forEach(pintarMiembro);
+  const tg=g.createLinearGradient(-tw/2,0,tw/2,0);tg.addColorStop(0,'#050506');tg.addColorStop(.3,'#3a3a40');tg.addColorStop(.6,'#1c1c20');tg.addColorStop(1,'#040405');
+  g.fillStyle=tg;g.beginPath();g.roundRect(-tw/2,cadera,tw,hombro-cadera+rh*.2,tw*.35);g.fill();
+  [Math.PI/2,-Math.PI/2].forEach(phi=>{const c=Math.cos(th+phi);if(c<=0)return;const x=Math.sin(th+phi)*tw*.46;g.fillStyle=`rgba(35,64,255,${.5+c*.5})`;g.fillRect(x-3.5*c-1,cadera+tw*.2,7*c+2,hombro-cadera-tw*.2)});
+  const ng=g.createLinearGradient(-rh*.35,0,rh*.35,0);ng.addColorStop(0,'#1a120d');ng.addColorStop(.35,'#6a4f3e');ng.addColorStop(1,'#140d09');
+  g.fillStyle=ng;g.fillRect(-rh*.33,-rh*1.25,rh*.66,rh*.55);
+  const hg=g.createRadialGradient(-rh*.38,-rh*.42,rh*.08,0,0,rh*1.02);hg.addColorStop(0,'#9b775f');hg.addColorStop(.45,'#5a4133');hg.addColorStop(1,'#140d09');
+  g.fillStyle=hg;g.beginPath();g.arc(0,0,rh,0,Math.PI*2);g.fill();
+  [Math.PI/2,-Math.PI/2].forEach(phi=>{const c=Math.cos(th+phi);if(c<=-.15)return;const x=Math.sin(th+phi)*rh*.96;g.fillStyle=mezclar([40,28,20],[120,90,70],(c+1)/2);g.beginPath();g.ellipse(x,-rh*.12,rh*.17*Math.max(.25,Math.abs(c)),rh*.24,0,0,Math.PI*2);g.fill()});
+  const yGaf=rh*.02,semi=Math.sqrt(rh*rh-yGaf*yGaf);
+  const pasos=24,ptsSup=[],ptsInf=[];
+  for(let i=0;i<=pasos;i++){const phi=-.62+1.24*i/pasos,c=Math.cos(th+phi);if(c<=0)continue;const x=Math.sin(th+phi)*semi;ptsSup.push([x,yGaf-rh*.13]);ptsInf.push([x,yGaf+rh*.1])}
+  if(ptsSup.length>1){g.fillStyle='#050505';g.beginPath();ptsSup.forEach(([x,y],i)=>i?g.lineTo(x,y):g.moveTo(x,y));ptsInf.reverse().forEach(([x,y])=>g.lineTo(x,y));g.closePath();g.fill();
+    const cG=Math.cos(th);if(cG>.2){const xg=Math.sin(th-.25)*semi;g.fillStyle=`rgba(255,255,255,${cG*.55})`;g.fillRect(xg-rh*.1*cG,yGaf-rh*.09,rh*.2*cG,rh*.04)}}
+  g.save();g.beginPath();g.arc(0,0,rh*1.01,0,Math.PI*2);g.clip();
+  const bg=g.createRadialGradient(-rh*.35,rh*.2,rh*.1,0,rh*.3,rh*1.1);bg.addColorStop(0,'#4d66ff');bg.addColorStop(.55,'#2340FF');bg.addColorStop(1,'#0b1660');
+  g.fillStyle=bg;g.fillRect(-rh*1.1,rh*.18,rh*2.2,rh);
+  g.fillStyle='#0b1660';g.fillRect(-rh*1.1,rh*.18,rh*2.2,rh*.06);
+  g.fillStyle='rgba(255,255,255,.85)';g.fillRect(-rh*1.1,rh*.48,rh*2.2,rh*.08);g.fillRect(-rh*1.1,rh*.7,rh*2.2,rh*.06);
+  const cL=Math.cos(th);if(cL>0){const yL=rh*.3,sL=Math.sqrt(rh*rh-yL*yL),xL=Math.sin(th)*sL;g.fillStyle=`rgba(255,255,255,${.6+cL*.4})`;g.fillRect(xL-rh*.16*cL,yL-rh*.07,rh*.32*cL,rh*.12);g.fillStyle='#2340FF';g.font=`800 ${rh*.1}px Syne`;g.textAlign='center';g.textBaseline='middle';g.save();g.translate(xL,yL-rh*.01);g.scale(Math.max(.05,cL),1);g.fillText('AH',0,0);g.restore()}
+  g.restore();
+  g.fillStyle='#e9ecff';g.beginPath();g.arc(0,rh*1.02,rh*.17,0,Math.PI*2);g.fill();
+  g.fillStyle='rgba(35,64,255,.35)';g.beginPath();g.arc(rh*.04,rh*1.06,rh*.1,0,Math.PI*2);g.fill();
+  miembros.filter(m=>m.z>=0).sort((a,b)=>a.z-b.z).forEach(pintarMiembro);
+  g.restore();
+}
+
+/* ============ PHYSICS ============ */
+const escena=document.getElementById('escena'),rpmEl=document.getElementById('rpm'),grito=document.getElementById('grito'),pista=document.getElementById('pista');
+let ang=0,vel=0,arr=false,lastX=0,lastT=0,ultimoGrito=0,maxAlcanzado=0;
+const VMAX=1100;
+escena.addEventListener('pointerdown',e=>{arr=true;escena.setPointerCapture(e.pointerId);lastX=e.clientX;lastT=performance.now();vel*=.3;asegurarAudio();pista.style.opacity=0});
+escena.addEventListener('pointermove',e=>{if(!arr)return;const t=performance.now(),dx=e.clientX-lastX,dt=Math.max(1,t-lastT)/1000;const inst=dx*.55/dt;vel=vel*.5+inst*.5;ang+=dx*.55;lastX=e.clientX;lastT=t});
+['pointerup','pointercancel'].forEach(ev=>escena.addEventListener(ev,()=>{arr=false}));
+escena.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();asegurarAudio();vel+=(e.key==='ArrowRight'?1:-1)*260;pista.style.opacity=0}});
+addEventListener('wheel',e=>{if(e.target.closest('.escena')&&Math.abs(e.deltaX)>Math.abs(e.deltaY)){vel+=e.deltaX*2}},{passive:true});
+
+let prev=performance.now();
+function bucle(now){
+  const dt=Math.min(.05,(now-prev)/1000);prev=now;
+  if(!arr){ang+=vel*dt;vel*=Math.pow(.55,dt)}
+  else if(now-lastT>80)vel*=.8;
+  const v=Math.min(1,Math.abs(vel)/VMAX);
+  root.style.setProperty('--v',v.toFixed(3));
+  anillo1.style.setProperty('--a',ang+'deg');anillo2.style.setProperty('--a2',(-ang*.75)+'deg');
+  dibujarFigura(ang*Math.PI/180,v);
+  const rpm=Math.round(Math.abs(vel)/6);rpmEl.textContent=rpm;escena.setAttribute('aria-valuetext',rpm+' rpm');
+  maxAlcanzado=Math.max(maxAlcanzado,v);
+  if(v>.85&&now-ultimoGrito>2500){gritar('FULL SPIN!');ultimoGrito=now;if(listo)hoover()}
+  if(v<.03&&maxAlcanzado>.35&&now-ultimoGrito>800){gritar('FREEZE!');ultimoGrito=now;maxAlcanzado=0;if(listo)stab()}
+  if(listo)mezcla(v);
+  requestAnimationFrame(bucle);
+}
+requestAnimationFrame(bucle);
+function gritar(t){grito.textContent=t;grito.classList.add('on');setTimeout(()=>grito.classList.remove('on'),700)}
+
+/* ============ AUDIO: a break that opens with the spin ============ */
+const BPM=140,BAR=60/BPM*4;
+let ctx,src,lp,gain,listo=false,activado=false,master;
+function sesionAltavoz(a){try{if(navigator.audioSession)navigator.audioSession.type=a?'playback':'auto'}catch(e){}}
+async function render(){
+  const sr=44100,off=new OfflineAudioContext(1,Math.ceil(sr*BAR*2),sr),st=60/BPM/4;
+  const nb=off.createBuffer(1,sr,sr),nd=nb.getChannelData(0);for(let i=0;i<nd.length;i++)nd[i]=Math.random()*2-1;
+  const out=off.createDynamicsCompressor();out.connect(off.destination);
+  const K='x.....x..x....x.x.x...x...x.....',S='....x..g.g..x..g....x..g.g..x.gx',H='x.xxx.x.x.xxx.x.x.xxx.x.x.xxx.xx';
+  const B={0:38.89,6:38.89,10:46.25,14:34.65,16:38.89,22:51.91,26:46.25};
+  for(let i=0;i<32;i++){const t=i*st+(i%2?st*.12:0);
+    if(K[i]==='x'){const o=off.createOscillator(),g=off.createGain();o.frequency.setValueAtTime(170,t);o.frequency.exponentialRampToValueAtTime(48,t+.07);g.gain.setValueAtTime(1,t);g.gain.exponentialRampToValueAtTime(.001,t+.33);o.connect(g).connect(out);o.start(t);o.stop(t+.34)}
+    if(S[i]!=='.'){const v=S[i]==='x'?1:.3;const s=off.createBufferSource();s.buffer=nb;const f=off.createBiquadFilter();f.type='highpass';f.frequency.value=900;const pk=off.createBiquadFilter();pk.type='peaking';pk.frequency.value=2100;pk.gain.value=7;const g=off.createGain();g.gain.setValueAtTime(.65*v,t);g.gain.exponentialRampToValueAtTime(.001,t+.22);s.connect(f).connect(pk).connect(g).connect(out);s.start(t,Math.random()*.5);s.stop(t+.24);
+      const o=off.createOscillator(),og=off.createGain();o.type='triangle';o.frequency.setValueAtTime(235,t);o.frequency.exponentialRampToValueAtTime(178,t+.05);og.gain.setValueAtTime(.5*v,t);og.gain.exponentialRampToValueAtTime(.001,t+.1);o.connect(og).connect(out);o.start(t);o.stop(t+.11)}
+    if(H[i]==='x'){const s=off.createBufferSource();s.buffer=nb;const f=off.createBiquadFilter();f.type='highpass';f.frequency.value=7500;const g=off.createGain();g.gain.setValueAtTime(i%2?.13:.22,t);g.gain.exponentialRampToValueAtTime(.001,t+.04);s.connect(f).connect(g).connect(out);s.start(t,Math.random()*.5);s.stop(t+.05)}
+    if(B[i]){let l=1;while(l<4&&!B[i+l]&&i+l<32)l++;const d=l*st,o1=off.createOscillator(),o2=off.createOscillator(),sub=off.createOscillator(),f=off.createBiquadFilter(),g=off.createGain(),gs=off.createGain();o1.type=o2.type='sawtooth';o1.frequency.value=o2.frequency.value=B[i]*2;o2.detune.value=12;sub.frequency.value=B[i];f.type='lowpass';f.Q.value=5;f.frequency.setValueAtTime(900,t);f.frequency.exponentialRampToValueAtTime(250,t+d);g.gain.setValueAtTime(.16,t);g.gain.setValueAtTime(.16,t+d-.02);g.gain.linearRampToValueAtTime(0,t+d);gs.gain.setValueAtTime(.34,t);gs.gain.setValueAtTime(.34,t+d-.02);gs.gain.linearRampToValueAtTime(0,t+d);o1.connect(f);o2.connect(f);f.connect(g).connect(out);sub.connect(gs).connect(out);[o1,o2,sub].forEach(o=>{o.start(t);o.stop(t+d)})}
+  }
+  return off.startRendering();
+}
+async function asegurarAudio(){
+  if(activado)return;activado=true;
+  ctx=new (window.AudioContext||window.webkitAudioContext)();sesionAltavoz(true);
+  const buf=await render();
+  lp=ctx.createBiquadFilter();lp.type='lowpass';lp.Q.value=4;lp.frequency.value=200;
+  gain=ctx.createGain();gain.gain.value=.3;master=ctx.createGain();master.gain.value=.9;
+  src=ctx.createBufferSource();src.buffer=buf;src.loop=true;src.connect(lp).connect(gain).connect(master).connect(ctx.destination);src.start();
+  listo=true;document.getElementById('sonido').setAttribute('aria-pressed','true');document.getElementById('sonido').textContent='♫ Sound off';
+}
+function mezcla(v){const t=ctx.currentTime;lp.frequency.setTargetAtTime(180+Math.pow(v,1.7)*17000,t,.06);gain.gain.setTargetAtTime(.3+v*.7,t,.06)}
+function hoover(){const t=ctx.currentTime,dur=1.6,f=ctx.createBiquadFilter(),g=ctx.createGain();f.type='lowpass';f.frequency.value=2400;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.1,t+.05);g.gain.linearRampToValueAtTime(0,t+dur);
+  [-24,-8,0,9,25].forEach(d=>{const o=ctx.createOscillator();o.type='sawtooth';o.detune.value=d;o.frequency.setValueAtTime(77.78,t);o.frequency.exponentialRampToValueAtTime(155.56,t+.2);o.frequency.exponentialRampToValueAtTime(116.54,t+dur);o.connect(f);o.start(t);o.stop(t+dur)});f.connect(g).connect(master)}
+function stab(){const t=ctx.currentTime;[311.13,369.99,466.16,554.37].forEach(fq=>{const o=ctx.createOscillator(),g=ctx.createGain();o.type='square';o.frequency.value=fq;g.gain.setValueAtTime(.06,t);g.gain.exponentialRampToValueAtTime(.001,t+.5);o.connect(g).connect(master);o.start(t);o.stop(t+.5)})}
+document.getElementById('sonido').addEventListener('click',async e=>{
+  const b=e.currentTarget;
+  if(!activado){await asegurarAudio();vel+=500;return}
+  const on=b.getAttribute('aria-pressed')==='true';
+  master.gain.setTargetAtTime(on?0:.9,ctx.currentTime,.05);b.setAttribute('aria-pressed',!on);b.textContent=on?'♫ Sound on':'♫ Sound off';sesionAltavoz(!on);
+});
+</script>
+</body>
+</html>

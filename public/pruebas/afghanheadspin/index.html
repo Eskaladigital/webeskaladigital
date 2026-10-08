@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Afghan Headspin — Website design proposals · ESKALA</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Website design proposals for Afghan Headspin. Demo by ESKALA Marketing.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0d0c10;--panel:#17151c;--white:#f1eee6;--text:rgba(241,238,230,.7);
+  --pink:#FF2FA0;--lime:#A8FF2E;--blue:#2340FF;--line:rgba(241,238,230,.12)}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;font-weight:300;overflow-x:hidden}
+::selection{background:var(--lime);color:#0d0c10}
+a{color:inherit;text-decoration:none}
+h1,h2,h3{font-family:'Space Grotesk',sans-serif;font-weight:700;line-height:1.05}
+.ambient{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(55vw 55vw at 85% -10%,rgba(255,47,160,.16),transparent 60%),radial-gradient(50vw 50vw at 0% 105%,rgba(35,64,255,.18),transparent 60%)}
+
+.ribbon{position:fixed;top:0;left:0;right:0;z-index:40;display:flex;align-items:center;justify-content:center;gap:.7rem;
+  padding:.44rem 1rem;font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;
+  background:linear-gradient(90deg,var(--pink),var(--blue));color:#fff;font-weight:600}
+.ribbon a{font-weight:700;text-decoration:underline;text-underline-offset:2px}
+
+.wrap{position:relative;z-index:1;max-width:1240px;margin:0 auto;padding:8rem 5vw 4rem}
+.head{text-align:center;max-width:780px;margin:0 auto 3.5rem}
+.brand{display:inline-flex;align-items:center;gap:.6rem;font-family:'Space Grotesk';font-weight:700;font-size:1.2rem;margin-bottom:1.6rem}
+.brand .mk{width:36px;height:36px;border-radius:50%;background:conic-gradient(var(--pink),var(--blue),var(--lime),var(--pink));display:grid;place-items:center;font-size:.8rem;color:#0d0c10;font-weight:700;animation:gira 6s linear infinite}
+@keyframes gira{to{transform:rotate(360deg)}}
+.head .kick{font-size:.7rem;letter-spacing:.3em;text-transform:uppercase;color:var(--lime);display:block;margin-bottom:1rem}
+.head h1{font-size:clamp(2.2rem,5vw,3.6rem);letter-spacing:-.02em;margin-bottom:1rem}
+.head h1 em{font-style:italic;background:linear-gradient(90deg,var(--pink),var(--lime));-webkit-background-clip:text;background-clip:text;color:transparent}
+.head p{color:var(--text);line-height:1.8;font-size:1.08rem}
+
+.grupo{margin:3rem 0 1.4rem;display:flex;align-items:center;gap:1rem;font-family:'Space Grotesk';font-weight:600;font-size:.8rem;letter-spacing:.2em;text-transform:uppercase;color:var(--text)}
+.grupo::after{content:"";flex:1;height:1px;background:var(--line)}
+.grupo b{color:var(--lime)}
+
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem}
+.grid.dos{grid-template-columns:repeat(2,1fr)}
+.demo{position:relative;display:flex;flex-direction:column;background:var(--panel);border:1px solid var(--line);border-radius:22px;overflow:hidden;
+  transition:transform .35s,border-color .35s,box-shadow .35s}
+.demo:hover{transform:translateY(-8px);border-color:rgba(168,255,46,.45);box-shadow:0 30px 70px rgba(0,0,0,.45)}
+.demo.nuevo{border-color:rgba(255,47,160,.45)}
+.demo .thumb{height:190px;position:relative;overflow:hidden;background:#0a090c}
+.grid.dos .demo .thumb{height:260px}
+.demo .thumb iframe{position:absolute;top:0;left:0;width:1280px;height:960px;border:0;transform-origin:0 0;pointer-events:none;background:#0d0c10}
+.demo .thumb::after{content:'';position:absolute;inset:0;z-index:1;box-shadow:inset 0 -26px 30px -22px rgba(0,0,0,.55)}
+.demo .thumb .lbl{position:absolute;top:.9rem;left:.9rem;z-index:2;font-family:'Space Grotesk';font-weight:700;font-size:.7rem;letter-spacing:.1em;color:var(--white);
+  background:rgba(13,12,16,.72);backdrop-filter:blur(6px);border:1px solid var(--line);padding:.25rem .7rem;border-radius:99px}
+.demo .thumb .tag{position:absolute;bottom:.9rem;right:.9rem;z-index:2;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--white);
+  padding:.22rem .6rem;border-radius:99px;background:rgba(13,12,16,.72);backdrop-filter:blur(6px);border:1px solid var(--line)}
+.demo.nuevo .thumb .tag{background:var(--pink);border-color:var(--pink)}
+.demo .body{padding:1.5rem 1.6rem 1.7rem;flex:1;display:flex;flex-direction:column}
+.demo h3{font-size:1.2rem;margin-bottom:.5rem}
+.demo p{color:var(--text);line-height:1.6;font-size:.9rem;flex:1;margin-bottom:1.2rem}
+.demo .open{display:inline-flex;align-items:center;gap:.5rem;font-family:'Space Grotesk';font-weight:600;font-size:.74rem;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--lime);transition:gap .25s}
+.demo:hover .open{gap:.85rem}
+.demo .link-abs{position:absolute;inset:0;z-index:2}
+
+.footer{text-align:center;margin-top:4rem;color:var(--text);font-size:.85rem}
+
+@media (max-width:980px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:640px){.grid,.grid.dos{grid-template-columns:1fr}.wrap{padding-top:6.5rem}}
+</style>
+</head>
+<body>
+<div class="ambient" aria-hidden="true"></div>
+<div class="ribbon">Design proposals · Demo by <a href="https://www.eskaladigital.com/servicios" target="_blank" rel="noopener">ESKALA Marketing</a></div>
+
+<div class="wrap">
+  <header class="head">
+    <div class="brand"><span class="mk">AH</span>Afghan Headspin</div>
+    <span class="kick">7 homepage proposals · aka Jason Bull</span>
+    <h1>Breakbeat, UK bass and rave, <em>spun seven ways</em></h1>
+    <p>Seven visual directions for Afghan Headspin's new website. The two newest (06 and 07) take the ideas you liked most, the rave info line and the VHS telly, and put the music first, with the real SoundCloud catalogue, a player and the full discography. All of them make sound: open each one and have a play.</p>
+  </header>
+
+  <div class="grupo"><b>New</b> Music-first versions</div>
+  <div class="grid dos">
+    <article class="demo nuevo">
+      <a class="link-abs" href="/pruebas/afghanheadspin-6" target="_blank" rel="noopener" aria-label="Open proposal 6"></a>
+      <div class="thumb"><iframe src="/pruebas/afghanheadspin-6" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true" title="Preview of proposal 6"></iframe><span class="lbl">06</span><span class="tag">Real music</span></div>
+      <div class="body"><h3>Flyer &amp; Info Line</h3><p>The 90s photocopied flyer, now with a NOW PLAYING hero, the tracklist pulled live from SoundCloud and a sticky player bar. Then the latest mix, the key releases, a wall of gig flyers and the payphone as the booking line: press 1 and it drops you into the music.</p><span class="open">Open demo →</span></div>
+    </article>
+    <article class="demo nuevo">
+      <a class="link-abs" href="/pruebas/afghanheadspin-7" target="_blank" rel="noopener" aria-label="Open proposal 7"></a>
+      <div class="thumb"><iframe src="/pruebas/afghanheadspin-7" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true" title="Preview of proposal 7"></iframe><span class="lbl">07</span><span class="tag">Real music</span></div>
+      <div class="body"><h3>AH-TV</h3><p>A 90s music channel. Music channels play the real SoundCloud while the telly shows warehouse footage pulsing to the beat, with the track title on the lower third. Info channels are teletext pages, Ceefax style: about, releases, dates and Dirty Kitchen Rave.</p><span class="open">Open demo →</span></div>
+    </article>
+  </div>
+
+  <div class="grupo">First round · concepts</div>
+  <div class="grid">
+    <article class="demo">
+      <a class="link-abs" href="/pruebas/afghanheadspin-1" target="_blank" rel="noopener" aria-label="Open proposal 1"></a>
+      <div class="thumb"><iframe src="/pruebas/afghanheadspin-1" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true" title="Preview of proposal 1"></iframe><span class="lbl">01</span><span class="tag">With voice</span></div>
+      <div class="body"><h3>Rave Hotline</h3><p>A photocopied rave flyer and a payphone. Press a key: DTMF tones, then a British voice reads the info line over a break squashed through a phone line.</p><span class="open">Open demo →</span></div>
+    </article>
+    <article class="demo">
+      <a class="link-abs" href="/pruebas/afghanheadspin-2" target="_blank" rel="noopener" aria-label="Open proposal 2"></a>
+      <div class="thumb"><iframe src="/pruebas/afghanheadspin-2" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true" title="Preview of proposal 2"></iframe><span class="lbl">02</span><span class="tag">Interactive</span></div>
+      <div class="body"><h3>Genre Triangle</h3><p>Breakbeat, UK bass and rave on the corners of a triangle. Drag the puck and the beat morphs live. Even the logo changes weight. Plus a map of labels and collaborators.</p><span class="open">Open demo →</span></div>
+    </article>
+    <article class="demo">
+      <a class="link-abs" href="/pruebas/afghanheadspin-3" target="_blank" rel="noopener" aria-label="Open proposal 3"></a>
+      <div class="thumb"><iframe src="/pruebas/afghanheadspin-3" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true" title="Preview of proposal 3"></iframe><span class="lbl">03</span><span class="tag">Hold &amp; drop</span></div>
+      <div class="body"><h3>Pressure</h3><p>A speaker stack. Hold to build the pressure, release to drop: sub impact, screen shake and cones that pump on every kick. The sound as a technical rider.</p><span class="open">Open demo →</span></div>
+    </article>
+    <article class="demo">
+      <a class="link-abs" href="/pruebas/afghanheadspin-4" target="_blank" rel="noopener" aria-label="Open proposal 4"></a>
+      <div class="thumb"><iframe src="/pruebas/afghanheadspin-4" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true" title="Preview of proposal 4"></iframe><span class="lbl">04</span><span class="tag">Spin it</span></div>
+      <div class="body"><h3>Headspin</h3><p>An upside-down b-boy inside a ring of letters. Flick it and they spin together, and the faster it spins the more the break opens up. The career as a battle bracket.</p><span class="open">Open demo →</span></div>
+    </article>
+    <article class="demo">
+      <a class="link-abs" href="/pruebas/afghanheadspin-5" target="_blank" rel="noopener" aria-label="Open proposal 5"></a>
+      <div class="thumb"><iframe src="/pruebas/afghanheadspin-5" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true" title="Preview of proposal 5"></iframe><span class="lbl">05</span><span class="tag">Insert tape</span></div>
+      <div class="body"><h3>VHS Warehouse</h3><p>A CRT telly, a VCR and five tapes, one per era: Resonant Evil, 2006, the Skint years, No One Dies and Dirty Kitchen Rave. Rewind, fast-forward, pause.</p><span class="open">Open demo →</span></div>
+    </article>
+  </div>
+
+  <div class="footer">
+    <p>All proposals are visual demos · <span style="color:var(--lime)">Afghan Headspin · aka Jason Bull</span></p>
+    <p style="margin-top:1rem">Design by <a href="https://www.eskaladigital.com/servicios" target="_blank" rel="noopener">ESKALA Marketing</a></p>
+  </div>
+</div>
+<script>
+function fitPreviews(){document.querySelectorAll('.thumb iframe').forEach(function(f){var w=f.parentElement.clientWidth;if(w>0)f.style.transform='scale('+(w/1280)+')'})}
+addEventListener('resize',fitPreviews);addEventListener('load',fitPreviews);fitPreviews();
+</script>
+</body>
+</html>

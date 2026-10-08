@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Afghan Headspin — VHS Warehouse proposal · ESKALA</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="VHS Warehouse proposal for Afghan Headspin. Demo by ESKALA Marketing.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rubik:wght@400;500;800;900&family=Permanent+Marker&display=swap" rel="stylesheet">
+<style>
+  /* PROPOSAL 05 — VHS WAREHOUSE
+     Idea: rave memory lives on tape. The homepage is a CRT telly and a VCR with a shelf of five home-recorded
+     cassettes, one per era of the project: Resonant Evil, 2006, the Skint years, No One Dies and Dirty Kitchen Rave.
+     Insert a tape: tracking noise, then "footage" of a warehouse (lasers, strobes on every kick, a crowd that bobs
+     to the beat) and that era's sound. FF doubles the tempo, REW plays backwards, PAUSE freezes the frame.
+     Everything is drawn live in canvas. The rest of the page is the VHS sleeve. */
+  :root{
+    --fondo:#121216;
+    --crema:#F1ECE0;
+    --naranja:#FF6A13;
+    --rojo:#E8222E;
+    --amarillo:#FFC72C;
+    --azul:#1B3AB8;
+    --tinta:#141414;
+    --gris:#8C8A86;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:Rubik,system-ui,sans-serif;background:var(--fondo);color:var(--crema);line-height:1.55;overflow-x:hidden}
+  a{color:inherit}
+  :focus-visible{outline:3px solid var(--amarillo);outline-offset:3px}
+  .mono{font-family:"Share Tech Mono",monospace}
+
+  .top{display:flex;justify-content:space-between;align-items:center;padding:calc(1rem + env(safe-area-inset-top,0px)) clamp(1rem,4vw,3rem)}
+  .brand{font-family:Rubik;font-weight:900;font-size:1.1rem;text-decoration:none;letter-spacing:.02em}
+  .top nav{display:flex;gap:1.5rem;font-family:"Share Tech Mono";font-size:.95rem;text-transform:uppercase}
+  .top nav a{text-decoration:none;color:var(--gris)}
+  .top nav a:hover{color:var(--amarillo)}
+
+  .hero{display:grid;grid-template-columns:1fr 300px;gap:clamp(1.5rem,3vw,3rem);align-items:start;max-width:1320px;margin:0 auto;padding:1rem clamp(1rem,4vw,3rem) clamp(3rem,6vw,5rem)}
+  .tele{background:linear-gradient(160deg,#2b2a28,#151413);border-radius:28px;padding:clamp(14px,2.2vw,26px);box-shadow:0 40px 80px rgba(0,0,0,.6),inset 0 2px 0 rgba(255,255,255,.08)}
+  .pantalla{position:relative;aspect-ratio:4/3;border-radius:22px/30px;overflow:hidden;background:#000;box-shadow:inset 0 0 40px rgba(0,0,0,.9)}
+  .pantalla canvas{width:100%;height:100%;display:block}
+  .pantalla::after{content:"";position:absolute;inset:0;pointer-events:none;border-radius:inherit;
+    background:repeating-linear-gradient(0deg,rgba(0,0,0,.22) 0 1px,transparent 1px 3px),radial-gradient(ellipse at center,transparent 55%,rgba(0,0,0,.55) 100%)}
+  .tele-pie{display:flex;justify-content:space-between;align-items:center;margin-top:12px;padding:0 6px;font-family:"Share Tech Mono";font-size:.8rem;color:#777}
+  .tele-pie i{width:8px;height:8px;border-radius:50%;background:#e33;display:inline-block;margin-right:.4rem;box-shadow:0 0 8px #e33}
+
+  .vcr{margin-top:14px;background:linear-gradient(180deg,#232323,#161616);border-radius:10px;padding:14px 18px;display:grid;grid-template-columns:1fr auto auto;gap:1rem;align-items:center;box-shadow:0 20px 40px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.06)}
+  .ranura{height:34px;background:#0a0a0a;border-radius:4px;position:relative;box-shadow:inset 0 3px 6px rgba(0,0,0,.9);overflow:hidden}
+  .ranura .cinta-dentro{position:absolute;left:10%;right:10%;top:4px;bottom:-30px;background:var(--c,#222);border-radius:3px;transform:translateY(100%);transition:transform .5s cubic-bezier(.5,0,.3,1);display:flex;align-items:flex-start;justify-content:center;padding-top:5px;font-family:"Permanent Marker";font-size:.8rem;color:#111}
+  .ranura.llena .cinta-dentro{transform:translateY(0)}
+  .reloj{font-family:"Share Tech Mono";font-size:1.4rem;color:#4dff9a;background:#050505;padding:.2rem .6rem;border-radius:4px;text-shadow:0 0 8px rgba(77,255,154,.6);min-width:7.5ch;text-align:center}
+  .mandos{display:flex;gap:6px}
+  .mandos button{width:46px;height:34px;border:0;border-radius:4px;background:linear-gradient(180deg,#3a3a3a,#262626);color:#ddd;font-size:.9rem;cursor:pointer;box-shadow:0 3px 0 #0a0a0a}
+  .mandos button:active,.mandos button.on{transform:translateY(2px);box-shadow:0 1px 0 #0a0a0a;color:var(--amarillo)}
+
+  .estante h2{font-family:Rubik;font-weight:900;font-size:1.05rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.4rem}
+  .estante p{color:var(--gris);font-size:.9rem;margin-bottom:1rem}
+  .cintas{display:grid;gap:10px}
+  .cinta{display:grid;grid-template-columns:1fr auto;align-items:center;gap:.5rem;height:62px;border:0;border-radius:4px;background:#0f0f0f;color:#111;cursor:pointer;text-align:left;padding:0 12px 0 0;position:relative;overflow:hidden;box-shadow:0 6px 0 #050505,0 10px 18px rgba(0,0,0,.4);transition:transform .15s}
+  .cinta:hover{transform:translateX(-6px)}
+  .cinta[aria-pressed="true"]{transform:translateX(-14px);outline:2px solid var(--amarillo)}
+  .cinta .etiq{height:100%;margin-left:10px;background:var(--crema);display:flex;flex-direction:column;justify-content:center;padding:0 10px;border-left:10px solid var(--c);background-image:repeating-linear-gradient(0deg,transparent 0 13px,rgba(27,58,184,.18) 13px 14px)}
+  .cinta .etiq b{font-family:"Permanent Marker";font-weight:400;font-size:1rem;line-height:1.05}
+  .cinta .etiq small{font-family:"Share Tech Mono";font-size:.72rem;color:#555}
+  .cinta .num{font-family:"Share Tech Mono";color:#888;font-size:.8rem}
+
+  .rayas{height:44px;background:linear-gradient(180deg,var(--amarillo) 0 25%,var(--naranja) 25% 50%,var(--rojo) 50% 75%,var(--azul) 75%)}
+
+  section{padding:clamp(4.5rem,9vw,7rem) clamp(1rem,4vw,3rem)}
+  .wrap{max-width:1240px;margin:0 auto}
+  h2.grande{font-family:Rubik;font-weight:900;font-size:clamp(2.6rem,7vw,5.4rem);line-height:.9;letter-spacing:-.02em;margin-bottom:2.4rem;text-transform:uppercase}
+  h2.grande em{font-style:normal;color:var(--naranja)}
+  .etq{font-family:"Share Tech Mono";font-size:.95rem;color:var(--amarillo);margin-bottom:.8rem;letter-spacing:.08em}
+
+  .funda{background:var(--crema);color:var(--tinta)}
+  .funda .etq{color:var(--rojo)}
+  .funda h2.grande em{color:var(--azul)}
+  .funda .cols{display:grid;grid-template-columns:1.2fr .8fr;gap:clamp(2rem,5vw,5rem)}
+  .funda p{font-size:1.06rem;margin-bottom:1rem;max-width:58ch}
+  .ficha{border:3px solid var(--tinta);padding:1.4rem;background:#fff;align-self:start}
+  .ficha h3{font-family:Rubik;font-weight:900;font-size:1rem;letter-spacing:.12em;text-transform:uppercase;border-bottom:3px solid var(--tinta);padding-bottom:.6rem;margin-bottom:.6rem}
+  .ficha dl{display:grid;grid-template-columns:auto 1fr;gap:.45rem 1rem;font-size:.95rem}
+  .ficha dt{font-family:"Share Tech Mono";color:#666}
+  .ficha dd{font-weight:500}
+
+  .indice{list-style:none}
+  .indice li{display:grid;grid-template-columns:5rem 1fr auto;gap:1.5rem;align-items:baseline;padding:1.3rem 0;border-bottom:1px solid #2a2a2e}
+  .indice .n{font-family:"Share Tech Mono";font-size:1.4rem;color:var(--c)}
+  .indice h3{font-family:Rubik;font-weight:800;font-size:clamp(1.3rem,2.4vw,1.8rem);line-height:1.1}
+  .indice p{color:#b9b6ae;font-size:.95rem;margin-top:.2rem}
+  .indice button{font-family:"Share Tech Mono";font-size:.9rem;background:none;border:1px solid #444;color:var(--crema);padding:.5rem .8rem;cursor:pointer;white-space:nowrap}
+  .indice button:hover{border-color:var(--amarillo);color:var(--amarillo)}
+
+  .alquiler{background:var(--azul)}
+  .alquiler .cols{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,5vw,4rem);align-items:center}
+  .caja-vhs{aspect-ratio:.58;max-width:300px;width:100%;margin:0 auto;background:var(--tinta);border-radius:6px;position:relative;box-shadow:20px 30px 60px rgba(0,0,0,.45);display:flex;flex-direction:column;overflow:hidden;transform:rotate(-4deg)}
+  .caja-vhs .r{height:30%;background:linear-gradient(180deg,var(--amarillo) 0 25%,var(--naranja) 25% 50%,var(--rojo) 50% 75%,var(--crema) 75%)}
+  .caja-vhs .t{flex:1;display:flex;flex-direction:column;justify-content:center;padding:1.2rem}
+  .caja-vhs b{font-family:Rubik;font-weight:900;font-size:2.8rem;line-height:.85;color:var(--crema)}
+  .caja-vhs small{font-family:"Share Tech Mono";color:var(--amarillo);margin-top:.6rem}
+  .caja-vhs .e{font-family:"Share Tech Mono";font-size:.7rem;color:#777;padding:.6rem 1.2rem;border-top:1px solid #333}
+  .alquiler p{font-size:1.08rem;max-width:44ch;margin-bottom:1.4rem;color:#e2e6ff}
+  .links{display:flex;flex-wrap:wrap;gap:.6rem}
+  .links a{font-family:"Share Tech Mono";text-decoration:none;background:var(--crema);color:var(--tinta);padding:.75rem 1.1rem;font-size:.95rem}
+  .links a:hover{background:var(--amarillo)}
+
+  .devolucion .slip{max-width:760px;margin:0 auto;background:var(--crema);color:var(--tinta);padding:clamp(1.6rem,4vw,2.6rem);position:relative;box-shadow:0 30px 60px rgba(0,0,0,.4)}
+  .slip::before{content:"";position:absolute;left:0;right:0;top:-10px;height:10px;background:radial-gradient(circle at 10px 10px,transparent 6px,var(--crema) 6.5px) 0 0/20px 20px repeat-x}
+  .slip h2{font-family:Rubik;font-weight:900;font-size:clamp(2rem,5vw,3.4rem);line-height:.95;text-transform:uppercase;margin-bottom:1rem}
+  .slip .fila{display:grid;grid-template-columns:10rem 1fr;gap:1rem;padding:.7rem 0;border-bottom:1px dashed #999;font-family:"Share Tech Mono";font-size:1rem}
+  .slip .fila span:last-child{font-family:"Permanent Marker";font-size:1.1rem}
+  .slip .sello{display:inline-block;margin-top:1.6rem;font-family:Rubik;font-weight:900;color:var(--rojo);border:4px solid var(--rojo);padding:.4rem 1rem;transform:rotate(-6deg);letter-spacing:.1em}
+  .slip a.btn{display:inline-block;margin-top:1.6rem;margin-left:1rem;font-family:Rubik;font-weight:800;text-decoration:none;background:var(--tinta);color:var(--crema);padding:1rem 1.6rem}
+  .slip a.btn:hover{background:var(--naranja);color:var(--tinta)}
+
+  footer{border-top:1px solid #2a2a2e;padding:2rem clamp(1rem,4vw,3rem) calc(2rem + env(safe-area-inset-bottom,0px));display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem;font-family:"Share Tech Mono";color:var(--gris)}
+  footer nav{display:flex;flex-wrap:wrap;gap:1.2rem}
+  footer a:hover{color:var(--amarillo)}
+
+  @media (max-width:1000px){
+    .top nav{display:none}
+    .hero{grid-template-columns:1fr}
+    .cintas{grid-template-columns:1fr 1fr}
+    .funda .cols,.alquiler .cols{grid-template-columns:1fr}
+    .indice li{grid-template-columns:3.4rem 1fr;gap:.4rem 1rem}
+    .indice button{grid-column:2;justify-self:start}
+  }
+  @media (max-width:560px){.cintas{grid-template-columns:1fr}.vcr{grid-template-columns:1fr auto}.vcr .reloj{grid-column:2;grid-row:1}.mandos{grid-column:1/-1;justify-content:space-between}.mandos button{flex:1}.slip .fila{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <a class="brand" href="#">AFGHAN HEADSPIN</a>
+  <nav aria-label="Main"><a href="#notes">Liner notes</a><a href="#index">Tape index</a><a href="#rental">Phat Bass</a><a href="#return">Booking</a></nav>
+</header>
+
+<main>
+  <section class="hero" aria-labelledby="h1" style="padding-top:1rem">
+    <div>
+      <div class="tele">
+        <div class="pantalla"><canvas id="tv" width="800" height="600" aria-label="TV screen showing generated warehouse footage"></canvas></div>
+        <div class="tele-pie"><span><i aria-hidden="true"></i>AH-VISION 21"</span><span id="canal">AV1</span></div>
+      </div>
+      <div class="vcr" role="group" aria-label="Video recorder controls">
+        <div class="ranura" id="ranura"><div class="cinta-dentro" id="cintaDentro"></div></div>
+        <div class="reloj" id="reloj" aria-live="off">--:--:--</div>
+        <div class="mandos">
+          <button id="rew" aria-label="Rewind">◀◀</button>
+          <button id="play" aria-label="Play">▶</button>
+          <button id="pausa" aria-label="Pause">❚❚</button>
+          <button id="ff" aria-label="Fast forward">▶▶</button>
+          <button id="eject" aria-label="Eject">⏏</button>
+        </div>
+      </div>
+    </div>
+
+    <aside class="estante">
+      <h1 id="h1" class="mono" style="font-size:.9rem;color:var(--amarillo);margin-bottom:.6rem;font-weight:400">AFGHAN HEADSPIN · AKA JASON BULL · HOME VIDEO</h1>
+      <h2>The tape shelf</h2>
+      <p>Five tapes, five eras: from the Resonant Evil days to Dirty Kitchen Rave. Pick one and slide it into the VCR.</p>
+      <div class="cintas" id="cintas"></div>
+    </aside>
+  </section>
+
+  <div class="rayas" aria-hidden="true"></div>
+
+  <section class="funda" id="notes">
+    <div class="wrap">
+      <p class="etq">// LINER NOTES</p>
+      <h2 class="grande">Afghan Headspin<br>is <em>Jason Bull</em></h2>
+      <div class="cols">
+        <div>
+          <p>The name started in 2006 as a project of Mackie (Jason Bull) and Wrisk (Colin Worth). Both came from Resonant Evil, the early-2000s British drum &amp; bass trio completed by Audio (Gareth Greenall). Around 2005–2006 the trio stopped working as a regular group, and Mackie and Wrisk opened Afghan Headspin as a vehicle for breaks, drum &amp; bass, dubstep and whatever else they wanted to make.</p>
+          <p>Going Down came out on Skint on 9 May 2011, billed as Afghan Headspin featuring MC Coppa. On 25 November 2022 Soundsystem Bassrock released No One Dies, an eighteen-track album.</p>
+          <p>Today he is label manager and A&amp;R at Dirty Kitchen Rave, the centre of the recent work. The records sit in breakbeat, UK bass and rave; drum &amp; bass and hardcore are the roots. The same period ties the project to Spain, and to Andalusia in particular.</p>
+        </div>
+        <div class="ficha">
+          <h3>Tape details</h3>
+          <dl>
+            <dt>Origin</dt><dd>United Kingdom</dd>
+            <dt>Project</dt><dd>Jason Bull (Mackie)</dd>
+            <dt>Co-founder</dt><dd>Wrisk (Colin Worth), 2006</dd>
+            <dt>Roots</dt><dd>Resonant Evil</dd>
+            <dt>Running</dt><dd>2006 → present</dd>
+            <dt>Genres</dt><dd>Breakbeat · UK bass · Rave · Bass music</dd>
+            <dt>Labels</dt><dd>Dirty Kitchen Rave · Skint · Soundsystem Bassrock · Kaleidoscope · Rocstar · Ape Music · Broke</dd>
+            <dt>Also in</dt><dd>Pixel Fist, with Gareth Greenall, Lorne and MC Stapleton</dd>
+            <dt>Collabs</dt><dd>Anuschka · Miss Mants · DJ Brownie</dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="index">
+    <div class="wrap">
+      <p class="etq">// TAPE INDEX</p>
+      <h2 class="grande">Five tapes,<br><em>one story</em></h2>
+      <ol class="indice" id="indice"></ol>
+    </div>
+  </section>
+
+  <section class="alquiler" id="rental">
+    <div class="wrap cols">
+      <div class="caja-vhs" aria-hidden="true"><div class="r"></div><div class="t"><b>PHAT<br>BASS</b><small>AFGHAN HEADSPIN · 2026</small></div><div class="e">DIRTY KITCHEN RAVE · HIGH GRADE · HEAVY SUB</div></div>
+      <div>
+        <p class="etq">// NOW AVAILABLE TO RENT</p>
+        <h2 class="grande" style="font-size:clamp(2.2rem,5vw,4rem)">The essential<br>track</h2>
+        <p>Out on Dirty Kitchen Rave in February 2026, the same month as the album KILLA. The latest: Roller Coaster Hands In The Air (September 2026).</p>
+        <div class="links">
+          <a href="https://www.beatport.com/artist/afghan-headspin/30700" target="_blank" rel="noopener">Beatport ↗</a>
+          <a href="https://afghanheadspin.bandcamp.com/" target="_blank" rel="noopener">Bandcamp ↗</a>
+          <a href="https://soundcloud.com/afghan-headspin" target="_blank" rel="noopener">SoundCloud ↗</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="devolucion" id="return">
+    <div class="wrap">
+      <div class="slip">
+        <p class="etq" style="color:var(--rojo)">// RETURN SLIP · BOOKING</p>
+        <h2>Book the<br>next tape</h2>
+        <div class="fila"><span>LAST RECORDED</span><span>Olibass Open Air · Torredonjimeno · 19.09.26</span></div>
+        <div class="fila"><span>BEFORE THAT</span><span>Pure Bassline 7th Anniversary · Seville · 02.04.26</span></div>
+        <div class="fila"><span>NEXT</span><span>Your warehouse, your date…</span></div>
+        <span class="sello">BE KIND · REWIND</span><a class="btn" href="#">Booking enquiries →</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div class="rayas" aria-hidden="true"></div>
+<footer>
+  <span>AFGHAN HEADSPIN · AKA JASON BULL · UK</span>
+  <nav aria-label="Social"><a href="https://www.beatport.com/artist/afghan-headspin/30700">Beatport</a><a href="https://afghanheadspin.bandcamp.com/">Bandcamp</a><a href="https://soundcloud.com/afghan-headspin">SoundCloud</a><a href="https://www.facebook.com/afghanheadspinmusic/">Facebook</a></nav>
+</footer>
+
+<script>
+const CINTAS=[
+  {n:'01',t:'Resonant Evil',s:'Early 2000s · UK D&B trio',c:'#E8222E',laser:'#ff2a2a',bpm:172,k:'x.x.......xx....',sn:'....x..g.g..x..g',h:'x.x.x.x.x.x.x.x.',o:'......x.......x.',b:{0:38.89,10:51.91},st:[],hoover:false,
+   d:'Mackie (Jason Bull), Wrisk (Colin Worth) and Audio (Gareth Greenall). Jason Bull is also a member of Pixel Fist, with Gareth Greenall, Lorne and MC Stapleton.'},
+  {n:'02',t:'Afghan Headspin begins',s:'2006 · Mackie & Wrisk',c:'#FFC72C',laser:'#ffd84a',bpm:136,k:'x.....xx..x...x.',sn:'....x..g.g..x..g',h:'x.xxx.x.x.xxx.x.',o:'',b:{0:38.89,6:38.89,7:38.89,10:46.25,14:34.65},st:[],hoover:false,
+   d:'Mackie and Wrisk open Afghan Headspin for breaks, drum & bass, dubstep and whatever else they want to make. Early releases include True (Ape Music, 2007) and The Calling.'},
+  {n:'03',t:'The Skint years',s:'Going Down · 2011',c:'#FF6A13',laser:'#ff8a33',bpm:132,k:'x..x..x...x..x..',sn:'....x..g.g..x..g',h:'x.x.x.xxx.x.x.xx',o:'..............x.',b:{0:38.89,3:38.89,6:46.25,10:38.89,13:34.65},st:[14],hoover:false,
+   d:'Going Down, 9 May 2011, on Skint: Afghan Headspin featuring MC Coppa. Also on Rocstar and Kaleidoscope.'},
+  {n:'04',t:'No One Dies',s:'2022 · the first album',c:'#3D6BFF',laser:'#5a86ff',bpm:140,k:'x.....x...x..x..',sn:'....x..g....x...',h:'x.xxx.x.x.xxx.x.',o:'..............x.',b:{0:38.89,6:38.89,10:46.25,13:34.65},st:[],hoover:false,
+   d:'Soundsystem Bassrock released No One Dies on 25 November 2022, an eighteen-track album.'},
+  {n:'05',t:'Dirty Kitchen Rave',s:'2023–2026 · KILLA · live 2026',c:'#4DFF9A',laser:'#4dff9a',bpm:140,k:'x..x..x...x..x..',sn:'....x..g.g..x..g',h:'x.xxx.xxx.xxx.xx',o:'',b:{0:38.89,6:46.25,10:38.89,13:34.65},st:[],hoover:true,crowd:true,
+   d:'Label manager and A&R at Dirty Kitchen Rave: JUSTICE, WE ARE BREAKBEAT, ACIDICA, JUMP, ROMERO, PHAT BASS, the album KILLA and Roller Coaster Hands In The Air. Live at Pure Bassline (Seville) and Olibass Open Air (Torredonjimeno) in 2026.'}
+];
+const cintasEl=document.getElementById('cintas'),indice=document.getElementById('indice');
+CINTAS.forEach((c,i)=>{
+  const b=document.createElement('button');b.className='cinta';b.style.setProperty('--c',c.c);b.setAttribute('aria-pressed','false');b.setAttribute('aria-label',`Tape ${c.n}: ${c.t}`);
+  b.innerHTML=`<span class="etiq"><b>${c.t}</b><small>${c.s}</small></span><span class="num">T-${c.n}</span>`;
+  b.addEventListener('click',()=>insertar(i));cintasEl.appendChild(b);
+  const li=document.createElement('li');li.style.setProperty('--c',c.c);
+  li.innerHTML=`<span class="n">T-${c.n}</span><div><h3>${c.t}</h3><p>${c.d}</p></div><button>▶ Play tape</button>`;
+  li.querySelector('button').addEventListener('click',()=>{insertar(i);document.getElementById('tv').scrollIntoView({behavior:'smooth',block:'center'})});
+  indice.appendChild(li);
+});
+
+let ctx,noise,master,vhsIn,hissG,sched=null,paso=0,next=0,compas=0,golpes=[],modo='stop',actual=-1;
+function sesionAltavoz(a){try{if(navigator.audioSession)navigator.audioSession.type=a?'playback':'auto'}catch(e){}}
+function initAudio(){
+  ctx=new (window.AudioContext||window.webkitAudioContext)();
+  noise=ctx.createBuffer(1,ctx.sampleRate*2,ctx.sampleRate);const d=noise.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;
+  const dl=ctx.createDelay(.05);dl.delayTime.value=.012;const lfo=ctx.createOscillator(),lg=ctx.createGain();lfo.frequency.value=.7;lg.gain.value=.0018;lfo.connect(lg).connect(dl.delayTime);lfo.start();
+  const fl=ctx.createOscillator(),fg=ctx.createGain();fl.frequency.value=7;fg.gain.value=.0003;fl.connect(fg).connect(dl.delayTime);fl.start();
+  const lp=ctx.createBiquadFilter();lp.type='lowpass';lp.frequency.value=9000;
+  const sat=ctx.createWaveShaper();const c=new Float32Array(1024);for(let i=0;i<1024;i++){const x=i/512-1;c[i]=Math.tanh(1.6*x)}sat.curve=c;
+  const comp=ctx.createDynamicsCompressor();comp.threshold.value=-14;comp.ratio.value=4;
+  vhsIn=ctx.createGain();vhsIn.gain.value=.7;
+  master=ctx.createGain();master.gain.value=1;
+  vhsIn.connect(dl).connect(lp).connect(sat).connect(comp).connect(master).connect(ctx.destination);
+  const h=ctx.createBufferSource();h.buffer=noise;h.loop=true;const hf=ctx.createBiquadFilter();hf.type='highpass';hf.frequency.value=4000;hissG=ctx.createGain();hissG.gain.value=0;h.connect(hf).connect(hissG).connect(ctx.destination);h.start();
+}
+function ruido(t,d){const s=ctx.createBufferSource();s.buffer=noise;s.start(t,Math.random());s.stop(t+d);return s}
+function kick(t){const o=ctx.createOscillator(),g=ctx.createGain();o.frequency.setValueAtTime(170,t);o.frequency.exponentialRampToValueAtTime(48,t+.07);g.gain.setValueAtTime(1,t);g.gain.exponentialRampToValueAtTime(.001,t+.32);o.connect(g).connect(vhsIn);o.start(t);o.stop(t+.33);golpes.push(t)}
+function snare(t,v=1){const n=ruido(t,.24),f=ctx.createBiquadFilter(),pk=ctx.createBiquadFilter(),g=ctx.createGain();f.type='highpass';f.frequency.value=900;pk.type='peaking';pk.frequency.value=2100;pk.gain.value=7;g.gain.setValueAtTime(.62*v,t);g.gain.exponentialRampToValueAtTime(.001,t+.22);n.connect(f).connect(pk).connect(g).connect(vhsIn);
+  const o=ctx.createOscillator(),og=ctx.createGain();o.type='triangle';o.frequency.setValueAtTime(235,t);o.frequency.exponentialRampToValueAtTime(178,t+.05);og.gain.setValueAtTime(.5*v,t);og.gain.exponentialRampToValueAtTime(.001,t+.1);o.connect(og).connect(vhsIn);o.start(t);o.stop(t+.11)}
+function hat(t,v=1){const n=ruido(t,.05),f=ctx.createBiquadFilter(),g=ctx.createGain();f.type='highpass';f.frequency.value=7000;g.gain.setValueAtTime(.22*v,t);g.gain.exponentialRampToValueAtTime(.001,t+.04);n.connect(f).connect(g).connect(vhsIn)}
+function abierto(t){const n=ruido(t,.28),f=ctx.createBiquadFilter(),g=ctx.createGain();f.type='highpass';f.frequency.value=6500;g.gain.setValueAtTime(.18,t);g.gain.exponentialRampToValueAtTime(.001,t+.25);n.connect(f).connect(g).connect(vhsIn)}
+function bass(t,f,d){const o1=ctx.createOscillator(),o2=ctx.createOscillator(),sub=ctx.createOscillator(),lp=ctx.createBiquadFilter(),g=ctx.createGain(),gs=ctx.createGain();o1.type=o2.type='sawtooth';o1.frequency.value=o2.frequency.value=f*2;o2.detune.value=13;sub.frequency.value=f;lp.type='lowpass';lp.Q.value=5;lp.frequency.setValueAtTime(950,t);lp.frequency.exponentialRampToValueAtTime(240,t+d);
+  g.gain.setValueAtTime(.15,t);g.gain.setValueAtTime(.15,t+d-.02);g.gain.linearRampToValueAtTime(0,t+d);gs.gain.setValueAtTime(.32,t);gs.gain.setValueAtTime(.32,t+d-.02);gs.gain.linearRampToValueAtTime(0,t+d);o1.connect(lp);o2.connect(lp);lp.connect(g).connect(vhsIn);sub.connect(gs).connect(vhsIn);[o1,o2,sub].forEach(o=>{o.start(t);o.stop(t+d)})}
+function stab(t){[311.13,369.99,466.16,554.37].forEach(fq=>{const o=ctx.createOscillator(),g=ctx.createGain();o.type='square';o.frequency.value=fq;g.gain.setValueAtTime(.05,t);g.gain.exponentialRampToValueAtTime(.001,t+.4);o.connect(g).connect(vhsIn);o.start(t);o.stop(t+.41)})}
+function hoover(t,dur){const f=ctx.createBiquadFilter(),g=ctx.createGain();f.type='lowpass';f.frequency.value=2200;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.08,t+.05);g.gain.setValueAtTime(.08,t+dur-.1);g.gain.linearRampToValueAtTime(0,t+dur);
+  [-24,-8,0,9,25].forEach(d=>{const o=ctx.createOscillator();o.type='sawtooth';o.detune.value=d;o.frequency.setValueAtTime(77.78,t);o.frequency.exponentialRampToValueAtTime(155.56,t+.2);o.frequency.setValueAtTime(155.56,t+dur*.7);o.frequency.exponentialRampToValueAtTime(116.54,t+dur);o.connect(f);o.start(t);o.stop(t+dur)});f.connect(g).connect(vhsIn)}
+function multitud(t,d){const n=ruido(t,d),f=ctx.createBiquadFilter(),g=ctx.createGain();f.type='bandpass';f.frequency.value=1100;f.Q.value=.6;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.12,t+d*.3);g.gain.linearRampToValueAtTime(0,t+d);n.connect(f).connect(g).connect(vhsIn)}
+function programar(){
+  const c=CINTAS[actual];if(!c)return;
+  const vel=modo==='ff'?2:1,dur=60/c.bpm/4/vel;
+  while(next<ctx.currentTime+.1){
+    const t=next;
+    if(modo==='play'||modo==='ff'){
+      if(c.k[paso]==='x')kick(t);
+      if(c.sn[paso]==='x')snare(t);else if(c.sn[paso]==='g')snare(t,.28);
+      if(c.o[paso]==='x')abierto(t);else if(c.h[paso]==='x')hat(t,paso%2?.55:1);
+      if(c.b[paso]){let l=1;while(l<4&&!c.b[(paso+l)%16])l++;bass(t,c.b[paso]*(modo==='ff'?2:1),l*dur)}
+      if(c.st.includes(paso))stab(t);
+      if(c.hoover&&paso===0&&compas%4===0)hoover(t,dur*12);
+      if(c.crowd&&paso===0&&compas%8===4)multitud(t,dur*24);
+    }
+    next+=dur;paso=(paso+1)%16;if(paso===0)compas++;
+  }
+}
+function rebobinado(on){
+  if(!ctx)return;const t=ctx.currentTime;
+  if(on){const n=ctx.createBufferSource();n.buffer=noise;n.loop=true;n.playbackRate.value=.6;const f=ctx.createBiquadFilter();f.type='bandpass';f.frequency.value=1800;f.Q.value=3;const g=ctx.createGain();g.gain.value=.14;
+    const lfo=ctx.createOscillator(),lg=ctx.createGain();lfo.frequency.value=11;lg.gain.value=900;lfo.connect(lg).connect(f.frequency);lfo.start();
+    n.connect(f).connect(g).connect(ctx.destination);n.start();rebobinado.nodo={n,lfo,g}}
+  else if(rebobinado.nodo){rebobinado.nodo.g.gain.setTargetAtTime(0,t,.02);rebobinado.nodo.n.stop(t+.1);rebobinado.nodo.lfo.stop(t+.1);rebobinado.nodo=null}
+}
+
+const ranura=document.getElementById('ranura'),cintaDentro=document.getElementById('cintaDentro'),relojEl=document.getElementById('reloj'),canal=document.getElementById('canal');
+let tapeTime=0,tracking=0,insertadoEn=0;
+function botonesModo(){['rew','play','pausa','ff'].forEach(id=>document.getElementById(id).classList.toggle('on',(id==='pausa'?'pause':id)===modo))}
+function setModo(m){
+  if(actual<0)return;
+  if(modo==='rew')rebobinado(false);
+  modo=m;botonesModo();
+  if(m==='rew')rebobinado(true);
+  if(ctx){hissG.gain.setTargetAtTime(m==='pause'||m==='stop'?.004:.012,ctx.currentTime,.05)}
+  if((m==='play'||m==='ff')&&!sched){paso=0;compas=0;next=ctx.currentTime+.05;sched=setInterval(programar,25)}
+  if(m==='play'||m==='ff')next=Math.max(next,ctx.currentTime+.02);
+  sesionAltavoz(m!=='stop');
+}
+function insertar(i){
+  if(!ctx)initAudio();ctx.resume();
+  if(modo==='rew')rebobinado(false);
+  clearInterval(sched);sched=null;
+  actual=i;const c=CINTAS[i];
+  document.querySelectorAll('.cinta').forEach((b,j)=>b.setAttribute('aria-pressed',j===i));
+  ranura.classList.remove('llena');cintaDentro.style.setProperty('--c',c.c);cintaDentro.textContent=c.t;
+  void ranura.offsetWidth;ranura.classList.add('llena');
+  const t=ctx.currentTime;const o=ctx.createOscillator(),g=ctx.createGain();o.frequency.setValueAtTime(140,t);o.frequency.exponentialRampToValueAtTime(50,t+.08);g.gain.setValueAtTime(.4,t);g.gain.exponentialRampToValueAtTime(.001,t+.12);o.connect(g).connect(ctx.destination);o.start(t);o.stop(t+.13);
+  tapeTime=0;tracking=1;insertadoEn=performance.now();canal.textContent='VCR · T-'+c.n;
+  modo='stop';botonesModo();
+  setTimeout(()=>{if(actual===i)setModo('play')},700);
+}
+function expulsar(){
+  if(modo==='rew')rebobinado(false);
+  clearInterval(sched);sched=null;modo='stop';botonesModo();actual=-1;ranura.classList.remove('llena');
+  document.querySelectorAll('.cinta').forEach(b=>b.setAttribute('aria-pressed','false'));canal.textContent='AV1';relojEl.textContent='--:--:--';
+  if(ctx)hissG.gain.setTargetAtTime(0,ctx.currentTime,.05);sesionAltavoz(false);
+}
+document.getElementById('play').addEventListener('click',()=>{if(actual<0){insertar(4);return}setModo('play')});
+document.getElementById('pausa').addEventListener('click',()=>setModo(modo==='pause'?'play':'pause'));
+document.getElementById('ff').addEventListener('click',()=>setModo(modo==='ff'?'play':'ff'));
+document.getElementById('rew').addEventListener('click',()=>setModo(modo==='rew'?'play':'rew'));
+document.getElementById('eject').addEventListener('click',expulsar);
+
+const tv=document.getElementById('tv'),g=tv.getContext('2d'),W=tv.width,H=tv.height;
+const gente=Array.from({length:42},()=>({x:Math.random()*W,s:.7+Math.random()*.6,f:Math.random()*Math.PI*2,brazos:Math.random()>.65}));
+let flash=0,ultimoFrame=performance.now(),frozen=null;
+function textoOSD(txt,x,y,size,col,align='left'){g.font=`${size}px "Share Tech Mono", monospace`;g.textAlign=align;g.fillStyle='rgba(0,0,0,.6)';g.fillText(txt,x+3,y+3);g.fillStyle=col;g.fillText(txt,x,y)}
+function tiempo(s){s=Math.max(0,s);const h=Math.floor(s/3600),m=Math.floor(s/60)%60,ss=Math.floor(s)%60;return`${h}:${String(m).padStart(2,'0')}:${String(ss).padStart(2,'0')}`}
+function pantallaAzul(){
+  g.fillStyle='#0A1DB0';g.fillRect(0,0,W,H);
+  textoOSD('AV1',40,60,34,'#fff');
+  textoOSD('NO TAPE',W/2,H/2,64,'#fff','center');
+  textoOSD('PICK A TAPE FROM THE SHELF →',W/2,H/2+60,24,'#fff','center');
+  const d=new Date();textoOSD(`${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`,W-40,60,34,'#fff','right');
+}
+function escena(c,now,beatPhase){
+  const fondo=g.createLinearGradient(0,0,0,H);fondo.addColorStop(0,'#05050a');fondo.addColorStop(1,'#15121a');g.fillStyle=fondo;g.fillRect(0,0,W,H);
+  g.strokeStyle='rgba(255,255,255,.05)';g.lineWidth=2;for(let x=-40;x<W+40;x+=80){g.beginPath();g.moveTo(x,0);g.lineTo(x+40,90);g.lineTo(x+80,0);g.stroke()}
+  g.beginPath();g.moveTo(0,90);g.lineTo(W,90);g.stroke();
+  const tt=now/1000;g.globalCompositeOperation='lighter';
+  for(let i=0;i<9;i++){const a=Math.PI/2+Math.sin(tt*(.7+i*.08)+i)*0.9;const ox=W/2+(i-4)*12,oy=70;
+    g.strokeStyle=c.laser;g.globalAlpha=.25+.25*Math.sin(tt*3+i);g.lineWidth=2;g.beginPath();g.moveTo(ox,oy);g.lineTo(ox+Math.cos(a)*900,oy+Math.sin(a)*900);g.stroke()}
+  g.globalAlpha=.18;const hz=g.createRadialGradient(W/2,H*.55,10,W/2,H*.55,W*.6);hz.addColorStop(0,c.laser);hz.addColorStop(1,'transparent');g.fillStyle=hz;g.fillRect(0,0,W,H);
+  g.globalAlpha=1;g.globalCompositeOperation='source-over';
+  const bob=Math.pow(Math.max(0,Math.cos(beatPhase*Math.PI*2)),3);
+  gente.forEach(p=>{const y=H-40-p.s*90-bob*14*p.s+Math.sin(tt*2+p.f)*3;g.fillStyle='#000';
+    g.beginPath();g.arc(p.x,y,18*p.s,0,Math.PI*2);g.fill();
+    g.fillRect(p.x-24*p.s,y+16*p.s,48*p.s,120*p.s);
+    if(p.brazos){g.lineWidth=9*p.s;g.strokeStyle='#000';g.beginPath();g.moveTo(p.x-18*p.s,y+22*p.s);g.lineTo(p.x-34*p.s,y-30*p.s-bob*18);g.moveTo(p.x+18*p.s,y+22*p.s);g.lineTo(p.x+34*p.s,y-30*p.s-bob*18);g.stroke()}
+  });
+  if(flash>0){g.fillStyle=`rgba(255,255,255,${flash*.55})`;g.fillRect(0,0,W,H)}
+}
+function efectosVHS(intensidad){
+  const n=Math.floor(3+intensidad*14);
+  for(let i=0;i<n;i++){const y=Math.random()*H,h=2+Math.random()*(6+intensidad*30),dx=(Math.random()-.5)*(8+intensidad*90);g.drawImage(tv,0,y,W,h,dx,y,W,h)}
+  const by=(performance.now()/6)%(H+120)-60;g.fillStyle=`rgba(255,255,255,${.05+intensidad*.25})`;
+  for(let x=0;x<W;x+=4){if(Math.random()>.5)g.fillRect(x,by+Math.random()*30,3,2)}
+  if(intensidad>.3){g.globalAlpha=intensidad*.6;for(let i=0;i<1600*intensidad;i++){g.fillStyle=Math.random()>.5?'#fff':'#777';g.fillRect(Math.random()*W,Math.random()*H,2,2)}g.globalAlpha=1}
+}
+function dibujar(now){
+  const dt=(now-ultimoFrame)/1000;ultimoFrame=now;
+  if(actual<0){pantallaAzul();efectosVHS(.05);requestAnimationFrame(dibujar);return}
+  const c=CINTAS[actual];
+  if(modo==='play')tapeTime+=dt;else if(modo==='ff')tapeTime+=dt*2;else if(modo==='rew')tapeTime=Math.max(0,tapeTime-dt*4);
+  if(ctx){while(golpes.length&&golpes[0]<=ctx.currentTime){golpes.shift();flash=1}}
+  flash*=.82;
+  tracking=Math.max(0,tracking-dt*1.4);
+  const beatPhase=ctx?((ctx.currentTime*c.bpm/60)%1):0;
+  if(modo==='pause'&&frozen){g.putImageData(frozen,0,0);g.save();g.translate(0,(Math.random()-.5)*3);efectosVHS(.15);g.restore()}
+  else{
+    escena(c,modo==='rew'?-now:now,beatPhase);
+    const intens=tracking+(modo==='ff'?.35:0)+(modo==='rew'?.6:0)+(modo==='stop'?.4:0);
+    efectosVHS(Math.min(1,intens));
+    if(modo!=='pause')frozen=null;
+  }
+  const etiqueta={play:'PLAY ▶',ff:'FF ▶▶',rew:'◀◀ REW',pause:'PAUSE ❚❚',stop:'LOADING…'}[modo];
+  textoOSD(etiqueta,40,58,32,'#fff');
+  textoOSD(tiempo(tapeTime),W-40,58,32,'#fff','right');
+  textoOSD('SP',40,H-36,28,'#fff');
+  textoOSD('T-'+c.n,W-40,H-36,28,'#fff','right');
+  const desde=(performance.now()-insertadoEn)/1000;
+  if(desde<4.2&&desde>.6){const a=Math.min(1,(desde-.6)*2,(4.2-desde)*2);g.globalAlpha=a;
+    g.fillStyle='rgba(0,0,0,.55)';g.fillRect(0,H/2-90,W,170);
+    g.font='bold 54px Rubik, sans-serif';g.textAlign='center';g.fillStyle='#ff004c';g.fillText(c.t.toUpperCase(),W/2-3,H/2-10);g.fillStyle='#00e5ff';g.fillText(c.t.toUpperCase(),W/2+3,H/2-10);g.fillStyle='#fff';g.fillText(c.t.toUpperCase(),W/2,H/2-10);
+    textoOSD(c.s.toUpperCase(),W/2,H/2+40,24,c.laser,'center');g.globalAlpha=1}
+  if(modo==='pause'&&!frozen)frozen=g.getImageData(0,0,W,H);
+  relojEl.textContent=tiempo(tapeTime);
+  requestAnimationFrame(dibujar);
+}
+document.fonts.ready.then(()=>requestAnimationFrame(dibujar));
+</script>
+</body>
+</html>

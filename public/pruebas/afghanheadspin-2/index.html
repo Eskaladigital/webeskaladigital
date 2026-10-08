@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Afghan Headspin — Genre Triangle proposal · ESKALA</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Genre Triangle proposal for Afghan Headspin. Demo by ESKALA Marketing.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@200..900&family=JetBrains+Mono:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  /* PROPOSAL 02 — GENRE TRIANGLE
+     Idea: Afghan Headspin's records today sit in breakbeat, UK bass and rave, in shifting proportions
+     (with drum & bass and hardcore as the roots). The hero is a triangle with those three on its corners.
+     Drag the puck and the beat morphs live: tempo, drum pattern, swing, rave piano stabs, hoovers and reese bass
+     all blend by weight. Even the logo responds. Below, a map of labels, crews and collaborators. Swiss acid look. */
+  :root{
+    --bg:#0B0B0C;
+    --fg:#F2F2EE;
+    --gris:#77777A;
+    --breaks:#D4FF00;
+    --dnb:#8A6BFF;
+    --hc:#FF4B1F;
+    --mix:#D4FF00;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:"JetBrains Mono",monospace;background:var(--bg);color:var(--fg);line-height:1.6;overflow-x:hidden}
+  a{color:inherit}
+  :focus-visible{outline:2px solid var(--mix);outline-offset:3px}
+  .u{font-family:Unbounded,sans-serif}
+
+  .top{display:flex;justify-content:space-between;align-items:center;padding:calc(1rem + env(safe-area-inset-top,0px)) clamp(1rem,4vw,3rem);position:relative;z-index:3}
+  .brand{font-family:Unbounded;font-weight:800;font-size:1rem;text-decoration:none;letter-spacing:.02em}
+  .top nav{display:flex;gap:1.6rem;font-size:.8rem;text-transform:uppercase}
+  .top nav a{text-decoration:none;color:var(--gris)}
+  .top nav a:hover{color:var(--fg)}
+
+  /* HERO */
+  .hero{position:relative;min-height:calc(100svh - 64px);display:grid;grid-template-columns:1fr minmax(320px,560px);gap:clamp(2rem,5vw,5rem);align-items:center;padding:1rem clamp(1rem,4vw,3rem) 3rem;overflow:hidden}
+  .hero::before{content:"";position:absolute;inset:-20%;background:radial-gradient(40% 50% at var(--gx,70%) var(--gy,45%),color-mix(in srgb,var(--mix) 28%,transparent),transparent 70%);transition:background .3s;pointer-events:none}
+  .hero > *{position:relative}
+  .kicker{font-size:.8rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gris);margin-bottom:1.2rem}
+  .kicker b{color:var(--mix)}
+  h1{font-family:Unbounded;font-size:clamp(3rem,7.6vw,7rem);line-height:.86;font-variation-settings:"wght" var(--w,700);letter-spacing:var(--ls,-.02em);transform:skewX(var(--sk,0deg));transform-origin:left bottom;transition:font-variation-settings .15s,letter-spacing .15s,transform .15s;word-break:break-word}
+  .lead{max-width:46ch;margin-top:1.6rem;color:#BDBDB8;font-size:.98rem}
+  .lectura{margin-top:2rem;display:grid;grid-template-columns:auto 1fr;gap:1.5rem;align-items:end}
+  .bpm{font-family:Unbounded;font-weight:800;font-size:clamp(3rem,6vw,4.6rem);line-height:.85;color:var(--mix)}
+  .bpm small{display:block;font-family:"JetBrains Mono";font-size:.75rem;font-weight:600;color:var(--gris);letter-spacing:.2em;margin-top:.4rem}
+  .barras{display:grid;gap:.45rem}
+  .barra{display:grid;grid-template-columns:6.5rem 1fr 3rem;gap:.6rem;align-items:center;font-size:.75rem;text-transform:uppercase;letter-spacing:.08em}
+  .barra .tr{height:8px;background:#222;position:relative;overflow:hidden}
+  .barra .tr i{position:absolute;inset:0 auto 0 0;background:var(--c);width:var(--v);transition:width .1s}
+  .barra span:last-child{text-align:right;color:var(--c)}
+  .acciones{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.8rem}
+  .play{font-family:Unbounded;font-weight:700;font-size:.95rem;background:var(--mix);color:#0B0B0C;border:0;padding:.9rem 1.4rem;cursor:pointer;transition:background .2s}
+  .preset{font-family:"JetBrains Mono";font-size:.75rem;background:none;color:var(--fg);border:1px solid #333;padding:.55rem .8rem;cursor:pointer;text-transform:uppercase;letter-spacing:.08em}
+  .preset:hover{border-color:var(--mix);color:var(--mix)}
+
+  .tri-wrap{position:relative;width:100%;aspect-ratio:1/0.92;touch-action:none;user-select:none}
+  .tri-wrap svg{width:100%;height:100%;overflow:visible}
+  .esquina{font-family:Unbounded;font-weight:800;font-size:15px;letter-spacing:.04em}
+  .esquina-sub{font-family:"JetBrains Mono";font-size:9.5px;fill:#77777A;letter-spacing:.1em}
+  .disco{cursor:grab}
+  .disco:active{cursor:grabbing}
+  .ayuda{position:absolute;left:50%;bottom:-2.2rem;transform:translateX(-50%);font-size:.72rem;color:var(--gris);white-space:nowrap;letter-spacing:.1em;text-transform:uppercase}
+
+  section{padding:clamp(5rem,10vw,8rem) clamp(1rem,4vw,3rem)}
+  .wrap{max-width:1240px;margin:0 auto}
+  h2{font-family:Unbounded;font-weight:800;font-size:clamp(2.2rem,5.6vw,4.4rem);line-height:.92;letter-spacing:-.02em;margin-bottom:2.4rem}
+  h2 em{font-style:normal;font-weight:200}
+  .etq{font-size:.75rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gris);margin-bottom:1rem;display:flex;gap:.8rem;align-items:center}
+  .etq::before{content:"";width:28px;height:2px;background:var(--fg)}
+
+  /* ABOUT */
+  .camp .cols{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem}
+  .camp .cols p{color:#C8C8C3;font-size:.95rem}
+  .camp .cols h3{font-family:Unbounded;font-weight:600;font-size:1.1rem;margin-bottom:.6rem;color:var(--c)}
+  .camp .cols div{border-top:3px solid var(--c);padding-top:1rem}
+
+  /* NETWORK */
+  .red{background:#121214}
+  .red .cols{display:grid;grid-template-columns:1.3fr .7fr;gap:2rem;align-items:center}
+  .red svg{width:100%;height:auto;overflow:visible}
+  .nodo{cursor:pointer}
+  .nodo circle{transition:r .2s,fill .2s}
+  .nodo text{font-family:"JetBrains Mono";font-size:12px;fill:#F2F2EE;pointer-events:none}
+  .nodo:hover circle,.nodo.on circle{fill:var(--mix)}
+  .enlace{stroke:#2c2c30;stroke-width:1.5;transition:stroke .2s}
+  .enlace.on{stroke:var(--mix)}
+  .panel-red{border:1px solid #2c2c30;padding:1.5rem;min-height:220px}
+  .panel-red .tipo{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--mix)}
+  .panel-red h3{font-family:Unbounded;font-weight:700;font-size:1.6rem;line-height:1.05;margin:.4rem 0 .6rem}
+  .panel-red p{color:#C8C8C3;font-size:.92rem}
+
+  /* ESSENTIAL */
+  .esencial{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,5vw,4rem);align-items:center}
+  .vinilo{aspect-ratio:1;max-width:460px;width:100%;border-radius:50%;background:radial-gradient(circle,var(--mix) 0 17%,#0B0B0C 17.5% 18.5%,transparent 19%),repeating-radial-gradient(circle,#161616 0 2px,#0e0e0e 2px 4px);display:grid;place-items:center;animation:gira 6s linear infinite;box-shadow:0 30px 80px rgba(0,0,0,.6)}
+  .vinilo span{font-family:Unbounded;font-weight:900;font-size:clamp(1rem,2.2vw,1.4rem);color:#0B0B0C;text-align:center;line-height:.9}
+  @keyframes gira{to{transform:rotate(360deg)}}
+  .esencial p{color:#C8C8C3;max-width:44ch;margin-bottom:1.6rem}
+  .links{display:flex;flex-wrap:wrap;gap:.6rem}
+  .links a{text-decoration:none;border:1px solid #333;padding:.7rem 1rem;font-size:.85rem;text-transform:uppercase;letter-spacing:.08em}
+  .links a:hover{background:var(--mix);color:#0B0B0C;border-color:var(--mix)}
+  .tracks{list-style:none;margin:0 0 1.6rem;display:flex;flex-wrap:wrap;gap:.4rem}
+  .tracks li{font-size:.75rem;border:1px solid #2c2c30;padding:.3rem .6rem;color:#C8C8C3}
+
+  /* DATES */
+  .fechas{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+  .entrada{display:grid;grid-template-columns:auto 1fr;border:1px solid #2c2c30}
+  .entrada .lado{writing-mode:vertical-rl;transform:rotate(180deg);padding:1rem .7rem;background:var(--c);color:#0B0B0C;font-family:Unbounded;font-weight:800;font-size:.8rem;letter-spacing:.15em;text-align:center}
+  .entrada .cuerpo{padding:1.5rem 1.6rem}
+  .entrada .dia{font-family:Unbounded;font-weight:800;font-size:2.6rem;line-height:.9}
+  .entrada h3{font-family:Unbounded;font-weight:600;font-size:1.15rem;margin:.6rem 0 .3rem}
+  .entrada p{color:#9a9a96;font-size:.85rem}
+
+  /* BOOKING */
+  .booking{text-align:center;background:var(--mix);color:#0B0B0C;transition:background .3s}
+  .booking h2{font-size:clamp(3rem,10vw,8rem);margin-bottom:1.2rem}
+  .booking p{max-width:50ch;margin:0 auto 2rem;font-size:1rem}
+  .booking a{display:inline-block;font-family:Unbounded;font-weight:700;background:#0B0B0C;color:var(--fg);text-decoration:none;padding:1.1rem 2rem;font-size:1rem}
+
+  footer{padding:2rem clamp(1rem,4vw,3rem) calc(2rem + env(safe-area-inset-bottom,0px));display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem;font-size:.78rem;color:var(--gris);border-top:1px solid #222}
+  footer nav{display:flex;flex-wrap:wrap;gap:1.2rem}
+  footer a:hover{color:var(--fg)}
+
+  @media (max-width:980px){
+    .top nav{display:none}
+    .hero{grid-template-columns:1fr;min-height:auto}
+    .tri-wrap{max-width:520px;margin:0 auto 2.5rem}
+    .camp .cols,.red .cols,.esencial,.fechas{grid-template-columns:1fr}
+  }
+  @media (max-width:520px){.lectura{grid-template-columns:1fr}.barra{grid-template-columns:5.5rem 1fr 2.6rem}}
+  @media (prefers-reduced-motion:reduce){.vinilo{animation:none}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <a class="brand" href="#">AFGHAN HEADSPIN</a>
+  <nav aria-label="Main"><a href="#camp">About</a><a href="#network">Network</a><a href="#essential">Phat Bass</a><a href="#dates">Dates</a><a href="#booking">Booking</a></nav>
+</header>
+
+<main>
+  <section class="hero" id="hero" aria-labelledby="h1" style="padding-top:1rem">
+    <div>
+      <p class="kicker">aka Jason Bull · <b id="kickerMix">mixing…</b></p>
+      <h1 id="h1">AFGHAN<br>HEADSPIN</h1>
+      <p class="lead">Breakbeat, UK bass and rave in shifting proportions, with drum &amp; bass and hardcore in the roots. Drag the puck inside the triangle and hear the beat change in real time. There's no wrong place to stand.</p>
+      <div class="lectura">
+        <div class="bpm" id="bpm">148<small>BPM</small></div>
+        <div class="barras">
+          <div class="barra" style="--c:var(--breaks)"><span>Breakbeat</span><span class="tr"><i id="bB"></i></span><span id="pB">0%</span></div>
+          <div class="barra" style="--c:var(--dnb)"><span>UK bass</span><span class="tr"><i id="bD"></i></span><span id="pD">0%</span></div>
+          <div class="barra" style="--c:var(--hc)"><span>Rave</span><span class="tr"><i id="bH"></i></span><span id="pH">0%</span></div>
+        </div>
+      </div>
+      <div class="acciones">
+        <button class="play" id="play" aria-pressed="false">▶ DROP THE MIX</button>
+        <button class="preset" data-p="1,0,0">WE ARE BREAKBEAT</button>
+        <button class="preset" data-p=".15,.75,.1">PHAT BASS</button>
+        <button class="preset" data-p=".3,.1,.6">BITCH HOOVA!</button>
+        <button class="preset" data-p=".34,.33,.33">Dead centre</button>
+      </div>
+    </div>
+
+    <div class="tri-wrap" id="tri" role="slider" tabindex="0" aria-label="Genre mixer. Use arrow keys or drag the puck." aria-valuetext="">
+      <svg viewBox="0 0 520 480" id="svg">
+        <defs>
+          <linearGradient id="gB" x1="50%" y1="0%" x2="50%" y2="100%"><stop offset="0" stop-color="#D4FF00" stop-opacity=".35"/><stop offset="1" stop-color="#D4FF00" stop-opacity="0"/></linearGradient>
+          <linearGradient id="gD" x1="0%" y1="100%" x2="70%" y2="30%"><stop offset="0" stop-color="#8A6BFF" stop-opacity=".35"/><stop offset="1" stop-color="#8A6BFF" stop-opacity="0"/></linearGradient>
+          <linearGradient id="gH" x1="100%" y1="100%" x2="30%" y2="30%"><stop offset="0" stop-color="#FF4B1F" stop-opacity=".35"/><stop offset="1" stop-color="#FF4B1F" stop-opacity="0"/></linearGradient>
+        </defs>
+        <polygon points="260,40 40,420 480,420" fill="#141416"/>
+        <polygon points="260,40 40,420 480,420" fill="url(#gB)"/>
+        <polygon points="260,40 40,420 480,420" fill="url(#gD)"/>
+        <polygon points="260,40 40,420 480,420" fill="url(#gH)"/>
+        <g id="rejilla" stroke="#26262a" stroke-width="1"></g>
+        <polygon points="260,40 40,420 480,420" fill="none" stroke="#F2F2EE" stroke-width="2"/>
+        <circle cx="260" cy="40" r="7" fill="#D4FF00"/><circle cx="40" cy="420" r="7" fill="#8A6BFF"/><circle cx="480" cy="420" r="7" fill="#FF4B1F"/>
+        <text class="esquina" x="260" y="18" text-anchor="middle" fill="#D4FF00">BREAKBEAT</text>
+        <text class="esquina-sub" x="260" y="-2" text-anchor="middle">134 BPM · SWING · FUNK BASS</text>
+        <text class="esquina" x="40" y="452" text-anchor="middle" fill="#8A6BFF">UK BASS</text>
+        <text class="esquina-sub" x="40" y="470" text-anchor="middle">140 BPM · REESE · SUB WEIGHT</text>
+        <text class="esquina" x="480" y="452" text-anchor="middle" fill="#FF4B1F">RAVE</text>
+        <text class="esquina-sub" x="480" y="470" text-anchor="middle">150 BPM · STABS · HOOVER</text>
+        <g id="lineas" stroke-dasharray="3 5" stroke-width="1.2"></g>
+        <g class="disco" id="disco">
+          <circle r="26" fill="#0B0B0C" stroke="#F2F2EE" stroke-width="2.5"/>
+          <circle r="9" id="discoCentro" fill="#D4FF00"/>
+          <line x1="-36" x2="-28" y1="0" y2="0" stroke="#F2F2EE" stroke-width="2"/><line x1="28" x2="36" y1="0" y2="0" stroke="#F2F2EE" stroke-width="2"/>
+          <line y1="-36" y2="-28" x1="0" x2="0" stroke="#F2F2EE" stroke-width="2"/><line y1="28" y2="36" x1="0" x2="0" stroke="#F2F2EE" stroke-width="2"/>
+        </g>
+      </svg>
+      <span class="ayuda">Drag the puck · or use the arrow keys</span>
+    </div>
+  </section>
+
+  <section class="camp" id="camp">
+    <div class="wrap">
+      <p class="etq">aka Jason Bull</p>
+      <h2>From the roots<br><em>to the rave</em></h2>
+      <div class="cols">
+        <div style="--c:var(--breaks)"><h3>The roots</h3><p>Afghan Headspin started in 2006 as Mackie (Jason Bull) and Wrisk (Colin Worth), both from Resonant Evil, the early-2000s UK drum &amp; bass trio completed by Audio. The name was a vehicle for breaks, drum &amp; bass, dubstep and whatever else they wanted to make.</p></div>
+        <div style="--c:var(--dnb)"><h3>The records</h3><p>Going Down came out on Skint on 9 May 2011, featuring MC Coppa. No One Dies, an eighteen-track album, came out on Soundsystem Bassrock on 25 November 2022. Discogs still lists Colin Worth and Jason Bull as members.</p></div>
+        <div style="--c:var(--hc)"><h3>The now</h3><p>Label manager and A&amp;R at Dirty Kitchen Rave. Breakbeat, UK bass and rave, with D&amp;B and hardcore as the roots, and a strong tie to Spain and Andalusia.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="red" id="network">
+    <div class="wrap">
+      <p class="etq">The network</p>
+      <h2>Labels, crews<br><em>and collaborators</em></h2>
+      <div class="cols">
+        <svg viewBox="0 0 640 520" id="redSvg" aria-label="Network of labels and related artists"></svg>
+        <div class="panel-red" aria-live="polite"><span class="tipo" id="nTipo">Hover a node</span><h3 id="nTit">Afghan Headspin</h3><p id="nTxt">Jason Bull. From Resonant Evil to Dirty Kitchen Rave, via Skint, Soundsystem Bassrock and more.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="essential">
+    <div class="wrap esencial">
+      <div class="vinilo" aria-hidden="true"><span>PHAT<br>BASS</span></div>
+      <div>
+        <p class="etq">Essential track</p>
+        <h2>Phat<br><em>Bass</em></h2>
+        <p>Out on Dirty Kitchen Rave in February 2026, the same month as the album KILLA. Try the PHAT BASS preset up top.</p>
+        <ul class="tracks" aria-label="More essential tracks">
+          <li>KILLA</li><li>Roller Coaster Hands In The Air</li><li>ROMERO</li><li>JUMP</li><li>ACIDICA</li><li>WE ARE BREAKBEAT</li><li>JUSTICE</li><li>No One Dies</li><li>Going Down</li><li>True</li><li>The Calling</li>
+        </ul>
+        <div class="links">
+          <a href="https://www.beatport.com/artist/afghan-headspin/30700" target="_blank" rel="noopener">Beatport ↗</a>
+          <a href="https://afghanheadspin.bandcamp.com/" target="_blank" rel="noopener">Bandcamp ↗</a>
+          <a href="https://soundcloud.com/afghan-headspin" target="_blank" rel="noopener">SoundCloud ↗</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="dates">
+    <div class="wrap">
+      <p class="etq">Recent dates · Spain &amp; Andalusia</p>
+      <h2>Lately on<br><em>the road</em></h2>
+      <div class="fechas">
+        <article class="entrada"><div class="lado" style="--c:var(--hc)">OPEN AIR</div><div class="cuerpo"><div class="dia">19.09.26</div><h3>Olibass Music Festival</h3><p>Torredonjimeno, Spain · live mix recorded on the night</p></div></article>
+        <article class="entrada"><div class="lado" style="--c:var(--dnb)">ANNIVERSARY</div><div class="cuerpo"><div class="dia">02.04.26</div><h3>Pure Bassline · 7th Anniversary</h3><p>Seville, Spain</p></div></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="booking" id="booking">
+    <div class="wrap">
+      <h2>Pick your<br>corner</h2>
+      <p>Breakbeat-heavy club set, full rave pressure or somewhere in the middle. Tell us where your floor sits on the triangle.</p>
+      <a href="#">Booking enquiries →</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <span>AFGHAN HEADSPIN · AKA JASON BULL · UK</span>
+  <nav aria-label="Social"><a href="https://www.beatport.com/artist/afghan-headspin/30700">Beatport</a><a href="https://afghanheadspin.bandcamp.com/">Bandcamp</a><a href="https://soundcloud.com/afghan-headspin">SoundCloud</a><a href="https://www.facebook.com/afghanheadspinmusic/">Facebook</a></nav>
+</footer>
+
+<script>
+/* ============ TRIANGLE GEOMETRY ============ */
+const A={x:260,y:40},B={x:40,y:420},C={x:480,y:420}; /* A breakbeat, B UK bass, C rave */
+const svg=document.getElementById('svg'),disco=document.getElementById('disco'),tri=document.getElementById('tri');
+let w={b:.55,d:.1,h:.35};
+function bary(p){
+  const d=(B.y-C.y)*(A.x-C.x)+(C.x-B.x)*(A.y-C.y);
+  let a=((B.y-C.y)*(p.x-C.x)+(C.x-B.x)*(p.y-C.y))/d;
+  let b=((C.y-A.y)*(p.x-C.x)+(A.x-C.x)*(p.y-C.y))/d;
+  let c=1-a-b;
+  a=Math.max(0,a);b=Math.max(0,b);c=Math.max(0,c);const s=a+b+c;return{b:a/s,d:b/s,h:c/s};
+}
+function punto(w){return{x:A.x*w.b+B.x*w.d+C.x*w.h,y:A.y*w.b+B.y*w.d+C.y*w.h}}
+const rej=document.getElementById('rejilla');
+for(let i=1;i<5;i++){const t=i/5;
+  [[A,B,C],[B,C,A],[C,A,B]].forEach(([P,Q,R])=>{
+    const p1={x:P.x+(Q.x-P.x)*t,y:P.y+(Q.y-P.y)*t},p2={x:P.x+(R.x-P.x)*t,y:P.y+(R.y-P.y)*t};
+    const l=document.createElementNS('http://www.w3.org/2000/svg','line');l.setAttribute('x1',p1.x);l.setAttribute('y1',p1.y);l.setAttribute('x2',p2.x);l.setAttribute('y2',p2.y);rej.appendChild(l);
+  });
+}
+const lineas=document.getElementById('lineas');
+const lns=[A,B,C].map((V,i)=>{const l=document.createElementNS('http://www.w3.org/2000/svg','line');l.setAttribute('x1',V.x);l.setAttribute('y1',V.y);l.setAttribute('stroke',['#D4FF00','#8A6BFF','#FF4B1F'][i]);lineas.appendChild(l);return l});
+
+const hex=h=>[1,3,5].map(i=>parseInt(h.slice(i,i+2),16));
+const CB=hex('#D4FF00'),CD=hex('#8A6BFF'),CH=hex('#FF4B1F');
+function mezclaColor(){const c=[0,1,2].map(i=>Math.round(CB[i]*w.b+CD[i]*w.d+CH[i]*w.h));return`rgb(${c})`}
+const bpmEl=document.getElementById('bpm');
+function bpmActual(){return Math.round(134*w.b+140*w.d+150*w.h)}
+function pintar(){
+  const p=punto(w);disco.setAttribute('transform',`translate(${p.x},${p.y})`);
+  lns.forEach((l,i)=>{l.setAttribute('x2',p.x);l.setAttribute('y2',p.y);l.setAttribute('stroke-opacity',[w.b,w.d,w.h][i]*1.2+.1)});
+  const col=mezclaColor();document.documentElement.style.setProperty('--mix',col);
+  document.getElementById('discoCentro').setAttribute('fill',col);
+  bpmEl.firstChild.nodeValue=bpmActual();
+  [['B','b'],['D','d'],['H','h']].forEach(([k,c])=>{document.getElementById('b'+k).style.setProperty('--v',(w[c]*100)+'%');document.getElementById('p'+k).textContent=Math.round(w[c]*100)+'%'});
+  const h1=document.getElementById('h1').style;
+  h1.setProperty('--w',Math.round(250+w.h*650+w.d*100));
+  h1.setProperty('--ls',(-.04+w.d*.12)+'em');
+  h1.setProperty('--sk',(-w.b*9)+'deg');
+  const dom=w.b>=w.d&&w.b>=w.h?'breakbeat-led':w.d>=w.h?'UK-bass-led':'rave-led';
+  document.getElementById('kickerMix').textContent=`${dom} · ${bpmActual()} bpm`;
+  tri.setAttribute('aria-valuetext',`Breakbeat ${Math.round(w.b*100)}%, UK bass ${Math.round(w.d*100)}%, rave ${Math.round(w.h*100)}%, ${bpmActual()} bpm`);
+  const r=tri.getBoundingClientRect(),hr=document.getElementById('hero').getBoundingClientRect();
+  document.getElementById('hero').style.setProperty('--gx',((r.left-hr.left+p.x/520*r.width)/hr.width*100)+'%');
+  document.getElementById('hero').style.setProperty('--gy',((r.top-hr.top+p.y/480*r.height)/hr.height*100)+'%');
+}
+function aSvg(e){const pt=svg.createSVGPoint();pt.x=e.clientX;pt.y=e.clientY;return pt.matrixTransform(svg.getScreenCTM().inverse())}
+let arrastre=false;
+tri.addEventListener('pointerdown',e=>{arrastre=true;tri.setPointerCapture(e.pointerId);w=bary(aSvg(e));pintar();if(!sonando)alternar()});
+tri.addEventListener('pointermove',e=>{if(!arrastre)return;w=bary(aSvg(e));pintar()});
+['pointerup','pointercancel'].forEach(ev=>tri.addEventListener(ev,()=>arrastre=false));
+tri.addEventListener('keydown',e=>{const p=punto(w),s=12;const m={ArrowUp:[0,-s],ArrowDown:[0,s],ArrowLeft:[-s,0],ArrowRight:[s,0]}[e.key];if(!m)return;e.preventDefault();w=bary({x:p.x+m[0],y:p.y+m[1]});pintar()});
+document.querySelectorAll('.preset').forEach(b=>b.addEventListener('click',()=>{
+  const [b0,d0,h0]=b.dataset.p.split(',').map(Number);const ini={...w},fin={b:b0,d:d0,h:h0};let t=0;
+  const anim=()=>{t+=.06;const k=t>=1?1:1-Math.pow(1-t,3);w={b:ini.b+(fin.b-ini.b)*k,d:ini.d+(fin.d-ini.d)*k,h:ini.h+(fin.h-ini.h)*k};pintar();if(t<1)requestAnimationFrame(anim)};anim();
+  if(!sonando)alternar();
+}));
+addEventListener('resize',pintar);
+
+/* ============ AUDIO: three styles, one blended engine ============ */
+const P=s=>[...s].map(c=>c==='x'?1:c==='g'?.35:0);
+const G={
+  b:{k:P('x.....x..x....x.'),s:P('....x..g.g..x..g'),h:P('x.x.x.x.x.xxx.x.'),o:P('..............x.')},
+  d:{k:P('x.....x...x..x..'),s:P('....x..g....x...'),h:P('x.xxx.x.x.xxx.x.'),o:P('..............x.')}, /* UK bass: syncopated, sub-led */
+  h:{k:P('x.....x.x.x.....'),s:P('....x.......x.xx'),h:P('..x...x...x...x.'),o:P('..x...x...x...x.')}  /* rave */
+};
+let ctx,noise,master,rev,sonando=false,sched=null,paso=0,compas=0,next=0,openG=null;
+function sesionAltavoz(a){try{if(navigator.audioSession)navigator.audioSession.type=a?'playback':'auto'}catch(e){}}
+function initAudio(){
+  ctx=new (window.AudioContext||window.webkitAudioContext)();
+  noise=ctx.createBuffer(1,ctx.sampleRate,ctx.sampleRate);const d=noise.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;
+  const sat=ctx.createWaveShaper();const c=new Float32Array(2048);for(let i=0;i<2048;i++){const x=i/1024-1;c[i]=Math.tanh(1.7*x)/Math.tanh(1.7)}sat.curve=c;
+  const comp=ctx.createDynamicsCompressor();comp.threshold.value=-15;comp.ratio.value=4;comp.attack.value=.004;comp.release.value=.12;
+  master=ctx.createGain();master.gain.value=.7;master.connect(sat).connect(comp).connect(ctx.destination);
+  rev=ctx.createConvolver();const len=ctx.sampleRate*.9,ib=ctx.createBuffer(2,len,ctx.sampleRate);for(let ch=0;ch<2;ch++){const x=ib.getChannelData(ch);for(let i=0;i<len;i++)x[i]=(Math.random()*2-1)*Math.pow(1-i/len,3)}rev.buffer=ib;
+  const rg=ctx.createGain();rg.gain.value=.4;rev.connect(rg).connect(master);
+}
+function out(n,e){n.connect(master);if(e){const g=ctx.createGain();g.gain.value=e;n.connect(g);g.connect(rev)}}
+function ruido(t,d){const s=ctx.createBufferSource();s.buffer=noise;s.start(t,Math.random()*.5);s.stop(t+d);return s}
+function kick(t,v){const o=ctx.createOscillator(),g=ctx.createGain();o.frequency.setValueAtTime(175,t);o.frequency.exponentialRampToValueAtTime(50,t+.07);o.frequency.exponentialRampToValueAtTime(43,t+.3);g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(1.05*v,t+.002);g.gain.exponentialRampToValueAtTime(.001,t+.32);o.connect(g);out(g,.03);o.start(t);o.stop(t+.33);
+  const n=ruido(t,.02),f=ctx.createBiquadFilter(),cg=ctx.createGain();f.type='highpass';f.frequency.value=2500;cg.gain.setValueAtTime(.3*v,t);cg.gain.exponentialRampToValueAtTime(.001,t+.015);n.connect(f).connect(cg);out(cg)}
+function snare(t,v){const n=ruido(t,.26),hp=ctx.createBiquadFilter(),pk=ctx.createBiquadFilter(),g=ctx.createGain();hp.type='highpass';hp.frequency.value=900;pk.type='peaking';pk.frequency.value=2200;pk.gain.value=7;g.gain.setValueAtTime(.6*v,t);g.gain.exponentialRampToValueAtTime(.001,t+.22);n.connect(hp).connect(pk).connect(g);out(g,.4*v);
+  const o=ctx.createOscillator(),og=ctx.createGain();o.type='triangle';o.frequency.setValueAtTime(235,t);o.frequency.exponentialRampToValueAtTime(178,t+.05);og.gain.setValueAtTime(.5*v,t);og.gain.exponentialRampToValueAtTime(.001,t+.1);o.connect(og);out(og,.2*v);o.start(t);o.stop(t+.11)}
+function hat(t,v){if(openG){openG.gain.cancelScheduledValues(t);openG.gain.setTargetAtTime(0,t,.008);openG=null}const n=ruido(t,.05),f=ctx.createBiquadFilter(),g=ctx.createGain();f.type='highpass';f.frequency.value=7500;g.gain.setValueAtTime(.24*v,t);g.gain.exponentialRampToValueAtTime(.001,t+.04);n.connect(f).connect(g);out(g,.02)}
+function abierto(t,v){const n=ruido(t,.3),f=ctx.createBiquadFilter(),g=ctx.createGain();f.type='highpass';f.frequency.value=6500;g.gain.setValueAtTime(.2*v,t);g.gain.exponentialRampToValueAtTime(.001,t+.26);n.connect(f).connect(g);out(g,.06);openG=g}
+function reese(t,f,dur,v){const o1=ctx.createOscillator(),o2=ctx.createOscillator(),sub=ctx.createOscillator(),lp=ctx.createBiquadFilter(),g=ctx.createGain(),gs=ctx.createGain();
+  o1.type=o2.type='sawtooth';o1.frequency.value=o2.frequency.value=f*2;o1.detune.value=-12;o2.detune.value=13;sub.frequency.value=f;
+  lp.type='lowpass';lp.Q.value=4;lp.frequency.setValueAtTime(300,t);lp.frequency.linearRampToValueAtTime(700+v*600,t+dur*.5);lp.frequency.linearRampToValueAtTime(300,t+dur);
+  g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.14*v,t+.01);g.gain.setValueAtTime(.14*v,t+dur-.03);g.gain.linearRampToValueAtTime(0,t+dur);
+  gs.gain.setValueAtTime(0,t);gs.gain.linearRampToValueAtTime(.3,t+.01);gs.gain.setValueAtTime(.3,t+dur-.03);gs.gain.linearRampToValueAtTime(0,t+dur);
+  o1.connect(lp);o2.connect(lp);lp.connect(g);sub.connect(gs);out(g);out(gs);[o1,o2,sub].forEach(o=>{o.start(t);o.stop(t+dur+.01)})}
+function funkBass(t,f,dur,v){const o=ctx.createOscillator(),lp=ctx.createBiquadFilter(),g=ctx.createGain();o.type='square';o.frequency.value=f*2;lp.type='lowpass';lp.Q.value=9;lp.frequency.setValueAtTime(1400,t);lp.frequency.exponentialRampToValueAtTime(160,t+.18);g.gain.setValueAtTime(.17*v,t);g.gain.exponentialRampToValueAtTime(.001,t+Math.min(dur,.3));o.connect(lp).connect(g);out(g);o.start(t);o.stop(t+dur)}
+function piano(t,v){[311.13,369.99,466.16,554.37,622.25].forEach(fq=>{['square','triangle'].forEach((ty,i)=>{const o=ctx.createOscillator(),g=ctx.createGain(),lp=ctx.createBiquadFilter();o.type=ty;o.frequency.value=fq*(i?2:1);lp.type='lowpass';lp.frequency.value=3200;g.gain.setValueAtTime(.045*v,t);g.gain.exponentialRampToValueAtTime(.001,t+.45);o.connect(lp).connect(g);out(g,.5);o.start(t);o.stop(t+.46)})})}
+function hoover(t,dur,v){const lp=ctx.createBiquadFilter(),g=ctx.createGain();lp.type='lowpass';lp.frequency.value=2200;lp.Q.value=2;
+  g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.09*v,t+.05);g.gain.setValueAtTime(.09*v,t+dur-.1);g.gain.linearRampToValueAtTime(0,t+dur);
+  [-25,-8,0,9,24].forEach(dt=>{const o=ctx.createOscillator();o.type='sawtooth';o.detune.value=dt;o.frequency.setValueAtTime(77.78,t);o.frequency.exponentialRampToValueAtTime(155.56,t+.18);o.frequency.setValueAtTime(155.56,t+dur*.7);o.frequency.exponentialRampToValueAtTime(116.54,t+dur);o.connect(lp);o.start(t);o.stop(t+dur+.01)});
+  lp.connect(g);out(g,.4)}
+const RAIZ=38.89,NOTAS=[38.89,38.89,46.25,34.65];
+function programar(){
+  const dur=60/bpmActual()/4,sw=w.b*.14*dur;
+  while(next<ctx.currentTime+.1){
+    const t=next+(paso%2?sw:0);
+    const val=k=>G.b[k][paso]*w.b+G.d[k][paso]*w.d+G.h[k][paso]*w.h;
+    const vk=val('k'),vs=val('s'),vh=val('h'),vo=val('o');
+    if(vk>=.3)kick(t,Math.min(1,.55+vk*.6));
+    if(vs>=.3)snare(t,Math.min(1,vs*1.1));else if(vs>=.1)snare(t,.28);
+    if(vo>=.35)abierto(t,Math.min(1,vo*1.2));else if(vh>=.3)hat(t,(paso%2?.55:1)*Math.min(1,.4+vh));
+    const nota=NOTAS[Math.floor(paso/4)];
+    if(w.d>.2&&(paso===0||paso===8))reese(t,paso===8&&compas%2?46.25:RAIZ,dur*7.6,w.d);
+    if(w.b>.2&&[0,3,6,10,13].includes(paso))funkBass(t,nota,dur*1.6,w.b);
+    if(w.h>.22&&[0,6,10].includes(paso))piano(t,Math.min(1,w.h*1.6));
+    if(w.h>.45&&paso===0&&compas%2===0)hoover(t,dur*12,w.h);
+    next+=dur;paso=(paso+1)%16;if(paso===0)compas++;
+  }
+}
+const playBtn=document.getElementById('play');
+function alternar(){
+  sonando=!sonando;sesionAltavoz(sonando);
+  if(!ctx)initAudio();
+  playBtn.setAttribute('aria-pressed',sonando);playBtn.textContent=sonando?'■ STOP':'▶ DROP THE MIX';
+  if(sonando){ctx.resume();paso=0;compas=0;next=ctx.currentTime+.06;sched=setInterval(programar,25)}else clearInterval(sched);
+}
+playBtn.addEventListener('click',alternar);
+pintar();
+
+/* ============ NETWORK GRAPH ============ */
+const nodos=[
+  {id:'ah',x:330,y:260,r:46,t:'Afghan Headspin',tipo:'Mackie & Wrisk',d:'Started in 2006 as Mackie and Wrisk. Breakbeat, UK bass and rave. Discogs still lists both members.'},
+  {id:'re',x:95,y:75,r:24,t:'Resonant Evil',tipo:'Origin · early 2000s',d:'British drum & bass trio: Mackie, Wrisk and Audio (Gareth Greenall). Stopped working as a regular group around 2005–2006.'},
+  {id:'mk',x:70,y:225,r:22,t:'Mackie',tipo:'Jason Bull',d:'Also a member of Pixel Fist, with Gareth Greenall, Lorne and MC Stapleton.'},
+  {id:'wr',x:95,y:370,r:20,t:'Wrisk',tipo:'Colin Worth',d:'Co-founded Afghan Headspin in 2006. Discogs still lists him as a member.'},
+  {id:'sk',x:270,y:55,r:20,t:'Skint',tipo:'Label',d:'Going Down, 9 May 2011, Afghan Headspin featuring MC Coppa. Stand Up, the same year.'},
+  {id:'ro',x:200,y:160,r:16,t:'Rocstar',tipo:'Label',d:'Total Recall (2010) and Protect Your Neck (2013).'},
+  {id:'di',x:430,y:55,r:18,t:'APE Music',tipo:'Label',d:'True (2007).'},
+  {id:'ka',x:570,y:130,r:18,t:'Kaleidoscope',tipo:'Label',d:'Love Is All I Got (2025).'},
+  {id:'ag',x:600,y:265,r:18,t:'Broke',tipo:'Label',d:'The Calling, with Coming On Deep (2006).'},
+  {id:'sb',x:590,y:385,r:20,t:'Soundsystem Bassrock',tipo:'Label',d:'No One Dies, 25 November 2022, an eighteen-track album.'},
+  {id:'dk',x:370,y:420,r:28,t:'Dirty Kitchen Rave',tipo:'Label manager & A&R',d:'The centre of the recent work: JUSTICE, WE ARE BREAKBEAT, BITCH HOOVA!, ACIDICA, JUMP, ROMERO, PHAT BASS, KILLA and Roller Coaster Hands In The Air.'},
+  {id:'an',x:210,y:470,r:15,t:'Anuschka',tipo:'Collaborator',d:'WE ARE BREAKBEAT (2024).'},
+  {id:'mm',x:300,y:500,r:15,t:'Miss Mants',tipo:'Collaborator',d:'ACIDICA (2025).'},
+  {id:'db',x:470,y:495,r:15,t:'DJ Brownie',tipo:'Collaborator',d:'JUMP (2025).'}
+];
+const enlaces=[['ah','re'],['re','mk'],['re','wr'],['ah','mk'],['ah','wr'],['ah','sk'],['ah','ro'],['ah','di'],['ah','ka'],['ah','ag'],['ah','sb'],['ah','dk'],['dk','an'],['dk','mm'],['dk','db']];
+const NS='http://www.w3.org/2000/svg',red=document.getElementById('redSvg');
+const lineasRed=enlaces.map(([a,b])=>{const A=nodos.find(n=>n.id===a),B=nodos.find(n=>n.id===b);const l=document.createElementNS(NS,'line');l.setAttribute('x1',A.x);l.setAttribute('y1',A.y);l.setAttribute('x2',B.x);l.setAttribute('y2',B.y);l.setAttribute('class','enlace');l.dataset.a=a;l.dataset.b=b;red.appendChild(l);return l});
+nodos.forEach(n=>{
+  const g=document.createElementNS(NS,'g');g.setAttribute('class','nodo');g.setAttribute('tabindex','0');g.setAttribute('role','button');g.setAttribute('aria-label',n.t);
+  const c=document.createElementNS(NS,'circle');c.setAttribute('cx',n.x);c.setAttribute('cy',n.y);c.setAttribute('r',n.r);c.setAttribute('fill',n.id==='ah'?'#F2F2EE':'#2a2a2e');
+  const t=document.createElementNS(NS,'text');t.setAttribute('x',n.x);t.setAttribute('y',n.y+n.r+16);t.setAttribute('text-anchor','middle');t.textContent=n.t;
+  g.append(c,t);red.appendChild(g);
+  const on=()=>{document.querySelectorAll('.nodo').forEach(x=>x.classList.remove('on'));g.classList.add('on');lineasRed.forEach(l=>l.classList.toggle('on',l.dataset.a===n.id||l.dataset.b===n.id));document.getElementById('nTipo').textContent=n.tipo;document.getElementById('nTit').textContent=n.t;document.getElementById('nTxt').textContent=n.d};
+  g.addEventListener('pointerenter',on);g.addEventListener('focus',on);g.addEventListener('click',on);
+});
+</script>
+</body>
+</html>

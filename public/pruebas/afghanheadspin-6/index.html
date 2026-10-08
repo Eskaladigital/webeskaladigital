@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Afghan Headspin — Flyer &amp; Info Line proposal · ESKALA</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Flyer & Info Line proposal for Afghan Headspin. Demo by ESKALA Marketing.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bungee&family=IBM+Plex+Mono:wght@400;600;700&family=Archivo:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  /* PROPOSAL 06 — FLYER & INFO LINE (music-first version of 01)
+     Same 90s photocopied-flyer world, but the music comes first: the hero is a NOW PLAYING flyer with
+     the real tracklist pulled from their SoundCloud, a sticky player bar runs along the bottom of every
+     page like any artist site, then mixes, key releases, a wall of gig flyers and the payphone info line as the
+     booking section (press 1 and the line "connects you" to the music). */
+  :root{
+    --papel:#F1EEE6;
+    --tinta:#111;
+    --rosa:#FF2FA0;
+    --verde:#A8FF2E;
+    --cian:#00C2E8;
+    --lcd:#9BC43B;
+    --lcd-t:#13200A;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:Archivo,system-ui,sans-serif;background:var(--papel);color:var(--tinta);line-height:1.55;overflow-x:hidden;padding-bottom:84px}
+  body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:90;opacity:.2;mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='3'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+  a{color:inherit}
+  :focus-visible{outline:3px solid var(--rosa);outline-offset:3px}
+
+  .top{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:calc(1rem + env(safe-area-inset-top,0px)) clamp(1rem,4vw,3rem);border-bottom:3px solid var(--tinta)}
+  .brand{font-family:Bungee;font-size:1.15rem;text-decoration:none}
+  .top nav{display:flex;gap:1.4rem;font-family:"IBM Plex Mono";font-weight:600;font-size:.85rem;text-transform:uppercase}
+  .top nav a{text-decoration:none}
+  .top nav a:hover{background:var(--verde)}
+  .escuchar{font-family:Bungee;font-size:.9rem;text-decoration:none;background:var(--tinta);color:var(--verde);padding:.55rem .9rem;border:3px solid var(--tinta)}
+  .escuchar:hover{background:var(--verde);color:var(--tinta)}
+
+  .hero{display:grid;grid-template-columns:1.25fr .85fr;gap:clamp(1.5rem,4vw,3.5rem);align-items:start;padding:clamp(2rem,4vw,3.5rem) clamp(1rem,4vw,3rem) clamp(3rem,6vw,5rem);max-width:1400px;margin:0 auto}
+  .flyer{position:relative;background:#fff;padding:clamp(1.4rem,3vw,2.4rem);transform:rotate(-1.2deg);box-shadow:8px 12px 0 rgba(0,0,0,.85);border:3px solid var(--tinta)}
+  .flyer::before,.flyer::after{content:"";position:absolute;width:110px;height:30px;background:rgba(255,255,220,.75);box-shadow:0 1px 2px rgba(0,0,0,.2)}
+  .flyer::before{top:-14px;left:12%;transform:rotate(-6deg)}
+  .flyer::after{top:-12px;right:10%;transform:rotate(5deg)}
+  .presenta{font-family:"IBM Plex Mono";font-weight:700;font-size:.82rem;letter-spacing:.22em;text-transform:uppercase}
+  .flyer h1{font-family:Bungee;font-weight:400;font-size:clamp(3rem,7.6vw,6.6rem);line-height:.86;margin:.5rem 0 1.2rem;text-shadow:4px 3px 0 var(--rosa),-3px -2px 0 var(--cian)}
+
+  .ahora{display:grid;grid-template-columns:auto 1fr;gap:1.2rem;align-items:center;border:3px solid var(--tinta);background:var(--verde);padding:1rem;box-shadow:5px 5px 0 var(--tinta)}
+  .portada{width:clamp(96px,12vw,140px);aspect-ratio:1;border:3px solid var(--tinta);background:var(--tinta) center/cover;position:relative;display:grid;place-items:center;color:var(--verde);font-family:Bungee;font-size:1.6rem;line-height:.9;text-align:center}
+  .ahora .etq{font-family:"IBM Plex Mono";font-weight:700;font-size:.72rem;letter-spacing:.22em;display:flex;align-items:center;gap:.5rem}
+  .eq{display:inline-flex;gap:2px;align-items:flex-end;height:12px}
+  .eq i{width:3px;background:var(--tinta);height:30%}
+  body.sonando .eq i{animation:eq .5s ease-in-out infinite alternate}
+  body.sonando .eq i:nth-child(2){animation-delay:.15s}body.sonando .eq i:nth-child(3){animation-delay:.3s}body.sonando .eq i:nth-child(4){animation-delay:.05s}
+  @keyframes eq{to{height:100%}}
+  .ahora h2{font-family:Bungee;font-weight:400;font-size:clamp(1.4rem,3vw,2.2rem);line-height:1;margin:.35rem 0 .2rem;word-break:break-word}
+  .ahora p{font-family:"IBM Plex Mono";font-size:.82rem}
+  .ahora .ctrl{display:flex;gap:.6rem;margin-top:.8rem;flex-wrap:wrap}
+  .bplay{font-family:Bungee;font-size:1rem;background:var(--tinta);color:var(--verde);border:0;padding:.7rem 1.1rem;cursor:pointer}
+  .bplay:hover{background:var(--rosa);color:#fff}
+  .bsec{font-family:"IBM Plex Mono";font-weight:700;font-size:.8rem;background:#fff;border:2px solid var(--tinta);padding:.55rem .8rem;cursor:pointer}
+
+  .pegatinas{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.3rem}
+  .peg{font-family:Bungee;font-size:.9rem;text-decoration:none;border:3px solid var(--tinta);padding:.45rem .8rem;background:#fff;transform:rotate(var(--r,0deg));transition:transform .15s}
+  .peg:hover{transform:rotate(0) scale(1.06);background:var(--rosa);color:#fff}
+  .sello{position:absolute;right:-18px;bottom:-30px;width:122px;height:122px;border-radius:50%;background:var(--rosa);color:#fff;display:grid;place-items:center;text-align:center;font-family:Bungee;font-size:.78rem;line-height:1.05;transform:rotate(12deg);border:3px solid var(--tinta)}
+
+  .inlay{background:#fff;border:3px solid var(--tinta);box-shadow:8px 8px 0 var(--tinta);transform:rotate(1.4deg)}
+  .inlay header{background:var(--tinta);color:var(--papel);padding:.8rem 1rem;display:flex;justify-content:space-between;align-items:center;font-family:Bungee;font-size:1rem}
+  .inlay header small{font-family:"IBM Plex Mono";font-size:.7rem;color:var(--verde)}
+  .lista{list-style:none;max-height:440px;overflow:auto}
+  .lista li{border-bottom:2px dashed #bbb}
+  .lista button{width:100%;display:grid;grid-template-columns:2.2rem 1fr auto;gap:.6rem;align-items:center;text-align:left;background:none;border:0;padding:.7rem 1rem;font:inherit;cursor:pointer}
+  .lista button:hover{background:var(--verde)}
+  .lista .n{font-family:"IBM Plex Mono";font-weight:700;font-size:.8rem;color:#777}
+  .lista .t{font-weight:800;line-height:1.2}
+  .lista .d{font-family:"IBM Plex Mono";font-size:.75rem;color:#777}
+  .lista li.on button{background:var(--rosa);color:#fff}
+  .lista li.on .n,.lista li.on .d{color:#fff}
+  .inlay footer{padding:.8rem 1rem;font-family:"IBM Plex Mono";font-size:.75rem;color:#555}
+
+  .cinta{border-top:3px solid var(--tinta);border-bottom:3px solid var(--tinta);background:var(--tinta);color:var(--verde);overflow:hidden;white-space:nowrap;font-family:Bungee;font-size:clamp(1.2rem,2.6vw,2rem);padding:.55rem 0}
+  .cinta div{display:inline-block;animation:corre 32s linear infinite}
+  .cinta span{margin:0 1.2rem}
+  .cinta span:nth-child(3n+2){color:var(--rosa)}
+  @keyframes corre{to{transform:translateX(-50%)}}
+
+  section{padding:clamp(4rem,9vw,7rem) clamp(1rem,4vw,3rem);scroll-margin-top:1rem}
+  .wrap{max-width:1240px;margin:0 auto}
+  h2.tit{font-family:Bungee;font-weight:400;font-size:clamp(2.2rem,6vw,4.6rem);line-height:.92;margin-bottom:2rem}
+  .kick{font-family:"IBM Plex Mono";font-weight:700;font-size:.8rem;letter-spacing:.2em;text-transform:uppercase;margin-bottom:.8rem}
+
+  .mix{background:var(--tinta);color:var(--papel)}
+  .mix .cols{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(2rem,5vw,4rem);align-items:center}
+  .cassette{aspect-ratio:1.58;background:#2a2a2a;border-radius:14px;position:relative;box-shadow:0 30px 60px rgba(0,0,0,.5);padding:7% 6% 0}
+  .cassette .etiq{background:var(--verde);color:var(--tinta);height:58%;border-radius:4px;padding:5% 6%;position:relative}
+  .cassette .etiq b{font-family:Bungee;font-size:clamp(1rem,2.4vw,1.6rem);line-height:1;display:block}
+  .cassette .etiq small{font-family:"IBM Plex Mono";font-weight:700;font-size:.7rem}
+  .cassette .ventana{position:absolute;left:24%;right:24%;top:46%;height:24%;background:#111;border-radius:30px;display:flex;justify-content:space-around;align-items:center}
+  .cassette .bobina{width:22%;aspect-ratio:1;border-radius:50%;background:repeating-conic-gradient(#ddd 0 20deg,#888 20deg 60deg);animation:gira 2.5s linear infinite}
+  @keyframes gira{to{transform:rotate(360deg)}}
+  .mix p{color:#cfcac0;font-size:1.05rem;max-width:46ch;margin-bottom:1.4rem}
+  .btn{display:inline-flex;align-items:center;gap:.5rem;font-family:Bungee;font-size:1rem;text-decoration:none;border:3px solid var(--tinta);background:#fff;color:var(--tinta);padding:.75rem 1.1rem;box-shadow:4px 4px 0 var(--tinta);transition:transform .1s,box-shadow .1s}
+  .btn:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--tinta)}
+  .btn.verde{background:var(--verde);border-color:var(--verde);box-shadow:4px 4px 0 var(--rosa)}
+
+  .sc-marco{border:3px solid var(--tinta);background:#fff;box-shadow:8px 8px 0 var(--tinta);padding:.6rem}
+  .sc-marco iframe{display:block;width:100%;height:450px;border:0}
+  .sc-fallo{display:none;padding:2rem;font-family:"IBM Plex Mono"}
+  .plataformas{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:1.8rem}
+
+  .muro{background:#d9d3c5;background-image:radial-gradient(rgba(0,0,0,.06) 1px,transparent 1px);background-size:6px 6px}
+  .flyers{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(1rem,3vw,2.2rem);align-items:start}
+  .mini{background:#fff;border:3px solid var(--tinta);padding:1.4rem;transform:rotate(var(--r));box-shadow:6px 8px 0 rgba(0,0,0,.7);position:relative}
+  .mini::before{content:"";position:absolute;top:-10px;left:50%;width:16px;height:16px;border-radius:50%;background:var(--rosa);border:2px solid var(--tinta);transform:translateX(-50%)}
+  .mini .fecha{font-family:Bungee;font-size:2.6rem;line-height:.9}
+  .mini .fecha small{display:block;font-family:"IBM Plex Mono";font-size:.75rem;letter-spacing:.2em}
+  .mini h3{font-family:Bungee;font-weight:400;font-size:1.35rem;line-height:1;margin:.8rem 0 .3rem}
+  .mini p{font-family:"IBM Plex Mono";font-size:.82rem}
+  .mini .lineup{margin-top:.9rem;font-family:Bungee;font-size:1rem;background:var(--c);color:var(--tinta);padding:.4rem .6rem;display:inline-block}
+  .mini a{display:inline-block;margin-top:.9rem;font-family:"IBM Plex Mono";font-weight:700;font-size:.8rem}
+  .mini.vacio{border-style:dashed;background:transparent;box-shadow:none}
+
+  .linea{background:var(--rosa);color:#fff}
+  .linea .cols{display:grid;grid-template-columns:1fr minmax(300px,420px);gap:clamp(2rem,5vw,4rem);align-items:center}
+  .linea p{font-size:1.1rem;max-width:44ch;margin-bottom:1rem}
+  .linea .num{font-family:Bungee;font-size:clamp(2rem,5vw,3.4rem);line-height:1;margin:1rem 0}
+  .telefono{background:linear-gradient(160deg,#3a3f45,#1b1e22);border-radius:1.4rem;padding:1.2rem;box-shadow:0 24px 50px rgba(0,0,0,.35);color:#e8e8e8}
+  .tel-top{display:flex;justify-content:space-between;font-family:"IBM Plex Mono";font-size:.7rem;letter-spacing:.2em;color:#aab;margin-bottom:.8rem}
+  .display{background:var(--lcd);color:var(--lcd-t);border-radius:.5rem;padding:.9rem 1rem;min-height:130px;font-family:"IBM Plex Mono";font-weight:600;font-size:.85rem;line-height:1.4;box-shadow:inset 0 3px 10px rgba(0,0,0,.35)}
+  .display .l1{font-weight:700;border-bottom:1px solid rgba(19,32,10,.3);padding-bottom:.3rem;margin-bottom:.4rem}
+  .menu{list-style:none;margin:.8rem 0;font-family:"IBM Plex Mono";font-size:.75rem;color:#c9ccd2;columns:2}
+  .menu b{color:var(--verde)}
+  .teclado{display:grid;grid-template-columns:repeat(3,1fr);gap:.55rem}
+  .tecla{border:0;border-radius:.6rem;background:linear-gradient(180deg,#e9eaec,#b9bcc2);color:#111;font-family:Bungee;font-size:1.35rem;padding:.6rem 0 .5rem;cursor:pointer;box-shadow:0 5px 0 #555}
+  .tecla:active{transform:translateY(4px);box-shadow:0 1px 0 #555}
+  .tecla.amarilla{background:linear-gradient(180deg,#ffe25e,#e0b91c)}
+
+  .rejilla-discos{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
+  .disco{background:#fff;border:3px solid var(--tinta);padding:1.1rem;box-shadow:5px 5px 0 var(--tinta);display:flex;flex-direction:column;gap:.35rem;position:relative;overflow:hidden}
+  .disco::before{content:"";position:absolute;right:-30px;top:-30px;width:90px;height:90px;border-radius:50%;background:radial-gradient(circle,var(--tinta) 0 18%,var(--c) 19% 34%,var(--tinta) 35%)}
+  .disco .a{font-family:"IBM Plex Mono";font-weight:700;font-size:.72rem;letter-spacing:.15em}
+  .disco b{font-family:Bungee;font-weight:400;font-size:1.2rem;line-height:1.05;max-width:85%}
+  .disco small{font-family:"IBM Plex Mono";font-size:.76rem;color:#555}
+  .disco.destacado{grid-column:span 2;background:var(--c)}
+  .disco.destacado b{font-size:2rem}
+  .disco.destacado small{color:var(--tinta)}
+  @media (max-width:980px){.rejilla-discos{grid-template-columns:1fr 1fr}}
+  @media (max-width:560px){.rejilla-discos{grid-template-columns:1fr}.disco.destacado{grid-column:auto}}
+
+  .sobre .cols{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(2rem,5vw,5rem)}
+  .sobre p{font-size:1.06rem;max-width:58ch;margin-bottom:1rem}
+  .sellos{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;align-self:start}
+  .stamp{border:4px double var(--c);color:var(--c);padding:1rem;font-family:Bungee;font-size:1.05rem;line-height:1.05;text-align:center;transform:rotate(var(--r))}
+  .stamp small{display:block;font-family:"IBM Plex Mono";font-size:.62rem;font-weight:700;margin-top:.3rem}
+
+  .reproductor{position:fixed;left:0;right:0;bottom:0;z-index:80;background:var(--tinta);color:var(--papel);border-top:3px solid var(--verde);display:grid;grid-template-columns:auto 1fr auto auto;gap:1rem;align-items:center;padding:.6rem clamp(.8rem,3vw,2rem) calc(.6rem + env(safe-area-inset-bottom,0px));transform:translateY(110%);transition:transform .4s}
+  .reproductor.listo{transform:none}
+  .reproductor .mini-art{width:52px;height:52px;background:#333 center/cover;border:2px solid var(--verde)}
+  .reproductor .info{min-width:0}
+  .reproductor .info b{display:block;font-family:Bungee;font-size:.95rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .reproductor .info small{font-family:"IBM Plex Mono";font-size:.72rem;color:#aaa}
+  .reproductor .barra{height:4px;background:#333;margin-top:.35rem;cursor:pointer;position:relative}
+  .reproductor .barra i{position:absolute;inset:0 auto 0 0;width:0;background:var(--verde)}
+  .reproductor .mandos{display:flex;gap:.4rem}
+  .reproductor .mandos button{width:42px;height:42px;border:2px solid var(--papel);background:none;color:var(--papel);font-size:1rem;cursor:pointer}
+  .reproductor .mandos button.pp{background:var(--verde);border-color:var(--verde);color:var(--tinta);font-weight:700}
+  .reproductor a{font-family:"IBM Plex Mono";font-size:.72rem;color:var(--verde);text-decoration:none}
+
+  footer{background:var(--tinta);color:#bbb;padding:2rem clamp(1rem,4vw,3rem);display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem;font-family:"IBM Plex Mono";font-size:.8rem}
+  footer nav{display:flex;flex-wrap:wrap;gap:1.2rem}
+  footer a:hover{color:var(--verde)}
+
+  @media (max-width:980px){
+    .top nav{display:none}
+    .hero,.mix .cols,.linea .cols,.sobre .cols{grid-template-columns:1fr}
+    .flyers{grid-template-columns:1fr 1fr}
+    .sello{right:-6px;width:96px;height:96px;font-size:.64rem}
+    .inlay,.flyer{transform:none}
+  }
+  @media (max-width:600px){
+    .flyers{grid-template-columns:1fr}
+    .ahora{grid-template-columns:1fr}
+    .reproductor{grid-template-columns:auto 1fr auto}
+    .reproductor a{display:none}
+  }
+  @media (prefers-reduced-motion:reduce){.cinta div,.cassette .bobina{animation:none}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <a class="brand" href="#">AFGHAN HEADSPIN</a>
+  <nav aria-label="Main"><a href="#tracks">Music</a><a href="#releases">Releases</a><a href="#mix">Mix</a><a href="#dates">Dates</a><a href="#about">About</a><a href="#infoline">Booking</a></nav>
+  <a class="escuchar" href="#tracks">▶ LISTEN</a>
+</header>
+
+<main>
+  <section class="hero" aria-labelledby="h1" style="padding-top:clamp(2rem,4vw,3.5rem)">
+    <div class="flyer">
+      <p class="presenta">UK · Breakbeat · UK Bass · Rave · aka Jason Bull</p>
+      <h1 id="h1">AFGHAN HEADSPIN</h1>
+
+      <div class="ahora" aria-live="polite">
+        <div class="portada" id="portada">PHAT<br>BASS</div>
+        <div>
+          <span class="etq"><span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span id="estadoTxt">NOW PLAYING</span></span>
+          <h2 id="tituloAhora">Phat Bass</h2>
+          <p id="subAhora">Dirty Kitchen Rave · February 2026</p>
+          <div class="ctrl">
+            <button class="bplay" id="bplay">▶ PLAY</button>
+            <button class="bsec" id="bsig">NEXT TRACK ⏭</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="pegatinas">
+        <a class="peg" style="--r:-3deg" href="https://www.beatport.com/artist/afghan-headspin/30700" target="_blank" rel="noopener">BEATPORT</a>
+        <a class="peg" style="--r:2deg" href="https://afghanheadspin.bandcamp.com/" target="_blank" rel="noopener">BANDCAMP</a>
+        <a class="peg" style="--r:-1deg" href="https://soundcloud.com/afghan-headspin" target="_blank" rel="noopener">SOUNDCLOUD</a>
+        <a class="peg" style="--r:3deg" href="https://www.facebook.com/afghanheadspinmusic/" target="_blank" rel="noopener">FACEBOOK</a>
+      </div>
+      <div class="sello" aria-hidden="true">LAST SEEN<br>OLIBASS<br>19.09.26</div>
+    </div>
+
+    <aside class="inlay" aria-labelledby="tl">
+      <header><span id="tl">TRACKLIST</span><small id="tlFuente">LOADING SOUNDCLOUD…</small></header>
+      <ol class="lista" id="lista"></ol>
+      <footer>Side A · straight off SoundCloud. Hit a track to play it.</footer>
+    </aside>
+  </section>
+
+  <div class="cinta" aria-hidden="true"><div>
+    <span>Roller Coaster Hands In The Air</span><span>✱</span><span>KILLA</span><span>✱</span><span>PHAT BASS</span><span>✱</span><span>ROMERO</span><span>✱</span><span>JUMP</span><span>✱</span><span>ACIDICA</span><span>✱</span><span>WE ARE BREAKBEAT</span><span>✱</span><span>JUSTICE</span><span>✱</span><span>No One Dies</span><span>✱</span><span>Going Down</span><span>✱</span>
+    <span>Roller Coaster Hands In The Air</span><span>✱</span><span>KILLA</span><span>✱</span><span>PHAT BASS</span><span>✱</span><span>ROMERO</span><span>✱</span><span>JUMP</span><span>✱</span><span>ACIDICA</span><span>✱</span><span>WE ARE BREAKBEAT</span><span>✱</span><span>JUSTICE</span><span>✱</span><span>No One Dies</span><span>✱</span><span>Going Down</span><span>✱</span>
+  </div></div>
+
+  <section class="mix" id="mix">
+    <div class="wrap cols">
+      <div class="cassette" aria-hidden="true">
+        <div class="etiq"><b>LIVE @ OLIBASS OPEN AIR</b><small>AFGHAN HEADSPIN · 19.09.2026 · TORREDONJIMENO</small></div>
+        <div class="ventana"><span class="bobina"></span><span class="bobina"></span></div>
+      </div>
+      <div>
+        <p class="kick" style="color:var(--verde)">Latest mix</p>
+        <h2 class="tit">Olibass<br>Open Air 2026</h2>
+        <p>Recorded live at Olibass Music Festival, Torredonjimeno, on 19 September 2026. Breakbeat, UK bass and rave, straight from the rig.</p>
+        <a class="btn verde" href="https://www.optimalbreaks.com/en/mixes/afghan-headspin-olibass-open-air-2026" target="_blank" rel="noopener">▶ Listen to the mix ↗</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="tracks">
+    <div class="wrap">
+      <p class="kick">The music</p>
+      <h2 class="tit">All tracks</h2>
+      <div class="sc-marco">
+        <iframe id="sc" title="Afghan Headspin on SoundCloud" allow="autoplay" scrolling="no"
+          src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/afghan-headspin&color=%23ff2fa0&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false"></iframe>
+        <div class="sc-fallo" id="scFallo">The SoundCloud player couldn't load here. <a href="https://soundcloud.com/afghan-headspin" target="_blank" rel="noopener">Open Afghan Headspin on SoundCloud ↗</a></div>
+      </div>
+      <div class="plataformas">
+        <a class="btn" href="https://www.beatport.com/artist/afghan-headspin/30700" target="_blank" rel="noopener">Buy on Beatport ↗</a>
+        <a class="btn" href="https://afghanheadspin.bandcamp.com/" target="_blank" rel="noopener">Bandcamp ↗</a>
+        <a class="btn" href="https://soundcloud.com/afghan-headspin" target="_blank" rel="noopener">SoundCloud ↗</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="discos" id="releases">
+    <div class="wrap">
+      <p class="kick">Discography</p>
+      <h2 class="tit">Key releases</h2>
+      <div class="rejilla-discos">
+        <article class="disco" style="--c:var(--rosa)"><span class="a">2026</span><b>Roller Coaster Hands In The Air</b><small>Dirty Kitchen Rave · September</small></article>
+        <article class="disco destacado" style="--c:var(--verde)"><span class="a">2026 · ALBUM</span><b>KILLA</b><small>Dirty Kitchen Rave</small></article>
+        <article class="disco" style="--c:var(--cian)"><span class="a">2026</span><b>PHAT BASS</b><small>Dirty Kitchen Rave · February</small></article>
+        <article class="disco" style="--c:var(--verde)"><span class="a">2026</span><b>ROMERO</b><small>Dirty Kitchen Rave · January</small></article>
+        <article class="disco" style="--c:var(--rosa)"><span class="a">2025</span><b>JUMP</b><small>Dirty Kitchen Rave · with DJ Brownie</small></article>
+        <article class="disco" style="--c:var(--cian)"><span class="a">2025</span><b>ACIDICA</b><small>Dirty Kitchen Rave · with Miss Mants</small></article>
+        <article class="disco" style="--c:var(--verde)"><span class="a">2025</span><b>BITCH HOOVA!</b><small>Dirty Kitchen Rave</small></article>
+        <article class="disco" style="--c:var(--rosa)"><span class="a">2024</span><b>WE ARE BREAKBEAT</b><small>Dirty Kitchen Rave · with Anuschka</small></article>
+        <article class="disco" style="--c:var(--cian)"><span class="a">2023</span><b>JUSTICE</b><small>Dirty Kitchen Rave</small></article>
+        <article class="disco destacado" style="--c:var(--rosa)"><span class="a">2022 · ALBUM</span><b>No One Dies</b><small>Soundsystem Bassrock · the first artist album</small></article>
+        <article class="disco" style="--c:var(--verde)"><span class="a">2011</span><b>Going Down</b><small>Skint · featuring MC Coppa</small></article>
+        <article class="disco" style="--c:var(--cian)"><span class="a">2007</span><b>True</b><small>Ape Music · an early release</small></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="muro" id="dates">
+    <div class="wrap">
+      <p class="kick">Recent dates · Spain &amp; Andalusia</p>
+      <h2 class="tit">The flyer wall</h2>
+      <div class="flyers">
+        <article class="mini" style="--r:-2deg;--c:var(--verde)">
+          <div class="fecha">19.09<small>2026 · SATURDAY</small></div>
+          <h3>Olibass Music Festival · Open Air</h3><p>Torredonjimeno, Spain</p>
+          <span class="lineup">AFGHAN HEADSPIN</span><br>
+          <a href="https://www.optimalbreaks.com/en/events/olibass-music-festival-open-air" target="_blank" rel="noopener">Event info ↗</a>
+        </article>
+        <article class="mini" style="--r:2.5deg;--c:var(--cian)">
+          <div class="fecha">02.04<small>2026 · THURSDAY</small></div>
+          <h3>Pure Bassline · 7th Anniversary</h3><p>Seville, Spain</p>
+          <span class="lineup">AFGHAN HEADSPIN</span><br>
+          <a href="https://www.optimalbreaks.com/en/events/pure-bassline-7-aniversario-2026" target="_blank" rel="noopener">Event info ↗</a>
+        </article>
+        <article class="mini vacio" style="--r:2deg;--c:var(--rosa)">
+          <div class="fecha">??.??<small>YOUR DATE</small></div>
+          <h3>Your rave here</h3><p>Club, warehouse or festival</p>
+          <a href="#infoline">Ring the info line →</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="linea" id="infoline">
+    <div class="wrap cols">
+      <div>
+        <p class="kick">Booking &amp; info line</p>
+        <h2 class="tit">Ring the<br>info line</h2>
+        <p>Just like the old days: press a key for the recorded message. Press 1 and the line drops you straight into the music. Press 4 for bookings.</p>
+        <div class="num">☎ AH-0898</div>
+        <a class="btn" href="#">Booking enquiries →</a>
+      </div>
+      <div class="telefono" role="group" aria-label="Info line payphone">
+        <div class="tel-top"><span id="estadoLinea">LINE IDLE</span><span>AH-0898</span></div>
+        <div class="display" aria-live="polite"><div class="l1" id="dTit">AFGHAN HEADSPIN INFO</div><div id="dTxt">PRESS A KEY TO CALL</div></div>
+        <ul class="menu"><li><b>1</b> Hear the music</li><li><b>2</b> Latest mix</li><li><b>3</b> Recent dates</li><li><b>4</b> Bookings</li><li><b>5</b> New releases</li><li><b>0</b> Operator</li></ul>
+        <div class="teclado" id="teclado"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sobre" id="about">
+    <div class="wrap">
+      <p class="kick">About</p>
+      <h2 class="tit">From Resonant Evil<br>to KILLA</h2>
+      <div class="cols">
+        <div>
+          <p>Afghan Headspin is Jason Bull. The name started in 2006 as a project of Mackie (Jason Bull) and Wrisk (Colin Worth), both from Resonant Evil, the early-2000s British drum &amp; bass trio completed by Audio. When the trio stopped working as a regular group, Mackie and Wrisk opened Afghan Headspin for breaks, drum &amp; bass, dubstep and whatever else they wanted to make.</p>
+          <p>Going Down came out on Skint on 9 May 2011, billed as Afghan Headspin featuring MC Coppa. On 25 November 2022 Soundsystem Bassrock released No One Dies, an eighteen-track album.</p>
+          <p>Jason Bull is also a member of Pixel Fist, with Gareth Greenall, Lorne and MC Stapleton. Discogs still lists Colin Worth and Jason Bull as the two members of the name.</p>
+          <p>Today he is label manager and A&amp;R at Dirty Kitchen Rave, the centre of the recent work. The records sit in breakbeat, UK bass and rave; drum &amp; bass and hardcore are the roots. And the project has a strong tie to Spain, Andalusia in particular.</p>
+        </div>
+        <div class="sellos">
+          <div class="stamp" style="--c:#4a8c00;--r:-2deg;grid-column:1/-1">DIRTY KITCHEN RAVE<small>LABEL MANAGER &amp; A&amp;R</small></div>
+          <div class="stamp" style="--c:#111;--r:-3deg">SKINT<small>LABEL</small></div>
+          <div class="stamp" style="--c:#FF2FA0;--r:2deg">SOUNDSYSTEM BASSROCK<small>LABEL</small></div>
+          <div class="stamp" style="--c:#0095b5;--r:-1deg">KALEIDOSCOPE<small>LABEL</small></div>
+          <div class="stamp" style="--c:#111;--r:3deg">APE MUSIC<small>TRUE · 2007</small></div>
+          <div class="stamp" style="--c:#FF2FA0;--r:-2deg">BROKE<small>THE CALLING · 2006</small></div>
+          <div class="stamp" style="--c:#0095b5;--r:2deg">ROCSTAR<small>LABEL</small></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <span>AFGHAN HEADSPIN · AKA JASON BULL · UK</span>
+  <nav aria-label="Social"><a href="https://www.beatport.com/artist/afghan-headspin/30700">Beatport</a><a href="https://afghanheadspin.bandcamp.com/">Bandcamp</a><a href="https://soundcloud.com/afghan-headspin">SoundCloud</a><a href="https://www.facebook.com/afghanheadspinmusic/">Facebook</a></nav>
+</footer>
+
+<div class="reproductor" id="repro" role="region" aria-label="Music player">
+  <div class="mini-art" id="miniArt"></div>
+  <div class="info"><b id="rTit">Afghan Headspin</b><small id="rSub">SoundCloud</small><div class="barra" id="barra"><i id="prog"></i></div></div>
+  <div class="mandos"><button id="rPrev" aria-label="Previous">⏮</button><button class="pp" id="rPlay" aria-label="Play or pause">▶</button><button id="rNext" aria-label="Next">⏭</button></div>
+  <a href="https://soundcloud.com/afghan-headspin" target="_blank" rel="noopener">SOUNDCLOUD ↗</a>
+</div>
+
+<script src="https://w.soundcloud.com/player/api.js"></script>
+<script>
+/* ================= SOUNDCLOUD (real music) ================= */
+let W=null,sonidos=[],listo=false,sonando=false,indice=0;
+const $=id=>document.getElementById(id);
+function fmt(ms){const s=Math.round(ms/1000);return Math.floor(s/60)+':'+String(s%60).padStart(2,'0')}
+function arte(url){return url?url.replace('-large','-t300x300'):''}
+function pintarLista(){
+  const ol=$('lista');ol.innerHTML='';
+  sonidos.slice(0,14).forEach((s,i)=>{
+    const li=document.createElement('li');li.innerHTML=`<button><span class="n">${String(i+1).padStart(2,'0')}</span><span class="t">${s.title}</span><span class="d">${s.duration?fmt(s.duration):''}</span></button>`;
+    li.querySelector('button').addEventListener('click',()=>{W.skip(i);});
+    ol.appendChild(li);
+  });
+  $('tlFuente').textContent=sonidos.length+' TRACKS · SOUNDCLOUD';
+}
+function marcarActual(){[...$('lista').children].forEach((li,i)=>li.classList.toggle('on',i===indice))}
+function actualizarAhora(){
+  W.getCurrentSound(s=>{if(!s)return;
+    W.getCurrentSoundIndex(i=>{indice=i;marcarActual()});
+    $('tituloAhora').textContent=s.title;$('subAhora').textContent=(s.user&&s.user.username?s.user.username:'Afghan Headspin')+(s.duration?' · '+fmt(s.duration):'');
+    $('rTit').textContent=s.title;$('rSub').textContent=s.user&&s.user.username?s.user.username:'Afghan Headspin';
+    const a=arte(s.artwork_url||(s.user&&s.user.avatar_url));
+    if(a){$('portada').style.backgroundImage=`url(${a})`;$('portada').textContent='';$('miniArt').style.backgroundImage=`url(${a})`}
+  });
+}
+function estado(on){sonando=on;document.body.classList.toggle('sonando',on);$('bplay').textContent=on?'❚❚ PAUSE':'▶ PLAY';$('rPlay').textContent=on?'❚❚':'▶';$('estadoTxt').textContent=on?'NOW PLAYING':'PAUSED'}
+const fallo=setTimeout(()=>{if(!listo){$('scFallo').style.display='block';$('tlFuente').textContent='OFFLINE';
+  $('lista').innerHTML='<li><button onclick="window.open(\'https://soundcloud.com/afghan-headspin\')"><span class="n">01</span><span class="t">Phat Bass</span><span class="d">↗</span></button></li>'}},9000);
+try{
+  W=SC.Widget($('sc'));
+  W.bind(SC.Widget.Events.READY,()=>{
+    listo=true;clearTimeout(fallo);$('repro').classList.add('listo');
+    W.getSounds(list=>{sonidos=(list||[]).filter(s=>s&&s.title);
+      const pb=sonidos.findIndex(s=>/phat\s*bass/i.test(s.title));
+      pintarLista();if(pb>0){W.skip(pb);setTimeout(()=>W.pause(),300)}
+      setTimeout(actualizarAhora,400);
+    });
+  });
+  W.bind(SC.Widget.Events.PLAY,()=>{estado(true);actualizarAhora()});
+  W.bind(SC.Widget.Events.PAUSE,()=>estado(false));
+  W.bind(SC.Widget.Events.FINISH,()=>estado(false));
+  W.bind(SC.Widget.Events.PLAY_PROGRESS,e=>{$('prog').style.width=(e.relativePosition*100)+'%'});
+}catch(e){}
+const alternar=()=>{if(W&&listo)W.toggle();else window.open('https://soundcloud.com/afghan-headspin')};
+$('bplay').addEventListener('click',alternar);$('rPlay').addEventListener('click',alternar);
+$('bsig').addEventListener('click',()=>W&&W.next());$('rNext').addEventListener('click',()=>W&&W.next());$('rPrev').addEventListener('click',()=>W&&W.prev());
+$('barra').addEventListener('click',e=>{if(!W)return;const r=e.currentTarget.getBoundingClientRect();W.getDuration(d=>W.seekTo(d*(e.clientX-r.left)/r.width))});
+
+/* ================= INFO LINE (booking) ================= */
+const mensajes={
+  '1':{t:'1 · THE MUSIC',txt:"Connecting you to the music. Hold the line.",musica:true},
+  '2':{t:'2 · LATEST MIX',txt:"The latest mix was recorded live at Olibass Music Festival Open Air, Torredonjimeno, September twenty twenty six. Find it on Optimal Breaks."},
+  '3':{t:'3 · RECENT DATES',txt:"Recent dates. Pure Bassline seventh anniversary in Seville, April twenty twenty six. Olibass Open Air in Torredonjimeno, September twenty twenty six."},
+  '4':{t:'4 · BOOKINGS',txt:"For bookings, use the booking enquiries button on this page and the crew will call you back. Clubs, warehouses and festivals."},
+  '5':{t:'5 · NEW RELEASES',txt:"New on Dirty Kitchen Rave: Roller Coaster Hands In The Air, September twenty twenty six. Before that, the album KILLA, and PHAT BASS."},
+  '0':{t:'0 · OPERATOR',txt:"Operator. You'll find us on Beatport, Bandcamp, SoundCloud and Facebook. Links in the player and at the bottom of the page."}
+};
+const DTMF={'1':[697,1209],'2':[697,1336],'3':[697,1477],'4':[770,1209],'5':[770,1336],'6':[770,1477],'7':[852,1209],'8':[852,1336],'9':[852,1477],'*':[941,1209],'0':[941,1336],'#':[941,1477]};
+let ac=null;
+function tono(k){if(!ac)ac=new (window.AudioContext||window.webkitAudioContext)();ac.resume();const t=ac.currentTime;DTMF[k].forEach(f=>{const o=ac.createOscillator(),g=ac.createGain();o.frequency.value=f;g.gain.setValueAtTime(.1,t);g.gain.setValueAtTime(.1,t+.14);g.gain.linearRampToValueAtTime(0,t+.16);o.connect(g).connect(ac.destination);o.start(t);o.stop(t+.17)})}
+let voz=null;function elegir(){if(!('speechSynthesis' in window))return;const v=speechSynthesis.getVoices();voz=v.find(x=>/en-GB/i.test(x.lang))||v.find(x=>/^en/i.test(x.lang))||null}
+if('speechSynthesis' in window){elegir();speechSynthesis.onvoiceschanged=elegir}
+let typer=null;function escribir(t){clearInterval(typer);let i=0;typer=setInterval(()=>{$('dTxt').textContent=t.slice(0,++i).toUpperCase();if(i>=t.length)clearInterval(typer)},36)}
+['1','2','3','4','5','6','7','8','9','*','0','#'].forEach(k=>{
+  const b=document.createElement('button');b.className='tecla'+(k==='*'||k==='#'?' amarilla':'');b.textContent=k;b.setAttribute('aria-label','Key '+k);
+  b.addEventListener('click',()=>marcar(k));$('teclado').appendChild(b);
+});
+function marcar(k){
+  tono(k);const m=mensajes[k];
+  if(!m){$('dTit').textContent='MENU';escribir('1 MUSIC · 2 MIX · 3 DATES · 4 BOOKINGS · 5 NEW RELEASES · 0 OPERATOR');return}
+  if('speechSynthesis' in window)speechSynthesis.cancel();
+  $('estadoLinea').textContent='CONNECTED';$('dTit').textContent=m.t;escribir(m.txt);
+  if(W&&listo&&sonando)W.pause();
+  const fin=()=>{$('estadoLinea').textContent='LINE IDLE';if(m.musica&&W&&listo){W.play();document.getElementById('tracks').scrollIntoView({behavior:'smooth'})}};
+  if('speechSynthesis' in window){const u=new SpeechSynthesisUtterance(m.txt);if(voz)u.voice=voz;u.lang='en-GB';u.pitch=.85;u.onend=fin;setTimeout(()=>speechSynthesis.speak(u),250)}
+  else setTimeout(fin,2500);
+}
+</script>
+</body>
+</html>

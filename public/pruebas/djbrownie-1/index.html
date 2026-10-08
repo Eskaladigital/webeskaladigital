@@ -42,16 +42,16 @@
   .top nav a{text-decoration:none}
   .top nav a:hover{text-decoration:underline;text-underline-offset:4px}
 
-  .maquina{margin:0 clamp(.75rem,3vw,2.5rem);background:var(--panel);color:#F1E7DC;border-radius:1.5rem;padding:clamp(1.25rem,3vw,2.5rem);box-shadow:inset 0 2px 0 rgba(255,255,255,.08),0 20px 40px rgba(36,23,15,.35);position:relative;overflow:hidden}
+  .maquina{max-width:1320px;margin:0 auto;margin-inline:max(clamp(.75rem,3vw,2.5rem),calc((100% - 1320px)/2));background:var(--panel);color:#F1E7DC;border-radius:1.5rem;padding:clamp(1.25rem,3vw,2.5rem);box-shadow:inset 0 2px 0 rgba(255,255,255,.08),0 20px 40px rgba(36,23,15,.35);position:relative;overflow:hidden}
   .maquina::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(255,255,255,.018) 0 2px,transparent 2px 6px);pointer-events:none}
-  .maq-top{display:grid;grid-template-columns:1fr auto;gap:2rem;align-items:start;margin-bottom:2rem;position:relative}
+  .maq-top{display:grid;grid-template-columns:1fr auto;gap:2rem;align-items:end;margin-bottom:1.4rem;position:relative}
   .modelo{font-family:"Chakra Petch";font-weight:600;font-size:.8rem;letter-spacing:.2em;color:#B79F8C;margin-bottom:.4rem}
-  .maquina h1{font-size:clamp(3rem,9vw,7.5rem);font-weight:700;line-height:.85;letter-spacing:-.02em}
+  .maquina h1{font-size:clamp(3rem,min(7vw,11vh),6rem);font-weight:700;line-height:.85;letter-spacing:-.02em}
   .maquina h1 small{display:block;font-size:.2em;letter-spacing:0;font-weight:500;color:#B79F8C;margin-top:.8rem;line-height:1.3;max-width:34ch}
   .lcd{background:var(--lcd);color:var(--lcd-t);border-radius:.5rem;padding:1rem 1.2rem;min-width:320px;font-family:"Chakra Petch";font-weight:600;box-shadow:inset 0 0 0 3px #120b07,inset 0 6px 14px rgba(0,0,0,.25),0 0 30px rgba(245,185,90,.15)}
   .lcd .l1{font-size:1.5rem;line-height:1.1}
   .lcd .l2{font-size:.95rem;opacity:.85}
-  .controles{display:flex;flex-wrap:wrap;gap:1rem 2rem;align-items:center;margin-bottom:1.5rem;position:relative}
+  .controles{display:flex;flex-wrap:wrap;gap:1rem 2rem;align-items:center;margin-bottom:1.2rem;position:relative}
   .play{background:var(--pad-n);color:var(--panel);border:0;border-radius:.5rem;font-family:"Chakra Petch";font-weight:700;font-size:1.1rem;padding:.8rem 1.6rem;cursor:pointer;box-shadow:0 4px 0 #8f5214}
   .play:active{transform:translateY(3px);box-shadow:0 1px 0 #8f5214}
   .tempo{display:flex;align-items:center;gap:.8rem;color:#B79F8C}
@@ -62,7 +62,8 @@
 
   .grid{display:grid;grid-template-columns:5.5rem repeat(16,1fr);gap:6px;align-items:center;position:relative}
   .grid .nombre{font-family:"Chakra Petch";font-weight:600;font-size:.85rem;color:#B79F8C;line-height:1.1}
-  .paso{aspect-ratio:1;border:0;border-radius:6px;background:#3A271B;cursor:pointer;position:relative}
+  /* On desktop the steps are compact pads with a height capped to the screen, so all 6 rows fit in the hero */
+  .paso{height:clamp(26px,4.6vh,44px);border:0;border-radius:6px;background:#3A271B;cursor:pointer;position:relative}
   .paso.tiempo{background:#4B3426}
   .paso[aria-pressed="true"]{background:var(--c)}
   .paso.ahora{box-shadow:0 0 0 2px #fff}
@@ -168,7 +169,7 @@
     .info .grid2{grid-template-columns:1fr}
     .grid,.contador{grid-template-columns:3.4rem repeat(16,1fr);gap:3px}
     .grid .nombre{font-size:.62rem}
-    .paso{border-radius:3px}
+    .paso{height:auto;aspect-ratio:1;border-radius:3px}
   }
   @media (max-width:600px){.pads{grid-template-columns:1fr 1fr;gap:.5rem}.pad{min-height:88px;padding:.8rem}.tempo input{width:100px}}
   @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.pad{transition:none}}
