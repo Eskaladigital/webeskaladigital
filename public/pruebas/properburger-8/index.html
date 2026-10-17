@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Proper Burger — Propuesta Revista · ESKALA</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Propuesta Revista para Proper Burger (Murcia). Demo de ESKALA Marketing.">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#f5efe4;--ink:#16211b;--green:#1f3b2d;--tomato:#e4572e;--muted:#7a776f}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:'Inter',sans-serif;overflow-x:hidden}
+.mast{display:flex;justify-content:space-between;align-items:center;padding:16px 28px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;border-bottom:1px solid var(--ink)}
+.cover{min-height:100vh;display:grid;grid-template-columns:1.2fr 1fr;border-bottom:1px solid var(--ink)}
+.cover .l{padding:40px 28px;display:flex;flex-direction:column;justify-content:space-between;border-right:1px solid var(--ink)}
+.cover h1{font-family:'Fraunces';font-weight:900;font-size:clamp(90px,17vw,260px);line-height:.8;letter-spacing:-.05em}
+.cover h1 i{font-weight:300;font-style:italic;color:var(--tomato)}
+.cover .dek{font-family:'Fraunces';font-style:italic;font-weight:300;font-size:clamp(26px,3.2vw,46px);line-height:1.1;max-width:560px}
+.cover .r{background:var(--green);color:var(--paper);display:flex;flex-direction:column;justify-content:space-between;padding:40px 28px;position:relative;overflow:hidden}
+.plate{width:min(380px,70%);aspect-ratio:1;border-radius:50%;margin:20px auto;background:radial-gradient(circle,#f5efe4 0 52%,#e8dfcf 53% 60%,#f5efe4 61%);display:grid;place-items:center;box-shadow:0 30px 60px rgba(0,0,0,.4);animation:rot 40s linear infinite}
+@keyframes rot{to{transform:rotate(360deg)}}
+.plate span{font-size:clamp(70px,10vw,130px)}
+.cover .r ul{list-style:none;font-family:'Fraunces';font-size:20px}
+.cover .r li{padding:8px 0;border-top:1px solid rgba(245,239,228,.25);display:flex;justify-content:space-between}
+.cover .r li b{font-family:'Inter';font-size:12px;letter-spacing:.15em;color:#f7a58c}
+.issue{font-size:12px;letter-spacing:.2em;text-transform:uppercase;display:flex;gap:30px}
+article{max-width:1180px;margin:0 auto;padding:110px 28px;display:grid;grid-template-columns:1fr 2fr;gap:60px}
+article .side{font-size:13px;line-height:1.6;color:var(--muted);position:sticky;top:30px;align-self:start}
+article .side b{display:block;color:var(--ink);font-size:12px;letter-spacing:.2em;text-transform:uppercase;margin-bottom:8px}
+article h2{font-family:'Fraunces';font-weight:700;font-size:clamp(44px,6vw,86px);line-height:.95;letter-spacing:-.03em}
+article h2 i{font-weight:300;color:var(--tomato)}
+.cols{columns:2 280px;column-gap:40px;margin-top:40px;font-size:17px;line-height:1.7}
+.cols p{margin-bottom:16px}
+.cols p:first-child::first-letter{font-family:'Fraunces';font-weight:900;font-size:96px;float:left;line-height:.75;margin:8px 12px 0 0;color:var(--green)}
+.pull{column-span:all;font-family:'Fraunces';font-style:italic;font-weight:300;font-size:clamp(30px,4vw,52px);line-height:1.1;border-top:3px solid var(--ink);border-bottom:1px solid var(--ink);padding:26px 0;margin:30px 0;color:var(--green)}
+.toc{background:var(--ink);color:var(--paper);padding:100px 28px}
+.toc .in{max-width:1180px;margin:0 auto}
+.toc h2{font-family:'Fraunces';font-weight:900;font-size:clamp(60px,10vw,150px);letter-spacing:-.04em;line-height:.85}
+.toc h2 i{font-weight:300;color:var(--tomato)}
+.toc .sect{display:grid;grid-template-columns:200px 1fr;gap:30px;padding:36px 0;border-top:1px solid rgba(245,239,228,.25)}
+.toc .sect h3{font-family:'Fraunces';font-style:italic;font-weight:600;font-size:34px;color:#f7a58c}
+.toc .it{display:grid;grid-template-columns:1fr auto;gap:10px;padding:10px 0;align-items:baseline;transition:padding .3s}
+.toc .it:hover{padding-left:16px;color:#f7a58c}
+.toc .it span{font-family:'Fraunces';font-size:26px}
+.toc .it small{display:block;font-family:'Inter';font-size:13px;color:#a6a196;margin-top:2px}
+.toc .it b{font-family:'Fraunces';font-weight:300;font-size:26px;font-variant-numeric:oldstyle-nums}
+.back{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--ink)}
+.back div{padding:50px 28px;border-right:1px solid var(--ink)}
+.back div:last-child{border:0;background:var(--tomato);color:var(--paper)}
+.back h4{font-size:12px;letter-spacing:.2em;text-transform:uppercase;margin-bottom:14px}
+.back p{font-family:'Fraunces';font-size:30px;line-height:1.15}
+.reveal{opacity:0;transform:translateY(30px);transition:1s cubic-bezier(.2,.9,.2,1)}
+.reveal.in{opacity:1;transform:none}
+@media(max-width:860px){.cover,article,.back{grid-template-columns:1fr}.toc .sect{grid-template-columns:1fr}.cover .l{border-right:0}article .side{position:static}}
+</style>
+</head>
+<body>
+<div class="mast"><span>Proper Magazine</span><span>Murcia · Otoño 2026</span><span>Nº 02</span></div>
+<section class="cover">
+  <div class="l">
+    <div class="issue"><span>Edición especial</span><span>La nueva carta</span></div>
+    <h1>Pro<i>per</i></h1>
+    <p class="dek">La hamburguesa se fue de viaje y volvió con gildas, mejillones, paos y croquetas en la maleta.</p>
+  </div>
+  <div class="r">
+    <div class="issue"><span>En portada</span><span>Pág. 04</span></div>
+    <div class="plate"><span>🥟</span></div>
+    <ul><li>La gilda, revisitada <b>P. 06</b></li><li>Mejillones con acento <b>P. 09</b></li><li>El pao como bocadillo <b>P. 12</b></li><li>Bechamel: un manifiesto <b>P. 15</b></li></ul>
+  </div>
+</section>
+
+<article>
+  <aside class="side reveal"><b>Reportaje</b>Texto de muestra para la sección editorial. Sustituir por la historia real del local y su equipo.<br><br><b>Lugar</b>C/ Victorio, 14<br>30003 Murcia</aside>
+  <div>
+    <h2 class="reveal">Del pan de burger<br>al <i>pan bao.</i></h2>
+    <div class="cols reveal">
+      <p>Durante años, Proper fue sinónimo de smash burger en el centro de Murcia: carne aplastada en plancha, salsa de la casa, patatas cortadas a mano y una tarta de queso con Lotus que la ciudad entera recomienda en voz baja, como quien comparte un secreto.</p>
+      <p>Pero las cocinas inquietas no se quedan quietas. La nueva carta abre la barra a otros acentos: la gilda donostiarra con guiños murcianos, mejillones en escabeche hechos en casa, paos esponjosos rellenos de panceta glaseada y croquetas de bechamel lenta.</p>
+      <div class="pull">“Seguimos siendo una hamburguesería. Solo que ahora, además, somos una barra.”</div>
+      <p>El resultado es una carta para picar, compartir y pedir otra ronda. Platos pequeños, precios de barrio y la misma obsesión por lo casero que convirtió a Proper en uno de los sitios mejor valorados de la ciudad, con una media de 4,8 en Google.</p>
+      <p>Las smash, por supuesto, siguen ahí. Ahora tienen compañía.</p>
+    </div>
+  </div>
+</article>
+
+<section class="toc">
+  <div class="in">
+    <h2 class="reveal">Índice <i>de la carta</i></h2>
+    <div id="toc"></div>
+  </div>
+</section>
+
+<section class="back">
+  <div><h4>Dirección</h4><p>Calle Victorio, 14<br>30003 Murcia</p></div>
+  <div><h4>Horario</h4><p>[Por confirmar]<br>Comidas y cenas</p></div>
+  <div><h4>Reservas</h4><p>[Teléfono]<br>[@instagram]</p></div>
+</section>
+<script>
+const S=[["Gildas",[["Clásica","Anchoa, piparra, aceituna","2,50"],["Proper","Boquerón, pepinillo, salsa de la casa","3,00"],["De mejillón","Escabeche casero, guindilla","3,00"]]],
+["Mejillones",[["Al vapor","Limón, laurel y pan para mojar","9,00"],["Tigres","Bechamel picante y crujiente","8,00"],["En escabeche","Pimentón y vinagre de jerez","8,50"]]],
+["Paos",[["Panceta glaseada","Hoisin, pepino, cebolla encurtida","5,00"],["Pollo frito","Sriracha mayo y col","5,00"],["Smash","La burger, en versión nube","5,50"]]],
+["Croquetas",[["Jamón ibérico","Por unidad","2,00"],["Carrillera al vino","Por unidad","2,20"],["Queso azul","Por unidad","2,00"]]],
+["Clásicos",[["Smash Proper","Doble, cheddar, salsa de la casa","11,00"],["Patatas caseras","Cortadas a mano","3,50"],["Tarta de queso Lotus","La que hay que pedir","5,50"]]]];
+document.getElementById('toc').innerHTML=S.map(s=>`<div class="sect reveal"><h3>${s[0]}</h3><div>${s[1].map(i=>`<div class="it"><span>${i[0]}<small>${i[1]}</small></span><b>${i[2]}</b></div>`).join('')}</div></div>`).join('');
+const io=new IntersectionObserver(es=>es.forEach(e=>e.isIntersecting&&e.target.classList.add('in')),{threshold:.15});
+document.querySelectorAll('.reveal').forEach(r=>io.observe(r));
+</script>
+</body>
+</html>

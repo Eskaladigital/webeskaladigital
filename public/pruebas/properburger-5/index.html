@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Proper Burger — Propuesta Arcade · ESKALA</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Propuesta Arcade para Proper Burger (Murcia). Demo de ESKALA Marketing.">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+<style>
+:root{--y:#ffe600;--c:#00f0ff;--m:#ff2bd6;--g:#39ff14;--bg:#07010f}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:#fff;font-family:'VT323',monospace;font-size:22px;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:50;background:repeating-linear-gradient(0deg,rgba(0,0,0,.35) 0 2px,transparent 2px 4px)}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:51;box-shadow:inset 0 0 180px rgba(0,0,0,.9)}
+.px{font-family:'Press Start 2P',monospace}
+.title{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px;position:relative;overflow:hidden}
+.sun{position:absolute;bottom:22%;width:min(520px,80vw);aspect-ratio:1;border-radius:50%;background:linear-gradient(var(--y),var(--m));-webkit-mask:repeating-linear-gradient(0deg,#000 0 14px,transparent 14px 20px);mask:linear-gradient(#000 45%,transparent 45%),repeating-linear-gradient(0deg,#000 0 14px,transparent 14px 22px);opacity:.75}
+.floor{position:absolute;bottom:0;left:-50%;right:-50%;height:38%;background:linear-gradient(transparent 0,var(--bg) 95%),repeating-linear-gradient(90deg,var(--m) 0 2px,transparent 2px 80px),repeating-linear-gradient(0deg,var(--m) 0 2px,transparent 2px 40px);transform:perspective(300px) rotateX(60deg);transform-origin:top;animation:run 1.2s linear infinite}
+@keyframes run{to{background-position:0 0,0 0,0 40px}}
+.title h1{position:relative;font-size:clamp(40px,10vw,110px);line-height:1;color:var(--y);text-shadow:4px 4px 0 var(--m),8px 8px 0 var(--c);letter-spacing:-.04em}
+.title h2{position:relative;font-size:clamp(14px,2.4vw,22px);color:var(--c);margin-top:14px}
+.title .sub{position:relative;margin-top:22px;font-size:26px;color:#ffd6f7}
+.press{position:relative;margin-top:50px;font-size:clamp(12px,2vw,18px);color:#fff;animation:blink 1s steps(2) infinite;cursor:pointer;background:none;border:0}
+@keyframes blink{50%{opacity:0}}
+.hud{position:fixed;top:0;left:0;right:0;display:flex;justify-content:space-between;padding:12px 18px;font-size:11px;z-index:40;background:linear-gradient(var(--bg),transparent)}
+.hud b{color:var(--y)}
+section{padding:80px 16px;max-width:1100px;margin:0 auto}
+.h{font-size:clamp(16px,3vw,28px);text-align:center;color:var(--y);margin-bottom:34px;text-shadow:3px 3px 0 var(--m)}
+.select{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
+.f{aspect-ratio:3/4;border:4px solid #333;background:linear-gradient(#1a0730,#09011a);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;position:relative;transition:.1s;image-rendering:pixelated}
+.f .e{font-size:clamp(34px,6vw,64px);filter:drop-shadow(4px 4px 0 rgba(255,43,214,.6))}
+.f .n{font-family:'Press Start 2P';font-size:9px;margin-top:10px;text-align:center}
+.f.on{border-color:var(--y);box-shadow:0 0 0 4px var(--m),0 0 30px var(--y)}
+.f.on::before{content:"P1";position:absolute;top:-16px;left:-4px;background:var(--y);color:#000;font-family:'Press Start 2P';font-size:9px;padding:3px 5px}
+.stage{display:grid;grid-template-columns:1fr 1.3fr;gap:30px;margin-top:40px;border:4px solid var(--c);padding:26px;background:rgba(0,240,255,.05)}
+.port{display:grid;place-items:center;font-size:clamp(90px,16vw,170px);animation:idle .6s steps(2) infinite;filter:drop-shadow(8px 8px 0 var(--m))}
+@keyframes idle{50%{transform:translateY(-6px)}}
+.stage h3{font-family:'Press Start 2P';font-size:clamp(16px,2.6vw,26px);color:var(--y);line-height:1.3}
+.stage .q{color:var(--c);margin:10px 0 18px;font-size:24px}
+.stat{display:grid;grid-template-columns:120px 1fr;gap:10px;align-items:center;margin:8px 0;font-size:20px}
+.stat .b{height:16px;border:2px solid #fff;padding:2px}
+.stat .b i{display:block;height:100%;background:repeating-linear-gradient(90deg,var(--g) 0 10px,transparent 10px 12px);transition:width .4s steps(10)}
+.special{margin-top:16px;color:var(--m);font-size:22px}
+.price{font-family:'Press Start 2P';font-size:18px;color:var(--g);margin-top:14px}
+.hs{border:4px solid var(--m);padding:26px;font-size:24px}
+.hs .r{display:grid;grid-template-columns:60px 1fr auto;gap:10px;padding:5px 0}
+.hs .r:nth-child(odd){color:var(--c)}
+.hs .r span:last-child{color:var(--y)}
+.cont{text-align:center;padding:100px 16px}
+.cont .cd{font-family:'Press Start 2P';font-size:clamp(50px,12vw,120px);color:var(--m);text-shadow:5px 5px 0 var(--c)}
+.cont p{font-size:28px;margin-top:20px}
+.cont .addr{font-family:'Press Start 2P';font-size:clamp(12px,2vw,16px);color:var(--y);margin-top:26px;line-height:1.8}
+@media(max-width:800px){.select{grid-template-columns:repeat(3,1fr)}.stage{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="hud px"><span>1UP <b id="sc">000000</b></span><span>HI-SCORE <b>PROPER</b></span><span>CRÉDITOS <b id="cr">0</b></span></div>
+
+<section class="title" style="max-width:none">
+  <div class="sun"></div><div class="floor"></div>
+  <h1 class="px">PROPER<br>FIGHTER II</h1>
+  <h2 class="px">THE NEW MENU EDITION</h2>
+  <p class="sub">Gildas · Mejillones · Paos · Croquetas · Smash</p>
+  <button class="press px" id="start">▶ PRESS START / INSERT COIN</button>
+</section>
+
+<section id="sel">
+  <h2 class="h px">ELIGE TU BOCADO</h2>
+  <div class="select" id="grid"></div>
+  <div class="stage" id="stage"></div>
+  <p style="text-align:center;margin-top:16px;color:#aaa">← → para cambiar · ENTER para elegir</p>
+</section>
+
+<section>
+  <h2 class="h px">HIGH SCORES · CARTA</h2>
+  <div class="hs" id="hs"></div>
+</section>
+
+<section class="cont">
+  <div class="cd" id="cd">9</div>
+  <p>CONTINUE? Ven a la arena.</p>
+  <div class="addr">C/ VICTORIO 14<br>30003 MURCIA<br>★ 4,8 GOOGLE ★</div>
+</section>
+<script>
+const F=[
+ ["🍢","GILDA","La Punzante","Clásica, Proper o de mejillón",[7,6,9],"Combo encurtido: anchoa + piparra + aceituna","2,50"],
+ ["🐚","MEJILLÓN","El del Mar","Vapor, tigre o escabeche",[8,4,6],"Tsunami de limón y laurel","8,00"],
+ ["🥟","PAO","Nube Asesina","Panceta, pollo picante o smash",[9,5,7],"Golpe al vapor de hoisin","5,00"],
+ ["🧆","CROQUETA","La Bechamel","Jamón, carrillera o queso azul",[9,1,8],"Fundido interior imparable","2,00"],
+ ["🍔","SMASH","El Original","Doble, cheddar, salsa de la casa",[10,3,9],"Aplastamiento total en plancha","11,00"],
+ ["🍰","LOTUS","Jefe Final","Tarta de queso con Lotus",[10,0,10],"Coma azucarado instantáneo","5,50"]
+];
+let cur=0,score=0;
+const g=document.getElementById('grid'),st=document.getElementById('stage');
+F.forEach((f,i)=>{const d=document.createElement('div');d.className='f';d.innerHTML=`<span class="e">${f[0]}</span><span class="n">${f[1]}</span>`;d.onclick=()=>pick(i);g.appendChild(d)});
+function pick(i){
+  cur=i;[...g.children].forEach((c,k)=>c.classList.toggle('on',k===i));const f=F[i];
+  st.innerHTML=`<div class="port">${f[0]}</div><div><h3>${f[1]}</h3><div class="q">“${f[2]}” — ${f[3]}</div>
+  ${["SABOR","PICANTE","CRUNCH"].map((s,k)=>`<div class="stat"><span>${s}</span><div class="b"><i style="width:0"></i></div></div>`).join('')}
+  <div class="special">ESPECIAL ▸ ${f[5]}</div><div class="price">DESDE ${f[6]} €</div></div>`;
+  requestAnimationFrame(()=>st.querySelectorAll('.b i').forEach((b,k)=>b.style.width=f[4][k]*10+'%'));
+  score+=100;document.getElementById('sc').textContent=String(score).padStart(6,'0');
+}
+pick(0);
+addEventListener('keydown',e=>{if(e.key==='ArrowRight')pick((cur+1)%F.length);if(e.key==='ArrowLeft')pick((cur+F.length-1)%F.length)});
+document.getElementById('start').onclick=()=>{const c=document.getElementById('cr');c.textContent=+c.textContent+1;document.getElementById('sel').scrollIntoView({behavior:'smooth'})};
+const H=[["Smash Proper","11,00"],["Mejillones al vapor","9,00"],["Mejillones escabeche","8,50"],["Mejillones tigre","8,00"],["Alitas búfalo","7,50"],["Tarta de queso Lotus","5,50"],["Pao smash","5,50"],["Pao de panceta","5,00"],["Pao pollo picante","5,00"],["Patatas caseras","3,50"],["Gilda Proper","3,00"],["Gilda clásica","2,50"],["Croqueta carrillera","2,20"],["Croqueta jamón","2,00"]];
+document.getElementById('hs').innerHTML=H.map((h,i)=>`<div class="r"><span>${String(i+1).padStart(2,'0')}.</span><span>${h[0].toUpperCase()} ${'.'.repeat(3)}</span><span>${h[1]} €</span></div>`).join('');
+let n=9;setInterval(()=>{n=n>0?n-1:9;document.getElementById('cd').textContent=n},1000);
+</script>
+</body>
+</html>

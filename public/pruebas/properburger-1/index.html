@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Proper Burger — Propuesta Comanda · ESKALA</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Propuesta Comanda para Proper Burger (Murcia). Demo de ESKALA Marketing.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&family=Anton&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#fbf8f1;--ink:#191919;--red:#e2231a;--faded:#8b877d}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:radial-gradient(ellipse at 50% -10%,#55595f,#1b1d20 65%);font-family:'IBM Plex Mono',monospace;color:var(--ink);min-height:100vh;overflow-x:hidden}
+/* rail de cocina */
+.rail{position:sticky;top:0;z-index:20;height:54px;background:linear-gradient(#e4e6ea,#9a9ea5 40%,#5d6168 60%,#a7abb2);box-shadow:0 8px 24px rgba(0,0,0,.6);display:flex;align-items:center;justify-content:space-between;padding:0 28px}
+.rail b{font-family:Anton;font-size:26px;letter-spacing:.04em}
+.rail nav a{color:#1d1d1d;text-decoration:none;font-weight:700;font-size:12px;letter-spacing:.18em;margin-left:22px}
+.rail nav a:hover{color:var(--red)}
+.board{display:flex;justify-content:center;align-items:flex-start;gap:36px;padding:0 16px 140px;flex-wrap:wrap}
+.ticket{width:min(440px,100%);background:var(--paper);padding:38px 30px 54px;position:relative;
+ background-image:repeating-linear-gradient(0deg,transparent 0 27px,rgba(0,0,0,.025) 27px 28px);
+ box-shadow:0 30px 60px rgba(0,0,0,.5);
+ -webkit-mask:conic-gradient(from -45deg at bottom,#0000,#000 1deg 89deg,#0000 90deg) 50%/18px 100%;
+ mask:conic-gradient(from -45deg at bottom,#0000,#000 1deg 89deg,#0000 90deg) 50%/18px 100%;
+ transform-origin:top center;animation:print 1.6s cubic-bezier(.2,.8,.2,1) both}
+.ticket:nth-child(2){animation-delay:.25s;margin-top:40px;transform:rotate(1.2deg)}
+.ticket:nth-child(3){animation-delay:.5s;margin-top:14px}
+@keyframes print{from{clip-path:inset(0 0 100% 0)}to{clip-path:inset(0 0 0 0)}}
+.clip{position:absolute;top:-6px;left:50%;width:120px;height:22px;transform:translateX(-50%);background:linear-gradient(#d9dce0,#8c9097);border-radius:0 0 6px 6px;box-shadow:0 3px 6px rgba(0,0,0,.3)}
+.logo{font-family:Anton;font-size:clamp(84px,22vw,128px);line-height:.85;text-align:center;letter-spacing:-.01em}
+.sub{text-align:center;font-size:11px;letter-spacing:.32em;margin:10px 0 18px}
+.meta{display:flex;justify-content:space-between;font-size:12px;border-top:2px dashed var(--ink);border-bottom:2px dashed var(--ink);padding:8px 0;margin:14px 0}
+h2{font-size:13px;letter-spacing:.3em;margin:26px 0 10px;display:flex;align-items:center;gap:10px}
+h2::after{content:"";flex:1;border-top:1px dashed var(--ink)}
+.line{display:grid;grid-template-columns:1fr auto 30px;gap:10px;align-items:baseline;padding:5px 0;font-size:14px}
+.line span small{display:block;color:var(--faded);font-size:11px;margin-top:2px}
+.line b{font-weight:700}
+.line button{all:unset;cursor:pointer;width:26px;height:26px;border:2px solid var(--ink);display:grid;place-items:center;font-weight:700;transition:.15s}
+.line button:hover{background:var(--ink);color:var(--paper);transform:rotate(90deg)}
+.stamp{position:absolute;top:120px;right:-6px;font-family:Anton;color:var(--red);border:5px solid var(--red);padding:6px 14px;font-size:30px;transform:rotate(-14deg);opacity:.85;mix-blend-mode:multiply;letter-spacing:.04em;line-height:1;text-align:center}
+.stamp small{display:block;font-family:'IBM Plex Mono';font-size:10px;letter-spacing:.3em}
+.barcode{height:54px;margin-top:26px;background:repeating-linear-gradient(90deg,var(--ink) 0 2px,transparent 2px 4px,var(--ink) 4px 7px,transparent 7px 8px,var(--ink) 8px 9px,transparent 9px 13px)}
+.center{text-align:center;font-size:11px;letter-spacing:.2em;margin-top:8px}
+/* pedido */
+#order .empty{color:var(--faded);font-size:13px;padding:18px 0;text-align:center}
+#order .row{display:flex;justify-content:space-between;font-size:14px;padding:4px 0;animation:in .3s}
+@keyframes in{from{opacity:0;transform:translateX(-10px)}}
+.total{display:flex;justify-content:space-between;font-family:Anton;font-size:34px;border-top:3px double var(--ink);margin-top:12px;padding-top:8px}
+.go{width:100%;margin-top:18px;background:var(--red);color:#fff;border:0;font-family:Anton;font-size:26px;letter-spacing:.06em;padding:14px;cursor:pointer;transition:.2s}
+.go:hover{background:var(--ink)}
+.toast{position:fixed;left:50%;bottom:30px;transform:translate(-50%,160%);background:var(--red);color:#fff;font-family:Anton;font-size:clamp(28px,6vw,54px);padding:14px 30px;transition:.5s cubic-bezier(.3,1.6,.5,1);z-index:30;white-space:nowrap}
+.toast.on{transform:translate(-50%,0)}
+.info p{font-size:13px;line-height:1.7}
+.info .big{font-family:Anton;font-size:40px;line-height:1;margin:6px 0 12px}
+.intro{color:#e9e6dd;text-align:center;padding:70px 16px 50px;max-width:760px;margin:0 auto}
+.intro h1{font-family:Anton;font-size:clamp(46px,9vw,110px);line-height:.9;text-transform:uppercase}
+.intro h1 s{color:#8f9297;text-decoration-color:var(--red);text-decoration-thickness:8px}
+.intro p{margin-top:18px;font-size:14px;letter-spacing:.06em;color:#b9bcc1}
+</style>
+</head>
+<body>
+<div class="rail"><b>PROPER</b><nav><a href="#carta">CARTA</a><a href="#order">PEDIDO</a><a href="#info">DÓNDE</a></nav></div>
+
+<section class="intro">
+  <h1><s>Burger</s> joint.<br>Ahora: barra.</h1>
+  <p>Gildas · Mejillones · Paos · Croquetas · y las smash de siempre.<br>Elige. Pulsa. Marcha comanda.</p>
+</section>
+
+<main class="board">
+  <article class="ticket" id="carta">
+    <div class="clip"></div>
+    <div class="logo">PROPER</div>
+    <div class="sub">C/ VICTORIO 14 · MURCIA</div>
+    <div class="meta"><span>MESA: <b>14</b></span><span id="hora">--:--</span><span>CARTA Nº 2</span></div>
+    <div class="stamp">NUEVA<br>CARTA<small>OTOÑO 26</small></div>
+
+    <h2>GILDAS</h2>
+    <div class="line" data-n="Gilda clásica" data-p="2.5"><span>GILDA CLÁSICA<small>anchoa · piparra · aceituna</small></span><b>2,50</b><button aria-label="Añadir">+</button></div>
+    <div class="line" data-n="Gilda Proper" data-p="3"><span>GILDA PROPER<small>boquerón · pepinillo · salsa de la casa</small></span><b>3,00</b><button>+</button></div>
+    <div class="line" data-n="Gilda de mejillón" data-p="3"><span>GILDA DE MEJILLÓN<small>escabeche casero · guindilla</small></span><b>3,00</b><button>+</button></div>
+
+    <h2>MEJILLONES</h2>
+    <div class="line" data-n="Mejillones al vapor" data-p="9"><span>AL VAPOR<small>limón · laurel · pan para mojar</small></span><b>9,00</b><button>+</button></div>
+    <div class="line" data-n="Mejillones tigre" data-p="8"><span>TIGRES<small>bechamel picante · rebozado crujiente</small></span><b>8,00</b><button>+</button></div>
+    <div class="line" data-n="Mejillones en escabeche" data-p="8.5"><span>ESCABECHE DE LA CASA<small>pimentón · vinagre de jerez</small></span><b>8,50</b><button>+</button></div>
+
+    <h2>PAOS</h2>
+    <div class="line" data-n="Pao de panceta" data-p="5"><span>PANCETA GLASEADA<small>pepino · cebolla encurtida · hoisin</small></span><b>5,00</b><button>+</button></div>
+    <div class="line" data-n="Pao de pollo picante" data-p="5"><span>POLLO FRITO PICANTE<small>mayo de sriracha · col</small></span><b>5,00</b><button>+</button></div>
+    <div class="line" data-n="Pao smash" data-p="5.5"><span>PAO SMASH<small>la burger, en versión nube</small></span><b>5,50</b><button>+</button></div>
+
+    <h2>CROQUETAS</h2>
+    <div class="line" data-n="Croqueta de jamón" data-p="2"><span>JAMÓN IBÉRICO<small>unidad</small></span><b>2,00</b><button>+</button></div>
+    <div class="line" data-n="Croqueta de carrillera" data-p="2.2"><span>CARRILLERA AL VINO<small>unidad</small></span><b>2,20</b><button>+</button></div>
+    <div class="line" data-n="Croqueta de queso azul" data-p="2"><span>QUESO AZUL<small>unidad</small></span><b>2,00</b><button>+</button></div>
+
+    <h2>LAS DE SIEMPRE</h2>
+    <div class="line" data-n="Smash Proper" data-p="11"><span>SMASH PROPER<small>doble · cheddar · salsa de la casa</small></span><b>11,00</b><button>+</button></div>
+    <div class="line" data-n="Tarta de queso Lotus" data-p="5.5"><span>TARTA DE QUESO LOTUS<small>la que no se comparte</small></span><b>5,50</b><button>+</button></div>
+
+    <div class="barcode"></div>
+    <div class="center">GRACIAS · VUELVA PRONTO · IVA INCL.</div>
+  </article>
+
+  <article class="ticket" id="order">
+    <div class="clip"></div>
+    <div class="logo" style="font-size:72px">PEDIDO</div>
+    <div class="sub">TU COMANDA EN DIRECTO</div>
+    <div class="meta"><span>CAMARERO: <b>TÚ</b></span><span id="count">0 UDS</span></div>
+    <div id="lines"><p class="empty">— vacía. pulsa los + —</p></div>
+    <div class="total"><span>TOTAL</span><span id="tot">0,00 €</span></div>
+    <button class="go" id="go">MARCHAR COMANDA →</button>
+  </article>
+
+  <article class="ticket info" id="info">
+    <div class="clip"></div>
+    <div class="sub" style="margin-top:6px">DÓNDE · CUÁNDO</div>
+    <p class="big">C/ Victorio, 14<br>30003 Murcia</p>
+    <p>Centro de Murcia. Barra, mesas y para llevar.</p>
+    <div class="meta"><span>GOOGLE</span><span><b>4,8 ★</b></span></div>
+    <p>HORARIO ........ [por confirmar]<br>RESERVAS ....... [teléfono]<br>INSTAGRAM ...... [@usuario]</p>
+    <div class="barcode" style="height:36px"></div>
+  </article>
+</main>
+<div class="toast" id="toast">¡MARCHANDO! 🔥</div>
+
+<script>
+const fmt=n=>n.toFixed(2).replace('.',',')+' €';
+const order={};
+const h=()=>{const d=new Date();document.getElementById('hora').textContent=d.toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'})};h();setInterval(h,10000);
+function render(){
+  const box=document.getElementById('lines');const keys=Object.keys(order);
+  if(!keys.length){box.innerHTML='<p class="empty">— vacía. pulsa los + —</p>';}
+  else box.innerHTML=keys.map(k=>`<div class="row"><span>${order[k].q}x ${k.toUpperCase()}</span><span>${fmt(order[k].q*order[k].p)}</span></div>`).join('');
+  let t=0,c=0;keys.forEach(k=>{t+=order[k].q*order[k].p;c+=order[k].q});
+  document.getElementById('tot').textContent=fmt(t);document.getElementById('count').textContent=c+' UDS';
+}
+document.querySelectorAll('.line button').forEach(b=>b.addEventListener('click',()=>{
+  const l=b.closest('.line');const n=l.dataset.n;const p=+l.dataset.p;
+  order[n]=order[n]||{q:0,p};order[n].q++;render();
+}));
+document.getElementById('go').onclick=()=>{
+  const t=document.getElementById('toast');
+  t.textContent=Object.keys(order).length?'¡MARCHANDO! 🔥':'PRIMERO PIDE ALGO, ACHO';
+  t.classList.add('on');setTimeout(()=>t.classList.remove('on'),2200);
+};
+</script>
+</body>
+</html>

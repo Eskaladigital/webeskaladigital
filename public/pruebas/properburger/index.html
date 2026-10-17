@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Proper Burger — Propuestas de diseño web · ESKALA</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Propuestas de diseño web para Proper Burger (Murcia). Demo de ESKALA Marketing.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@300;400;500;600&family=Anton&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#14110f;--panel:#1f1a16;--white:#f6efe4;--text:rgba(246,239,228,.72);
+  --red:#e2231a;--mustard:#f2b632;--line:rgba(246,239,228,.12)}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;font-weight:300;overflow-x:hidden}
+::selection{background:var(--mustard);color:#14110f}
+a{color:inherit;text-decoration:none}
+h1,h2,h3{font-family:'Space Grotesk',sans-serif;font-weight:700;line-height:1.05}
+.ambient{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(55vw 55vw at 82% -8%,rgba(226,35,26,.18),transparent 60%),radial-gradient(50vw 50vw at 0% 105%,rgba(242,182,50,.14),transparent 60%)}
+.ribbon{position:fixed;top:0;left:0;right:0;z-index:40;display:flex;align-items:center;justify-content:center;gap:.7rem;
+  padding:.44rem 1rem;font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;
+  background:linear-gradient(90deg,var(--red),var(--mustard));color:#14110f;font-weight:600}
+.ribbon a{font-weight:700;text-decoration:underline;text-underline-offset:2px}
+.wrap{position:relative;z-index:1;max-width:1240px;margin:0 auto;padding:8rem 5vw 4rem}
+.head{text-align:center;max-width:780px;margin:0 auto 3.5rem}
+.brand{display:inline-flex;align-items:center;gap:.6rem;font-family:'Anton';font-size:1.5rem;letter-spacing:.04em;margin-bottom:1.6rem}
+.brand .mk{width:38px;height:38px;border-radius:11px;background:linear-gradient(135deg,var(--red),var(--mustard));display:grid;place-items:center;font-size:1.1rem}
+.head .kick{font-size:.7rem;letter-spacing:.3em;text-transform:uppercase;color:var(--mustard);display:block;margin-bottom:1rem}
+.head h1{font-size:clamp(2.2rem,5vw,3.6rem);letter-spacing:-.02em;margin-bottom:1rem}
+.head h1 em{font-style:italic;background:linear-gradient(90deg,var(--red),var(--mustard));-webkit-background-clip:text;background-clip:text;color:transparent}
+.head p{color:var(--text);line-height:1.8;font-size:1.08rem}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem}
+.demo{position:relative;display:flex;flex-direction:column;background:var(--panel);border:1px solid var(--line);border-radius:22px;overflow:hidden;
+  transition:transform .35s,border-color .35s,box-shadow .35s}
+.demo:hover{transform:translateY(-8px);border-color:rgba(242,182,50,.45);box-shadow:0 30px 70px rgba(0,0,0,.45)}
+.demo .thumb{height:190px;position:relative;overflow:hidden;background:#0e0c0a}
+.demo .thumb iframe{position:absolute;top:0;left:0;width:1280px;height:960px;border:0;transform-origin:0 0;pointer-events:none;background:#14110f}
+.demo .thumb::after{content:'';position:absolute;inset:0;z-index:1;box-shadow:inset 0 -26px 30px -22px rgba(8,4,2,.55)}
+.demo .thumb .lbl{position:absolute;top:.9rem;left:.9rem;z-index:2;font-family:'Space Grotesk';font-weight:700;font-size:.7rem;letter-spacing:.1em;color:var(--white);
+  background:rgba(20,17,15,.72);backdrop-filter:blur(6px);border:1px solid var(--line);padding:.25rem .7rem;border-radius:99px}
+.demo .thumb .tag{position:absolute;bottom:.9rem;right:.9rem;z-index:2;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--white);
+  padding:.22rem .6rem;border-radius:99px;background:rgba(20,17,15,.72);backdrop-filter:blur(6px);border:1px solid var(--line)}
+.demo .body{padding:1.5rem 1.6rem 1.7rem;flex:1;display:flex;flex-direction:column}
+.demo h3{font-size:1.2rem;margin-bottom:.5rem}
+.demo p{color:var(--text);line-height:1.6;font-size:.9rem;flex:1;margin-bottom:1.2rem}
+.demo .open{display:inline-flex;align-items:center;gap:.5rem;font-family:'Space Grotesk';font-weight:600;font-size:.74rem;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--mustard);transition:gap .25s}
+.demo:hover .open{gap:.85rem}
+.demo .link-abs{position:absolute;inset:0;z-index:2}
+.footer{text-align:center;margin-top:4rem;color:var(--text);font-size:.85rem}
+.footer p+p{margin-top:.4rem}
+@media (max-width:980px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:640px){.grid{grid-template-columns:1fr}.wrap{padding-top:6.5rem}}
+</style>
+</head>
+<body>
+<div class="ambient" aria-hidden="true"></div>
+<div class="ribbon">Propuestas de diseño · Demo de <a href="https://www.eskaladigital.com/servicios" target="_blank" rel="noopener">ESKALA Marketing</a></div>
+
+<div class="wrap">
+  <header class="head">
+    <div class="brand"><span class="mk">🍔</span>PROPER</div>
+    <span class="kick">10 propuestas de home</span>
+    <h1>De la smash a la barra: <em>gildas, mejillones, paos y croquetas</em></h1>
+    <p>Diez direcciones visuales para la nueva web de Proper, en la calle Victorio de Murcia. Todas cuentan lo mismo: la hamburguesería de siempre que estrena carta para picar. Cada una lo hace con una personalidad distinta. Ábrelas, juega con ellas y dinos cuál se parece más a vosotros.</p>
+  </header>
+
+  <div class="grid" id="grid"></div>
+
+  <div class="footer">
+    <p>Todas las propuestas son demos visuales; platos y precios de ejemplo · <span style="color:var(--mustard)">Proper · C/ Victorio 14, Murcia</span></p>
+    <p style="margin-top:1rem">Diseño de <a href="https://www.eskaladigital.com/servicios" target="_blank" rel="noopener">ESKALA Marketing</a></p>
+  </div>
+</div>
+<script>
+var D=[
+ ["La Comanda","Interactiva","La web es un ticket de cocina colgado del rail. Pulsas «+» en cada plato, la comanda se suma en directo y al final se marcha a cocina."],
+ ["Fanzine","Punk","Fotocopia, celo y pegatinas. El titular está hecho con letras recortadas que cambian en cada visita, con un manifiesto de la nueva carta."],
+ ["Sistema Suizo","Tipográfica","Tipografía gigante y retícula a la vista. Cada familia de platos se despliega como un acordeón y un círculo rojo sigue al cursor."],
+ ["Tabla Periódica","Interactiva","Cada plato es un elemento químico, agrupado en familias como «Encurtidos» o «Bechamélicos». Púlsalo y aparece su ficha de análisis."],
+ ["Proper Fighter II","Jugable","Una recreativa de los 80: eliges tu bocado como si fuera un luchador, con sus stats, y la carta es la tabla de récords."],
+ ["Conservas","Vintage","Latas de conserva clásicas. Tiras de la anilla de la lata gigante para abrirla y la carta está colocada en estanterías."],
+ ["ProperOS","Interactiva","Un escritorio de ordenador con ventanas que se arrastran: Carta.exe, Reservar.app y una papelera con «carta_aburrida.doc»."],
+ ["Revista","Editorial","Revista gastronómica de lujo, con portada, reportaje a columnas y la carta presentada como índice."],
+ ["Cinético","Movimiento","Tipografía en movimiento sobre negro y verde ácido. El cursor está vivo, el texto se revela al hacer scroll y los platos se rellenan de color."],
+ ["Acho, qué Proper","Murciana","Azulejos, limón y huerta, con un «Diccionario murciano-Proper» y un test de «¿Cómo vienes hoy?» que te dice qué pedir."]
+];
+document.getElementById('grid').innerHTML=D.map(function(d,i){var n=i+1,nn=(n<10?'0':'')+n;
+ return '<article class="demo"><a class="link-abs" href="/pruebas/properburger-'+n+'" target="_blank" rel="noopener" aria-label="Abrir propuesta '+n+'"></a>'+
+ '<div class="thumb"><iframe src="/pruebas/properburger-'+n+'" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true" title="Vista previa de la propuesta '+n+'"></iframe><span class="lbl">'+nn+'</span><span class="tag">'+d[1]+'</span></div>'+
+ '<div class="body"><h3>'+d[0]+'</h3><p>'+d[2]+'</p><span class="open">Abrir demo →</span></div></article>';}).join('');
+function fitPreviews(){
+  document.querySelectorAll('.thumb iframe').forEach(function(f){
+    var w=f.parentElement.clientWidth;
+    if(w>0) f.style.transform='scale('+(w/1280)+')';
+  });
+}
+addEventListener('resize',fitPreviews);
+addEventListener('load',fitPreviews);
+fitPreviews();
+</script>
+</body>
+</html>

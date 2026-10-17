@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Proper Burger — Propuesta Conservas · ESKALA</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Propuesta Conservas para Proper Burger (Murcia). Demo de ESKALA Marketing.">
+<link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,500;1,600&display=swap" rel="stylesheet">
+<style>
+:root{--cream:#f4e8cf;--red:#c8102e;--navy:#13305a;--gold:#c9a227;--ink:#1d1a16}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--cream);color:var(--ink);font-family:'Cormorant Garamond',serif;font-size:19px;overflow-x:hidden;
+ background-image:radial-gradient(circle at 20% 10%,rgba(200,16,46,.06),transparent 40%),radial-gradient(circle at 80% 80%,rgba(19,48,90,.07),transparent 40%)}
+.stripe{height:14px;background:repeating-linear-gradient(90deg,var(--red) 0 22px,var(--cream) 22px 30px,var(--navy) 30px 52px,var(--cream) 52px 60px)}
+nav{display:flex;justify-content:center;gap:34px;padding:16px;font-family:'Bebas Neue';font-size:20px;letter-spacing:.14em}
+nav a{color:var(--navy);text-decoration:none}nav a:hover{color:var(--red)}
+.hero{display:grid;place-items:center;padding:30px 16px 80px;text-align:center}
+.kicker{font-family:'Bebas Neue';letter-spacing:.4em;color:var(--red);font-size:18px}
+/* lata gigante */
+.tin{width:min(640px,94vw);aspect-ratio:1.55;border-radius:60px;position:relative;margin-top:22px;cursor:pointer;
+ background:linear-gradient(145deg,#e9edf1,#9aa3ad 40%,#dfe4e9 55%,#8a939d);box-shadow:0 30px 60px rgba(29,26,22,.35),inset 0 0 0 10px #b9c0c8,inset 0 0 0 12px #7d8690}
+.label{position:absolute;inset:26px;border-radius:40px;background:var(--red);border:4px solid var(--gold);display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--cream);overflow:hidden;transition:transform .9s cubic-bezier(.6,-.2,.3,1.2);transform-origin:90% 10%}
+.label::before{content:"";position:absolute;inset:10px;border:2px dashed rgba(244,232,207,.6);border-radius:32px}
+.label .brand{font-family:'Abril Fatface';font-size:clamp(62px,13vw,128px);line-height:.9}
+.label .ribbon{background:var(--navy);padding:6px 26px;font-family:'Bebas Neue';letter-spacing:.3em;font-size:clamp(14px,2vw,20px);margin-top:10px;border-top:2px solid var(--gold);border-bottom:2px solid var(--gold)}
+.label em{font-style:italic;font-size:clamp(16px,2.3vw,24px);margin-top:10px}
+.ring{position:absolute;top:18px;right:40px;width:70px;height:40px;border:7px solid #8b939c;border-radius:40px;z-index:3;transition:.6s}
+.tin.open .label{transform:rotate(-28deg) translate(30%,-70%)}
+.tin.open .ring{transform:translate(120px,-140px) rotate(60deg);opacity:0}
+.inside{position:absolute;inset:26px;border-radius:40px;background:radial-gradient(#f3b24a,#c86b1e);display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;padding:20px;z-index:-0}
+.inside span{font-family:'Bebas Neue';background:var(--cream);color:var(--red);padding:6px 14px;border-radius:30px;font-size:22px;letter-spacing:.08em;box-shadow:0 4px 0 rgba(0,0,0,.2)}
+.tin .hint{position:absolute;bottom:-40px;left:0;right:0;font-family:'Bebas Neue';letter-spacing:.3em;color:var(--navy);font-size:15px}
+.intro{max-width:700px;margin:60px auto 0;padding:0 16px;text-align:center;font-size:23px;line-height:1.5}
+.intro::first-letter{font-family:'Abril Fatface';font-size:64px;color:var(--red);float:left;line-height:.8;margin:6px 10px 0 0}
+h2.sec{font-family:'Abril Fatface';font-size:clamp(44px,7vw,84px);text-align:center;color:var(--navy);margin-top:100px}
+h2.sec small{display:block;font-family:'Bebas Neue';color:var(--red);font-size:18px;letter-spacing:.4em}
+.shelf{max-width:1200px;margin:40px auto 0;padding:0 16px 30px;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:34px 26px;position:relative}
+.can{border-radius:26px;padding:14px;background:linear-gradient(145deg,#eef1f4,#9da6b0 45%,#e2e6ea 60%,#8c95a0);box-shadow:0 18px 30px rgba(29,26,22,.25);transition:transform .4s cubic-bezier(.3,1.5,.5,1)}
+.can:hover{transform:translateY(-10px) rotate(-2deg)}
+.can .lb{border-radius:18px;padding:22px 20px;background:var(--bg);color:var(--fg);border:3px solid var(--gold);min-height:100%;position:relative}
+.can .lb::after{content:"";position:absolute;inset:6px;border:1.5px solid currentColor;border-radius:13px;opacity:.4;pointer-events:none}
+.can h3{font-family:'Abril Fatface';font-size:44px;line-height:1;text-align:center}
+.can .t{font-family:'Bebas Neue';letter-spacing:.3em;font-size:14px;text-align:center;opacity:.85;margin:6px 0 14px}
+.can ul{list-style:none}
+.can li{display:flex;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px dotted currentColor;font-size:19px}
+.can li b{font-family:'Bebas Neue';font-size:22px;letter-spacing:.05em}
+.wood{height:24px;max-width:1240px;margin:0 auto;border-radius:4px;background:linear-gradient(#8b5a2b,#5e3a19);box-shadow:0 12px 20px rgba(0,0,0,.25)}
+.seal{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;max-width:1000px;margin:90px auto;padding:0 16px;text-align:center}
+.seal div{border:2px solid var(--navy);border-radius:50%;aspect-ratio:1;display:flex;flex-direction:column;justify-content:center;padding:20px;color:var(--navy)}
+.seal b{font-family:'Abril Fatface';font-size:48px;color:var(--red)}
+.seal span{font-family:'Bebas Neue';letter-spacing:.2em;font-size:16px}
+footer{background:var(--navy);color:var(--cream);text-align:center;padding:60px 16px}
+footer h4{font-family:'Abril Fatface';font-size:clamp(36px,6vw,64px)}
+footer p{font-family:'Bebas Neue';letter-spacing:.3em;margin-top:10px;color:var(--gold)}
+</style>
+</head>
+<body>
+<div class="stripe"></div>
+<nav><a href="#carta">La Despensa</a><a href="#sello">Garantía</a><a href="#donde">Fábrica</a></nav>
+<section class="hero">
+  <div class="kicker">★ CONSERVAS DE BARRA · MURCIA ★</div>
+  <div class="tin" id="tin">
+    <div class="inside"><span>GILDAS</span><span>MEJILLONES</span><span>PAOS</span><span>CROQUETAS</span><span>SMASH</span></div>
+    <div class="ring"></div>
+    <div class="label"><div class="brand">Proper</div><div class="ribbon">NUEVA CARTA · 2026</div><em>Selección de bocados de la calle Victorio</em></div>
+    <div class="hint">↑ TIRA DE LA ANILLA ↑</div>
+  </div>
+  <p class="intro">Empezamos aplastando hamburguesas. Hoy abrimos la lata: gildas, mejillones en escabeche de la casa, paos al vapor y croquetas cremosas. Todo hecho aquí, todo para picar.</p>
+</section>
+
+<h2 class="sec" id="carta"><small>LA DESPENSA</small>Nuestras latas</h2>
+<section class="shelf">
+  <div class="can"><div class="lb" style="--bg:var(--navy);--fg:var(--cream)"><h3>Gildas</h3><div class="t">EN ACEITE DE OLIVA</div><ul><li>Clásica<b>2,50</b></li><li>Proper con salsa de la casa<b>3,00</b></li><li>De mejillón<b>3,00</b></li></ul></div></div>
+  <div class="can"><div class="lb" style="--bg:var(--red);--fg:var(--cream)"><h3>Mejillones</h3><div class="t">DE LAS RÍAS A MURCIA</div><ul><li>Al vapor<b>9,00</b></li><li>Tigres<b>8,00</b></li><li>Escabeche de la casa<b>8,50</b></li></ul></div></div>
+  <div class="can"><div class="lb" style="--bg:var(--cream);--fg:var(--navy)"><h3>Paos</h3><div class="t">AL VAPOR · RELLENOS</div><ul><li>Panceta glaseada<b>5,00</b></li><li>Pollo frito picante<b>5,00</b></li><li>Pao smash<b>5,50</b></li></ul></div></div>
+</section>
+<div class="wood"></div>
+<section class="shelf" style="margin-top:50px">
+  <div class="can"><div class="lb" style="--bg:var(--gold);--fg:var(--ink)"><h3>Croquetas</h3><div class="t">BECHAMEL DE LA CASA</div><ul><li>Jamón ibérico<b>2,00</b></li><li>Carrillera al vino<b>2,20</b></li><li>Queso azul<b>2,00</b></li></ul></div></div>
+  <div class="can"><div class="lb" style="--bg:var(--ink);--fg:var(--cream)"><h3>Smash</h3><div class="t">RECETA ORIGINAL</div><ul><li>Smash Proper doble<b>11,00</b></li><li>Patatas caseras<b>3,50</b></li><li>Alitas búfalo<b>7,50</b></li></ul></div></div>
+  <div class="can"><div class="lb" style="--bg:#f6d6dc;--fg:var(--red)"><h3>Lotus</h3><div class="t">EDICIÓN DULCE</div><ul><li>Tarta de queso Lotus<b>5,50</b></li></ul></div></div>
+</section>
+<div class="wood"></div>
+
+<section class="seal" id="sello">
+  <div><b>4,8</b><span>Valoración<br>en Google</span></div>
+  <div><b>100%</b><span>Elaboración<br>casera</span></div>
+  <div><b>Nº 14</b><span>Calle<br>Victorio</span></div>
+</section>
+
+<footer id="donde"><h4>C/ Victorio, 14 · Murcia</h4><p>30003 · ABRIMOS LA LATA · [HORARIO]</p></footer>
+<div class="stripe"></div>
+<script>document.getElementById('tin').onclick=function(){this.classList.toggle('open')}</script>
+</body>
+</html>

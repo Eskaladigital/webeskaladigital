@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Proper Burger — Propuesta Cinético · ESKALA</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Propuesta Cinético para Proper Burger (Murcia). Demo de ESKALA Marketing.">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;700;900&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0a0a;--acid:#c6ff00;--txt:#f1f1f1;--pink:#ff3ea5}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--txt);font-family:'Syne',sans-serif;overflow-x:hidden;cursor:none}
+.cur{position:fixed;width:26px;height:26px;border-radius:50%;background:var(--acid);pointer-events:none;z-index:100;mix-blend-mode:difference;transform:translate(-50%,-50%);transition:width .3s,height .3s}
+.cur.big{width:140px;height:140px}
+.cur span{position:absolute;inset:0;display:grid;place-items:center;color:#000;font-weight:800;font-size:13px;opacity:0;transition:.2s}
+.cur.big span{opacity:1}
+nav{position:fixed;top:0;left:0;right:0;display:flex;justify-content:space-between;padding:22px 28px;z-index:50;mix-blend-mode:difference;font-weight:700;font-size:14px;letter-spacing:.1em}
+nav a{color:#fff;text-decoration:none;margin-left:24px}
+.hero{height:100vh;display:flex;flex-direction:column;justify-content:center;overflow:hidden;position:relative}
+.hero h1{font-family:'Unbounded';font-weight:900;font-size:clamp(70px,19vw,330px);line-height:.82;letter-spacing:-.05em;padding-left:3vw;white-space:nowrap}
+.hero h1 span{display:inline-block;transform:translateY(110%);animation:up 1s cubic-bezier(.2,.9,.2,1) forwards}
+@keyframes up{to{transform:none}}
+.hero h1 .o{color:var(--acid)}
+.hero .sw{position:absolute;right:4vw;bottom:10vh;max-width:360px;font-size:18px;line-height:1.4}
+.hero .sw b{color:var(--acid)}
+.blob{position:absolute;width:44vw;aspect-ratio:1;right:-10vw;top:-10vw;background:conic-gradient(from 0deg,var(--acid),var(--pink),var(--acid));filter:blur(70px);opacity:.35;border-radius:50%;animation:spin 12s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.band{overflow:hidden;white-space:nowrap;padding:18px 0;border-block:1px solid #333}
+.band div{display:inline-block;font-family:'Unbounded';font-weight:700;font-size:clamp(40px,7vw,100px);animation:mq 18s linear infinite}
+.band.r div{animation-direction:reverse;-webkit-text-stroke:2px var(--txt);color:transparent}
+.band.a{background:var(--acid);color:#000;transform:rotate(-3deg) scale(1.05);border:0}
+@keyframes mq{to{transform:translateX(-50%)}}
+.state{padding:24vh 6vw;font-family:'Unbounded';font-weight:300;font-size:clamp(34px,5.6vw,92px);line-height:1.08;letter-spacing:-.03em}
+.state .w{opacity:.12;transition:opacity .4s}
+.state .w.on{opacity:1}
+.state .w.k{color:var(--acid);font-weight:900}
+.menu{padding:0 6vw 20vh}
+.menu h2{font-size:14px;letter-spacing:.3em;color:#888;margin-bottom:30px}
+.dish{display:flex;justify-content:space-between;align-items:center;border-top:1px solid #333;padding:2.2vh 0;position:relative;overflow:hidden}
+.dish h3{font-family:'Unbounded';font-weight:900;font-size:clamp(40px,8vw,140px);letter-spacing:-.04em;line-height:.95;transition:transform .5s cubic-bezier(.2,.9,.2,1),color .3s;position:relative;z-index:2}
+.dish p{text-align:right;font-size:15px;color:#aaa;max-width:300px;z-index:2;position:relative}
+.dish p b{display:block;color:var(--txt);font-size:22px}
+.dish::before{content:"";position:absolute;inset:0;background:var(--acid);transform:translateY(101%);transition:transform .5s cubic-bezier(.2,.9,.2,1)}
+.dish:hover::before{transform:none}
+.dish:hover h3{transform:translateX(3vw);color:#000}
+.dish:hover p,.dish:hover p b{color:#000}
+.end{min-height:90vh;display:grid;place-items:center;text-align:center;padding:40px 16px;background:var(--acid);color:#000}
+.end h2{font-family:'Unbounded';font-weight:900;font-size:clamp(48px,11vw,190px);line-height:.85;letter-spacing:-.05em}
+.end p{font-size:20px;font-weight:700;margin-top:24px}
+@media(hover:none){body{cursor:auto}.cur{display:none}}
+</style>
+</head>
+<body>
+<div class="cur" id="c"><span>PÍDELO</span></div>
+<nav><b>PROPER®</b><div><a href="#carta">CARTA</a><a href="#ven">VEN</a></div></nav>
+
+<section class="hero">
+  <div class="blob"></div>
+  <h1><span>PROP</span><span class="o" style="animation-delay:.12s">ER</span><br><span style="animation-delay:.24s">MUTA</span><span class="o" style="animation-delay:.36s">.</span></h1>
+  <p class="sw">Mismo sitio. Misma calle Victorio. <b>Otra carta.</b> Gildas, mejillones, paos y croquetas conviven con las smash de siempre.</p>
+</section>
+
+<div class="band"><div>GILDAS ✺ MEJILLONES ✺ PAOS ✺ CROQUETAS ✺ SMASH ✺ GILDAS ✺ MEJILLONES ✺ PAOS ✺ CROQUETAS ✺ SMASH ✺&nbsp;</div></div>
+<div class="band r"><div>MURCIA ✺ CALLE VICTORIO 14 ✺ PARA PICAR ✺ MURCIA ✺ CALLE VICTORIO 14 ✺ PARA PICAR ✺&nbsp;</div></div>
+
+<section class="state" id="st">No somos una hamburguesería. Bueno, un poco. Ahora somos una barra con gildas que pican, mejillones que mojan, paos que abrazan y croquetas que se derriten. Y sí: la tarta Lotus sigue aquí.</section>
+
+<div class="band a"><div>NUEVA CARTA ★ NUEVA CARTA ★ NUEVA CARTA ★ NUEVA CARTA ★ NUEVA CARTA ★ NUEVA CARTA ★&nbsp;</div></div>
+
+<section class="menu" id="carta" style="margin-top:20vh">
+  <h2>— LA CARTA</h2>
+  <div class="dish"><h3>Gildas</h3><p><b>2,50 — 3,00 €</b>Clásica · Proper · De mejillón</p></div>
+  <div class="dish"><h3>Mejillones</h3><p><b>8,00 — 9,00 €</b>Al vapor · Tigres · Escabeche de la casa</p></div>
+  <div class="dish"><h3>Paos</h3><p><b>5,00 — 5,50 €</b>Panceta glaseada · Pollo picante · Pao smash</p></div>
+  <div class="dish"><h3>Croquetas</h3><p><b>2,00 — 2,20 €/ud</b>Jamón ibérico · Carrillera · Queso azul</p></div>
+  <div class="dish"><h3>Smash</h3><p><b>11,00 €</b>Doble, cheddar, salsa de la casa</p></div>
+  <div class="dish"><h3>Lotus</h3><p><b>5,50 €</b>Tarta de queso. No se negocia.</p></div>
+</section>
+
+<section class="end" id="ven">
+  <div><h2>C/ VICTORIO<br>14 — MURCIA</h2><p>4,8★ en Google · Reservas: [teléfono] · [@instagram]</p></div>
+</section>
+<script>
+const c=document.getElementById('c');
+addEventListener('mousemove',e=>{c.style.left=e.clientX+'px';c.style.top=e.clientY+'px'});
+document.querySelectorAll('.dish').forEach(d=>{d.onmouseenter=()=>c.classList.add('big');d.onmouseleave=()=>c.classList.remove('big')});
+const st=document.getElementById('st');const key=['hamburguesería.','barra','gildas','mejillones','paos','croquetas','Lotus'];
+st.innerHTML=st.textContent.split(' ').map(w=>`<span class="w${key.some(k=>w.includes(k))?' k':''}">${w}</span>`).join(' ');
+const ws=[...st.querySelectorAll('.w')];
+function onScroll(){const r=st.getBoundingClientRect();const p=Math.min(1,Math.max(0,(innerHeight*.75-r.top)/(r.height)));const n=Math.floor(p*ws.length);ws.forEach((w,i)=>w.classList.toggle('on',i<n))}
+addEventListener('scroll',onScroll,{passive:true});onScroll();
+</script>
+</body>
+</html>

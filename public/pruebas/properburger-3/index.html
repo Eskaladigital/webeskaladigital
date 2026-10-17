@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Proper Burger — Propuesta Sistema suizo · ESKALA</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Propuesta Sistema suizo para Proper Burger (Murcia). Demo de ESKALA Marketing.">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f2f0eb;--ink:#111;--red:#ff3b00;--line:rgba(17,17,17,.14)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:'Inter Tight',sans-serif;overflow-x:hidden}
+.grid-bg{position:fixed;inset:0;pointer-events:none;display:grid;grid-template-columns:repeat(12,1fr);padding:0 24px;gap:16px;z-index:0}
+.grid-bg i{border-left:1px solid var(--line);border-right:1px solid var(--line)}
+.wrap{position:relative;z-index:1;padding:0 24px}
+.top{display:grid;grid-template-columns:repeat(12,1fr);gap:16px;padding:22px 0;font-size:13px;font-weight:500;border-bottom:2px solid var(--ink)}
+.top span:nth-child(1){grid-column:1/4;font-weight:900}
+.top span:nth-child(2){grid-column:4/7}
+.top span:nth-child(3){grid-column:7/10}
+.top span:nth-child(4){grid-column:10/13;text-align:right}
+.hero{display:grid;grid-template-columns:repeat(12,1fr);gap:16px;padding:40px 0 30px;align-items:end}
+.hero h1{grid-column:1/13;font-weight:900;font-size:clamp(90px,23vw,380px);line-height:.78;letter-spacing:-.065em}
+.hero h1 em{font-style:normal;color:var(--red)}
+.hero p{grid-column:1/6;font-size:clamp(20px,2.4vw,34px);line-height:1.05;font-weight:800;letter-spacing:-.02em;margin-top:30px}
+.hero .dot{grid-column:9/13;justify-self:end;width:clamp(120px,18vw,260px);aspect-ratio:1;border-radius:50%;background:var(--red);display:grid;place-items:center;color:#fff;font-weight:900;font-size:clamp(16px,1.6vw,22px);text-align:center;line-height:1.05;animation:pulse 3s ease-in-out infinite}
+@keyframes pulse{50%{transform:scale(.92)}}
+.index{border-top:2px solid var(--ink);margin-top:40px}
+.row{display:grid;grid-template-columns:80px 1fr auto;gap:16px;align-items:center;border-bottom:2px solid var(--ink);cursor:pointer;padding:12px 0;position:relative}
+.row .n{font-weight:500;font-size:16px}
+.row h2{font-weight:900;font-size:clamp(48px,9vw,140px);letter-spacing:-.05em;line-height:.9;transition:transform .45s cubic-bezier(.2,.9,.2,1),color .3s}
+.row .c{font-weight:800;font-size:18px}
+.row:hover h2{transform:translateX(30px);color:var(--red)}
+.items{grid-column:2/4;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;max-height:0;overflow:hidden;transition:max-height .6s cubic-bezier(.2,.9,.2,1),padding .4s}
+.row.open .items{max-height:400px;padding:14px 0 18px}
+.item{border-top:6px solid var(--ink);padding-top:10px}
+.item b{display:block;font-size:20px;font-weight:800;letter-spacing:-.02em}
+.item span{font-size:14px;color:#555;display:block;margin:6px 0}
+.item i{font-style:normal;font-weight:900;font-size:28px;color:var(--red)}
+.follow{position:fixed;width:120px;height:120px;border-radius:50%;background:var(--red);pointer-events:none;z-index:5;transform:translate(-50%,-50%) scale(0);transition:transform .35s cubic-bezier(.2,.9,.2,1);mix-blend-mode:multiply;display:grid;place-items:center;color:#fff;font-weight:900;font-size:14px}
+.follow.on{transform:translate(-50%,-50%) scale(1)}
+.facts{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;padding:90px 0;border-bottom:2px solid var(--ink)}
+.facts div{border-top:2px solid var(--ink);padding-top:12px}
+.facts b{display:block;font-size:clamp(56px,8vw,120px);font-weight:900;letter-spacing:-.05em;line-height:.9}
+.facts span{font-size:14px;font-weight:500}
+.foot{display:grid;grid-template-columns:repeat(12,1fr);gap:16px;padding:60px 0 80px}
+.foot h3{grid-column:1/8;font-weight:900;font-size:clamp(40px,6vw,96px);letter-spacing:-.04em;line-height:.9}
+.foot p{grid-column:9/13;font-size:16px;line-height:1.5;font-weight:500;align-self:end}
+.foot a{color:var(--ink)}
+@media(max-width:700px){.facts{grid-template-columns:1fr 1fr}.row{grid-template-columns:40px 1fr auto}.hero p,.foot h3,.foot p{grid-column:1/13}.hero .dot{grid-column:1/13;justify-self:start}.top span{grid-column:auto!important}.top{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<div class="grid-bg"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+<div class="follow" id="f">+</div>
+<div class="wrap">
+  <div class="top"><span>Proper®</span><span>C/ Victorio 14, Murcia</span><span>Carta 02 — 2026</span><span id="clock">Murcia 00:00</span></div>
+
+  <section class="hero">
+    <h1>Proper<em>.</em></h1>
+    <p>Antes, una burger. Ahora, un sistema completo de bocados para picar.</p>
+    <div class="dot">Nueva<br>carta<br>→</div>
+  </section>
+
+  <section class="index" id="index"></section>
+
+  <section class="facts">
+    <div><b>05</b><span>Familias de bocado</span></div>
+    <div><b>4,8</b><span>Nota media en Google</span></div>
+    <div><b>100%</b><span>Hecho en casa</span></div>
+    <div><b>01</b><span>Tarta Lotus. Innegociable.</span></div>
+  </section>
+
+  <section class="foot">
+    <h3>Ven a picar.<br>Calle Victorio, 14.</h3>
+    <p>30003 Murcia, centro.<br>Barra, mesa y para llevar.<br>Reservas: [teléfono] · <a href="#">Instagram</a></p>
+  </section>
+</div>
+<script>
+const data=[
+ ["Gildas","3 tipos",[["Clásica","Anchoa, piparra, aceituna","2,50"],["Proper","Boquerón, pepinillo, salsa de la casa","3,00"],["Mejillón","Escabeche casero, guindilla","3,00"]]],
+ ["Mejillones","3 tipos",[["Al vapor","Limón, laurel, pan","9,00"],["Tigres","Bechamel picante, crujientes","8,00"],["Escabeche","Pimentón y jerez","8,50"]]],
+ ["Paos","3 tipos",[["Panceta","Glaseado hoisin, pepino","5,00"],["Pollo frito","Sriracha mayo, col","5,00"],["Smash","La burger en nube","5,50"]]],
+ ["Croquetas","Por unidad",[["Jamón ibérico","Bechamel cremosa","2,00"],["Carrillera","Al vino tinto","2,20"],["Queso azul","Intensa","2,00"]]],
+ ["Smash","El origen",[["Smash Proper","Doble, cheddar, salsa de la casa","11,00"],["Patatas","Caseras, siempre","3,50"],["Tarta Lotus","De queso. La famosa.","5,50"]]]
+];
+const idx=document.getElementById('index');
+data.forEach((d,i)=>{
+  const r=document.createElement('div');r.className='row';
+  r.innerHTML=`<span class="n">0${i+1}</span><h2>${d[0]}</h2><span class="c">${d[1]}</span><div class="items">${d[2].map(x=>`<div class="item"><b>${x[0]}</b><span>${x[1]}</span><i>${x[2]} €</i></div>`).join('')}</div>`;
+  r.onclick=()=>{document.querySelectorAll('.row.open').forEach(o=>o!==r&&o.classList.remove('open'));r.classList.toggle('open')};
+  r.onmouseenter=()=>{f.classList.add('on');f.textContent=r.classList.contains('open')?'−':'+'};
+  r.onmouseleave=()=>f.classList.remove('on');
+  idx.appendChild(r);
+});
+const f=document.getElementById('f');
+addEventListener('mousemove',e=>{f.style.left=e.clientX+'px';f.style.top=e.clientY+'px'});
+const c=()=>document.getElementById('clock').textContent='Murcia '+new Date().toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit',timeZone:'Europe/Madrid'});c();setInterval(c,15000);
+</script>
+</body>
+</html>

@@ -14,6 +14,7 @@ const FAMILY_LABELS: Record<string, string> = {
   serveco: 'SERVECO',
   dirtykitchenrave: 'Dirty Kitchen Rave',
   djbrownie: 'DJ Brownie',
+  properburger: 'Proper Burger',
 }
 
 const PRUEBAS_HEADERS = {

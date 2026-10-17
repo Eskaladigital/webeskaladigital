@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Proper Burger — Propuesta Tabla periódica · ESKALA</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Propuesta Tabla periódica para Proper Burger (Murcia). Demo de ESKALA Marketing.">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0b1020;--grid:rgba(120,160,255,.08);--txt:#e6ebff;--mut:#7f8bb3;
+ --gi:#7ee081;--mj:#4cc9f0;--pa:#ff8fab;--cr:#ffb703;--sm:#ff4d3d;--du:#b892ff}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--txt);font-family:'Space Grotesk',sans-serif;min-height:100vh;
+ background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:32px 32px}
+header{padding:36px 24px 10px;max-width:1240px;margin:0 auto;display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:20px}
+header h1{font-size:clamp(34px,6vw,76px);line-height:.95;letter-spacing:-.03em}
+header h1 span{color:var(--sm)}
+header p{font-family:'JetBrains Mono';font-size:13px;color:var(--mut);max-width:360px;line-height:1.6}
+.lab{max-width:1240px;margin:0 auto;padding:24px;display:grid;grid-template-columns:1fr 340px;gap:28px}
+.table{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}
+.el{aspect-ratio:1;border:1.5px solid var(--c);border-radius:6px;padding:8px;position:relative;cursor:pointer;background:color-mix(in srgb,var(--c) 8%,transparent);transition:.25s;display:flex;flex-direction:column;justify-content:space-between;opacity:0;animation:pop .5s forwards}
+@keyframes pop{from{opacity:0;transform:scale(.6) rotate(-6deg)}to{opacity:1;transform:none}}
+.el:hover,.el.on{background:var(--c);color:var(--bg);transform:translateY(-4px);box-shadow:0 10px 30px color-mix(in srgb,var(--c) 50%,transparent)}
+.el .z{font-family:'JetBrains Mono';font-size:11px}
+.el .s{font-size:clamp(24px,3.2vw,42px);font-weight:700;line-height:1;letter-spacing:-.02em}
+.el .nm{font-size:10.5px;line-height:1.15;font-weight:500}
+.el .m{position:absolute;top:8px;right:8px;font-family:'JetBrains Mono';font-size:10px}
+.legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:22px;font-family:'JetBrains Mono';font-size:12px}
+.legend span{display:flex;align-items:center;gap:6px}
+.legend i{width:12px;height:12px;border-radius:3px;background:var(--c)}
+.panel{border:1.5px solid rgba(255,255,255,.15);border-radius:10px;padding:22px;background:rgba(11,16,32,.85);backdrop-filter:blur(8px);position:sticky;top:24px;align-self:start}
+.big{width:150px;height:150px;border:2px solid var(--c,#fff);border-radius:10px;padding:12px;display:flex;flex-direction:column;justify-content:space-between;background:color-mix(in srgb,var(--c,#fff) 12%,transparent);transition:.3s}
+.big .s{font-size:64px;font-weight:700;line-height:1}
+.panel h2{font-size:30px;margin:18px 0 4px;letter-spacing:-.02em}
+.panel .fam{font-family:'JetBrains Mono';font-size:12px;color:var(--c,#fff);text-transform:uppercase;letter-spacing:.15em}
+.panel p{color:#c1c9e8;font-size:15px;line-height:1.55;margin:14px 0}
+.props{font-family:'JetBrains Mono';font-size:12.5px;border-top:1px dashed rgba(255,255,255,.2)}
+.props div{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px dashed rgba(255,255,255,.2)}
+.props b{color:var(--c,#fff)}
+.bar{height:6px;background:rgba(255,255,255,.1);border-radius:3px;margin-top:4px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--c,#fff);transition:width .6s cubic-bezier(.2,.9,.2,1)}
+footer{max-width:1240px;margin:30px auto 0;padding:30px 24px 60px;border-top:1px solid rgba(255,255,255,.1);display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;font-family:'JetBrains Mono';font-size:13px;color:var(--mut)}
+footer b{color:var(--txt)}
+@media(max-width:900px){.lab{grid-template-columns:1fr}.table{grid-template-columns:repeat(4,1fr)}.panel{position:static}}
+</style>
+</head>
+<body>
+<header>
+  <h1>Tabla Periódica<br>de <span>Proper</span></h1>
+  <p>// Experimento nº 02. Tras años de investigación con smash burgers, el laboratorio de la calle Victorio aísla nuevos elementos. Pulsa uno para analizarlo.</p>
+</header>
+<main class="lab">
+  <div>
+    <div class="table" id="t"></div>
+    <div class="legend" id="lg"></div>
+  </div>
+  <aside class="panel" id="p"></aside>
+</main>
+<footer><span><b>PROPER LAB</b> · C/ Victorio 14 · 30003 Murcia</span><span>Reacción media en Google: <b>4,8★</b></span><span>Reservas: [teléfono]</span></footer>
+<script>
+const fam={gi:["Encurtidos","--gi"],mj:["Marinos","--mj"],pa:["Vapóridos","--pa"],cr:["Bechamélicos","--cr"],sm:["Smashicos (origen)","--sm"],du:["Dulces nobles","--du"]};
+const E=[
+ ["Gc","Gilda clásica","gi","2,50","Anchoa, piparra y aceituna ensartadas. El elemento más estable de la barra.",[80,10,60]],
+ ["Gp","Gilda Proper","gi","3,00","Boquerón, pepinillo y salsa de la casa. Isótopo exclusivo del laboratorio.",[85,15,70]],
+ ["Gm","Gilda de mejillón","gi","3,00","Mejillón en escabeche y guindilla. Enlace covalente entre tierra y mar.",[75,30,55]],
+ ["Mv","Mejillón al vapor","mj","9,00","Limón y laurel. Se recomienda catalizar con pan.",[70,5,20]],
+ ["Mt","Mejillón tigre","mj","8,00","Bechamel picante rebozada. Altamente adictivo.",[90,55,95]],
+ ["Me","Mejillón escabeche","mj","8,50","Pimentón y jerez. Reacción ácida controlada.",[78,25,30]],
+ ["Pp","Pao de panceta","pa","5,00","Glaseado hoisin, pepino y cebolla encurtida en masa al vapor.",[92,10,40]],
+ ["Pf","Pao de pollo","pa","5,00","Pollo frito picante, sriracha mayo y col.",[88,60,85]],
+ ["Ps","Pao smash","pa","5,50","Fusión fría entre la burger original y el pan bao.",[95,20,75]],
+ ["Cj","Croqueta de jamón","cr","2,00","Bechamel cremosa e ibérico. Masa crítica: alcanzada.",[90,0,90]],
+ ["Cc","Croqueta carrillera","cr","2,20","Carrillera al vino. Estado: fundido interior.",[88,0,88]],
+ ["Cq","Croqueta queso azul","cr","2,00","Intensa. Manipular con cuidado.",[82,5,90]],
+ ["Sp","Smash Proper","sm","11,00","El elemento fundacional. Doble carne, cheddar, salsa de la casa.",[98,10,85]],
+ ["Pt","Patatas caseras","sm","3,50","Cortadas y fritas en casa. Acompañante universal.",[75,0,95]],
+ ["Ab","Alitas búfalo","sm","7,50","Salsa búfalo clásica. Reacción exotérmica.",[80,70,80]],
+ ["Lt","Tarta Lotus","du","5,50","Tarta de queso con galleta Lotus. El elemento más buscado de Murcia.",[99,0,40]],
+ ["Hz","¿Elemento 17?","du","—","Aún en investigación. Vuelve pronto.",[0,0,0]],
+ ["Rs","Reserva","sm","→","Elemento interactivo. Llama o escribe para asegurar tu mesa.",[100,0,0]]
+];
+const t=document.getElementById('t'),p=document.getElementById('p');
+E.forEach((e,i)=>{
+  const d=document.createElement('div');d.className='el';d.style.setProperty('--c',`var(${fam[e[2]][1]})`);d.style.animationDelay=i*40+'ms';
+  d.innerHTML=`<span class="z">${i+1}</span><span class="m">${e[3]}</span><span class="s">${e[0]}</span><span class="nm">${e[1]}</span>`;
+  d.onclick=()=>show(i,d);t.appendChild(d);
+});
+document.getElementById('lg').innerHTML=Object.values(fam).map(f=>`<span style="--c:var(${f[1]})"><i></i>${f[0]}</span>`).join('');
+function show(i,d){
+  document.querySelectorAll('.el.on').forEach(x=>x.classList.remove('on'));d.classList.add('on');
+  const e=E[i];p.style.setProperty('--c',`var(${fam[e[2]][1]})`);
+  p.innerHTML=`<div class="big"><span style="font-family:JetBrains Mono;font-size:13px">${i+1}</span><span class="s">${e[0]}</span><span style="font-size:12px">${e[3]} €</span></div>
+  <h2>${e[1]}</h2><div class="fam">${fam[e[2]][0]}</div><p>${e[4]}</p>
+  <div class="props">
+   <div><span>Sabor</span><b>${e[5][0]}%</b></div><div class="bar"><i style="width:0"></i></div>
+   <div><span>Picante</span><b>${e[5][1]}%</b></div><div class="bar"><i style="width:0"></i></div>
+   <div><span>Adicción</span><b>${e[5][2]}%</b></div><div class="bar"><i style="width:0"></i></div>
+   <div><span>Punto de fusión</span><b>~3 s en boca</b></div>
+  </div>`;
+  requestAnimationFrame(()=>p.querySelectorAll('.bar i').forEach((b,k)=>b.style.width=e[5][k]+'%'));
+}
+show(0,t.children[0]);
+</script>
+</body>
+</html>
