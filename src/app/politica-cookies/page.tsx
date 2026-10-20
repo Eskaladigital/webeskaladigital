@@ -2,7 +2,7 @@ import { StandardLayout } from '@/components/layout'
 import type { Metadata } from 'next'
 import styles from '../politica-privacidad/legal.module.css'
 import { CookieSettingsButton } from '@/components/CookieConsentBar'
-import { CONTACT_EMAIL, CONTACT_PHONE, formatFullAddress } from '@/lib/site'
+import { CONTACT_EMAIL, CONTACT_PHONE, LEGAL_OWNER } from '@/lib/site'
 
 export const metadata: Metadata = {
   title: 'Política de Cookies | ESKALA Marketing Digital',
@@ -35,9 +35,11 @@ export default function PoliticaCookies() {
           <section className={styles.section}>
             <h2>2. Responsable</h2>
             <p>
-              <strong>ESKALA Marketing Digital</strong>
+              <strong>{LEGAL_OWNER.name}</strong> (marca comercial {LEGAL_OWNER.brand})
               <br />
-              Dirección: {formatFullAddress()}
+              NIF: {LEGAL_OWNER.nif}
+              <br />
+              Domicilio social: {LEGAL_OWNER.address}
               <br />
               Email: {CONTACT_EMAIL}
               <br />

@@ -2,7 +2,7 @@ import { StandardLayout } from '@/components/layout'
 import type { Metadata } from 'next'
 import styles from './legal.module.css'
 import { CookieSettingsButton } from '@/components/CookieConsentBar'
-import { CONTACT_EMAIL, CONTACT_PHONE, formatFullAddress } from '@/lib/site'
+import { CONTACT_EMAIL, CONTACT_PHONE, LEGAL_OWNER } from '@/lib/site'
 
 export const metadata: Metadata = {
   title: 'Política de Privacidad | ESKALA Marketing Digital',
@@ -19,14 +19,15 @@ export default function PoliticaPrivacidad() {
       <div className={styles.legalPage}>
         <div className={styles.container}>
           <h1 className={styles.title}>Política de Privacidad</h1>
-          <p className={styles.updated}>Última actualización: Diciembre 2025</p>
+          <p className={styles.updated}>Última actualización: Octubre 2026</p>
 
           <section className={styles.section}>
             <h2>1. Responsable del Tratamiento</h2>
             <p>
-              <strong>ESKALA Marketing Digital</strong><br />
-              CIF: [Tu CIF]<br />
-              Dirección: {formatFullAddress()}<br />
+              <strong>{LEGAL_OWNER.name}</strong> (marca comercial {LEGAL_OWNER.brand})<br />
+              NIF: {LEGAL_OWNER.nif}<br />
+              Domicilio social: {LEGAL_OWNER.address}<br />
+              {LEGAL_OWNER.registry}<br />
               Email: {CONTACT_EMAIL}<br />
               Teléfono: {CONTACT_PHONE}
             </p>
@@ -96,8 +97,9 @@ export default function PoliticaPrivacidad() {
               <li><strong>Portabilidad:</strong> recibir tus datos en formato estructurado</li>
             </ul>
             <p>
-              Para ejercer estos derechos, contacta con nosotros en: 
-              <a href="mailto:contacto@eskaladigital.com"> contacto@eskaladigital.com</a>
+              Para ejercer estos derechos, contacta con nosotros en{' '}
+              <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a> o por correo postal
+              a {LEGAL_OWNER.address}, indicando el derecho que ejerces y acreditando tu identidad
             </p>
           </section>
 

@@ -1,11 +1,11 @@
 import { StandardLayout } from '@/components/layout'
 import type { Metadata } from 'next'
 import styles from '../politica-privacidad/legal.module.css'
-import { CONTACT_EMAIL, CONTACT_PHONE, SITE_URL, formatFullAddress } from '@/lib/site'
+import { CONTACT_EMAIL, CONTACT_PHONE, LEGAL_OWNER, SITE_URL } from '@/lib/site'
 
 export const metadata: Metadata = {
   title: 'Aviso Legal | ESKALA Marketing Digital',
-  description: 'Aviso legal y condiciones de uso de ESKALA Marketing Digital. Información legal sobre nuestra empresa y servicios.',
+  description: 'Aviso legal y condiciones de uso de ESKALA Marketing Digital. Titular: ESTUDIO TLBDECORADORES, S.L.',
   robots: {
     index: true,
     follow: true,
@@ -18,7 +18,7 @@ export default function AvisoLegal() {
       <div className={styles.legalPage}>
         <div className={styles.container}>
           <h1 className={styles.title}>Aviso Legal</h1>
-          <p className={styles.updated}>Última actualización: Diciembre 2025</p>
+          <p className={styles.updated}>Última actualización: Octubre 2026</p>
 
           <section className={styles.section}>
             <h2>1. Datos Identificativos</h2>
@@ -27,10 +27,12 @@ export default function AvisoLegal() {
               de la Sociedad de la Información y Comercio Electrónico (LSSICE), se informa:
             </p>
             <ul>
-              <li><strong>Denominación social:</strong> ESKALA Marketing Digital</li>
-              <li><strong>CIF:</strong> [Tu CIF]</li>
-              <li><strong>Domicilio:</strong> {formatFullAddress()}</li>
-              <li><strong>Email:</strong> {CONTACT_EMAIL}</li>
+              <li><strong>Titular:</strong> {LEGAL_OWNER.name}</li>
+              <li><strong>Nombre comercial:</strong> {LEGAL_OWNER.brand}</li>
+              <li><strong>NIF:</strong> {LEGAL_OWNER.nif}</li>
+              <li><strong>Domicilio social:</strong> {LEGAL_OWNER.address}</li>
+              <li><strong>Datos registrales:</strong> {LEGAL_OWNER.registry}</li>
+              <li><strong>Email:</strong> <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a></li>
               <li><strong>Teléfono:</strong> {CONTACT_PHONE}</li>
               <li><strong>Sitio web:</strong> {SITE_URL.replace(/^https:\/\//, '')}</li>
             </ul>
@@ -39,8 +41,9 @@ export default function AvisoLegal() {
           <section className={styles.section}>
             <h2>2. Objeto</h2>
             <p>
-              El presente aviso legal regula el uso del sitio web www.eskaladigital.com, 
-              del que es titular ESKALA Marketing Digital.
+              El presente aviso legal regula el uso del sitio web www.eskaladigital.com,
+              del que es titular {LEGAL_OWNER.name}, que opera bajo la marca
+              comercial {LEGAL_OWNER.brand} (en adelante, «el titular»).
             </p>
             <p>
               La navegación por el sitio web atribuye la condición de usuario e implica 
@@ -66,8 +69,8 @@ export default function AvisoLegal() {
             <h2>4. Propiedad Intelectual</h2>
             <p>
               Todos los contenidos del sitio web (textos, imágenes, gráficos, logotipos, 
-              iconos, software, nombres comerciales, marcas) son propiedad de ESKALA 
-              Marketing Digital o de terceros que han autorizado su uso.
+              iconos, software, nombres comerciales, marcas) son propiedad de {LEGAL_OWNER.name}
+              o de terceros que han autorizado su uso.
             </p>
             <p>
               Queda prohibida la reproducción, distribución, comunicación pública, 
@@ -78,7 +81,7 @@ export default function AvisoLegal() {
 
           <section className={styles.section}>
             <h2>5. Exclusión de Responsabilidad</h2>
-            <p>ESKALA Marketing Digital no se hace responsable de:</p>
+            <p>El titular no se hace responsable de:</p>
             <ul>
               <li>Errores u omisiones en los contenidos</li>
               <li>Falta de disponibilidad temporal del sitio web</li>
@@ -91,8 +94,8 @@ export default function AvisoLegal() {
           <section className={styles.section}>
             <h2>6. Enlaces a Terceros</h2>
             <p>
-              Este sitio web puede contener enlaces a páginas de terceros. ESKALA 
-              Marketing Digital no asume responsabilidad por el contenido, veracidad 
+              Este sitio web puede contener enlaces a páginas de terceros. El titular
+              no asume responsabilidad por el contenido, veracidad 
               o políticas de privacidad de dichos sitios externos.
             </p>
           </section>
@@ -120,7 +123,7 @@ export default function AvisoLegal() {
           <section className={styles.section}>
             <h2>9. Modificaciones</h2>
             <p>
-              ESKALA Marketing Digital se reserva el derecho de modificar el presente 
+              El titular se reserva el derecho de modificar el presente 
               aviso legal para adaptarlo a novedades legislativas, jurisprudenciales 
               o de práctica empresarial. Se recomienda al usuario revisar periódicamente 
               este aviso legal.
@@ -133,8 +136,8 @@ export default function AvisoLegal() {
               Para cualquier consulta relacionada con este aviso legal, puede contactarnos en:
             </p>
             <ul>
-              <li><strong>Email:</strong> <a href="mailto:contacto@eskaladigital.com">contacto@eskaladigital.com</a></li>
-              <li><strong>Teléfono:</strong> +34 626 82 34 04</li>
+              <li><strong>Email:</strong> <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a></li>
+              <li><strong>Teléfono:</strong> {CONTACT_PHONE}</li>
             </ul>
           </section>
         </div>

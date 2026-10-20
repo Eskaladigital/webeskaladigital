@@ -5,6 +5,7 @@ import {
   CONTACT_EMAIL,
   CONTACT_PHONE,
   CONTACT_PHONE_TEL,
+  LEGAL_OWNER,
   formatShortAddress,
 } from '@/lib/site'
 
@@ -109,7 +110,7 @@ export function Footer() {
 
       <div className={styles.bottom}>
         <div className={styles.bottomLinks}>
-          <span>© {new Date().getFullYear()} ESKALA Marketing Digital. Todos los derechos reservados.</span>
+          <span>© {new Date().getFullYear()} {LEGAL_OWNER.brand}, marca de {LEGAL_OWNER.name} (NIF {LEGAL_OWNER.nif}). Todos los derechos reservados.</span>
           <Link href="/sitemap-html" className={styles.sitemapLink}>Mapa del Sitio</Link>
         </div>
         <span className={styles.credit}>

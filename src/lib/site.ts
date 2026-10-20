@@ -8,6 +8,20 @@ export const SITE_URL =
 export const SITE_NAME =
   process.env.NEXT_PUBLIC_SITE_NAME?.trim() || 'ESKALA Marketing Digital'
 
+/**
+ * Titular legal del sitio (art. 10 LSSI). ESKALA es una marca comercial de esta sociedad.
+ * Fuente: escrituras en Acttax/EI - ESTUDIO TLBDECORADORES (inscripción RM Murcia).
+ * Si la sociedad cambia de denominación o domicilio, actualizar solo aquí.
+ */
+export const LEGAL_OWNER = {
+  name: 'ESTUDIO TLBDECORADORES, S.L.',
+  nif: 'B73825648',
+  address: 'Calle Enrique Villar Bas, 15, 5º C, 30008 Murcia (España)',
+  registry:
+    'Inscrita en el Registro Mercantil de Murcia, Tomo 3017, Folio 93, Hoja MU-83123',
+  brand: 'ESKALA Marketing Digital',
+}
+
 export const CONTACT_EMAIL = 'contacto@eskaladigital.com'
 export const CONTACT_PHONE = '+34 626 82 34 04'
 export const CONTACT_PHONE_TEL = '+34626823404'
