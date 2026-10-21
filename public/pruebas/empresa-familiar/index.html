@@ -120,11 +120,19 @@ table.t tr:nth-child(even) td{background:#fafafa}
 /* Interfaz */
 .ui{position:fixed;z-index:20}
 #barra{left:0;bottom:0;height:5px;background:var(--azul);transition:width .3s}
-#mandos{right:14px;bottom:14px;display:flex;gap:6px;opacity:0;transition:opacity .2s}
-#mandos:hover{opacity:1}
-#mandos button{font:14px Arial;padding:7px 11px;border:0;border-radius:4px;background:#fff;color:var(--gris);cursor:pointer}
-#contador{left:14px;bottom:14px;color:#9aa0a0;font-size:13px;opacity:0;transition:opacity .2s}
-#contador:hover{opacity:1}
+#mandos{right:14px;bottom:14px;display:flex;gap:6px;opacity:0;pointer-events:none;transition:opacity .25s}
+#mandos button{font:14px Arial;padding:8px 12px;border:0;border-radius:4px;background:#fff;color:var(--gris);cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.25)}
+#mandos button:hover{background:var(--azul);color:#fff}
+#contador{left:50%;top:12px;transform:translateX(-50%);color:#fff;background:rgba(0,0,0,.5);padding:5px 10px;border-radius:4px;font-size:14px;opacity:0;pointer-events:none;transition:opacity .25s}
+.flecha{position:fixed;z-index:21;top:50%;width:64px;height:64px;margin-top:-32px;padding:0;border:0;border-radius:50%;background:rgba(23,28,143,.6);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .25s,background .2s,transform .15s;box-shadow:0 2px 10px rgba(0,0,0,.3)}
+.flecha svg{width:30px;height:30px;pointer-events:none}
+#flechaIzq{left:16px} #flechaDer{right:16px}
+.flecha:hover{background:var(--azul);transform:scale(1.08)}
+.flecha:active{transform:scale(.94)}
+.flecha:focus{outline:none}
+body.mandos-on #mandos,body.mandos-on #contador,body.mandos-on .flecha{opacity:1;pointer-events:auto}
+.flecha.tope{opacity:0!important;pointer-events:none!important}
+body.sin-cursor,body.sin-cursor *{cursor:none!important}
 .capa{position:fixed;inset:0;background:rgba(20,24,26,.94);z-index:30;display:none;color:#fff;overflow:auto;padding:40px 60px}
 .capa.abierta{display:block}
 .capa h3{margin:0 0 18px;font-size:24px;color:#9fd0ff}
@@ -139,8 +147,14 @@ table.t tr:nth-child(even) td{background:#fafafa}
 
 /* Móvil y tableta */
 body{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
-body.tactil #mandos,body.tactil #contador{pointer-events:none}
-body.tactil.mandos-on #mandos,body.tactil.mandos-on #contador{opacity:.92;pointer-events:auto}
+body.tactil .flecha{width:50px;height:50px;margin-top:-25px;opacity:.55;pointer-events:auto}
+body.tactil.mandos-on .flecha{opacity:.95}
+body.tactil #flechaIzq{left:calc(8px + env(safe-area-inset-left))}
+body.tactil #flechaDer{right:calc(8px + env(safe-area-inset-right))}
+body.hueco-abajo .flecha{top:calc(50% + var(--mitad) + 28px);margin-top:0;width:64px;height:64px}
+body.hueco-abajo #flechaIzq{left:calc(50% - 96px)}
+body.hueco-abajo #flechaDer{right:calc(50% - 96px)}
+body.hueco-abajo #contador{top:auto;bottom:calc(50% + var(--mitad) + 14px)}
 body.tactil #mandos{bottom:calc(10px + env(safe-area-inset-bottom));flex-wrap:wrap;justify-content:flex-end;max-width:96vw}
 body.tactil #mandos button{font-size:16px;padding:11px 14px}
 body.tactil .solo-pc{display:none}
@@ -1234,8 +1248,6 @@ body.tactil .solo-pc{display:none}
 <div id="barra" class="ui"></div>
 <div id="contador" class="ui"></div>
 <div id="mandos" class="ui">
-  <button onclick="anterior()" title="Anterior">◀</button>
-  <button onclick="siguiente()" title="Siguiente">▶</button>
   <button onclick="abrirCapa('indice')" title="Índice (I)">Índice</button>
   <button onclick="verNotas()" title="Notas (N)">Notas</button>
   <button class="solo-pc" onclick="abrirPonente()" title="Ventana del ponente (P)">Ponente</button>
@@ -1243,6 +1255,8 @@ body.tactil .solo-pc{display:none}
   <button class="solo-pc" onclick="window.print()" title="Imprimir apuntes">Imprimir</button>
   <button onclick="abrirCapa('ayuda')" title="Ayuda (?)">?</button>
 </div>
+<button id="flechaIzq" class="flecha ui" onclick="anterior()" title="Anterior (←)" aria-label="Anterior"><svg viewBox="0 0 24 24"><path d="M15 4 7 12l8 8" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+<button id="flechaDer" class="flecha ui" onclick="siguiente()" title="Siguiente (→)" aria-label="Siguiente"><svg viewBox="0 0 24 24"><path d="M9 4l8 8-8 8" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
 <div id="girar">Gire el móvil: en horizontal las diapositivas se ven a tamaño completo. <u>Cerrar</u></div>
 <div id="capaIndice" class="capa"><button class="cerrar" onclick="cerrarCapas()" aria-label="Cerrar">✕</button><h3>Índice — pulse una diapositiva</h3><div id="indiceLista"></div></div>
 <div id="capaAyuda" class="capa"><button class="cerrar" onclick="cerrarCapas()" aria-label="Cerrar">✕</button>
@@ -1253,8 +1267,9 @@ body.tactil .solo-pc{display:none}
     <tr><td>Tocar fuera de la diapositiva</td><td>Mostrar los botones (Índice, Notas…)</td></tr>
     <tr><td>Pellizcar</td><td>Ampliar un cuadro; con la vista ampliada, deslizar mueve la imagen y no cambia de diapositiva</td></tr>
   </table>
-  <h3 style="margin-top:22px">Teclas</h3>
+  <h3 style="margin-top:22px">En el ordenador</h3>
   <table class="ayuda">
+    <tr><td>Ratón</td><td>Al moverlo aparecen las flechas de los lados y los botones; se ocultan solos a los pocos segundos</td></tr>
     <tr><td><kbd>→</kbd> <kbd>Espacio</kbd> <kbd>AvPág</kbd></td><td>Avanzar (primero destapa los pasos de la diapositiva)</td></tr>
     <tr><td><kbd>←</kbd> <kbd>RePág</kbd></td><td>Retroceder</td></tr>
     <tr><td><kbd>Inicio</kbd> <kbd>Fin</kbd></td><td>Primera / última</td></tr>
@@ -1279,6 +1294,8 @@ function escalar(){
   const w=document.documentElement.clientWidth||window.innerWidth, h=document.documentElement.clientHeight||window.innerHeight;
   const s=Math.min(w/1280, h/720);
   stage.style.transform='translate(-50%,-50%) scale('+s+')';
+  document.body.style.setProperty('--mitad',(720*s/2)+'px');
+  document.body.classList.toggle('hueco-abajo', h-720*s>260);
 }
 window.addEventListener('resize',escalar); window.addEventListener('orientationchange',()=>setTimeout(escalar,250)); escalar();
 
@@ -1300,11 +1317,16 @@ function mostrar(n,destapado){
   document.getElementById('barra').style.width=((actual+1)/slides.length*100)+'%';
   document.getElementById('contador').textContent=(actual+1)+' / '+slides.length;
   history.replaceState(null,'','#'+(actual+1));
-  actualizarNotas(); actualizarPonente();
+  actualizarNotas(); actualizarPonente(); estadoFlechas();
+}
+function estadoFlechas(){
+  const pend=pasos(slides[actual]).some(p=>!p.classList.contains('visto'));
+  document.getElementById('flechaIzq').classList.toggle('tope',actual===0);
+  document.getElementById('flechaDer').classList.toggle('tope',actual===slides.length-1&&!pend);
 }
 function siguiente(){
   const pend=pasos(slides[actual]).filter(p=>!p.classList.contains('visto'));
-  if(pend.length){pend[0].classList.add('visto'); actualizarPonente(); return;}
+  if(pend.length){pend[0].classList.add('visto'); actualizarPonente(); estadoFlechas(); return;}
   mostrar(actual+1,false);
 }
 function anterior(){ mostrar(actual-1,true); }
@@ -1387,7 +1409,18 @@ const tactil=matchMedia('(hover: none)').matches;
 if(tactil) document.body.classList.add('tactil');
 if(!document.documentElement.requestFullscreen) document.getElementById('btnCompleta').style.display='none';
 let tMandos=null;
-function verMandos(){document.body.classList.add('mandos-on'); clearTimeout(tMandos); tMandos=setTimeout(()=>document.body.classList.remove('mandos-on'),4000);}
+function verMandos(){
+  document.body.classList.add('mandos-on'); document.body.classList.remove('sin-cursor');
+  clearTimeout(tMandos);
+  tMandos=setTimeout(function apagar(){
+    if(document.querySelector('#mandos:hover,.flecha:hover,#contador:hover')){ tMandos=setTimeout(apagar,1000); return; }
+    document.body.classList.remove('mandos-on');
+    if(!tactil && document.fullscreenElement) document.body.classList.add('sin-cursor');
+  }, tactil?4000:2500);
+}
+window.verMandos=verMandos;
+let ultimoRaton=0;
+document.addEventListener('mousemove',e=>{ if(tactil) return; const ahora=Date.now(); if(ahora-ultimoRaton<120) return; ultimoRaton=ahora; verMandos(); });
 const INTERACTIVO='input,button,a,select,textarea,label,svg,.punto,.tarjeta,.calc table,[data-filtro],[data-preset]';
 let x0=null,y0=null,tt=0;
 document.addEventListener('touchstart',e=>{
@@ -1397,7 +1430,7 @@ document.addEventListener('touchstart',e=>{
 document.addEventListener('touchend',e=>{
   if(x0===null) return;
   const t=e.changedTouches[0], dx=t.clientX-x0, dy=t.clientY-y0; x0=null;
-  if(e.target.closest('.capa,#mandos,#girar')) return;
+  if(e.target.closest('.capa,#mandos,#girar,.flecha')) return;
   if(window.visualViewport && visualViewport.scale>1.05) return;
   const enDiapo=!!e.target.closest('#stage');
   if(Math.abs(dx)>50 && Math.abs(dx)>Math.abs(dy)*1.5){ if(dx<0) siguiente(); else anterior(); return; }
