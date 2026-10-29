@@ -9,7 +9,7 @@ import { enMetadata } from '@/lib/i18n'
 export const metadata = enMetadata(
   '/quienes-somos',
   'About us',
-  'ESKALA is a digital studio based in Murcia, Spain, working since 2020. We design and build websites, SEO and AI tools for labels, artists and brands.'
+  'ESKALA is a digital marketing agency based in Murcia, Spain, since 2020: web design, SEO, social media, Google Ads, AI apps, chatbots, branding and email marketing.'
 )
 
 export default function EnglishAboutPage() {

@@ -8,7 +8,7 @@ import { enMetadata } from '@/lib/i18n'
 export const metadata = enMetadata(
   '/contacto',
   'Contact',
-  'Tell us about your label, artist or brand. We reply within 24 working hours, in English.'
+  'Contact ESKALA Digital Marketing. Ask for a free, no-commitment quote for your digital marketing, website or SEO project. Reply within 24 hours.'
 )
 
 export default function EnglishContactPage() {

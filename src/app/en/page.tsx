@@ -4,8 +4,8 @@ import { enMetadata } from '@/lib/i18n'
 
 export const metadata = enMetadata(
   '/',
-  'ESKALA | Web Design and Digital Studio for Labels and Brands',
-  'Digital studio in Spain building websites, SEO, AI apps and campaigns for record labels, artists and brands. Built with Next.js, live and fast.',
+  'ESKALA | Digital Marketing Agency in Spain',
+  'Digital marketing agency specialising in web design, SEO, social media, Google Ads, AI apps, chatbots, branding and email marketing. We help your business grow.',
   true
 )
 

@@ -10,7 +10,7 @@ export const revalidate = 3600
 export const metadata = enMetadata(
   '/portfolio',
   'Portfolio',
-  'Live projects: a London bass label site with 413 releases, a breakbeat archive, a B2B shop in 7 languages and more.'
+  'Digital marketing, web design and development projects: B2B shops, marketplaces, booking platforms, AI apps and more. All live.'
 )
 
 type Row = { slug: string; featured_image: string | null; website_url: string | null; project_date: string | null }
@@ -32,11 +32,6 @@ async function loadRows(): Promise<Record<string, Row>> {
 
 export default async function EnglishPortfolioPage() {
   const rows = await loadRows()
-  const groups = [
-    { title: PORTFOLIO_EN.music, projects: PROJECTS_EN.filter((p) => p.music) },
-    { title: PORTFOLIO_EN.other, projects: PROJECTS_EN.filter((p) => !p.music) },
-  ]
-
   return (
     <StandardLayout lang="en">
       <section className={styles.hero}>
@@ -49,15 +44,11 @@ export default async function EnglishPortfolioPage() {
         </div>
       </section>
 
-      {groups.map((group, g) => (
-        <section key={group.title} className={styles.projectsSection}>
-          <h2 style={{ fontSize: '1.5rem', fontWeight: 800, textTransform: 'uppercase', margin: '0 0 1.5rem' }}>
-            {group.title}
-          </h2>
+      <section className={styles.projectsSection}>
           <div className={styles.projectsGrid}>
-            {group.projects.map((project, i) => {
+            {PROJECTS_EN.map((project, i) => {
               const row = rows[project.slug]
-              const color = COLORS[(g * 2 + i) % COLORS.length]
+              const color = COLORS[i % COLORS.length]
               const external = row?.website_url
               const cardHref = external || `/portfolio/${project.slug}`
               const year = row?.project_date ? new Date(row.project_date).getFullYear() : null
@@ -111,8 +102,7 @@ export default async function EnglishPortfolioPage() {
               )
             })}
           </div>
-        </section>
-      ))}
+      </section>
 
       <section className={styles.cta}>
         <div className={styles.ctaContent}>

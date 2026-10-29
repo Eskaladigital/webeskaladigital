@@ -7,7 +7,7 @@ import { enMetadata } from '@/lib/i18n'
 export const metadata = enMetadata(
   '/exitos',
   'Results',
-  'Figures from live projects we designed and built: a London bass label with 413 releases, a B2B shop in 7 languages, a map with 10,000+ areas.'
+  'Figures from live projects we designed and built: a B2B shop in 7 languages, a marketplace with 150+ professionals, a map with 10,000+ locations.'
 )
 
 export default function EnglishSuccessPage() {

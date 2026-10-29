@@ -67,8 +67,9 @@ export const placeholder = 'Escribe tu consulta…'
 
 export const topicMenusEn: MenuItem[] = [
   { id: 'web', label: 'Web design', message: 'What does your web design service include?' },
-  { id: 'label', label: 'Sites for labels', message: 'Do you build websites for record labels? What did you do for Dirty Kitchen Rave?' },
-  { id: 'seo', label: 'SEO', message: 'How do you approach SEO for a site in English?' },
+  { id: 'seo', label: 'SEO', message: 'How does your SEO service work?' },
+  { id: 'social', label: 'Social media', message: 'What does social media management include?' },
+  { id: 'ads', label: 'Google Ads', message: 'How do you manage Google Ads campaigns?' },
   {
     id: 'ia',
     label: 'AI and chatbots',
@@ -77,11 +78,19 @@ export const topicMenusEn: MenuItem[] = [
       { id: 'ia2', label: 'Chatbots', message: 'Do you build chatbots like this one for websites or WhatsApp?' },
     ],
   },
+  {
+    id: 'marca',
+    label: 'Branding and email',
+    children: [
+      { id: 'br', label: 'Branding', message: 'What does your branding service include?' },
+      { id: 'em', label: 'Email marketing', message: 'How does your email marketing service work?' },
+    ],
+  },
   { id: 'contacto', label: 'Contact', message: 'How can I get in touch with ESKALA?' },
 ]
 
 export const welcomeMessageEn =
-  'Hi! I am Nora, ESKALA’s assistant. I can tell you what we do — websites for labels and brands, SEO, ads, AI — and point you to our work. If you want a quote, I will send you to the contact page. How can I help?'
+  'Hi! I am Nora, ESKALA’s assistant. I can tell you what we do (web design, SEO, social media, Ads, AI…) and point you to our work. If you want a quote, I will send you to the contact page. How can I help?'
 
 export const placeholderEn = 'Type your question…'
 

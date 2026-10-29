@@ -224,7 +224,7 @@ export default function ChatWidget() {
           <div className={styles.header}>
             <div>
               <p className={styles.headerTitle}>{ASSISTANT_NAME} · ESKALA</p>
-              <p className={styles.headerSub}>{en ? 'Digital studio · Spain' : 'Marketing digital en Murcia'}</p>
+              <p className={styles.headerSub}>{en ? 'Digital marketing agency' : 'Marketing digital en Murcia'}</p>
             </div>
             <div className={styles.headerActions}>
               <button type="button" onClick={refreshConversation} className={styles.iconBtn} title={en ? 'New conversation' : 'Nueva conversación'}>
