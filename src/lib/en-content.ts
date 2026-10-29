@@ -569,73 +569,125 @@ export const SERVICE_SECTIONS_EN = {
   processTitle: 'How we work',
 }
 
-/** Proyectos que se enseñan en /en. Cifras tal cual están en portfolio_projects. */
-export const PROJECTS_EN = [
-  {
-    slug: 'tricholand-tienda-mayorista-2026',
-    client: 'Tricholand',
-    title: 'B2B wholesale shop in 7 languages',
-    description: 'Wholesale shop for a specialist nursery: B2B lots, Redsys and Stripe payments, technical blog and country landing pages. Migrated from Joomla to Next.js.',
-    tags: ['Web design', 'Development', 'SEO'],
+/** Traducción por slug de portfolio_projects. Cifras tal cual están en la tabla; un slug sin entrada sale con el texto español. */
+export const PROJECTS_EN: Record<string, { title: string; description: string; metrics: string[] }> = {
+  'dirty-kitchen-rave-sello-bass': {
+    title: 'Dirty Kitchen Rave: website for a London record label',
+    description: 'Bilingual (EN/ES) site with 413 releases synced daily from Beatport, audio player, roster, shop and demo submissions. Next.js 16.',
+    metrics: ['413 releases', '175 artists', 'ES + EN'],
+  },
+  'neotermica-climatizacion-murcia': {
+    title: 'Neotérmica: website for an HVAC company',
+    description: 'Website for an air-conditioning and heating company: installation, repair and replacement within a 50 km radius. Eight trade pages, local SEO, Nora chatbot, blog and online quote requests.',
+    metrics: ['8 service landings', 'Nora chatbot', 'Online quotes'],
+  },
+  'optimalbreaks-archivo-breakbeat': {
+    title: 'Optimal Breaks: bilingual cultural archive with AI',
+    description: 'Bilingual (ES/EN) archive of a music genre: history, artists, labels, events, mixes and charts. Interactive DJ deck, AI agents and a fanzine look. Next.js 16 on Vercel.',
+    metrics: ['ES + EN', 'AI poster reading', 'Interactive DJ deck'],
+  },
+  'gvc-abogados-murcia-2026': {
+    title: 'GVC Abogados 2026: law firm website (Next.js)',
+    description: 'Law firm website: 6 practice areas, ES/EN, local SEO and leads saved to a database. Next.js 16. The 2022 version stays in the portfolio.',
+    metrics: ['6 practice areas', 'ES + EN', 'Joomla → Next.js'],
+  },
+  'tricholand-tienda-mayorista-2026': {
+    title: 'Tricholand 2026: B2B wholesale shop in 7 languages',
+    description: 'Wholesale shop for a specialist nursery in 7 languages: B2B lots, Redsys and Stripe payments, technical blog and country landing pages. Next.js 16.',
     metrics: ['7 languages', '28 checkout countries', '121 blog articles'],
   },
-  {
-    slug: 'retiru-marketplace-retiros-wellness',
-    client: 'Retiru',
-    title: 'Wellness retreats marketplace and directory',
-    description: 'Marketplace for wellness retreats in Spain with a free organiser panel (CRM, QR check-in, messaging), Stripe checkout and a map-based directory of centres.',
-    tags: ['Web design', 'SEO', 'Strategy'],
+  'retiru-marketplace-retiros-wellness': {
+    title: 'Retiru: wellness retreats marketplace and directory',
+    description: 'Marketplace for wellness retreats and a directory of wellness centres in Spain. 500+ yoga, meditation, detox, nature and food retreats. Free organiser panel with CRM, QR check-in and messaging, plus a wellness shop.',
     metrics: ['500+ retreats', 'ES + EN', 'Stripe checkout'],
   },
-  {
-    slug: 'health4spain-marketplace-extranjeros',
-    client: 'Health4Spain',
-    title: 'Services marketplace for foreigners in Spain',
-    description: 'Lead generator connecting foreigners in Spain with verified insurers, lawyers, estate agents and accountants. Four-step smart form.',
-    tags: ['Web design', 'SEO', 'Strategy'],
+  'health4spain-marketplace-extranjeros': {
+    title: 'Health4Spain: services marketplace for foreigners in Spain',
+    description: 'Lead generator and marketplace connecting foreigners in Spain with verified insurers, lawyers, estate agents and accountants. Smart four-step form, multilingual, 19 cities.',
     metrics: ['5 languages', '19 cities', '150+ professionals'],
   },
-  {
-    slug: 'furgocasa-sistema-gestion-flotas-2026',
-    client: 'Furgocasa',
-    title: 'Campervan rental platform and fleet management',
-    description: 'Full migration from Joomla to Next.js: real-time online bookings, fleet and damage management, smart calendar, customer CRM, payments and admin.',
-    tags: ['Web design', 'Development', 'AI apps', 'SEO'],
+  'furgocasa-sistema-gestion-flotas-2026': {
+    title: 'Furgocasa 2026: complete fleet management system with Next.js',
+    description: 'Full migration from Joomla to Next.js: fleet management, real-time online bookings, damage tracking, smart calendar, customer CRM, payments, coupons, blog CMS and admin panel.',
     metrics: ['15+ modules', '85% bookings online', '5x faster'],
   },
-  {
-    slug: 'mapa-furgocasa-ia',
-    client: 'MapafurgoCasa',
-    title: 'Map of motorhome areas',
-    description: 'Map with more than 10,000 motorhome areas, built as a funnel towards Furgocasa rentals. Next.js + Supabase.',
-    tags: ['Web design', 'Development', 'AI apps'],
+  'hakadogs-escuela-online-ia': {
+    title: 'Hakadogs: full rebuild with Next.js and an AI online school',
+    description: 'Dog training school: Next.js 16 website, blog with CMS, online school with AI and payments.',
+    metrics: ['AI-generated courses', 'Online payments', '+70% load speed'],
+  },
+  'aleman-pajaron-gestion-obras': {
+    title: 'Alemán y Pajarón: website for a construction management firm',
+    description: 'Next.js 16 website for construction technicians. Direct contact (no form), OpenStreetMap map and local SEO within a 50 km radius. Blog with AI.',
+    metrics: ['50 km local SEO', 'AI blog', 'Next.js 16'],
+  },
+  'casi-cinco-recomendaciones': {
+    title: 'Casi Cinco: places in Spain rated 4.7★ or higher',
+    description: 'Guide to restaurants, bars and hotels in Spain rated 4.7★ or higher. Diamond, Gold and Silver tiers, an AI travel assistant and a map. 5,100+ places.',
+    metrics: ['5,100+ places', '4.7★ minimum', 'AI assistant'],
+  },
+  'gvc-expertos-abogados': {
+    title: 'GVC Expertos: AI-powered website for medical negligence claims',
+    description: 'Medical negligence vertical: city landing pages, AI-assisted content, ES/EN. Next.js 16 on AWS Amplify.',
+    metrics: ['+180% enquiries', '<1 s load', 'ES + EN'],
+  },
+  'mapa-furgocasa-ia': {
+    title: 'MapafurgoCasa: map of motorhome areas',
+    description: 'Map with more than 10,000 motorhome areas, built as a funnel towards Furgocasa rentals. Next.js on Vercel.',
     metrics: ['10,000+ areas', 'Next.js + Supabase'],
   },
-  {
-    slug: 'dirty-kitchen-rave-sello-bass',
-    client: 'Dirty Kitchen Rave',
-    title: 'Website for a London record label',
-    description: 'Bilingual (EN/ES) site with the catalogue synced daily from Beatport, audio previews, roster, shop and demo submissions. Next.js 16 + Supabase.',
-    tags: ['Web design', 'Development', 'Branding', 'SEO'],
-    metrics: ['413 releases', '175 artists', 'Daily sync'],
+  'acttax-asesoria-fiscal': {
+    title: 'Acttax: digital transformation for a specialist tax firm',
+    description: 'Tax advisory firm (transfer pricing and valuation). Next.js 16 website, B2B SEO and content.',
+    metrics: ['+160% enquiries', '85% organic traffic', '8% conversion'],
   },
-  {
-    slug: 'optimalbreaks-archivo-breakbeat',
-    client: 'Optimal Breaks',
-    title: 'Bilingual cultural archive with AI',
-    description: 'Online archive about a music genre: history, artists, events and charts, with AI agents that create event listings from a photo of a poster.',
-    tags: ['Web design', 'AI apps', 'Branding'],
-    metrics: ['ES + EN', 'AI poster reading'],
+  'bcm-abogados-ibiza': {
+    title: 'BCM Abogados: local SEO website for an employment law firm',
+    description: 'Corporate website with local SEO for an employment law firm in Ibiza and Madrid. Professional design focused on winning local clients.',
+    metrics: ['Ibiza and Madrid', 'ES + EN', '15+ years in employment law'],
   },
-  {
-    slug: 'rebeca-medina',
-    client: 'Rebeca Medina',
-    title: 'Intimacy coordinator and acting coach',
-    description: 'Professional site for an internationally certified intimacy coordinator (IPA, SAG-AFTRA) with credits including The Walking Dead.',
-    tags: ['Web design'],
+  'gvc-abogados-murcia': {
+    title: 'García-Válcarcel & Cáceres: website for a full-service law firm',
+    description: 'Full-service law firm founded in 1946. Its first modern website (2022).',
+    metrics: ['Founded 1946', 'ES / EN', '6 practice areas'],
+  },
+  'tricholand-vivero-cactus': {
+    title: 'Tricholand: multilingual B2B website for a specialist nursery',
+    description: 'Nursery specialising in Trichocereus cacti. Multilingual B2B website (2021).',
+    metrics: ['ES / EN / DE', 'International B2B', 'Exports to EU, UK, USA'],
+  },
+  'on-procuradores-murcia': {
+    title: 'ON Procuradores: website for a court representatives firm',
+    description: 'Professional website for a firm of court representatives (procuradores) (2021).',
+    metrics: ['Legal sector', 'Legal blog', 'Local SEO'],
+  },
+  'rebeca-medina': {
+    title: 'Rebeca Medina: intimacy coordinator and acting coach',
+    description: 'Professional website with blog for an internationally certified intimacy coordinator (IPA, SAG-AFTRA) and acting coach.',
     metrics: ['400+ scenes since 2021', 'IPA · SAG-AFTRA'],
   },
-]
+  'furgocasa-alquiler-camper': {
+    title: 'Furgocasa: complete campervan rental platform',
+    description: 'Branding, web design, photography and digital marketing for a leading campervan rental company. We have run its whole digital ecosystem since 2017.',
+    metrics: ['4.9★ rating', '+70% online bookings', '3.5K+ Instagram followers'],
+  },
+}
+
+/** Etiquetas de services (portfolio_projects) en inglés. */
+export const SERVICE_TAGS_EN: Record<string, string> = {
+  'diseño-web': 'Web design',
+  'diseno-web': 'Web design',
+  'desarrollo-web': 'Development',
+  'seo-local': 'SEO',
+  seo: 'SEO',
+  'redes-sociales': 'Social media',
+  'google-ads': 'Google Ads',
+  branding: 'Branding',
+  'apps-ia': 'AI apps',
+  fotografia: 'Photography',
+  'email-marketing': 'Email marketing',
+  'estrategia-digital': 'Strategy',
+}
 
 export const PORTFOLIO_EN = {
   badge: '◈ Portfolio',

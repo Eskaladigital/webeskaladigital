@@ -3,7 +3,7 @@ import { StandardLayout } from '@/components/layout'
 import styles from '@/components/sections/Portfolio/PortfolioContent.module.css'
 import { createPublicClient } from '@/lib/supabase/server'
 import { enMetadata } from '@/lib/i18n'
-import { PORTFOLIO_EN, PROJECTS_EN } from '@/lib/en-content'
+import { PORTFOLIO_EN, PROJECTS_EN, SERVICE_TAGS_EN } from '@/lib/en-content'
 
 export const revalidate = 3600
 
@@ -13,21 +13,44 @@ export const metadata = enMetadata(
   'Digital marketing, web design and development projects: B2B shops, marketplaces, booking platforms, AI apps and more. All live.'
 )
 
-type Row = { slug: string; featured_image: string | null; website_url: string | null; project_date: string | null }
+type Row = {
+  slug: string
+  client: string
+  title: string
+  short_description: string | null
+  services: string[] | string | null
+  metrics: Record<string, string> | null
+  featured_image: string | null
+  website_url: string | null
+  project_date: string | null
+}
 
 const COLORS = ['#ff6b35', '#4a7c9b', '#e84a23', '#1e3a5f']
 
-async function loadRows(): Promise<Record<string, Row>> {
+async function loadRows(): Promise<Row[]> {
   try {
     const { data } = await createPublicClient()
       .from('portfolio_projects')
-      .select('slug, featured_image, website_url, project_date')
-      .in('slug', PROJECTS_EN.map((p) => p.slug))
+      .select('slug, client, title, short_description, services, metrics, featured_image, website_url, project_date')
       .eq('published', true)
-    return Object.fromEntries((data ?? []).map((r: Row) => [r.slug, r]))
+      .order('project_date', { ascending: false })
+    return (data ?? []) as Row[]
   } catch {
-    return {}
+    return []
   }
+}
+
+function tagsOf(services: Row['services']): string[] {
+  let list: string[] = []
+  if (Array.isArray(services)) list = services
+  else if (typeof services === 'string') {
+    try {
+      list = JSON.parse(services)
+    } catch {
+      list = []
+    }
+  }
+  return [...new Set(list.map((s) => SERVICE_TAGS_EN[s] ?? s))]
 }
 
 export default async function EnglishPortfolioPage() {
@@ -46,12 +69,20 @@ export default async function EnglishPortfolioPage() {
 
       <section className={styles.projectsSection}>
           <div className={styles.projectsGrid}>
-            {PROJECTS_EN.map((project, i) => {
-              const row = rows[project.slug]
+            {rows.map((row, i) => {
+              const en = PROJECTS_EN[row.slug]
+              const project = {
+                slug: row.slug,
+                client: row.client,
+                title: en?.title ?? row.title,
+                description: en?.description ?? row.short_description ?? '',
+                tags: tagsOf(row.services),
+                metrics: en?.metrics ?? Object.values(row.metrics ?? {}).slice(0, 3),
+              }
               const color = COLORS[i % COLORS.length]
-              const external = row?.website_url
+              const external = row.website_url
               const cardHref = external || `/portfolio/${project.slug}`
-              const year = row?.project_date ? new Date(row.project_date).getFullYear() : null
+              const year = row.project_date ? new Date(row.project_date).getFullYear() : null
               return (
                 <a
                   key={project.slug}
@@ -61,7 +92,7 @@ export default async function EnglishPortfolioPage() {
                   style={{ '--project-color': color } as React.CSSProperties}
                 >
                   <div className={styles.projectVisual}>
-                    {row?.featured_image ? (
+                    {row.featured_image ? (
                       <img
                         src={row.featured_image}
                         alt={project.title}
