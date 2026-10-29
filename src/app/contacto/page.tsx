@@ -5,6 +5,7 @@ import ContactOptions from '@/components/sections/Contacto/ContactOptions'
 import ContactInfo from '@/components/sections/Contacto/ContactInfo'
 import type { Metadata } from 'next'
 import { AGENCY_ID, SITE_URL, generateBreadcrumbSchema } from '@/lib/site'
+import { languageAlternates } from '@/lib/i18n'
 
 export const metadata: Metadata = {
   title: 'Contacto | Presupuesto Sin Compromiso',
@@ -37,9 +38,7 @@ export const metadata: Metadata = {
     description: 'Cuéntanos tu proyecto y te enviamos presupuesto en 24 horas.',
     images: ['/eskala_digital_opengraph.png'],
   },
-  alternates: {
-    canonical: 'https://www.eskaladigital.com/contacto',
-  },
+  alternates: languageAlternates('/contacto', 'es'),
 }
 
 export default function ContactoPage() {

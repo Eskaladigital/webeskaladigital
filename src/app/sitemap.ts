@@ -1,5 +1,6 @@
 import { MetadataRoute } from 'next'
 import { createPublicClient } from '@/lib/supabase/server'
+import { hasEnglish, languageAlternates } from '@/lib/i18n'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://www.eskaladigital.com'
@@ -138,7 +139,28 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     console.error('Error fetching portfolio projects for sitemap:', error)
   }
 
-  return [...staticPages, ...serviciosPages, ...blogPages, ...portfolioPages]
+  const withAlternates = [...staticPages, ...serviciosPages].map((page) => {
+    const esPath = page.url.replace(baseUrl, '') || '/'
+    return hasEnglish(esPath)
+      ? { ...page, alternates: { languages: languageAlternates(esPath, 'es').languages } }
+      : page
+  })
+
+  const englishPages: MetadataRoute.Sitemap = [...staticPages, ...serviciosPages]
+    .map((page) => page.url.replace(baseUrl, '') || '/')
+    .filter(hasEnglish)
+    .map((esPath) => {
+      const alt = languageAlternates(esPath, 'en')
+      return {
+        url: alt.canonical,
+        lastModified: new Date(),
+        changeFrequency: 'monthly' as const,
+        priority: esPath === '/' ? 0.9 : 0.6,
+        alternates: { languages: alt.languages },
+      }
+    })
+
+  return [...withAlternates, ...englishPages, ...blogPages, ...portfolioPages]
 }
 
 

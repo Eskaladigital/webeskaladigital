@@ -5,6 +5,7 @@ import ServiceBenefits from '@/components/sections/ServicioDetalle/ServiceBenefi
 import ServiceProcess from '@/components/sections/ServicioDetalle/ServiceProcess'
 import ServiceTestimonial from '@/components/sections/ServicioDetalle/ServiceTestimonial'
 import ServiceCTA from '@/components/sections/ServicioDetalle/ServiceCTA'
+import { languageAlternates } from '@/lib/i18n'
 
 export const metadata = {
   title: 'Diseño Web en Murcia | Páginas Web Profesionales | ESKALA',
@@ -43,9 +44,7 @@ export const metadata = {
     description: 'Páginas web modernas, rápidas y que convierten. Diseño web profesional en Murcia.',
     images: ['/eskala_digital_opengraph.png'],
   },
-  alternates: { 
-    canonical: 'https://www.eskaladigital.com/servicios/diseno-web' 
-  },
+  alternates: languageAlternates('/servicios/diseno-web', 'es'),
 }
 
 const heroData = {

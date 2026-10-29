@@ -7,6 +7,7 @@ import Values from '@/components/sections/QuienesSomos/Values'
 import CTA from '@/components/sections/QuienesSomos/CTA'
 import type { Metadata } from 'next'
 import { AGENCY_ID, SITE_URL, generateBreadcrumbSchema } from '@/lib/site'
+import { languageAlternates } from '@/lib/i18n'
 
 export const metadata: Metadata = {
   title: 'Quiénes somos',
@@ -34,9 +35,7 @@ export const metadata: Metadata = {
     description: 'Equipo y forma de trabajar. Agencia en Murcia desde 2020.',
     images: ['/eskala_digital_opengraph.png'],
   },
-  alternates: {
-    canonical: 'https://www.eskaladigital.com/quienes-somos',
-  },
+  alternates: languageAlternates('/quienes-somos', 'es'),
 }
 
 export default function QuienesSomosPage() {

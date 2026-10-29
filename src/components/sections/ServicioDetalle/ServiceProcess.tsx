@@ -1,6 +1,8 @@
 'use client'
 
 import styles from './ServiceProcess.module.css'
+import type { Lang } from '@/lib/i18n'
+import { SERVICE_SECTIONS_EN } from '@/lib/en-content'
 
 interface Step {
   step: string
@@ -10,16 +12,18 @@ interface Step {
 
 interface ServiceProcessProps {
   steps: Step[]
+  lang?: Lang
 }
 
-export default function ServiceProcess({ steps }: ServiceProcessProps) {
+export default function ServiceProcess({ steps, lang = 'es' }: ServiceProcessProps) {
+  const en = lang === 'en'
   return (
     <>
 
       <section className={styles.process}>
         <div className={`${styles.sectionHeader} fade-up`}>
-          <span className={styles.sectionLabel}>Metodología</span>
-          <h2 className={styles.sectionTitle}>Cómo trabajamos</h2>
+          <span className={styles.sectionLabel}>{en ? SERVICE_SECTIONS_EN.processLabel : 'Metodología'}</span>
+          <h2 className={styles.sectionTitle}>{en ? SERVICE_SECTIONS_EN.processTitle : 'Cómo trabajamos'}</h2>
         </div>
         <div className={styles.processSteps}>
           {steps.map((item, index) => (

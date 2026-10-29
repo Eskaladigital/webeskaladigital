@@ -5,6 +5,7 @@ import ServiceBenefits from '@/components/sections/ServicioDetalle/ServiceBenefi
 import ServiceProcess from '@/components/sections/ServicioDetalle/ServiceProcess'
 import ServiceTestimonial from '@/components/sections/ServicioDetalle/ServiceTestimonial'
 import ServiceCTA from '@/components/sections/ServicioDetalle/ServiceCTA'
+import { languageAlternates } from '@/lib/i18n'
 
 export const metadata = {
   title: 'Email Marketing en Murcia | Newsletters y Automatizaciones | ESKALA',
@@ -39,9 +40,7 @@ export const metadata = {
     description: 'Newsletters y automatizaciones con el mejor ROI del marketing digital.',
     images: ['/eskala_digital_opengraph.png'],
   },
-  alternates: { 
-    canonical: 'https://www.eskaladigital.com/servicios/email-marketing' 
-  },
+  alternates: languageAlternates('/servicios/email-marketing', 'es'),
 }
 
 const heroData = {

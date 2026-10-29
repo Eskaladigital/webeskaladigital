@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react'
 import { Mail, Phone, MapPin, Clock, CheckCircle } from 'lucide-react'
 import styles from './ContactForm.module.css'
 import { formatShortAddress } from '@/lib/site'
+import { SERVICES, type Lang } from '@/lib/i18n'
+import { CONTACT_EN } from '@/lib/en-content'
 
 interface FormData {
   contact_type: 'particular' | 'professional'
@@ -27,17 +29,54 @@ interface FormErrors {
   submit?: string
 }
 
-const INQUIRY_OPTIONS = [
-  { value: 'diseno-web', label: 'Diseño Web' },
-  { value: 'seo-local', label: 'SEO Local' },
-  { value: 'redes-sociales', label: 'Redes Sociales' },
-  { value: 'google-ads', label: 'Google Ads' },
-  { value: 'apps-ia', label: 'Apps con IA' },
-  { value: 'chatbots', label: 'Chatbots' },
-  { value: 'branding', label: 'Branding' },
-  { value: 'email-marketing', label: 'Email Marketing' },
-  { value: 'otro', label: 'Otro' },
-]
+const ES: typeof CONTACT_EN.form = {
+  label: 'Hablemos',
+  infoTitle: 'Cuéntanos qué necesitas',
+  infoLead: 'Particular o empresa, el servicio que te interesa y de dónde nos has oído. Te preparamos una propuesta sin compromiso.',
+  phone: 'Teléfono',
+  hours: 'Horario',
+  hoursValue: 'Lunes a viernes, 9:00–18:00',
+  location: 'Ubicación',
+  locationSuffix: 'presencial con cita',
+  sentTitle: '¡Mensaje enviado!',
+  sentText: 'Gracias por contactar con nosotros. Te responderemos en menos de 24 horas.',
+  sendAnother: 'Enviar otro mensaje',
+  formTitle: 'Envíanos un mensaje',
+  formText: 'Cuéntanos tu proyecto y nos pondremos en contacto contigo.',
+  typeLegend: 'Tipo de consulta',
+  individual: 'Particular',
+  business: 'Empresa',
+  company: 'Empresa',
+  companyPh: 'Nombre de tu empresa',
+  name: 'Nombre *',
+  namePh: 'Tu nombre completo',
+  email: 'Email *',
+  phoneLabel: 'Teléfono',
+  phonePh: '+34 600 000 000',
+  inquiry: 'Tipo de consulta *',
+  inquiryPh: 'Selecciona un servicio',
+  other: 'Otro',
+  referral: '¿Cómo nos has conocido?',
+  referralPh: 'Selecciona una opción',
+  referralGoogle: 'Búsqueda en Google',
+  referralSocial: 'Redes sociales',
+  referralRecommendation: 'Recomendación',
+  referralOther: 'Otro',
+  message: 'Mensaje *',
+  messagePh: 'Cuéntanos sobre tu proyecto...',
+  privacyPre: 'He leído y acepto la',
+  privacyLink: 'política de privacidad',
+  sending: 'Enviando...',
+  submit: 'Enviar mensaje →',
+  errName: 'El nombre es obligatorio',
+  errEmail: 'El email es obligatorio',
+  errEmailInvalid: 'El email no es válido',
+  errInquiry: 'Elige el tipo de consulta',
+  errMessage: 'El mensaje es obligatorio',
+  errMessageShort: 'El mensaje debe tener al menos 20 caracteres',
+  errPrivacy: 'Debes aceptar la política de privacidad',
+  errSubmit: 'No se pudo enviar. Inténtalo de nuevo.',
+}
 
 const emptyForm: FormData = {
   contact_type: 'particular',
@@ -52,7 +91,12 @@ const emptyForm: FormData = {
   privacy: false,
 }
 
-export default function ContactForm() {
+export default function ContactForm({ lang = 'es' }: { lang?: Lang }) {
+  const t = lang === 'en' ? CONTACT_EN.form : ES
+  const inquiryOptions = [
+    ...SERVICES.map((s) => ({ value: s.slug, label: lang === 'en' ? s.enLabel : s.es })),
+    { value: 'otro', label: t.other },
+  ]
   const [formData, setFormData] = useState<FormData>(emptyForm)
   const [errors, setErrors] = useState<FormErrors>({})
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -67,13 +111,13 @@ export default function ContactForm() {
 
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {}
-    if (!formData.name.trim()) newErrors.name = 'El nombre es obligatorio'
-    if (!formData.email.trim()) newErrors.email = 'El email es obligatorio'
-    else if (!validateEmail(formData.email)) newErrors.email = 'El email no es válido'
-    if (!formData.inquiry_type) newErrors.inquiry_type = 'Elige el tipo de consulta'
-    if (!formData.message.trim()) newErrors.message = 'El mensaje es obligatorio'
-    else if (formData.message.length < 20) newErrors.message = 'El mensaje debe tener al menos 20 caracteres'
-    if (!formData.privacy) newErrors.privacy = 'Debes aceptar la política de privacidad'
+    if (!formData.name.trim()) newErrors.name = t.errName
+    if (!formData.email.trim()) newErrors.email = t.errEmail
+    else if (!validateEmail(formData.email)) newErrors.email = t.errEmailInvalid
+    if (!formData.inquiry_type) newErrors.inquiry_type = t.errInquiry
+    if (!formData.message.trim()) newErrors.message = t.errMessage
+    else if (formData.message.length < 20) newErrors.message = t.errMessageShort
+    if (!formData.privacy) newErrors.privacy = t.errPrivacy
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0
   }
@@ -92,17 +136,18 @@ export default function ContactForm() {
           ...formData,
           gdpr_consent: formData.privacy,
           form_started_at: formStartedAt,
+          lang,
         }),
       })
       if (!res.ok) {
         const data = await res.json().catch(() => ({}))
-        setErrors({ submit: data.error || 'No se pudo enviar. Inténtalo de nuevo.' })
+        setErrors({ submit: lang === 'en' ? t.errSubmit : data.error || t.errSubmit })
         return
       }
       setIsSubmitted(true)
     } catch (error) {
       console.error('Error submitting form:', error)
-      setErrors({ submit: 'No se pudo enviar. Inténtalo de nuevo.' })
+      setErrors({ submit: t.errSubmit })
     } finally {
       setIsSubmitting(false)
     }
@@ -119,11 +164,9 @@ export default function ContactForm() {
     <section className={styles.contactForm} id="formulario">
       <div className={styles.split}>
         <aside className={styles.infoCol}>
-          <span className={styles.sectionLabel}>Hablemos</span>
-          <h2 className={styles.infoTitle}>Cuéntanos qué necesitas</h2>
-          <p className={styles.infoLead}>
-            Particular o empresa, el servicio que te interesa y de dónde nos has oído. Te preparamos una propuesta sin compromiso.
-          </p>
+          <span className={styles.sectionLabel}>{t.label}</span>
+          <h2 className={styles.infoTitle}>{t.infoTitle}</h2>
+          <p className={styles.infoLead}>{t.infoLead}</p>
           <ul className={styles.infoList}>
             <li>
               <Mail size={20} strokeWidth={2} aria-hidden="true" />
@@ -135,22 +178,22 @@ export default function ContactForm() {
             <li>
               <Phone size={20} strokeWidth={2} aria-hidden="true" />
               <div>
-                <strong>Teléfono</strong>
+                <strong>{t.phone}</strong>
                 <a href="tel:+34626823404">+34 626 82 34 04</a>
               </div>
             </li>
             <li>
               <Clock size={20} strokeWidth={2} aria-hidden="true" />
               <div>
-                <strong>Horario</strong>
-                <span>Lunes a viernes, 9:00–18:00</span>
+                <strong>{t.hours}</strong>
+                <span>{t.hoursValue}</span>
               </div>
             </li>
             <li>
               <MapPin size={20} strokeWidth={2} aria-hidden="true" />
               <div>
-                <strong>Ubicación</strong>
-                <span>{formatShortAddress()} · presencial con cita</span>
+                <strong>{t.location}</strong>
+                <span>{formatShortAddress()} · {t.locationSuffix}</span>
               </div>
             </li>
           </ul>
@@ -160,8 +203,8 @@ export default function ContactForm() {
           {isSubmitted ? (
             <div className={styles.successBlock}>
               <CheckCircle size={40} strokeWidth={2} aria-hidden="true" />
-              <h3>¡Mensaje enviado!</h3>
-              <p>Gracias por contactar con nosotros. Te responderemos en menos de 24 horas.</p>
+              <h3>{t.sentTitle}</h3>
+              <p>{t.sentText}</p>
               <button
                 type="button"
                 className={styles.submitBtn}
@@ -171,18 +214,18 @@ export default function ContactForm() {
                   setFormStartedAt(Date.now())
                 }}
               >
-                Enviar otro mensaje
+                {t.sendAnother}
               </button>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className={styles.form} noValidate>
               <div className={styles.formIntro}>
-                <h2>Envíanos un mensaje</h2>
-                <p>Cuéntanos tu proyecto y nos pondremos en contacto contigo.</p>
+                <h2>{t.formTitle}</h2>
+                <p>{t.formText}</p>
               </div>
 
               <div className={styles.formGroup}>
-                <p className={styles.radioLegend}>Tipo de consulta</p>
+                <p className={styles.radioLegend}>{t.typeLegend}</p>
                 <div className={styles.radioRow}>
                   <label>
                     <input
@@ -192,7 +235,7 @@ export default function ContactForm() {
                       checked={formData.contact_type === 'particular'}
                       onChange={handleChange}
                     />
-                    Particular
+                    {t.individual}
                   </label>
                   <label>
                     <input
@@ -202,7 +245,7 @@ export default function ContactForm() {
                       checked={formData.contact_type === 'professional'}
                       onChange={handleChange}
                     />
-                    Empresa
+                    {t.business}
                   </label>
                 </div>
               </div>
@@ -222,41 +265,41 @@ export default function ContactForm() {
 
               {formData.contact_type === 'professional' && (
                 <div className={styles.formGroup}>
-                  <label htmlFor="company">Empresa</label>
+                  <label htmlFor="company">{t.company}</label>
                   <input
                     type="text"
                     id="company"
                     name="company"
                     value={formData.company}
                     onChange={handleChange}
-                    placeholder="Nombre de tu empresa"
+                    placeholder={t.companyPh}
                   />
                 </div>
               )}
 
               <div className={styles.formRow}>
                 <div className={styles.formGroup}>
-                  <label htmlFor="name">Nombre *</label>
+                  <label htmlFor="name">{t.name}</label>
                   <input
                     type="text"
                     id="name"
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
-                    placeholder="Tu nombre completo"
+                    placeholder={t.namePh}
                     aria-invalid={Boolean(errors.name)}
                   />
                   {errors.name && <span className={styles.fieldError}>{errors.name}</span>}
                 </div>
                 <div className={styles.formGroup}>
-                  <label htmlFor="email">Email *</label>
+                  <label htmlFor="email">{t.email}</label>
                   <input
                     type="email"
                     id="email"
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    placeholder="tu@email.com"
+                    placeholder={lang === 'en' ? 'you@email.com' : 'tu@email.com'}
                     aria-invalid={Boolean(errors.email)}
                   />
                   {errors.email && <span className={styles.fieldError}>{errors.email}</span>}
@@ -265,18 +308,18 @@ export default function ContactForm() {
 
               <div className={styles.formRow}>
                 <div className={styles.formGroup}>
-                  <label htmlFor="phone">Teléfono</label>
+                  <label htmlFor="phone">{t.phoneLabel}</label>
                   <input
                     type="tel"
                     id="phone"
                     name="phone"
                     value={formData.phone}
                     onChange={handleChange}
-                    placeholder="+34 600 000 000"
+                    placeholder={t.phonePh}
                   />
                 </div>
                 <div className={styles.formGroup}>
-                  <label htmlFor="inquiry_type">Tipo de consulta *</label>
+                  <label htmlFor="inquiry_type">{t.inquiry}</label>
                   <select
                     id="inquiry_type"
                     name="inquiry_type"
@@ -284,8 +327,8 @@ export default function ContactForm() {
                     onChange={handleChange}
                     aria-invalid={Boolean(errors.inquiry_type)}
                   >
-                    <option value="">Selecciona un servicio</option>
-                    {INQUIRY_OPTIONS.map((opt) => (
+                    <option value="">{t.inquiryPh}</option>
+                    {inquiryOptions.map((opt) => (
                       <option key={opt.value} value={opt.value}>
                         {opt.label}
                       </option>
@@ -296,30 +339,30 @@ export default function ContactForm() {
               </div>
 
               <div className={styles.formGroup}>
-                <label htmlFor="referral_source">¿Cómo nos has conocido?</label>
+                <label htmlFor="referral_source">{t.referral}</label>
                 <select
                   id="referral_source"
                   name="referral_source"
                   value={formData.referral_source}
                   onChange={handleChange}
                 >
-                  <option value="">Selecciona una opción</option>
-                  <option value="google">Búsqueda en Google</option>
-                  <option value="social">Redes sociales</option>
-                  <option value="referral">Recomendación</option>
-                  <option value="other">Otro</option>
+                  <option value="">{t.referralPh}</option>
+                  <option value="google">{t.referralGoogle}</option>
+                  <option value="social">{t.referralSocial}</option>
+                  <option value="referral">{t.referralRecommendation}</option>
+                  <option value="other">{t.referralOther}</option>
                 </select>
               </div>
 
               <div className={styles.formGroup}>
-                <label htmlFor="message">Mensaje *</label>
+                <label htmlFor="message">{t.message}</label>
                 <textarea
                   id="message"
                   name="message"
                   value={formData.message}
                   onChange={handleChange}
                   rows={6}
-                  placeholder="Cuéntanos sobre tu proyecto..."
+                  placeholder={t.messagePh}
                   aria-invalid={Boolean(errors.message)}
                 />
                 {errors.message && <span className={styles.fieldError}>{errors.message}</span>}
@@ -334,9 +377,9 @@ export default function ContactForm() {
                   onChange={handleChange}
                 />
                 <label htmlFor="privacy">
-                  He leído y acepto la{' '}
+                  {t.privacyPre}{' '}
                   <a href="/politica-privacidad" target="_blank" rel="noreferrer">
-                    política de privacidad
+                    {t.privacyLink}
                   </a>
                   . *
                 </label>
@@ -345,7 +388,7 @@ export default function ContactForm() {
               {errors.submit && <span className={styles.fieldError}>{errors.submit}</span>}
 
               <button type="submit" disabled={isSubmitting} className={styles.submitBtn}>
-                {isSubmitting ? 'Enviando...' : 'Enviar mensaje →'}
+                {isSubmitting ? t.sending : t.submit}
               </button>
             </form>
           )}

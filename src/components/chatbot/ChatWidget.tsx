@@ -4,11 +4,15 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
 import { ChevronLeft, MessageCircle, RefreshCw, Send, X } from 'lucide-react'
 import {
-  placeholder,
-  topicMenus,
-  welcomeMessage,
+  placeholder as placeholderEs,
+  placeholderEn,
+  topicMenus as topicMenusEs,
+  topicMenusEn,
+  welcomeMessage as welcomeMessageEs,
+  welcomeMessageEn,
   type MenuItem,
 } from '@/lib/chatbot/menus'
+import { langFromPath } from '@/lib/i18n'
 import { isInternalEskalaUrl, renderChatMarkdown } from '@/lib/chatbot/markdown'
 import styles from './ChatWidget.module.css'
 
@@ -31,6 +35,24 @@ export default function ChatWidget() {
   const pathname = usePathname()
   const router = useRouter()
   const hidden = pathname.startsWith('/administrator')
+  const lang = langFromPath(pathname)
+  const en = lang === 'en'
+  const welcomeMessage = en ? welcomeMessageEn : welcomeMessageEs
+  const topicMenus = en ? topicMenusEn : topicMenusEs
+  const placeholder = en ? placeholderEn : placeholderEs
+
+  useEffect(() => {
+    // El layout raíz va con lang="es"; las rutas /en lo cambian aquí porque el chat está en todas las páginas.
+    document.documentElement.lang = lang
+  }, [lang])
+
+  useEffect(() => {
+    setMessages((m) =>
+      m.length === 1 && (m[0].content === welcomeMessageEs || m[0].content === welcomeMessageEn)
+        ? [{ ...m[0], content: welcomeMessage }]
+        : m
+    )
+  }, [welcomeMessage])
 
   const [open, setOpen] = useState(false)
   const [sessionId, setSessionId] = useState('')
@@ -100,6 +122,7 @@ export default function ChatWidget() {
             sessionId,
             conversationId: conversationId ?? undefined,
             text: trimmed,
+            lang,
           }),
         })
 
@@ -150,7 +173,9 @@ export default function ChatWidget() {
             x.id === assistantId
               ? {
                   ...x,
-                  content: `Lo siento, ha ocurrido un error: ${msg}. Puedes escribir a contacto@eskaladigital.com o llamar al +34 626 82 34 04.`,
+                  content: en
+                    ? `Sorry, something went wrong: ${msg}. You can write to contacto@eskaladigital.com or call +34 626 82 34 04.`
+                    : `Lo siento, ha ocurrido un error: ${msg}. Puedes escribir a contacto@eskaladigital.com o llamar al +34 626 82 34 04.`,
                 }
               : x
           )
@@ -159,7 +184,7 @@ export default function ChatWidget() {
         setStreaming(false)
       }
     },
-    [conversationId, sessionId, streaming]
+    [conversationId, sessionId, streaming, lang, en]
   )
 
   const handleLinkClick = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -187,7 +212,7 @@ export default function ChatWidget() {
           type="button"
           onClick={() => persistOpen(true)}
           className={styles.fab}
-          aria-label="Abrir chat de ESKALA"
+          aria-label={en ? 'Open ESKALA chat' : 'Abrir chat de ESKALA'}
         >
           <MessageCircle className={styles.fabIcon} />
           <span className={styles.fabLabel}>Chat ESKALA</span>
@@ -199,13 +224,13 @@ export default function ChatWidget() {
           <div className={styles.header}>
             <div>
               <p className={styles.headerTitle}>{ASSISTANT_NAME} · ESKALA</p>
-              <p className={styles.headerSub}>Marketing digital en Murcia</p>
+              <p className={styles.headerSub}>{en ? 'Digital studio · Spain' : 'Marketing digital en Murcia'}</p>
             </div>
             <div className={styles.headerActions}>
-              <button type="button" onClick={refreshConversation} className={styles.iconBtn} title="Nueva conversación">
+              <button type="button" onClick={refreshConversation} className={styles.iconBtn} title={en ? 'New conversation' : 'Nueva conversación'}>
                 <RefreshCw className={styles.icon} />
               </button>
-              <button type="button" onClick={() => persistOpen(false)} className={styles.iconBtn} aria-label="Cerrar">
+              <button type="button" onClick={() => persistOpen(false)} className={styles.iconBtn} aria-label={en ? 'Close' : 'Cerrar'}>
                 <X className={styles.iconLg} />
               </button>
             </div>
@@ -242,7 +267,7 @@ export default function ChatWidget() {
                     className={styles.back}
                     onClick={() => setMenuLevel(null)}
                   >
-                    <ChevronLeft className={styles.iconSm} /> Volver
+                    <ChevronLeft className={styles.iconSm} /> {en ? 'Back' : 'Volver'}
                   </button>
                   <div className={styles.chips}>
                     {menuLevel.map((item) => (
@@ -300,7 +325,7 @@ export default function ChatWidget() {
               onClick={() => sendMessage(input)}
               disabled={streaming || !input.trim()}
               className={styles.send}
-              aria-label="Enviar"
+              aria-label={en ? 'Send' : 'Enviar'}
             >
               <Send className={styles.iconLg} />
             </button>

@@ -10,6 +10,7 @@ import {
   streamChatCompletion,
   toOpenAIMessages,
 } from '@/lib/chatbot/chat-service'
+import { LANG_PROMPT_EN } from '@/lib/chatbot/menus'
 
 function sseLine(data: Record<string, unknown>): string {
   return `data: ${JSON.stringify(data)}\n\n`
@@ -36,6 +37,7 @@ export async function POST(request: Request) {
     sessionId?: string
     conversationId?: string
     text?: string
+    lang?: string
   }
 
   try {
@@ -58,7 +60,8 @@ export async function POST(request: Request) {
     const conversationId = await getOrCreateConversation(sb, sessionId, body.conversationId)
     const history = await loadConversationHistory(sb, conversationId)
     const { systemPrompt } = await prepareChatContext(sb, text, history)
-    const openaiMessages = toOpenAIMessages(history, systemPrompt, text)
+    const prompt = body.lang === 'en' ? `${systemPrompt}\n${LANG_PROMPT_EN}` : systemPrompt
+    const openaiMessages = toOpenAIMessages(history, prompt, text)
 
     await saveMessage(sb, conversationId, 'user', text)
 

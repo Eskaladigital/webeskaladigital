@@ -4,6 +4,8 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import Link from 'next/link'
 import { Sora } from 'next/font/google'
 import { Monitor, Search, Share2, Target, Cpu, Bot, Palette, Mail, type LucideIcon } from 'lucide-react'
+import { SERVICES, UI, counterpartPath, href, type Lang } from '@/lib/i18n'
+import { HOME_EN } from '@/lib/en-content'
 import styles from './HomeStripes.module.css'
 
 const sora = Sora({
@@ -173,9 +175,53 @@ const SECTION_CTA_LABELS: Record<string, string> = {
   universo: 'Explorar servicios',
 }
 
-function getSectionLinks(section: Section): SectionLink[] {
+function getSectionLinks(section: Section, lang: Lang): SectionLink[] {
   if (section.links?.length) return section.links
-  return [{ label: SECTION_CTA_LABELS[section.id] ?? 'Ver más', href: section.route }]
+  const labels = lang === 'en' ? HOME_EN.ctaLabels : SECTION_CTA_LABELS
+  return [{ label: labels[section.id] ?? (lang === 'en' ? HOME_EN.more : 'Ver más'), href: section.route }]
+}
+
+function englishSections(): Section[] {
+  return SECCIONES.map((section) => ({
+    ...section,
+    ...HOME_EN.sections[section.id],
+    route: href(section.route, 'en'),
+    links: section.links
+      ? [
+          { label: HOME_EN.allServices, href: href('/servicios', 'en') },
+          ...SERVICES.map((s) => ({
+            label: s.enLabel,
+            href: href(`/servicios/${s.slug}`, 'en'),
+            ghost: true,
+          })),
+        ]
+      : undefined,
+  }))
+}
+
+const HOME_ES = {
+  brandSub: 'Marketing Digital',
+  tagline: 'Explora · Descubre · Escala',
+  hint: 'Cada franja es una sección · Click para entrar',
+  navLabel: 'Navegación de secciones',
+  prev: 'Sección anterior',
+  next: 'Sección siguiente',
+  goTo: 'Ir a',
+  close: '✕ Cerrar',
+  kicker: 'Desde 2020 · Murcia y la Región',
+  h1: 'Agencia de marketing digital',
+  h1Span: 'en Murcia',
+  lead: 'Hacemos crecer tu negocio con marketing digital que funciona. Somos <strong>ESKALA</strong>: diseño web, SEO local, redes sociales, Google Ads y aplicaciones con IA para empresas de Murcia, Cartagena, Lorca y toda la Región.',
+  ctaPrimary: 'Hablemos de tu proyecto →',
+  ctaGhost: 'Ver servicios',
+  servicesLabel: 'Qué hacemos',
+  servicesTitle: 'Servicios de marketing digital en Murcia',
+  servicesDesc: 'Todo lo que tu negocio necesita para crecer en internet, bajo un mismo equipo.',
+  whyLabel: 'Por qué ESKALA',
+  whyTitle: 'Una agencia cercana, con resultados medibles',
+  finalTitle: '¿Listo para <span>escalar</span> tu negocio?',
+  finalText: 'Cuéntanos tu proyecto y diseñamos una estrategia de marketing digital a tu medida.',
+  finalCta: 'Empezar ahora →',
 }
 
 const services: { slug: string; Icon: LucideIcon; title: string; desc: string }[] = [
@@ -212,9 +258,19 @@ function SectionCta({ link, ink, top }: { link: SectionLink; ink: string; top: s
   )
 }
 
-export default function HomeStripes() {
+export default function HomeStripes({ lang = 'es' }: { lang?: Lang }) {
   const [openIndex, setOpenIndex] = useState(-1)
   const isOpen = openIndex >= 0
+  const SECCIONES_L = useMemo(() => (lang === 'en' ? englishSections() : SECCIONES), [lang])
+  const copy = lang === 'en' ? HOME_EN : HOME_ES
+  const serviceCards =
+    lang === 'en'
+      ? services.map((service) => {
+          const s = SERVICES.find((x) => x.slug === service.slug)!
+          return { ...service, title: s.enLabel, desc: HOME_EN.services[service.slug] }
+        })
+      : services
+  const reasonCards = lang === 'en' ? HOME_EN.reasons : reasons
 
   const starSets = useMemo(
     () =>
@@ -340,7 +396,7 @@ export default function HomeStripes() {
     <>
       <div className={`${styles.heroRoot} ${sora.variable}`}>
         <div className={styles.stage} data-open={isOpen ? '' : undefined} id="stage">
-          {SECCIONES.map((section, index) => (
+          {SECCIONES_L.map((section, index) => (
             <div
               key={section.id}
               className={`${styles.stripe} ${openIndex === index ? styles.stripeOpen : ''}`}
@@ -389,7 +445,7 @@ export default function HomeStripes() {
                   <p className={styles.fullText}>{section.p}</p>
                   <p className={styles.feat} dangerouslySetInnerHTML={{ __html: section.feat }} />
                   <div className={styles.ctas}>
-                    {getSectionLinks(section).map((link) => (
+                    {getSectionLinks(section, lang).map((link) => (
                       <SectionCta key={link.href} link={link} ink={section.ink} top={section.top} />
                     ))}
                   </div>
@@ -401,58 +457,60 @@ export default function HomeStripes() {
 
         <div className={`${styles.centerBrand} ${isOpen ? styles.hiddenWhenOpen : ''}`}>
           <h1>ESKALA</h1>
-          <p>Marketing Digital</p>
+          <p>{copy.brandSub}</p>
         </div>
 
-        <div className={`${styles.tagline} ${isOpen ? styles.hiddenWhenOpen : ''}`}>Explora · Descubre · Escala</div>
+        <div className={`${styles.tagline} ${isOpen ? styles.hiddenWhenOpen : ''}`}>{copy.tagline}</div>
 
-        <nav className={`${styles.nav} ${isOpen ? styles.navVisible : ''}`} aria-label="Navegación de secciones">
-          <button type="button" aria-label="Sección anterior" onClick={() => openStripe(openIndex - 1)}>
+        <Link
+          href={counterpartPath(href('/', lang))}
+          hrefLang={lang === 'en' ? 'es' : 'en'}
+          title={UI[lang].switchTitle}
+          className={`${styles.langSwitch} ${isOpen ? styles.hiddenWhenOpen : ''}`}
+        >
+          {UI[lang].switchLabel}
+        </Link>
+
+        <nav className={`${styles.nav} ${isOpen ? styles.navVisible : ''}`} aria-label={copy.navLabel}>
+          <button type="button" aria-label={copy.prev} onClick={() => openStripe(openIndex - 1)}>
             ←
           </button>
           <div className={styles.dots}>
-            {SECCIONES.map((section, index) => (
+            {SECCIONES_L.map((section, index) => (
               <button
                 key={section.id}
                 type="button"
                 className={`${styles.dot} ${openIndex === index ? styles.dotOn : ''}`}
-                aria-label={`Ir a ${section.t}`}
+                aria-label={`${copy.goTo} ${section.t}`}
                 onClick={() => openStripe(index)}
               />
             ))}
           </div>
-          <button type="button" aria-label="Sección siguiente" onClick={() => openStripe(openIndex + 1)}>
+          <button type="button" aria-label={copy.next} onClick={() => openStripe(openIndex + 1)}>
             →
           </button>
           <button type="button" className={styles.navClose} onClick={closeAll}>
-            ✕ Cerrar
+            {copy.close}
           </button>
         </nav>
 
-        <p className={`${styles.hint} ${isOpen ? styles.hiddenWhenOpen : ''}`}>
-          Cada franja es una sección · Click para entrar
-        </p>
+        <p className={`${styles.hint} ${isOpen ? styles.hiddenWhenOpen : ''}`}>{copy.hint}</p>
       </div>
 
       <main className={styles.content}>
         <section className={styles.intro}>
           <div className={styles.introInner}>
-            <span className={styles.kicker}>Desde 2020 · Murcia y la Región</span>
+            <span className={styles.kicker}>{copy.kicker}</span>
             <h1 className={styles.h1}>
-              Agencia de marketing digital{' '}
-              <span>en Murcia</span>
+              {copy.h1} <span>{copy.h1Span}</span>
             </h1>
-            <p className={styles.lead}>
-              Hacemos crecer tu negocio con marketing digital que funciona. Somos{' '}
-              <strong>ESKALA</strong>: diseño web, SEO local, redes sociales, Google Ads y
-              aplicaciones con IA para empresas de Murcia, Cartagena, Lorca y toda la Región.
-            </p>
+            <p className={styles.lead} dangerouslySetInnerHTML={{ __html: copy.lead }} />
             <div className={styles.ctaRow}>
-              <Link href="/contacto" className={`${styles.btn} ${styles.btnPrimary}`}>
-                Hablemos de tu proyecto →
+              <Link href={href('/contacto', lang)} className={`${styles.btn} ${styles.btnPrimary}`}>
+                {copy.ctaPrimary}
               </Link>
-              <Link href="/servicios" className={`${styles.btn} ${styles.btnGhost}`}>
-                Ver servicios
+              <Link href={href('/servicios', lang)} className={`${styles.btn} ${styles.btnGhost}`}>
+                {copy.ctaGhost}
               </Link>
             </div>
           </div>
@@ -461,17 +519,15 @@ export default function HomeStripes() {
         <section className={styles.servicesSeo}>
           <div className={styles.sectionInner}>
             <header className={styles.sectionHead}>
-              <span className={styles.sectionLabel}>Qué hacemos</span>
-              <h2 className={styles.h2}>Servicios de marketing digital en Murcia</h2>
-              <p className={styles.sectionDesc}>
-                Todo lo que tu negocio necesita para crecer en internet, bajo un mismo equipo.
-              </p>
+              <span className={styles.sectionLabel}>{copy.servicesLabel}</span>
+              <h2 className={styles.h2}>{copy.servicesTitle}</h2>
+              <p className={styles.sectionDesc}>{copy.servicesDesc}</p>
             </header>
             <div className={styles.serviceGrid}>
-              {services.map((service) => (
+              {serviceCards.map((service) => (
                 <Link
                   key={service.slug}
-                  href={`/servicios/${service.slug}`}
+                  href={href(`/servicios/${service.slug}`, lang)}
                   className={styles.serviceCard}
                 >
                   <span className={styles.serviceIcon}>
@@ -488,13 +544,11 @@ export default function HomeStripes() {
         <section className={styles.why}>
           <div className={styles.sectionInner}>
             <header className={styles.sectionHead}>
-              <span className={styles.sectionLabel}>Por qué ESKALA</span>
-              <h2 className={`${styles.h2} ${styles.h2White}`}>
-                Una agencia cercana, con resultados medibles
-              </h2>
+              <span className={styles.sectionLabel}>{copy.whyLabel}</span>
+              <h2 className={`${styles.h2} ${styles.h2White}`}>{copy.whyTitle}</h2>
             </header>
             <div className={styles.whyGrid}>
-              {reasons.map((reason) => (
+              {reasonCards.map((reason) => (
                 <article key={reason.num} className={styles.whyCard}>
                   <span className={styles.whyNum}>{reason.num}</span>
                   <h3 className={styles.whyTitle}>{reason.title}</h3>
@@ -506,17 +560,14 @@ export default function HomeStripes() {
         </section>
 
         <section className={styles.finalCta}>
-          <h2 className={styles.ctaTitle}>
-            ¿Listo para <span>escalar</span> tu negocio?
-          </h2>
-          <p className={styles.ctaText}>
-            Cuéntanos tu proyecto y diseñamos una estrategia de marketing digital a tu medida.
-          </p>
-          <Link href="/contacto" className={styles.ctaBtn}>
-            Empezar ahora →
+          <h2 className={styles.ctaTitle} dangerouslySetInnerHTML={{ __html: copy.finalTitle }} />
+          <p className={styles.ctaText}>{copy.finalText}</p>
+          <Link href={href('/contacto', lang)} className={styles.ctaBtn}>
+            {copy.finalCta}
           </Link>
         </section>
       </main>
     </>
   )
 }
+

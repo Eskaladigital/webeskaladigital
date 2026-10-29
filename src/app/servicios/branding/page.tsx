@@ -5,6 +5,7 @@ import ServiceBenefits from '@/components/sections/ServicioDetalle/ServiceBenefi
 import ServiceProcess from '@/components/sections/ServicioDetalle/ServiceProcess'
 import ServiceTestimonial from '@/components/sections/ServicioDetalle/ServiceTestimonial'
 import ServiceCTA from '@/components/sections/ServicioDetalle/ServiceCTA'
+import { languageAlternates } from '@/lib/i18n'
 
 export const metadata = {
   title: 'Branding y Diseño de Marca en Murcia | Logo e Identidad Visual | ESKALA',
@@ -41,9 +42,7 @@ export const metadata = {
     description: 'Diseño de marca e identidad visual profesional para empresas.',
     images: ['/eskala_digital_opengraph.png'],
   },
-  alternates: { 
-    canonical: 'https://www.eskaladigital.com/servicios/branding' 
-  },
+  alternates: languageAlternates('/servicios/branding', 'es'),
 }
 
 const heroData = {

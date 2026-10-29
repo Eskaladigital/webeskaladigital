@@ -1,6 +1,7 @@
 import HomeStripes from '@/components/sections/Home/HomeStripes'
 import { Footer } from '@/components/layout/Footer'
 import type { Metadata } from 'next'
+import { languageAlternates } from '@/lib/i18n'
 
 export const metadata: Metadata = {
   title: 'ESKALA | Agencia de Marketing Digital en Murcia',
@@ -34,9 +35,7 @@ export const metadata: Metadata = {
     description: 'Hacemos crecer tu negocio con estrategias de marketing digital que funcionan.',
     images: ['/eskala_digital_opengraph.png'],
   },
-  alternates: {
-    canonical: 'https://www.eskaladigital.com',
-  },
+  alternates: languageAlternates('/', 'es'),
 }
 
 export default function HomePage() {

@@ -4,6 +4,7 @@ import Testimonials from '@/components/sections/Exitos/Testimonials'
 import Results from '@/components/sections/Exitos/Results'
 import CTA from '@/components/sections/Exitos/CTA'
 import type { Metadata } from 'next'
+import { languageAlternates } from '@/lib/i18n'
 
 export const metadata: Metadata = {
   title: 'Casos de Éxito | Resultados Reales de Marketing Digital',
@@ -36,9 +37,7 @@ export const metadata: Metadata = {
     description: 'Resultados reales de nuestros clientes. Testimonios y métricas que demuestran nuestro trabajo.',
     images: ['/eskala_digital_opengraph.png'],
   },
-  alternates: {
-    canonical: 'https://www.eskaladigital.com/exitos',
-  },
+  alternates: languageAlternates('/exitos', 'es'),
 }
 
 export default function ExitosPage() {

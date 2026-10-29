@@ -77,6 +77,7 @@ export async function POST(request: Request) {
     const gdprConsent = Boolean(body.gdpr_consent || body.privacy)
     const website = String(body.website || '').trim()
     const startedAt = String(body.form_started_at || '')
+    const lang = body.lang === 'en' ? 'en' : 'es'
 
     if (!name || !email || !message) {
       return NextResponse.json({ error: 'Faltan campos obligatorios' }, { status: 400 })
@@ -125,6 +126,7 @@ export async function POST(request: Request) {
         inquiryType,
         referralSource,
         message,
+        lang,
       })
     } catch (mailError) {
       console.error('Contact email error:', mailError)

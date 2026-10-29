@@ -2,23 +2,24 @@
 
 import styles from './Hero.module.css'
 import Link from 'next/link'
+import { heroStripes, href, type Lang } from '@/lib/i18n'
+import { SUCCESS_EN } from '@/lib/en-content'
 
-const stripes = [
-  { label: 'Inicio', href: '/' },
-  { label: 'Nosotros', href: '/quienes-somos' },
-  { label: 'Método', href: '/metodologia' },
-  { label: 'Servicios', href: '/servicios' },
-  { label: 'Portfolio', href: '/portfolio' },
-  { label: 'Éxitos', href: '/exitos' },
-  { label: 'Blog', href: '/blog' },
-  { label: 'Contacto', href: '/contacto' },
-]
+const ES = {
+  badge: '▲ Casos de Éxito',
+  title: 'Clientes felices,',
+  titleSpan: 'resultados reales',
+  desc: 'No vendemos humo. Descubre lo que nuestros clientes dicen sobre trabajar con ESKALA y los resultados que hemos conseguido juntos.',
+  primary: 'Únete a ellos →',
+  secondary: 'Ver proyectos',
+}
 
-export default function Hero() {
+export default function Hero({ lang = 'es' }: { lang?: Lang }) {
+  const t = lang === 'en' ? SUCCESS_EN.hero : ES
   return (
     <section className={styles.hero}>
       <div className={styles.heroStripes}>
-        {stripes.map((stripe, index) => (
+        {heroStripes(lang).map((stripe, index) => (
           <Link key={index} href={stripe.href}>
             <span className={styles.heroStripeLabel}>{stripe.label}</span>
           </Link>
@@ -26,34 +27,20 @@ export default function Hero() {
       </div>
 
       <div className={styles.heroContent}>
-        <div className={styles.heroBadge}>▲ Casos de Éxito</div>
+        <div className={styles.heroBadge}>{t.badge}</div>
         <h1 className={styles.heroTitle}>
-          Clientes felices, <span>resultados reales</span>
+          {t.title} <span>{t.titleSpan}</span>
         </h1>
-        <p className={styles.heroDesc}>
-          No vendemos humo. Descubre lo que nuestros clientes dicen sobre trabajar 
-          con ESCALA y los resultados que hemos conseguido juntos.
-        </p>
+        <p className={styles.heroDesc}>{t.desc}</p>
         <div className={styles.heroButtons}>
-          <Link href="/contacto" className={`${styles.btn} ${styles.btnPrimary}`}>
-            Únete a ellos →
+          <Link href={href('/contacto', lang)} className={`${styles.btn} ${styles.btnPrimary}`}>
+            {t.primary}
           </Link>
-          <Link href="/portfolio" className={`${styles.btn} ${styles.btnSecondary}`}>
-            Ver proyectos
+          <Link href={href('/portfolio', lang)} className={`${styles.btn} ${styles.btnSecondary}`}>
+            {t.secondary}
           </Link>
         </div>
       </div>
     </section>
   )
 }
-
-
-
-
-
-
-
-
-
-
-

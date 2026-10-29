@@ -2,13 +2,18 @@
 
 import Link from 'next/link'
 import styles from './ServiceCTA.module.css'
+import { CONTACT_PHONE_TEL } from '@/lib/site'
+import { href, type Lang } from '@/lib/i18n'
+import { SERVICE_SECTIONS_EN } from '@/lib/en-content'
 
 interface ServiceCTAProps {
   title: string
   subtitle: string
+  lang?: Lang
 }
 
-export default function ServiceCTA({ title, subtitle }: ServiceCTAProps) {
+export default function ServiceCTA({ title, subtitle, lang = 'es' }: ServiceCTAProps) {
+  const en = lang === 'en'
   return (
     <>
 
@@ -18,11 +23,11 @@ export default function ServiceCTA({ title, subtitle }: ServiceCTAProps) {
           <h2 className={styles.ctaTitle}>{title}</h2>
           <p className={styles.ctaDesc}>{subtitle}</p>
           <div className={styles.ctaButtons}>
-            <Link href="/contacto" className={`${styles.btn} ${styles.btnPrimary}`}>
-              Solicitar presupuesto →
+            <Link href={href('/contacto', lang)} className={`${styles.btn} ${styles.btnPrimary}`}>
+              {en ? SERVICE_SECTIONS_EN.quote : 'Solicitar presupuesto →'}
             </Link>
-            <a href="tel:+34666666666" className={`${styles.btn} ${styles.btnSecondary}`}>
-              📞 Llamar ahora
+            <a href={`tel:${CONTACT_PHONE_TEL}`} className={`${styles.btn} ${styles.btnSecondary}`}>
+              {en ? SERVICE_SECTIONS_EN.call : '📞 Llamar ahora'}
             </a>
           </div>
         </div>
@@ -30,14 +35,3 @@ export default function ServiceCTA({ title, subtitle }: ServiceCTAProps) {
     </>
   )
 }
-
-
-
-
-
-
-
-
-
-
-

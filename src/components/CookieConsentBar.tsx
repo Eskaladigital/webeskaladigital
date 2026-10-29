@@ -2,7 +2,58 @@
 
 import { useCallback, useEffect, useState } from 'react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { BarChart3, Cookie, Megaphone, Settings, Shield, X } from 'lucide-react'
+import { langFromPath } from '@/lib/i18n'
+
+const COPY = {
+  es: {
+    settingsTitle: 'Configuración de cookies',
+    close: 'Cerrar',
+    settingsIntro: 'Elige qué tipos de cookies deseas aceptar. Las cookies necesarias no se pueden desactivar ya que son imprescindibles para el funcionamiento del sitio.',
+    necessary: 'Cookies necesarias',
+    necessaryDesc: 'Estas cookies son esenciales para el funcionamiento del sitio web. Sin ellas, el sitio no funcionaría correctamente.',
+    analytics: 'Cookies analíticas',
+    analyticsDesc: 'Nos permiten contar las visitas y analizar cómo los usuarios navegan por el sitio para mejorarlo (Google Analytics).',
+    functional: 'Cookies funcionales',
+    functionalDesc: 'Permiten recordar tus preferencias para una experiencia más personalizada.',
+    marketing: 'Cookies de marketing',
+    marketingDesc: 'Se utilizan para mostrarte anuncios relevantes y medir la efectividad de las campañas publicitarias.',
+    moreInfo: 'Más información en la',
+    privacy: 'Política de privacidad',
+    rejectAll: 'Rechazar todas',
+    save: 'Guardar preferencias',
+    acceptAll: 'Aceptar todas',
+    bannerLabel: 'Banner de consentimiento de cookies',
+    bannerTitle: 'Utilizamos cookies',
+    bannerText: 'Usamos cookies propias y de terceros para mejorar tu experiencia, analizar el tráfico y mostrarte contenido personalizado. Puedes aceptar todas o configurar tus preferencias.',
+    configure: 'Configurar',
+    always: 'Siempre activas',
+  },
+  en: {
+    settingsTitle: 'Cookie settings',
+    close: 'Close',
+    settingsIntro: 'Choose which cookies you accept. Necessary cookies cannot be switched off because the site needs them to work.',
+    necessary: 'Necessary cookies',
+    necessaryDesc: 'Essential for the website to work. Without them the site would not function properly.',
+    analytics: 'Analytics cookies',
+    analyticsDesc: 'Let us count visits and see how people use the site so we can improve it (Google Analytics).',
+    functional: 'Functional cookies',
+    functionalDesc: 'Remember your preferences for a more personalised experience.',
+    marketing: 'Marketing cookies',
+    marketingDesc: 'Used to show you relevant ads and measure how well campaigns perform.',
+    moreInfo: 'More information in our',
+    privacy: 'Privacy policy (ES)',
+    rejectAll: 'Reject all',
+    save: 'Save preferences',
+    acceptAll: 'Accept all',
+    bannerLabel: 'Cookie consent banner',
+    bannerTitle: 'We use cookies',
+    bannerText: 'We use our own and third-party cookies to improve your experience, analyse traffic and show you relevant content. You can accept them all or choose your preferences.',
+    configure: 'Settings',
+    always: 'Always on',
+  },
+}
 
 export const OPEN_COOKIE_SETTINGS = 'openCookieSettings'
 const KEY = 'eskala_cookie_consent'
@@ -79,6 +130,7 @@ export function CookieSettingsButton({
 export function CookieConsentBar() {
   const [view, setView] = useState<'hidden' | 'banner' | 'settings'>('hidden')
   const [prefs, setPrefs] = useState<Prefs>(ALL_ON)
+  const t = COPY[langFromPath(usePathname() || '/')]
 
   useEffect(() => {
     const stored = readPrefs()
@@ -123,32 +175,32 @@ export function CookieConsentBar() {
           <div className="flex items-center justify-between p-6 border-b border-gray-200">
             <div className="flex items-center gap-3">
               <Cookie className="h-8 w-8 text-orange-500" aria-hidden="true" />
-              <h2 id="cookie-settings-title" className="text-xl font-bold text-slate-900">Configuración de cookies</h2>
+              <h2 id="cookie-settings-title" className="text-xl font-bold text-slate-900">{t.settingsTitle}</h2>
             </div>
-            <button type="button" onClick={() => setView(readPrefs() ? 'hidden' : 'banner')} className="p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-lg" aria-label="Cerrar">
+            <button type="button" onClick={() => setView(readPrefs() ? 'hidden' : 'banner')} className="p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-lg" aria-label={t.close}>
               <X className="h-5 w-5" aria-hidden="true" />
             </button>
           </div>
           <div className="flex-1 overflow-y-auto p-6">
-            <p className="text-slate-600 mb-6">Elige qué tipos de cookies deseas aceptar. Las cookies necesarias no se pueden desactivar ya que son imprescindibles para el funcionamiento del sitio.</p>
+            <p className="text-slate-600 mb-6">{t.settingsIntro}</p>
             <div className="space-y-4">
-              <Category icon={Shield} title="Cookies necesarias" description="Estas cookies son esenciales para el funcionamiento del sitio web. Sin ellas, el sitio no funcionaría correctamente." enabled required />
-              <Category icon={BarChart3} title="Cookies analíticas" description="Nos permiten contar las visitas y analizar cómo los usuarios navegan por el sitio para mejorarlo (Google Analytics)." enabled={prefs.analytics} onChange={(v) => setPrefs((p) => ({ ...p, analytics: v }))} />
-              <Category icon={Settings} title="Cookies funcionales" description="Permiten recordar tus preferencias para una experiencia más personalizada." enabled={prefs.functional} onChange={(v) => setPrefs((p) => ({ ...p, functional: v }))} />
-              <Category icon={Megaphone} title="Cookies de marketing" description="Se utilizan para mostrarte anuncios relevantes y medir la efectividad de las campañas publicitarias." enabled={prefs.marketing} onChange={(v) => setPrefs((p) => ({ ...p, marketing: v }))} />
+              <Category icon={Shield} title={t.necessary} description={t.necessaryDesc} alwaysLabel={t.always} enabled required />
+              <Category icon={BarChart3} title={t.analytics} description={t.analyticsDesc} enabled={prefs.analytics} onChange={(v) => setPrefs((p) => ({ ...p, analytics: v }))} />
+              <Category icon={Settings} title={t.functional} description={t.functionalDesc} enabled={prefs.functional} onChange={(v) => setPrefs((p) => ({ ...p, functional: v }))} />
+              <Category icon={Megaphone} title={t.marketing} description={t.marketingDesc} enabled={prefs.marketing} onChange={(v) => setPrefs((p) => ({ ...p, marketing: v }))} />
             </div>
             <p className="text-sm text-slate-500 mt-6">
-              Más información en la{' '}
+              {t.moreInfo}{' '}
               <Link href="/politica-privacidad" className="text-orange-500 hover:underline" onClick={() => setView('hidden')}>
-                Política de privacidad
+                {t.privacy}
               </Link>
               .
             </p>
           </div>
           <div className="flex flex-col sm:flex-row gap-3 p-6 border-t border-gray-200 bg-slate-50">
-            <button type="button" onClick={rejectAll} className="flex-1 px-4 py-2.5 text-slate-700 border border-slate-300 rounded-lg font-medium hover:bg-white">Rechazar todas</button>
-            <button type="button" onClick={save} className="flex-1 px-4 py-2.5 text-slate-700 bg-white border border-slate-300 rounded-lg font-medium hover:bg-slate-50">Guardar preferencias</button>
-            <button type="button" onClick={acceptAll} className="flex-1 px-4 py-2.5 bg-orange-500 text-white rounded-lg font-medium hover:bg-orange-400">Aceptar todas</button>
+            <button type="button" onClick={rejectAll} className="flex-1 px-4 py-2.5 text-slate-700 border border-slate-300 rounded-lg font-medium hover:bg-white">{t.rejectAll}</button>
+            <button type="button" onClick={save} className="flex-1 px-4 py-2.5 text-slate-700 bg-white border border-slate-300 rounded-lg font-medium hover:bg-slate-50">{t.save}</button>
+            <button type="button" onClick={acceptAll} className="flex-1 px-4 py-2.5 bg-orange-500 text-white rounded-lg font-medium hover:bg-orange-400">{t.acceptAll}</button>
           </div>
         </div>
       </div>
@@ -156,21 +208,21 @@ export function CookieConsentBar() {
   }
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-[200] p-4 bg-white border-t border-slate-200 shadow-lg md:p-6" role="region" aria-label="Banner de consentimiento de cookies">
+    <div className="fixed bottom-0 left-0 right-0 z-[200] p-4 bg-white border-t border-slate-200 shadow-lg md:p-6" role="region" aria-label={t.bannerLabel}>
       <div className="mx-auto max-w-6xl flex flex-col md:flex-row md:items-center gap-4 md:gap-6">
         <div className="flex-1 flex items-start gap-3">
           <Cookie className="h-8 w-8 text-orange-500 flex-shrink-0 mt-1" aria-hidden="true" />
           <div>
-            <h3 className="text-lg font-bold text-slate-900 mb-1">Utilizamos cookies</h3>
+            <h3 className="text-lg font-bold text-slate-900 mb-1">{t.bannerTitle}</h3>
             <p className="text-slate-600 text-sm">
-              Usamos cookies propias y de terceros para mejorar tu experiencia, analizar el tráfico y mostrarte contenido personalizado. Puedes aceptar todas o configurar tus preferencias.{' '}
-              <Link href="/politica-privacidad" className="text-orange-500 hover:underline">Política de privacidad</Link>
+              {t.bannerText}{' '}
+              <Link href="/politica-privacidad" className="text-orange-500 hover:underline">{t.privacy}</Link>
             </p>
           </div>
         </div>
         <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 flex-shrink-0">
-          <button type="button" onClick={() => setView('settings')} className="px-4 py-2 text-slate-700 bg-slate-100 rounded-lg font-medium hover:bg-slate-200 text-sm">Configurar</button>
-          <button type="button" onClick={acceptAll} className="px-4 py-2 bg-orange-500 text-white rounded-lg font-medium hover:bg-orange-400 text-sm">Aceptar todas</button>
+          <button type="button" onClick={() => setView('settings')} className="px-4 py-2 text-slate-700 bg-slate-100 rounded-lg font-medium hover:bg-slate-200 text-sm">{t.configure}</button>
+          <button type="button" onClick={acceptAll} className="px-4 py-2 bg-orange-500 text-white rounded-lg font-medium hover:bg-orange-400 text-sm">{t.acceptAll}</button>
         </div>
       </div>
     </div>
@@ -183,6 +235,7 @@ function Category({
   description,
   enabled,
   required,
+  alwaysLabel,
   onChange,
 }: {
   icon: typeof Shield
@@ -190,6 +243,7 @@ function Category({
   description: string
   enabled: boolean
   required?: boolean
+  alwaysLabel?: string
   onChange?: (v: boolean) => void
 }) {
   return (
@@ -202,7 +256,7 @@ function Category({
           <div className="flex items-center justify-between mb-1 gap-3">
             <h3 className="font-semibold text-slate-900">{title}</h3>
             {required ? (
-              <span className="text-xs bg-gray-200 text-gray-600 px-2 py-1 rounded-full whitespace-nowrap">Siempre activas</span>
+              <span className="text-xs bg-gray-200 text-gray-600 px-2 py-1 rounded-full whitespace-nowrap">{alwaysLabel}</span>
             ) : (
               <label className="relative inline-flex items-center cursor-pointer">
                 <input type="checkbox" className="sr-only peer" checked={enabled} onChange={(e) => onChange?.(e.target.checked)} aria-label={title} />

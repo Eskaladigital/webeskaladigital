@@ -1,6 +1,8 @@
 'use client'
 
 import styles from './Values.module.css'
+import type { Lang } from '@/lib/i18n'
+import { ABOUT_EN } from '@/lib/en-content'
 
 const values = [
   {
@@ -20,17 +22,18 @@ const values = [
   },
 ]
 
-export default function Values() {
+export default function Values({ lang = 'es' }: { lang?: Lang }) {
+  const items = lang === 'en' ? ABOUT_EN.values : values
   return (
     <>
 
       <section className={styles.values} id="valores">
         <div className={`${styles.sectionHeader} fade-up`}>
-          <span className={styles.sectionLabel}>Por qué elegirnos</span>
-          <h2 className={styles.sectionTitle}>Nuestra forma de trabajar</h2>
+          <span className={styles.sectionLabel}>{lang === 'en' ? ABOUT_EN.valuesLabel : 'Por qué elegirnos'}</span>
+          <h2 className={styles.sectionTitle}>{lang === 'en' ? ABOUT_EN.valuesTitle : 'Nuestra forma de trabajar'}</h2>
         </div>
         <div className={styles.valuesGrid}>
-          {values.map((value, index) => (
+          {items.map((value, index) => (
             <div key={index} className={`${styles.valueCard} fade-up`}>
               <div className={styles.valueNumber}>{value.number}</div>
               <h3 className={styles.valueTitle}>{value.title}</h3>
@@ -42,14 +45,3 @@ export default function Values() {
     </>
   )
 }
-
-
-
-
-
-
-
-
-
-
-

@@ -1,6 +1,7 @@
 import { StandardLayout } from '@/components/layout'
 import PortfolioContent from '@/components/sections/Portfolio/PortfolioContent'
 import type { Metadata } from 'next'
+import { languageAlternates } from '@/lib/i18n'
 
 export const metadata: Metadata = {
   title: 'Portfolio | Proyectos de Marketing Digital y Diseño Web',
@@ -33,9 +34,7 @@ export const metadata: Metadata = {
     description: '+50 proyectos exitosos de marketing digital, diseño web y branding.',
     images: ['/eskala_digital_opengraph.png'],
   },
-  alternates: {
-    canonical: 'https://www.eskaladigital.com/portfolio',
-  },
+  alternates: languageAlternates('/portfolio', 'es'),
 }
 
 export default function Portfolio() {

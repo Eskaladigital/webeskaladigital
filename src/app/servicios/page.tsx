@@ -1,5 +1,6 @@
 import Universo3DClient from '@/components/sections/Servicios/Universo3DClient'
 import type { Metadata } from 'next'
+import { languageAlternates } from '@/lib/i18n'
 
 export const metadata: Metadata = {
   title: 'Servicios | ESKALA Marketing Digital',
@@ -39,9 +40,7 @@ export const metadata: Metadata = {
     description: 'Travesía 3D por nuestros 8 servicios de marketing digital en Murcia.',
     images: ['/eskala_digital_opengraph.png'],
   },
-  alternates: {
-    canonical: 'https://www.eskaladigital.com/servicios',
-  },
+  alternates: languageAlternates('/servicios', 'es'),
 }
 
 export default function ServiciosPage() {

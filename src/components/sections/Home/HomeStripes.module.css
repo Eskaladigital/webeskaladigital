@@ -95,6 +95,30 @@
   opacity: 0;
 }
 
+.langSwitch {
+  position: fixed;
+  top: 2.2vh;
+  right: 1.4rem;
+  z-index: 31;
+  padding: 0.4rem 0.75rem;
+  border: 1px solid rgba(244, 242, 238, 0.6);
+  border-radius: 50px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #f4f2ee;
+  text-decoration: none;
+  transition: opacity 0.5s, background 0.2s;
+}
+
+.langSwitch:hover {
+  background: rgba(244, 242, 238, 0.15);
+}
+
+.langSwitch.hiddenWhenOpen {
+  pointer-events: none;
+}
+
 .idle {
   position: absolute;
   inset: 0;

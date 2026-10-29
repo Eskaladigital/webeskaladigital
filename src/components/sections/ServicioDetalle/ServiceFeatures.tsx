@@ -2,6 +2,8 @@
 
 import { useEffect } from 'react'
 import styles from './ServiceFeatures.module.css'
+import type { Lang } from '@/lib/i18n'
+import { SERVICE_SECTIONS_EN } from '@/lib/en-content'
 
 interface Feature {
   icon: string
@@ -12,9 +14,10 @@ interface Feature {
 interface ServiceFeaturesProps {
   features: Feature[]
   title: string
+  lang?: Lang
 }
 
-export default function ServiceFeatures({ features, title }: ServiceFeaturesProps) {
+export default function ServiceFeatures({ features, title, lang = 'es' }: ServiceFeaturesProps) {
   useEffect(() => {
     const fadeElements = document.querySelectorAll('.fade-up')
     const fadeObserver = new IntersectionObserver(
@@ -37,7 +40,7 @@ export default function ServiceFeatures({ features, title }: ServiceFeaturesProp
       
       <section className={styles.features}>
         <div className={`${styles.sectionHeader} fade-up`}>
-          <span className={styles.sectionLabel}>Características</span>
+          <span className={styles.sectionLabel}>{lang === 'en' ? SERVICE_SECTIONS_EN.featuresLabel : 'Características'}</span>
           <h2 className={styles.sectionTitle}>{title}</h2>
         </div>
         <div className={styles.featuresGrid}>

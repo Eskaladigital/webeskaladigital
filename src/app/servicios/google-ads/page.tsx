@@ -5,6 +5,7 @@ import ServiceBenefits from '@/components/sections/ServicioDetalle/ServiceBenefi
 import ServiceProcess from '@/components/sections/ServicioDetalle/ServiceProcess'
 import ServiceTestimonial from '@/components/sections/ServicioDetalle/ServiceTestimonial'
 import ServiceCTA from '@/components/sections/ServicioDetalle/ServiceCTA'
+import { languageAlternates } from '@/lib/i18n'
 
 export const metadata = {
   title: 'Agencia Google Ads en Murcia',
@@ -38,9 +39,7 @@ export const metadata = {
     description: 'Campañas SEM desde Murcia. Más clics, más conversiones, mejor ROI.',
     images: ['/eskala_digital_opengraph.png'],
   },
-  alternates: { 
-    canonical: 'https://www.eskaladigital.com/servicios/google-ads' 
-  },
+  alternates: languageAlternates('/servicios/google-ads', 'es'),
 }
 
 const heroData = {

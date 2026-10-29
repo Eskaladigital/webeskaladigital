@@ -4,6 +4,7 @@ import Process from '@/components/sections/Metodologia/Process'
 import Benefits from '@/components/sections/Metodologia/Benefits'
 import CTA from '@/components/sections/Metodologia/CTA'
 import type { Metadata } from 'next'
+import { languageAlternates } from '@/lib/i18n'
 
 export const metadata: Metadata = {
   title: 'Metodología de Trabajo | Proceso de Marketing Digital',
@@ -36,9 +37,7 @@ export const metadata: Metadata = {
     description: 'Proceso de trabajo transparente y orientado a resultados.',
     images: ['/eskala_digital_opengraph.png'],
   },
-  alternates: {
-    canonical: 'https://www.eskaladigital.com/metodologia',
-  },
+  alternates: languageAlternates('/metodologia', 'es'),
 }
 
 export default function MetodologiaPage() {

@@ -3,6 +3,8 @@
 import styles from './ServiceHero.module.css'
 import Link from 'next/link'
 import { generateServiceBreadcrumb } from '@/lib/site'
+import { heroStripes, href, type Lang } from '@/lib/i18n'
+import { SERVICE_SECTIONS_EN } from '@/lib/en-content'
 
 interface ServiceHeroProps {
   badge: string
@@ -12,18 +14,8 @@ interface ServiceHeroProps {
   stripeColor: number
   jsonLdName?: string
   jsonLdSlug?: string
+  lang?: Lang
 }
-
-const stripes = [
-  { label: 'Inicio', href: '/' },
-  { label: 'Nosotros', href: '/quienes-somos' },
-  { label: 'Método', href: '/metodologia' },
-  { label: 'Servicios', href: '/servicios' },
-  { label: 'Portfolio', href: '/portfolio' },
-  { label: 'Éxitos', href: '/exitos' },
-  { label: 'Blog', href: '/blog' },
-  { label: 'Contacto', href: '/contacto' },
-]
 
 export default function ServiceHero({
   badge,
@@ -32,9 +24,11 @@ export default function ServiceHero({
   description,
   jsonLdName,
   jsonLdSlug,
+  lang = 'es',
 }: ServiceHeroProps) {
   const breadcrumbJsonLd =
     jsonLdName && jsonLdSlug ? generateServiceBreadcrumb(jsonLdName, jsonLdSlug) : null
+  const en = lang === 'en'
 
   return (
     <section className={styles.hero}>
@@ -45,7 +39,7 @@ export default function ServiceHero({
         />
       ) : null}
       <div className={styles.heroStripes}>
-        {stripes.map((stripe, index) => (
+        {heroStripes(lang).map((stripe, index) => (
           <Link key={index} href={stripe.href}>
             <span className={styles.heroStripeLabel}>{stripe.label}</span>
           </Link>
@@ -53,8 +47,8 @@ export default function ServiceHero({
       </div>
 
       <div className={styles.heroContent}>
-        <Link href="/servicios" className={styles.backLink}>
-          ← Volver a servicios
+        <Link href={href('/servicios', lang)} className={styles.backLink}>
+          {en ? SERVICE_SECTIONS_EN.back : '← Volver a servicios'}
         </Link>
         <div className={styles.heroBadge}>{badge}</div>
         <h1 className={styles.heroTitle}>
@@ -62,25 +56,14 @@ export default function ServiceHero({
         </h1>
         <p className={styles.heroDesc}>{description}</p>
         <div className={styles.heroButtons}>
-          <Link href="/contacto" className={`${styles.btn} ${styles.btnPrimary}`}>
-            Solicitar presupuesto →
+          <Link href={href('/contacto', lang)} className={`${styles.btn} ${styles.btnPrimary}`}>
+            {en ? SERVICE_SECTIONS_EN.quote : 'Solicitar presupuesto →'}
           </Link>
-          <Link href="/portfolio" className={`${styles.btn} ${styles.btnSecondary}`}>
-            Ver proyectos
+          <Link href={href('/portfolio', lang)} className={`${styles.btn} ${styles.btnSecondary}`}>
+            {en ? SERVICE_SECTIONS_EN.projects : 'Ver proyectos'}
           </Link>
         </div>
       </div>
     </section>
   )
 }
-
-
-
-
-
-
-
-
-
-
-

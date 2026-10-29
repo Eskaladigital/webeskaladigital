@@ -5,6 +5,7 @@ import ServiceBenefits from '@/components/sections/ServicioDetalle/ServiceBenefi
 import ServiceProcess from '@/components/sections/ServicioDetalle/ServiceProcess'
 import ServiceTestimonial from '@/components/sections/ServicioDetalle/ServiceTestimonial'
 import ServiceCTA from '@/components/sections/ServicioDetalle/ServiceCTA'
+import { languageAlternates } from '@/lib/i18n'
 
 export const metadata = {
   title: 'Gestión de Redes Sociales en Murcia | Community Manager | ESKALA',
@@ -43,9 +44,7 @@ export const metadata = {
     description: 'Community Manager profesional. Contenido que engancha y convierte.',
     images: ['/eskala_digital_opengraph.png'],
   },
-  alternates: { 
-    canonical: 'https://www.eskaladigital.com/servicios/redes-sociales' 
-  },
+  alternates: languageAlternates('/servicios/redes-sociales', 'es'),
 }
 
 const heroData = {

@@ -79,9 +79,9 @@ const C = {
   box: '#fff4ef',
 }
 
-function layout(content: string) {
+function layout(content: string, lang: 'es' | 'en' = 'es') {
   return `<!DOCTYPE html>
-<html lang="es">
+<html lang="${lang}">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>ESKALA</title></head>
 <body style="margin:0;padding:0;background-color:${C.page};font-family:Arial,Helvetica,sans-serif;color:${C.ink};">
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:${C.page};">
@@ -94,7 +94,7 @@ function layout(content: string) {
 <tr><td style="padding:32px;">${content}</td></tr>
 <tr><td style="background-color:${C.page};padding:20px 32px;border-top:1px solid ${C.line};text-align:center;">
 <p style="margin:0;font-size:12px;color:${C.muted};">ESKALA Marketing Digital — www.eskaladigital.com</p>
-<p style="margin:6px 0 0;font-size:11px;color:${C.line};">Este correo se ha enviado de forma automática.</p>
+<p style="margin:6px 0 0;font-size:11px;color:${C.line};">${lang === 'en' ? 'This email was sent automatically.' : 'Este correo se ha enviado de forma automática.'}</p>
 </td></tr>
 </table>
 </td></tr>
@@ -138,6 +138,7 @@ function contactAdminHtml(lead: {
   inquiryType?: string
   referralSource?: string
   message: string
+  lang?: 'es' | 'en'
 }) {
   const isPro = lead.contactType === 'professional'
   const name = escapeHtml(lead.name)
@@ -163,6 +164,7 @@ ${phone ? `<p style="margin:2px 0 0;font-size:13px;">${phone}</p>` : ''}
 <p style="margin:0 0 8px;font-size:11px;font-weight:bold;text-transform:uppercase;color:${C.muted};letter-spacing:1px;">Tipo de consulta</p>
 <p style="margin:0;font-size:13px;"><strong>${isPro ? 'Empresa' : 'Particular'}</strong>${inquiry ? ` — ${inquiry}` : ''}</p>
 ${referral ? `<p style="margin:8px 0 0;font-size:13px;color:${C.muted};">Origen: ${referral}</p>` : ''}
+${lead.lang === 'en' ? `<p style="margin:8px 0 0;font-size:13px;font-weight:bold;color:${C.accent};">Web en inglés (/en): contestar en inglés</p>` : ''}
 </td></tr></table>
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:24px;">
 <tr><td style="padding:16px;border:1px solid ${C.line};">
@@ -173,6 +175,23 @@ ${referral ? `<p style="margin:8px 0 0;font-size:13px;color:${C.muted};">Origen:
 <tr><td align="center">
 <a href="https://www.eskaladigital.com/administrator/contactos" style="display:inline-block;padding:12px 32px;background-color:${C.accent};color:#ffffff;font-size:13px;font-weight:bold;text-transform:uppercase;text-decoration:none;letter-spacing:1px;">Ver en el panel admin</a>
 </td></tr></table>`)
+}
+
+function contactClientHtmlEn(lead: { name: string; message: string }) {
+  const name = escapeHtml(lead.name)
+  const message = escapeHtml(lead.message)
+  return layout(`
+<h1 style="margin:0 0 4px;font-size:20px;font-weight:bold;text-transform:uppercase;color:${C.ink};">We have received your message</h1>
+<p style="margin:0 0 24px;font-size:14px;color:${C.muted};">ESKALA Digital Marketing</p>
+<p style="margin:0 0 16px;font-size:14px;line-height:1.6;">Hi <strong>${name}</strong>,</p>
+<p style="margin:0 0 24px;font-size:14px;line-height:1.6;">Thanks for getting in touch. We will reply within 24 working hours.</p>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:24px;">
+<tr><td style="padding:16px;background-color:${C.box};border:1px solid ${C.line};">
+<p style="margin:0 0 8px;font-size:11px;font-weight:bold;text-transform:uppercase;color:${C.muted};letter-spacing:1px;">Your message</p>
+<p style="margin:0;font-size:13px;line-height:1.6;white-space:pre-wrap;">${message}</p>
+</td></tr></table>
+<p style="margin:0 0 8px;font-size:14px;line-height:1.6;">If you want to add anything, just reply to this email or write to <a href="mailto:contacto@eskaladigital.com" style="color:${C.accent};">contacto@eskaladigital.com</a>.</p>
+<p style="margin:24px 0 0;font-size:14px;line-height:1.6;">ESKALA · Murcia, Spain</p>`, 'en')
 }
 
 function contactClientHtml(lead: { name: string; message: string }) {
@@ -201,19 +220,21 @@ export async function sendContactEmails(lead: {
   inquiryType?: string
   referralSource?: string
   message: string
+  lang?: 'es' | 'en'
 }) {
+  const en = lead.lang === 'en'
   const admin = await sendSmtpEmail({
     from: FROM,
     to: ADMIN,
-    subject: `[Web] Nueva consulta de ${lead.name}${lead.contactType === 'professional' ? ' (Empresa)' : ''}`,
+    subject: `[Web${en ? ' EN' : ''}] Nueva consulta de ${lead.name}${lead.contactType === 'professional' ? ' (Empresa)' : ''}`,
     html: contactAdminHtml(lead),
     replyTo: lead.email,
   })
   const client = await sendSmtpEmail({
     from: FROM,
     to: lead.email,
-    subject: 'Hemos recibido tu consulta — ESKALA',
-    html: contactClientHtml(lead),
+    subject: en ? 'We have received your message — ESKALA' : 'Hemos recibido tu consulta — ESKALA',
+    html: en ? contactClientHtmlEn(lead) : contactClientHtml(lead),
   })
   return { admin, client }
 }

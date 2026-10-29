@@ -5,6 +5,7 @@ import ServiceBenefits from '@/components/sections/ServicioDetalle/ServiceBenefi
 import ServiceProcess from '@/components/sections/ServicioDetalle/ServiceProcess'
 import ServiceTestimonial from '@/components/sections/ServicioDetalle/ServiceTestimonial'
 import ServiceCTA from '@/components/sections/ServicioDetalle/ServiceCTA'
+import { languageAlternates } from '@/lib/i18n'
 
 export const metadata = {
   title: 'Chatbots con IA en Murcia | WhatsApp, Web y Voz | ESKALA',
@@ -40,9 +41,7 @@ export const metadata = {
     description: 'Chatbots inteligentes para WhatsApp, web y voz. Atención 24/7 automatizada.',
     images: ['/eskala_digital_opengraph.png'],
   },
-  alternates: { 
-    canonical: 'https://www.eskaladigital.com/servicios/chatbots' 
-  },
+  alternates: languageAlternates('/servicios/chatbots', 'es'),
 }
 
 const heroData = {

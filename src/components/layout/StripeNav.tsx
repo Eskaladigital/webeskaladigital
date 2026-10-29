@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { NAV_ITEMS, LIGHT_STRIPES, STRIPE_COLORS } from '@/types'
+import { heroStripes, langFromPath } from '@/lib/i18n'
 import styles from './StripeNav.module.css'
 
 interface StripeNavProps {
@@ -14,9 +15,14 @@ export function StripeNav({ position }: StripeNavProps) {
   const pathname = usePathname()
   const router = useRouter()
   const [expandedStripe, setExpandedStripe] = useState<string | null>(null)
+  const lang = langFromPath(pathname)
+  const items =
+    lang === 'en'
+      ? NAV_ITEMS.map((item, i) => ({ ...item, ...heroStripes('en')[i] }))
+      : NAV_ITEMS
 
   const isActive = (href: string) => {
-    if (href === '/') return pathname === '/'
+    if (href === '/' || href === '/en') return pathname === href
     return pathname.startsWith(href)
   }
 
@@ -38,7 +44,7 @@ export function StripeNav({ position }: StripeNavProps) {
 
   return (
     <nav className={`${styles.stripeNav} ${styles[position]}`}>
-      {NAV_ITEMS.map((item) => {
+      {items.map((item) => {
         const isLightStripe = LIGHT_STRIPES.includes(item.stripeNumber)
         const active = isActive(item.href)
         const expanded = expandedStripe === item.href

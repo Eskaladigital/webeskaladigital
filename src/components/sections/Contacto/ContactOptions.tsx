@@ -8,6 +8,8 @@ import { useEffect } from 'react'
 import styles from './ContactOptions.module.css'
 import EmailContactButton from '@/components/ui/EmailContactButton'
 import { Mail, MessageCircle, Phone, Instagram, Facebook, Linkedin, Twitter, Zap, type LucideIcon } from 'lucide-react'
+import type { Lang } from '@/lib/i18n'
+import { CONTACT_EN } from '@/lib/en-content'
 
 const contactOptions: {
   Icon: LucideIcon
@@ -69,7 +71,21 @@ const socialLinks: { name: string; Icon: LucideIcon; url: string; color: string 
   },
 ]
 
-export default function ContactOptions() {
+export default function ContactOptions({ lang = 'es' }: { lang?: Lang }) {
+  const en = lang === 'en'
+  const o = CONTACT_EN.options
+  const options = en
+    ? contactOptions.map((option) => {
+        if (option.action === 'email') return { ...option, title: o.emailTitle, description: o.emailDesc }
+        if (option.action === 'whatsapp')
+          return {
+            ...option,
+            description: o.whatsappDesc,
+            link: `https://wa.me/34626823404?text=${encodeURIComponent(o.whatsappText)}`,
+          }
+        return { ...option, title: o.phoneTitle, description: o.phoneDesc }
+      })
+    : contactOptions
   useEffect(() => {
     const fadeElements = document.querySelectorAll('.fade-up')
     const fadeObserver = new IntersectionObserver(
@@ -91,18 +107,22 @@ export default function ContactOptions() {
     <section className={styles.contactOptions} id="contacto">
       {/* Header */}
       <div className={`${styles.header} fade-up`}>
-        <span className={styles.label}>También por canal directo</span>
-        <h2 className={styles.title}>
-          ¿Prefieres <span>escribir o llamar</span>?
-        </h2>
+        <span className={styles.label}>{en ? o.label : 'También por canal directo'}</span>
+        {en ? (
+          <h2 className={styles.title} dangerouslySetInnerHTML={{ __html: o.title }} />
+        ) : (
+          <h2 className={styles.title}>
+            ¿Prefieres <span>escribir o llamar</span>?
+          </h2>
+        )}
         <p className={styles.subtitle}>
-          Si no quieres rellenar el formulario, elige la forma que más cómoda te resulte.
+          {en ? o.subtitle : 'Si no quieres rellenar el formulario, elige la forma que más cómoda te resulte.'}
         </p>
       </div>
 
       {/* Opciones de contacto principales */}
       <div className={styles.optionsGrid}>
-        {contactOptions.map((option, index) => (
+        {options.map((option, index) => (
           <div key={index} className={`${styles.optionCard} fade-up`}>
             <div className={styles.optionIcon}>
               <option.Icon size={32} strokeWidth={2} aria-hidden="true" />
@@ -113,14 +133,20 @@ export default function ContactOptions() {
             {option.action === 'email' && (
               <>
                 <div className={styles.optionInfo}>{option.email}</div>
-                <EmailContactButton 
-                  variant="primary"
-                  subject="Consulta desde la página de contacto"
-                  email={option.email}
-                  className={styles.optionButton}
-                >
-                  Enviar Email
-                </EmailContactButton>
+                {en ? (
+                  <a href={`mailto:${option.email}`} className={styles.optionButton}>
+                    {o.emailButton}
+                  </a>
+                ) : (
+                  <EmailContactButton 
+                    variant="primary"
+                    subject="Consulta desde la página de contacto"
+                    email={option.email}
+                    className={styles.optionButton}
+                  >
+                    Enviar Email
+                  </EmailContactButton>
+                )}
               </>
             )}
 
@@ -133,7 +159,7 @@ export default function ContactOptions() {
                   rel="noopener noreferrer"
                   className={`${styles.optionButton} ${styles.whatsapp}`}
                 >
-                  Abrir WhatsApp
+                  {en ? o.whatsappButton : 'Abrir WhatsApp'}
                 </a>
               </>
             )}
@@ -145,7 +171,7 @@ export default function ContactOptions() {
                   href={option.link}
                   className={`${styles.optionButton} ${styles.phone}`}
                 >
-                  Llamar Ahora
+                  {en ? o.phoneButton : 'Llamar Ahora'}
                 </a>
               </>
             )}
@@ -155,7 +181,7 @@ export default function ContactOptions() {
 
       {/* Redes Sociales */}
       <div className={`${styles.socialSection} fade-up`}>
-        <h3 className={styles.socialTitle}>También estamos en redes sociales</h3>
+        <h3 className={styles.socialTitle}>{en ? o.social : 'También estamos en redes sociales'}</h3>
         <div className={styles.socialGrid}>
           {socialLinks.map((social, index) => (
             <a
@@ -181,11 +207,15 @@ export default function ContactOptions() {
           <Zap size={28} strokeWidth={2} aria-hidden="true" />
         </div>
         <div className={styles.infoContent}>
-          <h4>Respuesta rápida garantizada</h4>
-          <p>
-            Normalmente respondemos en <strong>menos de 2 horas</strong> en horario laboral.
-            Los fines de semana, el lunes a primera hora. ¡Prometido!
-          </p>
+          <h4>{en ? o.fastTitle : 'Respuesta rápida garantizada'}</h4>
+          {en ? (
+            <p>{o.fastText}</p>
+          ) : (
+            <p>
+              Normalmente respondemos en <strong>menos de 2 horas</strong> en horario laboral.
+              Los fines de semana, el lunes a primera hora. ¡Prometido!
+            </p>
+          )}
         </div>
       </div>
     </section>

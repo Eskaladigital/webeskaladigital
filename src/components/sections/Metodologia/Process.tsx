@@ -3,6 +3,8 @@
 import { useEffect } from 'react'
 import styles from './Process.module.css'
 import { Search, Target, Zap, BarChart3, Rocket, RefreshCw, type LucideIcon } from 'lucide-react'
+import type { Lang } from '@/lib/i18n'
+import { METHOD_EN } from '@/lib/en-content'
 
 const steps: { number: string; title: string; desc: string; Icon: LucideIcon }[] = [
   {
@@ -43,7 +45,9 @@ const steps: { number: string; title: string; desc: string; Icon: LucideIcon }[]
   },
 ]
 
-export default function Process() {
+export default function Process({ lang = 'es' }: { lang?: Lang }) {
+  const items =
+    lang === 'en' ? steps.map((step, i) => ({ ...step, ...METHOD_EN.steps[i] })) : steps
   useEffect(() => {
     const fadeElements = document.querySelectorAll('.fade-up')
     const fadeObserver = new IntersectionObserver(
@@ -64,11 +68,11 @@ export default function Process() {
   return (
     <section className={styles.process}>
       <div className={`${styles.sectionHeader} fade-up`}>
-        <span className={styles.sectionLabel}>Cómo trabajamos</span>
-        <h2 className={styles.sectionTitle}>6 pasos hacia el éxito</h2>
+        <span className={styles.sectionLabel}>{lang === 'en' ? METHOD_EN.processLabel : 'Cómo trabajamos'}</span>
+        <h2 className={styles.sectionTitle}>{lang === 'en' ? METHOD_EN.processTitle : '6 pasos hacia el éxito'}</h2>
       </div>
       <div className={styles.processGrid}>
-        {steps.map((step, index) => (
+        {items.map((step, index) => (
           <div key={index} className={`${styles.stepCard} fade-up`}>
             <div className={styles.stepIcon}>
               <step.Icon size={36} strokeWidth={2} aria-hidden="true" />

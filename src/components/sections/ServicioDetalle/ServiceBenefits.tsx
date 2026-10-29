@@ -1,6 +1,8 @@
 'use client'
 
 import styles from './ServiceBenefits.module.css'
+import type { Lang } from '@/lib/i18n'
+import { SERVICE_SECTIONS_EN } from '@/lib/en-content'
 
 interface Benefit {
   title: string
@@ -9,16 +11,18 @@ interface Benefit {
 
 interface ServiceBenefitsProps {
   benefits: Benefit[]
+  lang?: Lang
 }
 
-export default function ServiceBenefits({ benefits }: ServiceBenefitsProps) {
+export default function ServiceBenefits({ benefits, lang = 'es' }: ServiceBenefitsProps) {
+  const en = lang === 'en'
   return (
     <>
 
       <section className={styles.benefits}>
         <div className={`${styles.sectionHeader} fade-up`}>
-          <span className={styles.sectionLabel}>Ventajas</span>
-          <h2 className={styles.sectionTitle}>Por qué lo necesitas</h2>
+          <span className={styles.sectionLabel}>{en ? SERVICE_SECTIONS_EN.benefitsLabel : 'Ventajas'}</span>
+          <h2 className={styles.sectionTitle}>{en ? SERVICE_SECTIONS_EN.benefitsTitle : 'Por qué lo necesitas'}</h2>
         </div>
         <div className={styles.benefitsGrid}>
           {benefits.map((benefit, index) => (

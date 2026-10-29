@@ -3,8 +3,10 @@
 import Image from 'next/image'
 import { useEffect } from 'react'
 import styles from './About.module.css'
+import type { Lang } from '@/lib/i18n'
+import { ABOUT_EN } from '@/lib/en-content'
 
-export default function About() {
+export default function About({ lang = 'es' }: { lang?: Lang }) {
   useEffect(() => {
     // Intersection Observer para animaciones fade-up
     const fadeElements = document.querySelectorAll('.fade-up')
@@ -23,6 +25,45 @@ export default function About() {
 
     return () => fadeObserver.disconnect()
   }, [])
+
+  if (lang === 'en') {
+    const en = ABOUT_EN.about
+    return (
+      <section className={styles.about} id="about">
+        <div className={styles.aboutGrid}>
+          <div className={`${styles.aboutImageContainer} fade-up`}>
+            <Image
+              src="/images/oficina-creativa-murcia.png"
+              alt={en.imageAlt}
+              fill
+              className={styles.aboutImage}
+              sizes="(max-width: 768px) 100vw, 50vw"
+            />
+            <div className={styles.imageOverlay}></div>
+          </div>
+
+          <div className={`${styles.aboutContent} fade-up`}>
+            <h2>
+              {en.title} <span>{en.titleSpan}</span>
+            </h2>
+            {en.paragraphs.map((p) => (
+              <p key={p.slice(0, 24)} dangerouslySetInnerHTML={{ __html: p }} />
+            ))}
+            <h3>{en.h3}</h3>
+            <p>{en.why}</p>
+            <div className={styles.aboutStats}>
+              {en.stats.map((stat) => (
+                <div key={stat.label} className={styles.stat}>
+                  <div className={styles.statNumber}>{stat.value}</div>
+                  <div className={styles.statLabel}>{stat.label}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+    )
+  }
 
   return (
     <section className={styles.about} id="about">

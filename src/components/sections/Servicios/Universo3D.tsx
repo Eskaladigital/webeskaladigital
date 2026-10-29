@@ -4,6 +4,8 @@ import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { Sora } from 'next/font/google'
 import { initUniversoScene } from './universoScene'
+import { UI, counterpartPath, href, type Lang } from '@/lib/i18n'
+import { UNIVERSE_EN } from '@/lib/en-content'
 import styles from './Universo3D.module.css'
 
 const sora = Sora({
@@ -141,7 +143,28 @@ const WORLDS: ServiceWorld[] = [
   },
 ]
 
-export default function Universo3D() {
+const ES = {
+  tag: 'explora · descubre · escala',
+  eyebrow: 'Agencia de marketing digital · Murcia',
+  title: 'El universo',
+  titleGrad: 'ESKALA',
+  lead: 'Tu negocio es una nave. Internet, el espacio. Haz scroll y atraviesa los ocho mundos que hacen crecer una marca: cada planeta que ves es un servicio real, renderizado en 3D en tu pantalla ahora mismo. Al final del viaje sabrás exactamente qué órbita le falta a tu negocio.',
+  scroll: '▼ Scroll para despegar',
+  world: 'Mundo',
+  service: 'Servicio',
+  explore: 'Explorar este servicio →',
+  destEyebrow: 'Destino · Tu marca',
+  destTitle: 'Has llegado<br />a la estrella.',
+  destText: 'La estrella eres tú: branding, email y todo lo anterior orbitando alrededor de un negocio que crece. Cuéntanos el tuyo y te decimos, sin compromiso, qué mundo te dará más resultados primero.',
+  ctaProposal: 'Pedir propuesta',
+  ctaAgency: 'Ver la agencia',
+  ctaAll: 'Los 8 servicios →',
+}
+
+export default function Universo3D({ lang = 'es' }: { lang?: Lang }) {
+  const t = lang === 'en' ? UNIVERSE_EN : ES
+  const worlds =
+    lang === 'en' ? WORLDS.map((w) => ({ ...w, ...UNIVERSE_EN.worlds[w.slug] })) : WORLDS
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const mainRef = useRef<HTMLElement>(null)
   const shipRef = useRef<HTMLDivElement>(null)
@@ -177,16 +200,25 @@ export default function Universo3D() {
   }, [])
 
   const pctLabel = String(Math.round(progress * 100)).padStart(3, '0') + '%'
+  const servicesPath = href('/servicios', lang)
 
   return (
     <div className={`${styles.root} ${sora.variable}`}>
       <canvas ref={canvasRef} className={styles.canvas} aria-hidden="true" />
 
       <div className={styles.top}>
-        <Link href="/" className={styles.logo}>
+        <Link href={href('/', lang)} className={styles.logo}>
           ESKA<span>LA</span>
         </Link>
-        <div className={styles.tag}>explora · descubre · escala</div>
+        <div className={styles.tag}>{t.tag}</div>
+        <Link
+          href={counterpartPath(servicesPath)}
+          hrefLang={lang === 'en' ? 'es' : 'en'}
+          title={UI[lang].switchTitle}
+          className={styles.langSwitch}
+        >
+          {UI[lang].switchLabel}
+        </Link>
       </div>
 
       <div className={styles.route} aria-hidden="true">
@@ -200,27 +232,23 @@ export default function Universo3D() {
         <section className={`${styles.section} ${styles.hero}`}>
           <div className={styles.card}>
             <span className={styles.eyebrow} style={{ color: 'var(--orange)' }}>
-              Agencia de marketing digital · Murcia
+              {t.eyebrow}
             </span>
             <h1 className={styles.title1}>
-              El universo
+              {t.title}
               <br />
-              <span className={styles.grad}>ESKALA</span>
+              <span className={styles.grad}>{t.titleGrad}</span>
             </h1>
-            <p className={`${styles.cardText} ${styles.heroLead}`}>
-              Tu negocio es una nave. Internet, el espacio. Haz scroll y atraviesa los ocho mundos que
-              hacen crecer una marca: cada planeta que ves es un servicio real, renderizado en 3D en tu
-              pantalla ahora mismo. Al final del viaje sabrás exactamente qué órbita le falta a tu negocio.
-            </p>
+            <p className={`${styles.cardText} ${styles.heroLead}`}>{t.lead}</p>
           </div>
-          <span className={styles.scroll}>▼ Scroll para despegar</span>
+          <span className={styles.scroll}>{t.scroll}</span>
         </section>
 
-        {WORLDS.map((world) => (
+        {worlds.map((world) => (
           <section key={world.id} id={world.id} className={styles.section}>
             <div className={styles.card}>
               <span className={styles.eyebrow} style={{ color: world.color }}>
-                Mundo {world.num} / 8 · Servicio
+                {t.world} {world.num} / 8 · {t.service}
               </span>
               <h2 className={styles.title2} style={{ color: world.color }}>
                 {world.title}
@@ -238,9 +266,9 @@ export default function Universo3D() {
               <Link
                 className={styles.cta2}
                 style={{ color: world.color }}
-                href={`/servicios/${world.slug}`}
+                href={href(`/servicios/${world.slug}`, lang)}
               >
-                Explorar este servicio →
+                {t.explore}
               </Link>
             </div>
           </section>
@@ -249,26 +277,22 @@ export default function Universo3D() {
         <section className={`${styles.section} ${styles.final}`} id="destino">
           <div className={styles.card}>
             <span className={styles.eyebrow} style={{ color: 'var(--orange)' }}>
-              Destino · Tu marca
+              {t.destEyebrow}
             </span>
-            <h2 className={`${styles.title2} ${styles.finalTitle}`}>
-              Has llegado
-              <br />a la estrella.
-            </h2>
-            <p className={styles.cardText}>
-              La estrella eres tú: branding, email y todo lo anterior orbitando alrededor de un negocio
-              que crece. Cuéntanos el tuyo y te decimos, sin compromiso, qué mundo te dará más resultados
-              primero.
-            </p>
+            <h2
+              className={`${styles.title2} ${styles.finalTitle}`}
+              dangerouslySetInnerHTML={{ __html: t.destTitle }}
+            />
+            <p className={styles.cardText}>{t.destText}</p>
             <div className={styles.ctaGroup}>
-              <Link className={styles.btn} href="/contacto">
-                Pedir propuesta
+              <Link className={styles.btn} href={href('/contacto', lang)}>
+                {t.ctaProposal}
               </Link>
-              <Link className={`${styles.btn} ${styles.btnGhost}`} href="/">
-                Ver la agencia
+              <Link className={`${styles.btn} ${styles.btnGhost}`} href={href('/', lang)}>
+                {t.ctaAgency}
               </Link>
               <Link className={`${styles.btn} ${styles.btnGhost}`} href="#mundo-1">
-                Los 8 servicios →
+                {t.ctaAll}
               </Link>
             </div>
           </div>

@@ -117,6 +117,24 @@
   box-shadow: 0 10px 25px rgba(232, 74, 35, 0.3);
 }
 
+.langSwitch {
+  border: 1px solid currentColor;
+  border-radius: 50px;
+  padding: 0.45rem 0.75rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--text);
+  text-decoration: none;
+  opacity: 0.75;
+  transition: opacity 0.2s ease;
+  align-self: center;
+}
+
+.langSwitch:hover {
+  opacity: 1;
+}
+
 /* ===== DROPDOWN ===== */
 .dropdown {
   position: relative;
