@@ -7,6 +7,7 @@ import ServiceProcess from '@/components/sections/ServicioDetalle/ServiceProcess
 import ServiceCTA from '@/components/sections/ServicioDetalle/ServiceCTA'
 import { SERVICES, enMetadata } from '@/lib/i18n'
 import { SERVICES_EN } from '@/lib/en-content'
+import { AGENCY_ID, SITE_URL, generateBreadcrumbSchema } from '@/lib/site'
 
 type Params = Promise<{ slug: string }>
 
@@ -34,9 +35,36 @@ export default async function EnglishServicePage({ params }: { params: Params })
   const found = findService(slug)
   if (!found) notFound()
   const { service, content } = found
+  const url = `${SITE_URL}/en/services/${service.en}`
+  const serviceSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    serviceType: service.enLabel,
+    name: content.metaTitle,
+    description: content.metaDescription,
+    url,
+    inLanguage: 'en',
+    provider: { '@id': AGENCY_ID },
+    areaServed: [{ '@type': 'Country', name: 'Spain' }, { '@type': 'Place', name: 'Europe' }],
+    hasOfferCatalog: {
+      '@type': 'OfferCatalog',
+      name: content.featuresTitle,
+      itemListElement: content.features.map((f) => ({
+        '@type': 'Offer',
+        itemOffered: { '@type': 'Service', name: f.title, description: f.description },
+      })),
+    },
+  }
+  const breadcrumbJsonLd = generateBreadcrumbSchema([
+    { name: 'Home', path: '/en' },
+    { name: 'Services', path: '/en/services' },
+    { name: service.enLabel, path: `/en/services/${service.en}` },
+  ])
 
   return (
     <StandardLayout lang="en">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
       <ServiceHero
         badge={content.badge}
         title={content.title}

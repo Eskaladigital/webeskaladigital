@@ -5,6 +5,7 @@ import Services from '@/components/sections/QuienesSomos/Services'
 import Values from '@/components/sections/QuienesSomos/Values'
 import CTA from '@/components/sections/QuienesSomos/CTA'
 import { enMetadata } from '@/lib/i18n'
+import { AGENCY_ID, SITE_URL, generateBreadcrumbSchema } from '@/lib/site'
 
 export const metadata = enMetadata(
   '/quienes-somos',
@@ -13,8 +14,26 @@ export const metadata = enMetadata(
 )
 
 export default function EnglishAboutPage() {
+  const aboutSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'AboutPage',
+    '@id': `${SITE_URL}/en/about#about`,
+    url: `${SITE_URL}/en/about`,
+    name: 'About us | ESKALA Digital Marketing',
+    description: 'About ESKALA, a digital marketing agency in Murcia, Spain, since 2020.',
+    inLanguage: 'en',
+    about: { '@id': AGENCY_ID },
+    isPartOf: { '@id': `${SITE_URL}/#website` },
+  }
+  const breadcrumbJsonLd = generateBreadcrumbSchema([
+    { name: 'Home', path: '/en' },
+    { name: 'About us', path: '/en/about' },
+  ])
+
   return (
     <StandardLayout lang="en">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(aboutSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
       <Hero lang="en" />
       <About lang="en" />
       <Services lang="en" />

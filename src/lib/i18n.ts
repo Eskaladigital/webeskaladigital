@@ -75,11 +75,11 @@ export function enMetadata(esPath: string, title: string, description: string, a
       title,
       description,
       url: alternates.canonical,
-      siteName: 'ESKALA Digital',
+      siteName: 'ESKALA Digital Marketing',
       locale: 'en_GB',
       alternateLocale: ['es_ES'],
       type: 'website',
-      images: [{ url: '/eskala_digital_opengraph.png', width: 1200, height: 630, alt: 'ESKALA Digital' }],
+      images: [{ url: '/eskala_digital_opengraph.png', width: 1200, height: 630, alt: title }],
     },
     twitter: {
       card: 'summary_large_image',
