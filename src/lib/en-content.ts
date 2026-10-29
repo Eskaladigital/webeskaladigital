@@ -6,9 +6,9 @@ export const HOME_EN = {
   sections: {
     'quienes-somos': {
       t: 'About us',
-      h: 'From Murcia.<br>Digital.<br>Direct.',
+      h: 'Digital.<br>Close.<br>Direct.',
       p: 'Since 2020 we have helped businesses grow online. We are not just another agency: we are your strategic partner, with a close team, clear communication and meetings in person or by video call, wherever you are.',
-      feat: '<b>→</b> Based in Murcia, Spain, clients in Spain and abroad &nbsp;·&nbsp; <b>→</b> Firms, clinics, shops, restaurants, brands',
+      feat: '<b>→</b> Clients in several countries, meetings by video call &nbsp;·&nbsp; <b>→</b> Firms, clinics, shops, restaurants, brands',
     },
     metodologia: {
       t: 'Methodology',
@@ -89,10 +89,10 @@ export const HOME_EN = {
   next: 'Next section',
   goTo: 'Go to',
   close: '✕ Close',
-  kicker: 'Since 2020 · Murcia, Spain',
+  kicker: 'Since 2020 · Strategy, creativity and technology',
   h1: 'Digital marketing agency',
-  h1Span: 'based in Spain',
-  lead: 'We grow your business with digital marketing that works. We are <strong>ESKALA</strong>: web design, SEO, social media, Google Ads, AI apps, chatbots, branding and email marketing, for businesses in Spain and abroad.',
+  h1Span: 'that grows your business',
+  lead: 'We grow your business with digital marketing that works. We are <strong>ESKALA</strong>: web design, SEO, social media, Google Ads, AI apps, chatbots, branding and email marketing.',
   ctaPrimary: 'Let’s talk about your project →',
   ctaGhost: 'See services',
   servicesLabel: 'What we do',
@@ -107,10 +107,10 @@ export const HOME_EN = {
 
 export const ABOUT_EN = {
   hero: {
-    badge: 'Since 2020 · Murcia, Spain',
+    badge: 'Since 2020',
     title: 'About',
     titleSpan: 'us',
-    desc: 'We are ESKALA, a digital marketing agency in Murcia, Spain. We help businesses grow online with web design, SEO, social media, advertising and AI. Clear brief, careful execution and numbers we review together.',
+    desc: 'We are ESKALA, a digital marketing agency. We help businesses grow online with web design, SEO, social media, advertising and AI. Clear brief, careful execution and numbers we review together.',
     primary: 'Tell us about your project →',
     secondary: 'Our services',
   },
@@ -118,12 +118,12 @@ export const ABOUT_EN = {
     title: 'A digital marketing agency',
     titleSpan: 'that grows with you',
     paragraphs: [
-      '<strong>ESKALA</strong> is a digital marketing agency based in Murcia, Spain. Since 2020 we have worked with companies of every size and sector: professional firms, shops, clinics, restaurants, marketplaces and brands.',
+      '<strong>ESKALA</strong> is a digital marketing agency. Since 2020 we have worked with companies of every size and sector: professional firms, shops, clinics, restaurants, marketplaces and brands.',
       'We cover the whole journey: <strong>web design, SEO, social media, Google Ads, AI apps, chatbots, branding and email marketing</strong>. One team, one strategy, every channel pulling in the same direction.',
       'We do not sell vanity metrics. Every project has clear goals and every result can be checked. Where it helps, we add <strong>artificial intelligence</strong> to automate the repetitive work and serve your customers 24/7.',
     ],
     h3: 'Why work with ESKALA?',
-    why: 'A close team that speaks English, answers fast and explains everything in plain words. Meetings by video call, or in person if you are in Spain.',
+    why: 'A close team that speaks English, answers fast and explains everything in plain words. Meetings by video call, wherever you are.',
     stats: [
       { value: '2020', label: 'Founded' },
       { value: '7', label: 'Languages shipped' },
@@ -266,7 +266,7 @@ export const UNIVERSE_EN = {
     },
   } as Record<string, { title: string; metafora: string; text: string; stats: { value: string; label: string }[] }>,
   tag: 'explore · discover · scale',
-  eyebrow: 'Digital marketing agency · Spain',
+  eyebrow: 'Digital marketing agency',
   title: 'The',
   titleGrad: 'ESKALA universe',
   lead: 'Your project is a spaceship. The internet, outer space. Scroll through the eight worlds that make a brand grow: every planet is a real service, rendered in 3D on your screen right now. By the end of the journey you will know which orbit your project is missing.',

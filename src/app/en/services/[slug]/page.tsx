@@ -45,7 +45,6 @@ export default async function EnglishServicePage({ params }: { params: Params })
     url,
     inLanguage: 'en',
     provider: { '@id': AGENCY_ID },
-    areaServed: [{ '@type': 'Country', name: 'Spain' }, { '@type': 'Place', name: 'Europe' }],
     hasOfferCatalog: {
       '@type': 'OfferCatalog',
       name: content.featuresTitle,

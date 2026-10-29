@@ -10,7 +10,7 @@ import { AGENCY_ID, SITE_URL, generateBreadcrumbSchema } from '@/lib/site'
 export const metadata = enMetadata(
   '/quienes-somos',
   'About us',
-  'ESKALA is a digital marketing agency based in Murcia, Spain, since 2020: web design, SEO, social media, Google Ads, AI apps, chatbots, branding and email marketing.'
+  'ESKALA is a digital marketing agency working since 2020: web design, SEO, social media, Google Ads, AI apps, chatbots, branding and email marketing.'
 )
 
 export default function EnglishAboutPage() {
@@ -20,7 +20,7 @@ export default function EnglishAboutPage() {
     '@id': `${SITE_URL}/en/about#about`,
     url: `${SITE_URL}/en/about`,
     name: 'About us | ESKALA Digital Marketing',
-    description: 'About ESKALA, a digital marketing agency in Murcia, Spain, since 2020.',
+    description: 'About ESKALA, a digital marketing agency working since 2020.',
     inLanguage: 'en',
     about: { '@id': AGENCY_ID },
     isPartOf: { '@id': `${SITE_URL}/#website` },

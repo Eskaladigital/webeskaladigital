@@ -143,7 +143,7 @@ export const UI = {
     switchTitle: 'Versión en español',
     tagline: 'Digital Marketing',
     footerAbout:
-      'Digital marketing agency in Murcia, Spain. We grow your business with strategy, creativity and technology.',
+      'Digital marketing agency. We grow your business with strategy, creativity and technology.',
     company: 'Company',
     legal: 'Legal',
     legalNotice: 'Legal notice (ES)',

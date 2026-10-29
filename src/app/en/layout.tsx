@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: {
-    default: 'ESKALA | Digital Marketing Agency in Spain',
+    default: 'ESKALA | Digital Marketing Agency',
     template: '%s | ESKALA Digital',
   },
 }
