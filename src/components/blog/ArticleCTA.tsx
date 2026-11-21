@@ -1,27 +1,16 @@
 'use client'
 
-import { useState } from 'react'
+import Link from 'next/link'
 import styles from './ArticleCTA.module.css'
 
+const SERVICE_LINKS = [
+  { href: '/servicios/seo-local', label: 'SEO Local en Murcia' },
+  { href: '/servicios/google-ads', label: 'Agencia Google Ads Murcia' },
+  { href: '/servicios/chatbots', label: 'Chatbots con IA' },
+  { href: '/servicios/diseno-web', label: 'Diseño Web Murcia' },
+] as const
+
 export default function ArticleCTA() {
-  const [email, setEmail] = useState('')
-  const [submitted, setSubmitted] = useState(false)
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    
-    // Aquí puedes integrar con tu servicio de email marketing
-    // Por ahora solo simulamos el envío
-    console.log('Email capturado:', email)
-    
-    setSubmitted(true)
-    setEmail('')
-    
-    setTimeout(() => {
-      setSubmitted(false)
-    }, 3000)
-  }
-
   return (
     <div className={styles.ctaContainer}>
       <div className={styles.ctaContent}>
@@ -31,40 +20,38 @@ export default function ArticleCTA() {
           </svg>
         </div>
         <div className={styles.ctaText}>
-          <h3 className={styles.ctaTitle}>¿Te ha gustado este artículo?</h3>
+          <h3 className={styles.ctaTitle}>¿Quieres aplicar esto en tu negocio en Murcia?</h3>
           <p className={styles.ctaDescription}>
-            Suscríbete a nuestro newsletter y recibe contenido exclusivo sobre marketing digital, 
-            SEO y estrategias para hacer crecer tu negocio online.
+            En ESKALA Marketing Digital ayudamos a empresas con posicionamiento SEO, campañas de Google Ads,
+            diseño web orientado a conversión y chatbots con IA.
           </p>
         </div>
-        {!submitted ? (
-          <form onSubmit={handleSubmit} className={styles.ctaForm}>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="tu@email.com"
-              required
-              className={styles.ctaInput}
-            />
-            <button type="submit" className={styles.ctaButton}>
-              Suscribirme
-            </button>
-          </form>
-        ) : (
-          <div className={styles.ctaSuccess}>
-            <svg viewBox="0 0 24 24" fill="currentColor">
-              <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
-            </svg>
-            <span>¡Gracias por suscribirte!</span>
-          </div>
-        )}
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.6rem', marginTop: '0.25rem' }}>
+          {SERVICE_LINKS.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              style={{
+                padding: '0.5rem 0.95rem',
+                borderRadius: '999px',
+                background: 'rgba(255, 255, 255, 0.18)',
+                border: '1px solid rgba(255, 255, 255, 0.35)',
+                color: '#ffffff',
+                fontSize: '0.875rem',
+                fontWeight: 600,
+                textDecoration: 'none',
+              }}
+            >
+              {item.label}
+            </Link>
+          ))}
+        </div>
       </div>
       <div className={styles.ctaAlternative}>
-        <p className={styles.ctaAlternativeText}>¿Necesitas ayuda con tu estrategia digital?</p>
-        <a href="/contacto" className={styles.ctaAlternativeLink}>
-          Hablemos →
-        </a>
+        <p className={styles.ctaAlternativeText}>¿Necesitas una auditoría gratuita de tu web o campañas?</p>
+        <Link href="/contacto" className={styles.ctaAlternativeLink}>
+          Solicitar auditoría →
+        </Link>
       </div>
     </div>
   )

@@ -4,8 +4,8 @@ import type { Metadata } from 'next'
 import { languageAlternates } from '@/lib/i18n'
 
 export const metadata: Metadata = {
-  title: 'ESKALA | Agencia de Marketing Digital en Murcia',
-  description: 'Agencia de marketing digital en Murcia especializada en diseño web, SEO local, redes sociales, Google Ads y apps con IA. Hacemos crecer tu negocio.',
+  title: { absolute: 'Agencia de Marketing Digital en Murcia · SEO, Web e IA | ESKALA' },
+  description: 'Agencia de marketing digital en Murcia: posicionamiento SEO, diseño web, Google Ads y chatbots con IA para empresas. Solicita auditoría gratuita.',
   keywords: [
     'agencia marketing digital murcia',
     'marketing digital murcia',

@@ -8,8 +8,9 @@ import ServiceCTA from '@/components/sections/ServicioDetalle/ServiceCTA'
 import { languageAlternates } from '@/lib/i18n'
 
 export const metadata = {
-  title: 'Diseño Web en Murcia | Páginas Web Profesionales | ESKALA',
-  description: 'Agencia de diseño web en Murcia. Creamos páginas web profesionales, modernas y optimizadas para SEO. Diseño responsive, rápido y que convierte. Trabajamos con empresas de Murcia, Cartagena, Lorca y toda la Región. Presupuesto sin compromiso.',
+  title: { absolute: 'Diseño Web en Murcia · Páginas Web Profesionales | ESKALA' },
+  description:
+    'Agencia de diseño web en Murcia: páginas web rápidas, modernas y pensadas para posicionar en Google y convertir visitas en clientes. Presupuesto sin compromiso.',
   keywords: [
     'diseño web murcia',
     'páginas web murcia',

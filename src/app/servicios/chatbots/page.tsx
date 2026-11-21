@@ -8,8 +8,9 @@ import ServiceCTA from '@/components/sections/ServicioDetalle/ServiceCTA'
 import { languageAlternates } from '@/lib/i18n'
 
 export const metadata = {
-  title: 'Chatbots con IA en Murcia | WhatsApp, Web y Voz | ESKALA',
-  description: 'Desarrollo de chatbots inteligentes para empresas en Murcia. Chatbots para WhatsApp Business, web y voz con IA conversacional. Atiende clientes 24/7, automatiza respuestas, agenda citas y aumenta ventas. Trabajamos con empresas de Murcia, Cartagena y toda la Región. Powered by GPT-4. Demo gratuita.',
+  title: { absolute: 'Chatbot Inteligente con IA en Murcia · WhatsApp y Web | ESKALA' },
+  description:
+    'Desarrollo de chatbots inteligentes con IA para empresas en Murcia. WhatsApp Business, web y voz 24/7 para atender clientes, agendar citas y captar leads.',
   keywords: [
     'chatbot ia murcia',
     'chatbot whatsapp murcia',

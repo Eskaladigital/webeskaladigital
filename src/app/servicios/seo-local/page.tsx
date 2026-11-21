@@ -8,9 +8,9 @@ import ServiceCTA from '@/components/sections/ServicioDetalle/ServiceCTA'
 import { languageAlternates } from '@/lib/i18n'
 
 export const metadata = {
-  title: 'SEO Local en Murcia | Posicionamiento Web Google Maps | ESKALA',
+  title: { absolute: 'SEO Local y Posicionamiento Web en Murcia | ESKALA' },
   description:
-    'SEO local en Murcia: ficha de Google, pack local y búsquedas «servicio + Murcia». Auditoría gratuita.',
+    'Agencia de SEO local y posicionamiento web en Murcia. Optimización de ficha de Google, pack local y búsquedas comerciales en la Región. Auditoría gratuita.',
   keywords: [
     'seo local murcia',
     'seo murcia',

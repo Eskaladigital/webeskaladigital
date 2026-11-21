@@ -8,9 +8,9 @@ import ServiceCTA from '@/components/sections/ServicioDetalle/ServiceCTA'
 import { languageAlternates } from '@/lib/i18n'
 
 export const metadata = {
-  title: 'Agencia Google Ads en Murcia',
+  title: { absolute: 'Agencia Google Ads en Murcia · Gestión SEM y ROI | ESKALA' },
   description:
-    'Agencia Google Ads en Murcia. Campañas SEM de búsqueda, display, shopping y YouTube. Presupuesto controlado, medición clara, auditoría gratuita.',
+    'Agencia Google Ads en Murcia especializada en campañas SEM de búsqueda, Shopping y YouTube. Presupuesto controlado, sin permanencia y auditoría gratuita.',
   keywords: [
     'agencia google ads murcia',
     'google ads murcia',
